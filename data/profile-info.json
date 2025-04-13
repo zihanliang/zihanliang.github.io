@@ -1,0 +1,42 @@
+{
+  "name": "ZIHAN LIANG 梁梓涵",
+  "subtitle": "Undergraduate @ Emory University<br>Applied Mathematics & Statistics Major; Artificial Intelligence Minor",
+  "socialLinks": [
+    {
+      "type": "email",
+      "url": "mailto:zihan.liang@emory.edu",
+      "icon": "<i class=\"fas fa-envelope\"></i>"
+    },
+    {
+      "type": "googleScholar",
+      "url": "https://scholar.google.com/citations?user=qDHioQ8AAAAJ&hl",
+      "icon": "<i class=\"fas fa-graduation-cap\"></i>",
+      "target": "_blank"
+    },
+    {
+      "type": "linkedin",
+      "url": "https://www.linkedin.com/in/zihan-liang/",
+      "icon": "<i class=\"fab fa-linkedin\"></i>",
+      "target": "_blank"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/zihanliang",
+      "icon": "<i class=\"fab fa-github\"></i>",
+      "target": "_blank"
+    },
+    {
+      "type": "instagram",
+      "url": "https://www.instagram.com/zihanliangeddie/",
+      "icon": "<i class=\"fab fa-instagram\"></i>",
+      "target": "_blank"
+    },
+    {
+      "type": "researchgate",
+      "url": "https://www.researchgate.net/profile/Zihan-Liang-6",
+      "icon": "<i class=\"fab fa-researchgate\"></i>",
+      "target": "_blank"
+    }
+  ],
+  "profileImage": "assets/profile.PNG"
+} 

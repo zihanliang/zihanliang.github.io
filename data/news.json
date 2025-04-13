@@ -1,0 +1,36 @@
+[
+  {
+    "date": "Feb 2025 – Present",
+    "title": "Explainable Ensemble Learning for CO2 Emissions Forecasting",
+    "content": "Built an ensemble deep learning pipeline to predict vehicle CO₂ emissions with an R² exceeding 0.99, leveraging official Canadian datasets and SHAP for model interpretability. The pipeline integrated DNN, XGBoost, and Random Forest models to identify key emission drivers such as fuel type and engine size across over 7,300 vehicles. Explainable AI techniques, particularly SHAP, were employed to validate model decisions and generate actionable insights for sustainable transportation initiatives at Emory’s Office of Sustainability."
+  },
+  {
+    "date": "Jan 2025 – Present",
+    "title": "MIMIC Database (Causal Analysis and Forecasting)",
+    "content": "Developed a multimodal deep learning framework that integrates LLaMA-based clinical text embeddings, time-series patient vitals, and structured EHR data to improve readmission risk prediction and ICU treatment effect estimation. Designed a causal transformer architecture to mitigate confounding biases, incorporating Double Machine Learning (DML), domain adversarial learning, and orthogonality constraints for robust causal inference. Additionally, engineered a pipeline to detect missing modalities and impute absent data, enhancing patient representation for downstream clinical tasks. To ensure scalability, optimized large-scale processing of over 2 million ICU records using GPU-accelerated training in TensorFlow, efficient HDF5/Parquet indexing, and parallelized feature extraction."
+  },
+
+  {
+    "date": "Jun 2024 – Present",
+    "title": "Research on Transformer-Based Sentiment Analysis",
+    "content": "Developed a novel Gated Dynamic Local-Global Attention (GDLGA) model that combines BERT-based global representations with localized attention mechanisms via sliding windows for short-text sentiment analysis. The model achieved state-of-the-art performance on the Sentiment140 dataset, outperforming both traditional machine learning and transformer-based baselines with an F1 score of 87.49% and an AUC of 0.9484. Comprehensive ablation studies further validated the effectiveness of local attention, global attention, and gated fusion in improving classification stability and interpretability."
+  },
+
+  {
+    "date": "Sep 2024 – Present",
+    "title": "Collective Action & Research for Equity (CARE) Lab",
+    "content": "Analyzed nearly 300 user data points and developed an interactive dashboard for MakerGhat, an India-based nonprofit organization, using JavaScript, Python, and HTML to enable seamless and intuitive data visualization. Additionally, compiled and synthesized over 20 pages of technical and functional documentation for the organization’s Education Bot, ensuring clarity and usability for both developers and end users."
+  },
+
+  {
+    "date": "Jun 2024 – Present",
+    "title": "Game-Theoretic Analysis of Autonomous Taxis and Labor Market Dynamics",
+    "content": "Developed a hierarchical dynamic game-theoretic model to analyze strategic interactions among governments, enterprises, and workers in the adoption of autonomous taxi technologies, incorporating behavioral economics principles such as loss aversion and risk perception to simulate labor market responses. Through numerical simulations and sensitivity analyses in MATLAB and Python, identified equilibrium conditions under which moderate subsidies and regulations promote AI-driven innovation and employment stability, while extreme interventions lead to market volatility and hinder adoption. Based on these findings, formulated evidence-based policy recommendations advocating for phased regulatory strategies and workforce skill transition programs to ensure the socially sustainable integration of autonomous systems.",
+    "links": [
+      {
+        "text": "Pre-print",
+        "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5192917"
+      }
+    ]
+  }
+] 
