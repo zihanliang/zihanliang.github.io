@@ -286,85 +286,71 @@ function renderNewsItems(newsData, containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
     
-    // Clear any existing content
-    container.innerHTML = '';
-    
-    // Add each news item to the container
+    container.innerHTML = ''; // Clear any existing content
+
     newsData.forEach(newsItem => {
         const newsElement = document.createElement('div');
         newsElement.className = 'news-item';
-        
-        // Create the date element
+
+        // Date
         const dateElement = document.createElement('div');
         dateElement.className = 'news-date';
-        
         const dateHighlight = document.createElement('span');
         dateHighlight.className = 'year-highlight';
         dateHighlight.textContent = newsItem.date;
         dateElement.appendChild(dateHighlight);
-        
-        // Create the content element
+
+        // Content Container
         const contentElement = document.createElement('div');
         contentElement.className = 'news-content';
-        
-        // Create the title element
+
+        // Title
         const titleElement = document.createElement('h3');
-        
-        // Check if title contains HTML (like '<a href=')
-        if (newsItem.title && newsItem.title.includes('<a href=')) {
-            // Parse HTML in title
-            titleElement.innerHTML = newsItem.title;
-        } else {
-            titleElement.textContent = newsItem.title;
-        }
-        
+        titleElement.textContent = newsItem.title;
         contentElement.appendChild(titleElement);
-        
-        // Create the paragraph for content
-        const paragraphElement = document.createElement('p');
-        paragraphElement.innerHTML = newsItem.content;
-        
-        // Add links if provided in the links array format
+
+        // Position (NEW)
+        if (newsItem.position) {
+            const positionElement = document.createElement('p');
+            positionElement.className = 'news-position';
+            positionElement.textContent = newsItem.position;
+            contentElement.appendChild(positionElement);
+        }
+
+        // Bulleted Content (NEW)
+        if (newsItem.bullets && Array.isArray(newsItem.bullets)) {
+            const ul = document.createElement('ul');
+            ul.className = 'news-bullets';
+            newsItem.bullets.forEach(bullet => {
+                const li = document.createElement('li');
+                li.innerHTML = bullet;
+                ul.appendChild(li);
+            });
+            contentElement.appendChild(ul);
+        }
+
+        // Links
         if (newsItem.links && newsItem.links.length > 0) {
             newsItem.links.forEach(link => {
-                // Add a space if needed
-                const space = document.createTextNode(' ');
-                paragraphElement.appendChild(space);
-                
-                // Create link
                 const linkElement = document.createElement('a');
                 linkElement.href = link.url;
                 linkElement.textContent = link.text;
-                // Add target="_blank" for external links
-                if (link.url && !link.url.startsWith('#')) {
-                    linkElement.setAttribute('target', '_blank');
-                }
-                paragraphElement.appendChild(linkElement);
+                linkElement.setAttribute('target', '_blank');
+                linkElement.className = 'news-link';
+                contentElement.appendChild(linkElement);
             });
         }
-        
-        // Check for old style link (backward compatibility)
-        if (newsItem.link && newsItem.linkText) {
-            const space = document.createTextNode(' ');
-            paragraphElement.appendChild(space);
-            
-            const linkElement = document.createElement('a');
-            linkElement.href = newsItem.link;
-            linkElement.textContent = newsItem.linkText;
-            // Add target="_blank" for external links
-            if (newsItem.link && !newsItem.link.startsWith('#')) {
-                linkElement.setAttribute('target', '_blank');
-            }
-            paragraphElement.appendChild(linkElement);
+
+        // Legacy single-paragraph content fallback (optional)
+        if (!newsItem.bullets && newsItem.content) {
+            const paragraphElement = document.createElement('p');
+            paragraphElement.innerHTML = newsItem.content;
+            contentElement.appendChild(paragraphElement);
         }
-        
-        contentElement.appendChild(paragraphElement);
-        
-        // Add date and content to the news item
+
+        // Add to DOM
         newsElement.appendChild(dateElement);
         newsElement.appendChild(contentElement);
-        
-        // Add the news item to the container
         container.appendChild(newsElement);
     });
 }

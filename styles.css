@@ -16,8 +16,9 @@
 }
 
 body {
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
+    font-family: 'Georgia', serif;
+    line-height: 1.75;
+    font-weight: 400;
     color: var(--text-color);
     background-color: #fff;
 }
@@ -1534,3 +1535,19 @@ footer {
 .visitors-section .section-title {
     margin: 0 auto 2rem;
 }
+
+.news-position {
+    font-style: normal;
+    color: #555;
+    margin-top: -0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .news-bullets {
+    padding-left: 1.2rem;
+    margin-bottom: 0.6rem;
+  }
+  
+  .news-bullets li {
+    margin-bottom: 0.4rem;
+  }  
