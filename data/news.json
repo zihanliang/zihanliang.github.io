@@ -1,53 +1,94 @@
 [
   {
-    "date": "Feb 2025 – Present",
-    "title": "Explainable Ensemble Learning for CO2 Emissions Forecasting",
-    "position": "Research Group Leader, Emory Office of Sustainability",
+    "date": "Jun 2025 – Present",
+    "title": "ODE Modeling for C. difficile Transmission",
+    "position": "Research Assistant, Polymath Jr REU Summer Program",
     "bullets": [
-      "Built an ensemble deep learning pipeline to predict vehicle CO₂ emissions with an R² exceeding 0.99.",
-      "Integrated DNN, XGBoost, and Random Forest to identify key emission drivers such as fuel type and engine size.",
-      "Applied SHAP to validate model decisions and generate actionable insights for sustainable transportation."
+      "Developed and analyzed ODE-based mathematical models to study community transmission of C. difficile.",
+      "Collaborated with a team to identify optimal intervention strategies for controlling C. difficile spread in communities.",
+      "Implemented simulations in MATLAB and R to evaluate disease dynamics and mitigation strategies."
+    ]
+  },
+  {
+    "date": "Feb 2025 – Present",
+    "title": "MNAR-Aware Multi-Modal Rating Prediction",
+    "position": "Independent Researcher, Emory University (Supervised by Dr. Ruoxuan Xiong)",
+    "bullets": [
+      "Incorporated missing-not-at-random (MNAR) handling by encoding four distinct review-absence patterns (text-only, image-only, both, neither) and learning pattern-specific modality weights and bias corrections.",
+      "Developed a conservative composite loss that blends weighted MSE with pairwise ranking loss, assigning differential penalties per missing pattern to mitigate MNAR-induced bias.",
+      "Quantified systematic prediction offsets for each absence pattern on the validation set and applied these per-pattern rectifiers at test time, adaptively calibrating outputs to boost RMSE/MAE and NDCG performance."
     ]
   },
   {
     "date": "Jan 2025 – Present",
-    "title": "MIMIC Database (Causal Analysis and Forecasting)",
-    "position": "Independent Researcher, Emory College Department of Quantitative Theory and Methods",
+    "title": "Multimodal Causal Learning under Missing Clinical Data",
+    "position": "Independent Researcher, Emory University (Supervised by Dr. Ruoxuan Xiong)",
     "bullets": [
-      "Developed a multimodal DL framework integrating LLaMA-based clinical text, time-series vitals, and EHR data.",
-      "Built a causal transformer using DML, domain adversarial learning, and orthogonality constraints.",
-      "Engineered imputation for missing modalities and optimized GPU training on 2M+ ICU records using TensorFlow."
+      "Designed a causal representation learning framework that accounts for real-world MNAR patterns in clinical data, enabling robust modeling even when key modalities (e.g., clinical notes) are absent.",
+      "Built a modality-aware fusion module, representation balancing mechanism, and a bias rectifier that jointly capture patient health status, missingness patterns, and correct residual outcome prediction biases across subgroups.",
+      "Achieved substantial gains over strong baselines on the MIMIC-IV dataset, improving readmission AUC by +16.8% and ICU prediction APR by +10.2%, particularly enhancing generalization across missingness subgroups.",
+      "Led the research as first author, from conceptualization to empirical validation; submitted to EMNLP 2025 and currently under review."
+    ]
+  },
+  {
+    "date": "Sept 2024 – Present",
+    "title": "Collective Action & Research for Equity (CARE) Lab Research Assistant",
+    "position": "Emory School of Medicine",
+    "bullets": [
+      "Analyzed nearly 1,000 user data points and developed an interactive dashboard for MakerGhat using JavaScript, Python, and HTML.",
+      "Maintained a WhatsApp Education Bot via Python and Twilio for MakerGhat, enabling 15,000+ teachers to document lesson plans, impacting 600,000+ students and 10,000+ projects."
     ]
   },
   {
     "date": "Jun 2024 – Present",
     "title": "Research on Transformer-Based Sentiment Analysis",
-    "position": "Independent Researcher, Independent Research in NLP (Co-Authored Publication)",
+    "position": "Independent Researcher, Independent Research in NLP",
     "bullets": [
-      "Proposed GDLGA model combining BERT with local attention for short-text sentiment analysis.",
-      "Achieved F1 score of 87.49% and AUC of 0.9484 on Sentiment140, outperforming baselines.",
-      "Validated each component (global/local/gated fusion) via comprehensive ablation studies.",
-      "See<a href=\"https://www.techrxiv.org/doi/full/10.36227/techrxiv.174495340.03183932/v1\" target=\"_blank\">pre-print</a> for full results and model details."
-    ]
-  },  
-  {
-    "date": "Sep 2024 – Present",
-    "title": "Collective Action & Research for Equity (CARE) Lab",
-    "position": "Undergraduate Research Assistant, Emory School of Medicine Department of Biomedical Informatics",
-    "bullets": [
-      "Visualized 300+ user records through an interactive dashboard built with JavaScript, Python, and HTML.",
-      "Created 20+ pages of technical documentation for the Education Bot to aid usability and onboarding."
+      "Developed a novel Gated Dynamic Local-Global Attention (GDLGA) model that integrates BERT-based global features with local attention via sliding windows for short-text sentiment analysis.",
+      "Achieved state-of-the-art performance on the Sentiment140 dataset, surpassing transformer baselines with an F1 score of 87.49% and AUC of 0.9484.",
+      "Conducted extensive ablation studies to validate the contributions of local attention, global attention, and gated fusion mechanisms in enhancing classification stability and interpretability.",
+      "See<a href=\"https://www.techrxiv.org/users/912923/articles/1286489-gated-dynamic-local-global-attention-for-sentiment-analysis-enhancing-context-awareness-in-short-texts\" target=\"_blank\">pre-print</a> for full results and model details."
     ]
   },
   {
     "date": "Jun 2024 – Present",
-    "title": "Game-Theoretic Analysis of Autonomous Taxis and Labor Market Dynamics",
-    "position": "Independent Researcher, Independent Research in Game Theory (Co-Authored Publication)",
+    "title": "Game-Theoretic Analysis of Autonomous Taxis & Labor Market Dynamics",
+    "position": "Independent Researcher, Independent Research in Game Theory",
     "bullets": [
-      "Modeled dynamic interactions among governments, firms, and workers in autonomous taxi adoption.",
-      "Simulated loss aversion and risk in labor response using game theory and behavioral economics.",
-      "Identified stable equilibrium strategies under moderate regulation; warned against extreme subsidies.",
+      "Developed a hierarchical dynamic game-theoretic model to examine strategic interactions among governments, enterprises, and workers in autonomous taxi adoption, integrating loss aversion and risk perception.",
+      "Conducted numerical simulations and sensitivity analyses using MATLAB and Python, identifying equilibrium conditions where moderate subsidies and regulations optimize innovation and employment stability.",
+      "Formulated evidence-based policy recommendations advocating phased regulatory interventions and skill transition programs for socially sustainable integration.",
       "See<a href=\"https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5192917\" target=\"_blank\">pre-print</a> for full results and model details."
+    ]
+  },
+  {
+    "date": "Jan 2025 – Jun 2025",
+    "title": "Insomnia & Food Safety Event Detection via Domain-Aware Transformers",
+    "position": "Independent Researcher, Emory University (Supervised by Dr. Azra Ismail)",
+    "bullets": [
+      "Developed domain-adapted NLP pipelines for insomnia detection from clinical notes and food safety event extraction from FDA press releases.",
+      "Designed transformer-based classifiers (RoBERTa, ClinicalBERT) with GPT-4–driven data augmentation, class balancing, and ensemble inference to improve robustness under real-world noise.",
+      "Achieved first place in Task 5 Subtask 1 of the SMM4H-HeaRD 2025 shared task with a macro-F1 score of 0.958.",
+      "See<a href=\"https://www.arxiv.org/abs/2506.18185\" target=\"_blank\">pre-print</a> for full results and model details."
+    ]
+  },
+  {
+    "date": "Jan 2025 – May 2025",
+    "title": "CO2 Emissions Forecasting",
+    "position": "Team Leader & Research Assistant, AI Data Lab, Emory Office of Sustainability Initiatives",
+    "bullets": [
+      "Built an ensemble deep learning pipeline predicting vehicle CO₂ emissions with R² > 0.99 using Canadian datasets and SHAP for explainability.",
+      "Integrated DNN, XGBoost, and Random Forest models to uncover key emission drivers for 7,300+ vehicles.",
+      "Applied SHAP to validate model decisions and generate sustainable transportation insights.",
+      "See<a href=\"https://drive.google.com/file/d/1td6sjfooDL9Za6yJHlvpP3285Tfd2btO/view?usp=sharing\" target=\"_blank\">poster</a> for full results and model details."
+    ]
+  },
+  {
+    "date": "Jan 2025 – May 2025",
+    "title": "Spectral Graph Theory Research",
+    "position": "Research Assistant, Emory University Department of Mathematics",
+    "bullets": [
+      "Investigated spectral properties of sparse matrices and their applications in clustering large-scale data, enhancing algorithmic efficiency and stability via spectral decomposition and random walk methods."
     ]
   }
 ]
