@@ -1,0 +1,29 @@
+---
+title: ""
+pagetitle: "Zihan Liang - CV"
+title-prefix: ""
+page-layout: full
+title-block: false
+---
+
+<div class="site-shell cv-shell">
+<div data-animate>
+<h2 class="section-title cv-title">Curriculum Vitae</h2>
+</div>
+
+<div class="cv-viewer-wrap" data-animate>
+<iframe
+class="cv-viewer"
+src="Zihan_Liang_CV_Public.pdf#view=FitH"
+title="Curriculum Vitae PDF"
+></iframe>
+</div>
+
+<div class="cv-download-wrap" data-animate>
+<a class="cv-download-btn" href="Zihan_Liang_CV_Public.pdf" download>
+Download CV (PDF)
+</a>
+</div>
+</div>
+
+<script src="assets/js/scroll-animate.js"></script>

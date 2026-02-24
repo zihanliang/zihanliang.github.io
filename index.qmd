@@ -1,0 +1,49 @@
+---
+title: ""
+page-layout: full
+---
+
+<div class="site-shell">
+  <section class="hero-grid" data-animate>
+    <div id="hero-text" class="hero-copy"></div>
+    <div id="hero-image-wrap" class="hero-image-wrap"></div>
+  </section>
+
+  <section class="about" data-animate>
+    <p id="about-headline" class="about-headline"></p>
+    <div id="about-paragraphs" class="about-paragraphs"></div>
+  </section>
+
+  <section class="news" data-animate>
+    <h2 id="news-title" class="section-title"></h2>
+    <div id="news-items" class="news-list"></div>
+  </section>
+
+  <section class="doing" data-animate>
+    <h2 id="doing-title" class="section-title"></h2>
+    <div id="doing-cards" class="card-grid"></div>
+  </section>
+
+  <section class="research" data-animate>
+    <p id="research-lead" class="research-lead"></p>
+    <div id="research-paragraphs" class="research-paragraphs"></div>
+    <ul id="research-bullets" class="research-bullets"></ul>
+  </section>
+
+  <section class="contact" data-animate>
+<div class="contact-grid">
+<h2 id="contact-title" class="section-title"></h2>
+<ul id="contact-links" class="contact-links"></ul>
+</div>
+  </section>
+</div>
+
+<section class="home-globe" data-animate>
+  <div class="home-globe-widget">
+```{=html}
+<script type="text/javascript" id="clstr_globe" src="https://clustrmaps.com/globe.js?d=fhp6Q1J-oOgkSVq5QeSwr6mlcOFNiHB8vaWy_8IEP4Q"></script>
+```
+  </div>
+</section>
+
+<script src="assets/js/main.js"></script>

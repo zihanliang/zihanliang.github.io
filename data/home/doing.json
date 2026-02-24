@@ -1,0 +1,25 @@
+{
+  "title": "What I'm Doing",
+  "items": [
+    {
+      "title": "Machine Learning",
+      "description": "Developing robust and principled models that connect theory with real-world healthcare and NLP applications.",
+      "image": "figures/home/whatimdoing-ml.png"
+    },
+    {
+      "title": "Data Visualization",
+      "description": "Designing intuitive and scalable visual tools that effectively turn complex datasets into actionable insights.",
+      "image": "figures/home/whatimdoing-data.png"
+    },
+    {
+      "title": "AI Community",
+      "description": "Leading interdisciplinary collaboration to improve accessibility and practical AI adoption.",
+      "image": "figures/home/whatimdoing-aicomm.jpg"
+    },
+    {
+      "title": "Cultural Leadership",
+      "description": "Building impactful and inclusive cross-cultural programs and events with measurable, long-term impact.",
+      "image": "figures/home/whatimdoing-culture.jpg"
+    }
+  ]
+}

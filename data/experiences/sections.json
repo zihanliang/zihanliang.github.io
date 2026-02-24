@@ -1,0 +1,112 @@
+{
+  "pageFootnote": "",
+  "sections": [
+    {
+      "title": "Education Experiences",
+      "entries": [
+        {
+          "title": "Emory University | Honors B.S. in Applied Mathematics and Statistics; Minor: Artificial Intelligence",
+          "period": "Aug. 2023 - May 2026",
+          "bullets": [
+            "GPA: 3.99/4.00",
+            {
+              "text": "Data and Decision Sciences Honors Program",
+              "children": [
+                {
+                  "text": "Advisor: <a href=\"https://www.ruoxuanxiong.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Dr. Ruoxuan Xiong</a>"
+                }
+              ]
+            },
+            "Awards and Honors: Dean's List; American Statistical Association DataFest Best Visualization Award; AI Mathematical Olympiad Bronze Medal",
+            {
+              "text": "Relevant Courseworks:",
+              "children": [
+                {
+                  "text": "Mathematics: Multivariable Calculus, Linear Algebra, Discrete Mathematics, Ordinary Differential Equations, Linear Optimization, Graph Theory, Real Analysis"
+                },
+                {
+                  "text": "Statistics & Computation: Mathematical Statistics, Numerical Analysis, Data Structures and Algorithms, Data Science Computing, Machine Learning, Text Data Science, Information Visualization, Experimental Methods, Causal Inference (Doctoral Level)"
+                },
+                {
+                  "text": "Biostatistics & Bioinformatics: <a href=\"https://www.coursera.org/specializations/systems-biology\" target=\"_blank\" rel=\"noopener noreferrer\">Systems Biology and Biotechnology Specialization (Icahn School of Medicine at Mount Sinai)</a>"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Xi'an Tie Yi High School | CollegeBoard AP Program",
+          "period": "Sept. 2020 - May 2023",
+          "bullets": [
+            "GPA: 97.33/100 (unweighted)",
+            "Awards and Honors: American Invitational Mathematics Examination 9 Marks; Canadian Open Mathematics Challenge National Gold Award; Continental Calculus League National Gold; Outstanding Graduate; Recipient of the Excellence Academic Scholarship"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Teaching Experiences",
+      "entries": [
+        {
+          "title": "Teaching Assistant and Grader | Department of Data and Decision Sciences, Emory College - Undergraduate Machine Learning Course",
+          "period": "Jan. 2026 - May 2026",
+          "bullets": [
+            "More details coming soon!"
+          ]
+        },
+        {
+          "title": "Teaching Assistant and Grader | <a href=\"https://www.awesomemath.org/summer-program/overview/program-information/\" target=\"_blank\" rel=\"noopener noreferrer\">AwesomeMath</a> - Algebra Course for Mathematical Olympiads",
+          "period": "Jun. 2025 - Aug. 2025",
+          "bullets": [
+            "Assisted in the instruction of advanced mathematics topics, including algebraic manipulation, polynomial factoring, symmetric and cyclic factoring, partial fractions, AM-GM inequality, trigonometry, and systems of equations, for high school students preparing for math competitions.",
+            "Guided students through challenging problems, provided one-on-one tutoring, and helped build problem-solving skills across mathematical domains.",
+            "Responsible for writing homework solutions, grading assignments, and evaluating exams, ensuring timely feedback to support student performance and understanding."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Industry Experiences",
+      "entries": [
+        {
+          "title": "Artificial Intelligence Research Intern | Google China, Inc.",
+          "period": "Jun. 2025 - Aug. 2025",
+          "bullets": [
+            "Conducted systematic optimization of deep learning models on the TT100K traffic sign dataset, improving YOLOv8 and YOLOX detection accuracy by up to +4% mAP through advanced hyperparameter tuning and data augmentation strategies.",
+            "Designed and implemented knowledge distillation and feature transfer frameworks, achieving >15% relative gains in small-object detection and enabling lightweight models to retain over 95% of teacher performance while running at real-time inference speed.",
+            "Executed cross-domain transfer learning experiments (TT100K -> GTSRB, LISA, CTSD, BelgiumTSC), demonstrating significant performance boosts (e.g., +44% mAP in few-shot settings) and validating robust generalization of traffic sign recognition models across cultural and regional variations."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Leadership Experiences",
+      "entries": [
+        {
+          "title": "President | <a href=\"https://www.emorycsa.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Emory Chinese Student Association</a>",
+          "period": "Apr. 2025 - Present",
+          "bullets": [
+            "Led a team of over 100 members to organize and execute cultural, academic, and social events, enhancing community engagement for Chinese students at Emory University.",
+            "Fostered cross-cultural exchange through initiatives such as the annual Summer Pre-Orientation, Mid-Autumn Festival Fair, and academic career development workshops, impacting over 2,000 students and families."
+          ]
+        },
+        {
+          "title": "Founder and President | <a href=\"https://sites.google.com/view/emoryaida\" target=\"_blank\" rel=\"noopener noreferrer\">Emory Artificial Intelligence and Data Association</a>",
+          "period": "Apr. 2024 - Oct. 2025",
+          "bullets": [
+            "Led EAIDA to become a dynamic AI community, with over 200 general members and over 20 core members, fostering interdisciplinary collaboration in artificial intelligence and data science.",
+            "Launched the \"AI for ALL\" initiative, promoting AI literacy among students from diverse academic backgrounds through workshops, discussions, and mentorship programs aimed at making AI more accessible."
+          ]
+        },
+        {
+          "title": "Co-Founder & Standing Council Member | YouthBuild Program",
+          "period": "Aug. 2022 - Jul. 2024",
+          "bullets": [
+            "Contributed to the drafting and publication of the High School Volunteer Handbook and developed a cloud-based volunteer service sharing platform, equipping over 300 student members with structured resources and fostering collaboration with over 10 public service organizations.",
+            "Organized and led 10+ large-scale offline charity projects in partnership with the Shaanxi Charity Organization."
+          ]
+        }
+      ]
+    }
+  ]
+}

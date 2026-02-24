@@ -1,0 +1,25 @@
+{
+  "title": "Contact Me!",
+  "items": [
+    {
+      "icon": "📧",
+      "label": "Email",
+      "url": "mailto:zihan.liang@emory.edu"
+    },
+    {
+      "icon": "📚",
+      "label": "Google Scholar",
+      "url": "https://scholar.google.com/"
+    },
+    {
+      "icon": "💼",
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/"
+    },
+    {
+      "icon": "💻",
+      "label": "Github",
+      "url": "https://github.com/"
+    }
+  ]
+}

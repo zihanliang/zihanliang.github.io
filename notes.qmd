@@ -1,0 +1,18 @@
+---
+title: ""
+pagetitle: "Zihan Liang - Study Notes"
+title-prefix: ""
+page-layout: full
+title-block: false
+---
+
+<div class="site-shell notes-page">
+  <section class="notes-hero" data-animate>
+    <h2 class="section-title notes-title">Incoming Notes</h2>
+    <ul id="incoming-notes-list" class="incoming-notes-list"></ul>
+  </section>
+
+  <div id="notes-sections" class="notes-sections"></div>
+</div>
+
+<script src="assets/js/notes.js"></script>

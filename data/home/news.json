@@ -1,0 +1,13 @@
+{
+  "title": "Recent News",
+  "items": [
+    {
+      "date": "Feb 2026",
+      "text": "Our work “MambaDATG: Domain-Adaptive Tri-Plane-Gated Pre-training for 3D Abdominal Segmentation” has been accepted to ICASSP 2026!"
+    },
+    {
+      "date": "Feb 2026",
+      "text": "My new personal website is now live! It is accessible worldwide, including regions where Google services are restricted."
+    }
+  ]
+}

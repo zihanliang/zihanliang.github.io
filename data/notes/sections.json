@@ -1,0 +1,91 @@
+{
+  "incomingNotes": [
+    "English Version of \"Introduction to Java Programming and Data Structures\" Notes",
+    "Bilingual Chinese-English Version of \"Data Structures and Algorithms\" Notes",
+    "English Version of \"Introduction to Natural Language Processing\" Notes",
+    "English Version of \"Introduction to Causal Inference\" Notes"
+  ],
+  "sections": [
+    {
+      "title": "Artificial Intelligence and Machine Learning Notes",
+      "items": [
+        {
+          "icon": "🤖",
+          "subject": "Machine Learning",
+          "language": "English",
+          "file": "notes/ml.pdf"
+        }
+      ]
+    },
+    {
+      "title": "College Mathematics Course Notes",
+      "items": [
+        {
+          "icon": "λ",
+          "subject": "Linear Algebra",
+          "language": "English",
+          "file": "notes/lin_alg.pdf"
+        },
+        {
+          "icon": "∫",
+          "subject": "Multivariable Calculus and Vector Analysis",
+          "language": "English",
+          "file": "notes/cal3.pdf"
+        },
+        {
+          "icon": "∂",
+          "subject": "Differential Equations",
+          "language": "Bilingual",
+          "file": "notes/diff_equ.pdf"
+        },
+        {
+          "icon": "π",
+          "subject": "Numerical Analysis",
+          "language": "Bilingual",
+          "file": "notes/num_anal.pdf"
+        },
+        {
+          "icon": "📘",
+          "subject": "Real Analysis",
+          "language": "English",
+          "file": "notes/real_analysis.pdf"
+        }
+      ]
+    },
+    {
+      "title": "High School and College Prep Notes",
+      "items": [
+        {
+          "icon": "🧮",
+          "subject": "AP Calculus BC",
+          "language": "Bilingual",
+          "file": "notes/ap_cal_bc.pdf"
+        },
+        {
+          "icon": "📊",
+          "subject": "AP Statistics",
+          "language": "Bilingual",
+          "file": "notes/ap_stats.pdf"
+        },
+        {
+          "icon": "⚡",
+          "subject": "AP Physics C",
+          "language": "Bilingual",
+          "file": "notes/ap_phy_c.pdf"
+        },
+        {
+          "icon": "🧪",
+          "subject": "AP Chemistry",
+          "language": "Bilingual",
+          "file": "notes/ap_chem.pdf"
+        },
+        {
+          "icon": "💹",
+          "subject": "College Prep Economics",
+          "language": "Bilingual",
+          "file": "notes/college_prep_econ.pdf"
+        }
+      ]
+    }
+  ]
+}

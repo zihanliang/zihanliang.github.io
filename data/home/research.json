@@ -1,0 +1,12 @@
+{
+  "lead": "My work centers on reliable and robust machine learning systems under real-world uncertainty, particularly for incomplete, biased, and heterogeneous data.",
+  "paragraphs": [
+    "I am interested in missing data, distribution shift, and multimodal learning, and in how these factors affect model reliability and downstream decisions. I draw on tools from causal inference, representation learning, and modern deep learning, with a focus on healthcare and other high-stakes domains."
+  ],
+  "bullets": [
+    "Multimodal Learning under Missingness: modeling MNAR patterns and informative missing signals in clinical and recommendation settings.",
+    "Robust Generalization and Domain Adaptation: building adaptive frameworks that improve cross-dataset transfer and calibration.",
+    "Causal and Reliability-Aware Representation Learning: integrating causal views into deep representation learning for better interpretability.",
+    "Applied NLP under Noise and Imbalance: creating transformer-based systems for robust clinical text understanding."
+  ]
+}

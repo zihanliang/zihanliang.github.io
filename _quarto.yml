@@ -1,0 +1,37 @@
+project:
+  type: website
+  output-dir: docs
+  resources:
+    - data/**
+    - fonts/**
+    - figures/**
+    - icon/**
+    - notes/**
+    - Zihan_Liang_CV_Public.pdf
+
+website:
+  title: "Zihan Liang"
+  favicon: icon/web-icon.png
+  navbar:
+    logo: icon/web-icon.png
+    pinned: true
+    right:
+      - text: "Home"
+        href: index.qmd
+      - text: "CV"
+        href: cv.qmd
+      - text: "Research"
+        href: research.qmd
+      - text: "Experiences"
+        href: experiences.qmd
+      - text: "Study Notes"
+        href: notes.qmd
+  page-footer:
+    center: "Department of Data and Decision Sciences, Emory University | zihan.liang@emory.edu | (404) 310-6818<br>© 2025 Zihan Liang. All rights reserved."
+
+format:
+  html:
+    toc: false
+    theme: default
+    css: assets/css/style.css
+    include-after-body: assets/includes/nav-scroll.html

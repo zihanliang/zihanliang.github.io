@@ -1,0 +1,94 @@
+{
+  "pageTitle": "Research Portfolio",
+  "pageSubtitle": "Publications, manuscripts, and collaborative projects. Add, remove, or edit entries by updating this JSON file.",
+  "sections": [
+    {
+      "title": "Publications",
+      "entries": [
+        {
+          "title": "MambaDATG: Domain-Adaptive Tri-Plane-Gated Pre-training for 3D Abdominal Segmentation",
+          "authors": "Y. Shen*, D. Jiang*, Zihan Liang*, Y. Wei, W. Yang, S. Wang, et al.",
+          "status": "Accepted at ICASSP 2026",
+          "bullets": [
+            "Proposed MambaDATG, a tri-plane-gated selective SSM pre-training that fuses axial, coronal, and sagittal scans via voxel gating—capturing directional anisotropy with linear-time efficiency and zero inference overhead.",
+            "Introduced a domain-adaptive MIM stage adapting high-level layers on unlabeled CTs, improving small-organ segmentation (e.g., +1.8 Dice on BTCV) and revealing the tri-plane gate as the key performance driver."
+          ]
+        },
+        {
+          "title": "<a href=\"https://aclanthology.org/2025.emnlp-main.1465/\" target=\"_blank\" rel=\"noopener noreferrer\">Causal Representation Learning from Multimodal Clinical Records under Non-Random Modality Missingness</a>",
+          "authors": "Zihan Liang*, Ziwen Pan*, Ruoxuan Xiong",
+          "status": "Accepted at EMNLP 2025 Main",
+          "bullets": [
+            "Proposed CRL-MMNAR, a causal multimodal framework that treats modality missing-not-at-random as signal—combining missingness-aware fusion (gated by observation patterns) with cross-modal reconstruction + contrastive learning, and a multitask predictor with a cross-fitted rectifier to correct observation-pattern bias.",
+            "Demonstrated consistent gains on MIMIC-IV and eICU, including AUC 0.8687→0.9824 for ICU admission (+13.1%) and 0.7989→0.8657 for readmission (+8.4%) on MIMIC-IV, and readmission AUC to 0.9294 (+13.8%) on eICU, with lower Brier scores indicating better calibration."
+          ]
+        },
+        {
+          "title": "<a href=\"https://workshop-proceedings.icwsm.org/abstract.php?id=2025_59\" target=\"_blank\" rel=\"noopener noreferrer\">CareLab at #SMM4H-HeaRD 2025: Insomnia Detection and Food Safety Event Extraction with Domain-Aware Transformers</a>",
+          "authors": "Zihan Liang*, Ziwen Pan*, Sumon Kanti Dey, Azra Ismail",
+          "status": "Accepted at AAAI ICSWM 2025",
+          "bullets": [
+            "Ranked 1st on SMM4H–HeaRD 2025 Task 5, developing a RoBERTa + GPT-4–augmented system with classweighted training and ensembling, achieving F1 = 0.958 and revealing the limits of rule-based span extraction in clinical and food-safety texts."
+          ]
+        },
+        {
+          "title": "<a href=\"https://annualmeeting.mytrb.org/OnlineProgram/Details/24465#\" target=\"_blank\" rel=\"noopener noreferrer\">Dynamic Policy Design for Autonomous Taxi Adoption: A Hierarchical Game-Theoretic Framework</a>",
+          "authors": "Zihan Liang, Ziwen Pan",
+          "status": "Accepted at TRB Annual Meeting 2026",
+          "bullets": [
+            "Formulated a three-tier dynamic Stackelberg game modeling interactions among government, platform, and workers in autonomous taxi adoption, deriving equilibrium policies that balance innovation incentives with social welfare.",
+            "An extended version is under review at Transportation Research Record."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Manuscripts",
+      "entries": [
+        {
+          "title": "Adaptive Spatiotemporal Graph Neural Networks with Trend-Aware Prediction and Validation-Gated Calibration for Traffic Flow Forecasting",
+          "authors": "Zihan Liang*, Ziwen Pan*, Shuoyang Yu",
+          "status": "Under Review at IEEE Transactions on Intelligent Transportation Systems",
+          "period": "May 2025 - Present",
+          "bullets": [
+            "Proposed an adaptive spatiotemporal GNN that fuses distance- and correlation-based graphs with dual temporal–spatial encoders and a trend-aware head, achieving state-of-the-art accuracy on PeMS benchmarks.",
+            "Designed a validation-gated calibration pipeline with hour-conditional quantile mapping and AR(1) residual correction, applied only when improving MAPE/MAE to ensure reliable and interpretable post-processing."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Collaborative Research Projects",
+      "entries": [
+        {
+          "title": "Research Assistant at <a href=\"https://www.azraismail.me/the-care-lab\" target=\"_blank\" rel=\"noopener noreferrer\">Collective Action & Research for Equity (CARE) Lab</a>, Emory University",
+          "period": "Sept. 2024 - Present",
+          "bullets": [
+            "Analyzed nearly 1,000 user data points and developed an interactive dashboard for MakerGhat, an India-based organization, utilizing JavaScript, Python, and HTML for seamless data visualization.",
+            "Maintaining a WhatsApp Education Bot using Python and Twilio for MakerGhat, enabling over 15,000 teachers across India to document lesson plans and teaching activities, impacting 600,000+ students and supporting 10,000+ educational projects.",
+            "Developed an offline-first Android app for classroom session recording and metadata management, integrating Google Sheets validation, offline caching, and secure Drive synchronization."
+          ]
+        },
+        {
+          "title": "Research Assistant at <a href=\"https://geometrynyc.wixsite.com/polymathreu\" target=\"_blank\" rel=\"noopener noreferrer\">Polymath Jr REU Summer Program</a>",
+          "period": "Jun. 2025 - Aug. 2025",
+          "bullets": [
+            "Developed and analyzed mathematical models using ordinary differential equations (ODEs) to study the community transmission of Clostridioides difficile (C. difficile).",
+            "Collaborated with a team to identify optimal intervention strategies for controlling the spread of C. difficile in community settings.",
+            "Assisted in modifying and implementing code in MATLAB and R to simulate disease dynamics and evaluate mitigation strategies."
+          ]
+        },
+        {
+          "title": "Team Leader and Research Assistant at <a href=\"https://ailearning.emory.edu/learning/experiential-learning.html\" target=\"_blank\" rel=\"noopener noreferrer\">AI.Data Lab Program</a> for Emory Office of Sustainability Initiatives",
+          "period": "Jan. 2025 - May. 2025",
+          "bullets": [
+            "Built an ensemble deep learning pipeline to predict vehicle CO2 emissions, using official Canadian datasets and SHAP for explainability.",
+            "Integrated DNN, XGBoost, and Random Forest models to uncover key emission drivers like fuel type and engine size for 7,300+ vehicles.",
+            "Applied explainable AI (SHAP) to validate model decisions and support sustainable transportation insights at Emory’s Office of Sustainability Initiatives."
+          ]
+        }
+      ]
+    }
+  ],
+  "pageFootnote": "* These authors contributed equally to this work."
+}
