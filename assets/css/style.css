@@ -538,6 +538,23 @@ section {
   }
 }
 
+@media (max-width: 991.98px) {
+  body .page-columns {
+    grid-template-columns:
+      [screen-start] 1rem
+      [screen-start-inset page-start page-start-inset body-start-outset body-start body-content-start] minmax(0, 1fr)
+      [body-content-end body-end body-end-outset page-end-inset page-end screen-end-inset] 1rem
+      [screen-end] !important;
+  }
+
+  .page-columns .column-page,
+  #quarto-content.page-columns main.column-page,
+  #quarto-content.page-columns main.column-page-right,
+  #quarto-content.page-columns main.column-page-left {
+    grid-column: body-content-start / body-content-end !important;
+  }
+}
+
 @media (max-width: 640px) {
   #quarto-content,
   #quarto-document-content {
