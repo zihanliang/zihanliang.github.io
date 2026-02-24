@@ -539,6 +539,30 @@ section {
 }
 
 @media (max-width: 991.98px) {
+  #quarto-header > nav {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  #quarto-header .navbar-container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  #quarto-header .navbar .navbar-toggler {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  #quarto-header .navbar #quarto-search {
+    margin-right: 0 !important;
+  }
+
+  #quarto-header .navbar #quarto-search button {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
   body .page-columns {
     grid-template-columns:
       [screen-start] 1rem
@@ -557,6 +581,10 @@ section {
   .site-shell .hero-title {
     font-size: clamp(2.3rem, 8.8vw, 3.1rem) !important;
     line-height: 1.14;
+  }
+
+  .site-shell .about-headline {
+    font-size: clamp(1.2rem, 3.1vw, 1.34rem);
   }
 
   .footer .nav-footer {
