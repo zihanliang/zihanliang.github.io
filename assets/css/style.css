@@ -546,6 +546,10 @@ section {
   .card-grid {
     grid-template-columns: 1fr;
   }
+
+  .footer .nav-footer-center p {
+    white-space: normal;
+  }
 }
 
 .scholar-page {
