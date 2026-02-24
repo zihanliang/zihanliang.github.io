@@ -19,6 +19,13 @@ title="Curriculum Vitae PDF"
 ></iframe>
 </div>
 
+<div class="cv-mobile-open-wrap" data-animate>
+<p class="cv-mobile-tip">On mobile devices, open the PDF in your browser for full-page navigation.</p>
+<a class="cv-open-btn" href="Zihan_Liang_CV_Public.pdf" target="_blank" rel="noopener noreferrer">
+Open CV (Mobile Viewer)
+</a>
+</div>
+
 <div class="cv-download-wrap" data-animate>
 <a class="cv-download-btn" href="Zihan_Liang_CV_Public.pdf" download>
 Download CV (PDF)
