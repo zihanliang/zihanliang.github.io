@@ -186,6 +186,7 @@ html.nav-scrolled #quarto-header .navbar {
 
 .site-shell {
   width: min(1120px, 92vw);
+  max-width: 100%;
   margin: 2.4rem auto 1rem;
   padding: 1.4rem 0;
 }
@@ -538,8 +539,14 @@ section {
 }
 
 @media (max-width: 640px) {
+  #quarto-content,
+  #quarto-document-content {
+    overflow-x: clip;
+  }
+
   .site-shell {
     width: min(1120px, 94vw);
+    max-width: 100%;
     margin-top: 1.4rem;
   }
 
