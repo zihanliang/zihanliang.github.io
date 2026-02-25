@@ -3,7 +3,7 @@
   "email": "zihan.liang@emory.edu",
   "affiliation": "Department of Data and Decision Sciences, Emory University",
   "paragraphs": [
-    "At Emory University, I study Applied Mathematics and Statistics under the mentorship of Prof. Ruoxuan Xiong.",
+    "At Emory University, I study Applied Mathematics and Statistics under the mentorship of <a href=\"https://www.ruoxuanxiong.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Prof. Ruoxuan Xiong</a>.",
     "My research broadly focuses on building reliable machine learning systems under uncertainty, particularly in settings with bias, incomplete data, or distributional shifts. I am interested in methodological questions around uncertainty quantification, robustness, and missing data, and I often draw on causal and statistical perspectives when they are useful for understanding model behavior.",
     "I have worked on a range of applied problems—including multimodal healthcare modeling, applied NLP, and sequential decision-making—which has allowed me to study these reliability challenges across different domains and modeling paradigms."
   ]

@@ -3,10 +3,6 @@ project:
   output-dir: docs
   resources:
     - CNAME
-    - apple-touch-icon.png
-    - favicon.ico
-    - favicon-32x32.png
-    - favicon-16x16.png
     - data/**
     - fonts/**
     - figures/**
@@ -16,7 +12,7 @@ project:
 
 website:
   title: "Zihan Liang"
-  favicon: favicon-32x32.png
+  favicon: icon/favicon-32x32.png
   navbar:
     logo: icon/web-icon.png
     pinned: true
