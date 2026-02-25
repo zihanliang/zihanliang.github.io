@@ -9,17 +9,17 @@
     {
       "icon": "📚",
       "label": "Google Scholar",
-      "url": "https://scholar.google.com/"
+      "url": "https://scholar.google.com/citations?hl=en&user=qDHioQ8AAAAJ"
     },
     {
       "icon": "💼",
       "label": "LinkedIn",
-      "url": "https://www.linkedin.com/"
+      "url": "https://www.linkedin.com/in/zihan-liang/"
     },
     {
       "icon": "💻",
       "label": "Github",
-      "url": "https://github.com/"
+      "url": "https://github.com/zihanliang"
     }
   ]
 }
