@@ -267,6 +267,20 @@ section {
   line-height: 1.7;
 }
 
+.about-paragraphs a,
+.about-paragraphs a:visited,
+.research-paragraphs a,
+.research-paragraphs a:visited {
+  color: var(--primary);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.about-paragraphs a:hover,
+.research-paragraphs a:hover {
+  color: var(--primary);
+}
+
 .section-title {
   margin: 0 0 1.5rem;
   font-family: "CormorantGaramond", serif;
