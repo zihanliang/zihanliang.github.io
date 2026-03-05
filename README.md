@@ -1,4 +1,4 @@
-# Zihan Liang Personal Website
+# Zihan Liang's Personal Website
 
 Source repository for a personal academic website (Quarto + vanilla frontend).
 
