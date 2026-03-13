@@ -3,3 +3,117 @@
 <link rel="shortcut icon" href="icon/favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="icon/apple-touch-icon.png">
 <meta name="theme-color" content="#f3f5f9">
+<script>
+(function () {
+  const STORAGE_KEY = 'site-theme-preference';
+  const LIGHT_THEME_COLOR = '#f3f5f9';
+  const DARK_THEME_COLOR = '#09111f';
+  const LIGHT_START_HOUR = 7;
+  const DARK_START_HOUR = 19;
+  const ICON_SUN = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.75l2.2 4.46 4.92-.63-1.95 4.56 4.08 2.84-4.08 2.84 1.95 4.56-4.92-.63L12 24.25l-2.2-4.46-4.92.63 1.95-4.56-4.08-2.84 4.08-2.84-1.95-4.56 4.92.63L12 1.75zm0 6.1a5.15 5.15 0 100 10.3 5.15 5.15 0 000-10.3z"/></svg>';
+  const ICON_MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.45 2.2a1 1 0 01.43 1.36 8.3 8.3 0 008.19 12.01 1 1 0 01.84 1.69A11.25 11.25 0 1113.09 1.8a1 1 0 011.36.4z"/></svg>';
+
+  function getThemeForCurrentTime() {
+    const hour = new Date().getHours();
+    return hour >= DARK_START_HOUR || hour < LIGHT_START_HOUR ? 'dark' : 'light';
+  }
+
+  function getStoredTheme() {
+    try {
+      const stored = window.localStorage.getItem(STORAGE_KEY);
+      return stored === 'light' || stored === 'dark' ? stored : null;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function storeTheme(theme) {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, theme);
+    } catch (error) {
+      // Ignore storage failures so theme switching still works for the session.
+    }
+  }
+
+  function getResolvedTheme() {
+    return getStoredTheme() || getThemeForCurrentTime();
+  }
+
+  function updateToggleButton(theme) {
+    const button = document.querySelector('.theme-toggle');
+    if (!button) return;
+
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    const label = nextTheme === 'dark' ? 'Dark Mode' : 'Light Mode';
+    button.innerHTML = nextTheme === 'dark' ? ICON_MOON : ICON_SUN;
+    button.setAttribute('aria-label', 'Switch to ' + label.toLowerCase());
+    button.setAttribute('data-next-theme', nextTheme);
+    button.setAttribute('title', 'Switch to ' + label.toLowerCase());
+  }
+
+  function applyTheme(theme) {
+    const root = document.documentElement;
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+
+    root.setAttribute('data-theme', theme);
+
+    if (metaTheme) {
+      metaTheme.setAttribute('content', theme === 'dark' ? DARK_THEME_COLOR : LIGHT_THEME_COLOR);
+    }
+
+    updateToggleButton(theme);
+  }
+
+  function syncThemeFromPreference() {
+    applyTheme(getResolvedTheme());
+  }
+
+  function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || getResolvedTheme();
+    const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    storeTheme(nextTheme);
+    applyTheme(nextTheme);
+  }
+
+  function ensureThemeToggleButton() {
+    const tools = document.querySelector('.quarto-navbar-tools');
+    if (!tools || tools.querySelector('.theme-toggle')) return;
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'theme-toggle';
+    button.addEventListener('click', toggleTheme);
+    tools.appendChild(button);
+
+    updateToggleButton(document.documentElement.getAttribute('data-theme') || getResolvedTheme());
+  }
+
+  function removeSearchUi() {
+    const search = document.getElementById('quarto-search');
+    if (search) search.remove();
+
+    const searchResults = document.getElementById('quarto-search-results');
+    if (searchResults) searchResults.remove();
+  }
+
+  applyTheme(getResolvedTheme());
+
+  document.addEventListener('DOMContentLoaded', function () {
+    removeSearchUi();
+    ensureThemeToggleButton();
+  });
+  window.addEventListener('load', function () {
+    removeSearchUi();
+    ensureThemeToggleButton();
+  });
+  window.addEventListener('focus', function () {
+    if (!getStoredTheme()) syncThemeFromPreference();
+  });
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden && !getStoredTheme()) syncThemeFromPreference();
+  });
+  window.setInterval(function () {
+    if (!getStoredTheme()) syncThemeFromPreference();
+  }, 60000);
+})();
+</script>

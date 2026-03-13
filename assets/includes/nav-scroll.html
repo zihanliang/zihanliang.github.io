@@ -1,31 +1,5 @@
 <script>
 (function () {
-  function applyHeaderStyle(scrolled) {
-    const header = document.getElementById('quarto-header');
-    if (!header) return;
-    const navbar = header.querySelector('.navbar');
-    const container = header.querySelector('.navbar-container');
-    const targets = [header, navbar, container].filter(Boolean);
-
-    if (scrolled) {
-      targets.forEach((el) => {
-        el.style.background = 'rgba(243, 245, 249, 0.66)';
-        el.style.backdropFilter = 'blur(12px)';
-        el.style.webkitBackdropFilter = 'blur(12px)';
-        el.style.borderBottom = '1px solid rgba(255, 255, 255, 0.65)';
-        el.style.boxShadow = '0 8px 24px rgba(23, 36, 62, 0.08)';
-      });
-    } else {
-      targets.forEach((el) => {
-        el.style.background = 'transparent';
-        el.style.backdropFilter = 'none';
-        el.style.webkitBackdropFilter = 'none';
-        el.style.borderBottom = 'none';
-        el.style.boxShadow = 'none';
-      });
-    }
-  }
-
   function syncNavState() {
     const scrolled = window.scrollY > 8;
     if (scrolled) {
@@ -33,7 +7,6 @@
     } else {
       document.documentElement.classList.remove('nav-scrolled');
     }
-    applyHeaderStyle(scrolled);
   }
 
   window.addEventListener('scroll', syncNavState, { passive: true });
