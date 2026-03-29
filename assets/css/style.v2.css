@@ -62,11 +62,17 @@
   --button-border: rgba(31, 75, 153, 0.35);
   --button-bg: rgba(255, 255, 255, 0.55);
   --button-bg-hover: rgba(255, 255, 255, 0.72);
-  --toggle-bg: #f6f7f9;
-  --toggle-bg-hover: #ffffff;
-  --toggle-border: rgba(29, 36, 48, 0.08);
-  --toggle-icon: #111111;
+  --toggle-bg: rgba(222, 230, 241, 0.76);
+  --toggle-bg-hover: rgba(235, 241, 249, 0.92);
+  --toggle-border: rgba(29, 36, 48, 0.12);
   --toggle-shadow: 0 8px 18px rgba(23, 36, 62, 0.1);
+  --toggle-thumb: #fbfdff;
+  --toggle-thumb-shadow: 0 2px 8px rgba(23, 36, 62, 0.18);
+  --toggle-orbit: rgba(29, 36, 48, 0.2);
+  --toggle-focus: rgba(31, 75, 153, 0.22);
+  --status-oral-bg: rgba(185, 95, 35, 0.12);
+  --status-oral-text: #9a4714;
+  --status-oral-border: rgba(185, 95, 35, 0.22);
 }
 
 html {
@@ -109,11 +115,17 @@ html[data-theme="dark"] {
   --button-border: rgba(143, 183, 255, 0.34);
   --button-bg: rgba(16, 26, 45, 0.82);
   --button-bg-hover: rgba(24, 38, 65, 0.92);
-  --toggle-bg: #1b1c1f;
-  --toggle-bg-hover: #24262a;
-  --toggle-border: rgba(255, 255, 255, 0.08);
-  --toggle-icon: #f4f6fb;
+  --toggle-bg: rgba(149, 171, 206, 0.14);
+  --toggle-bg-hover: rgba(149, 171, 206, 0.2);
+  --toggle-border: rgba(255, 255, 255, 0.1);
   --toggle-shadow: 0 8px 18px rgba(2, 8, 23, 0.32);
+  --toggle-thumb: #eef4ff;
+  --toggle-thumb-shadow: 0 2px 8px rgba(2, 8, 23, 0.36);
+  --toggle-orbit: rgba(237, 243, 255, 0.34);
+  --toggle-focus: rgba(143, 183, 255, 0.28);
+  --status-oral-bg: rgba(245, 158, 11, 0.16);
+  --status-oral-text: #ffd08a;
+  --status-oral-border: rgba(245, 158, 11, 0.34);
 }
 
 * {
@@ -266,35 +278,79 @@ html.nav-scrolled #quarto-header .navbar {
 }
 
 .theme-toggle {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: auto;
-  height: auto;
+  width: 2.2rem;
+  height: 1.32rem;
   padding: 0;
-  border: none;
-  background: transparent;
-  color: var(--toggle-icon);
-  box-shadow: none;
-  transition: transform 180ms ease, color 180ms ease, opacity 180ms ease;
+  border: 1px solid var(--toggle-border);
+  border-radius: 999px;
+  background: var(--toggle-bg);
+  box-shadow: var(--toggle-shadow);
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
 }
 
 .theme-toggle:hover {
   transform: translateY(-1px);
-  opacity: 0.82;
+  background: var(--toggle-bg-hover);
 }
 
 .theme-toggle:focus,
 .theme-toggle:active {
   outline: none;
-  box-shadow: none;
 }
 
-.theme-toggle svg {
-  width: 1.7rem;
-  height: 1.7rem;
-  display: block;
-  fill: currentColor;
+.theme-toggle:focus-visible {
+  box-shadow: 0 0 0 4px var(--toggle-focus), var(--toggle-shadow);
+}
+
+.theme-toggle::before,
+.theme-toggle::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  border-radius: 50%;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease,
+    opacity 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.theme-toggle::before {
+  left: 0.16rem;
+  width: 0.76rem;
+  height: 0.76rem;
+  background: var(--toggle-thumb);
+  box-shadow: var(--toggle-thumb-shadow);
+  transform: translate(0, -50%);
+}
+
+.theme-toggle::after {
+  left: 0.29rem;
+  width: 0.44rem;
+  height: 0.44rem;
+  border: 1.5px solid var(--toggle-orbit);
+  opacity: 0.9;
+  transform: translate(1.08rem, -50%);
+}
+
+.theme-toggle[data-current-theme="dark"]::before {
+  transform: translate(1.12rem, -50%);
+}
+
+.theme-toggle[data-current-theme="dark"]::after {
+  transform: translate(0, -50%);
 }
 
 #quarto-search,
@@ -692,11 +748,6 @@ section {
     margin-left: 0.75rem;
   }
 
-  #quarto-header .theme-toggle {
-    width: auto;
-    height: auto;
-  }
-
   #quarto-header .navbar #quarto-search {
     margin-right: 0 !important;
   }
@@ -759,11 +810,6 @@ section {
     width: min(1120px, 94vw);
     max-width: 100%;
     margin-top: 1.4rem;
-  }
-
-  .theme-toggle {
-    width: auto;
-    height: auto;
   }
 
   .card-grid {
@@ -860,6 +906,24 @@ section {
   font-weight: 700;
   font-size: 0.95rem;
   line-height: 1.45;
+}
+
+.status-tag {
+  display: inline-block;
+  padding: 0.08rem 0.45rem;
+  margin-left: 0.2rem;
+  border-radius: 999px;
+  vertical-align: baseline;
+  line-height: 1.2;
+  border: 1px solid transparent;
+}
+
+.status-tag-oral {
+  background: var(--status-oral-bg);
+  color: var(--status-oral-text);
+  border-color: var(--status-oral-border);
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .scholar-bullets {
