@@ -1,6 +1,19 @@
 <script>
 (function () {
+  const MOBILE_NAV_QUERY = window.matchMedia('(max-width: 991.98px)')
+  let lockedScrollY = 0
+
+  function withNextPaint(callback) {
+    window.requestAnimationFrame(function () {
+      window.requestAnimationFrame(callback)
+    })
+  }
+
   function syncNavState() {
+    if (document.documentElement.classList.contains('mobile-nav-open')) {
+      return
+    }
+
     const scrolled = window.scrollY > 8;
     if (scrolled) {
       document.documentElement.classList.add('nav-scrolled');
@@ -9,9 +22,156 @@
     }
   }
 
+  function isMobileViewport() {
+    return MOBILE_NAV_QUERY.matches
+  }
+
+  function getNavbarCollapse() {
+    return document.getElementById('navbarCollapse')
+  }
+
+  function lockPageScroll() {
+    if (document.body.style.position === 'fixed') return
+
+    lockedScrollY = window.scrollY
+    document.body.style.position = 'fixed'
+    document.body.style.top = `-${lockedScrollY}px`
+    document.body.style.left = '0'
+    document.body.style.right = '0'
+    document.body.style.width = '100%'
+  }
+
+  function unlockPageScroll() {
+    if (document.body.style.position !== 'fixed') return
+
+    document.body.style.position = ''
+    document.body.style.top = ''
+    document.body.style.left = ''
+    document.body.style.right = ''
+    document.body.style.width = ''
+    window.scrollTo(0, lockedScrollY)
+  }
+
+  function setMobileNavOpen(open) {
+    const root = document.documentElement
+
+    if (open) {
+      root.classList.add('mobile-nav-open')
+      return
+    }
+
+    root.classList.remove('mobile-nav-open')
+    syncNavState()
+  }
+
+  function closeMobileNav() {
+    const collapse = getNavbarCollapse()
+    if (!collapse || !isMobileViewport()) return
+
+    if (window.bootstrap && window.bootstrap.Collapse) {
+      const instance = window.bootstrap.Collapse.getOrCreateInstance(collapse, { toggle: false })
+      instance.hide()
+      return
+    }
+
+    collapse.classList.remove('show', 'collapsing')
+    collapse.classList.add('collapse')
+
+    const toggler = document.querySelector('.navbar-toggler')
+    if (toggler) {
+      toggler.setAttribute('aria-expanded', 'false')
+      toggler.classList.add('collapsed')
+    }
+
+    setMobileNavOpen(false)
+    window.setTimeout(unlockPageScroll, 380)
+  }
+
+  function syncMobileNavState() {
+    const collapse = getNavbarCollapse()
+    if (!collapse) return
+
+    if (!isMobileViewport()) {
+      collapse.classList.remove('show', 'collapsing')
+      collapse.classList.add('collapse')
+
+      const toggler = document.querySelector('.navbar-toggler')
+      if (toggler) {
+        toggler.setAttribute('aria-expanded', 'false')
+        toggler.classList.add('collapsed')
+      }
+
+      setMobileNavOpen(false)
+      unlockPageScroll()
+      return
+    }
+
+    const isOpen =
+      collapse.classList.contains('show') || collapse.classList.contains('collapsing')
+
+    setMobileNavOpen(isOpen)
+    if (isOpen) {
+      lockPageScroll()
+    } else {
+      unlockPageScroll()
+    }
+  }
+
+  function setupMobileNav() {
+    const collapse = getNavbarCollapse()
+    if (!collapse) return
+
+    collapse.addEventListener('show.bs.collapse', function () {
+      if (isMobileViewport()) {
+        lockPageScroll()
+        withNextPaint(function () {
+          setMobileNavOpen(true)
+        })
+      }
+    })
+
+    collapse.addEventListener('shown.bs.collapse', function () {
+      if (isMobileViewport()) {
+        setMobileNavOpen(true)
+      }
+    })
+
+    collapse.addEventListener('hide.bs.collapse', function () {
+      if (isMobileViewport()) {
+        setMobileNavOpen(false)
+      }
+    })
+
+    collapse.addEventListener('hidden.bs.collapse', function () {
+      setMobileNavOpen(false)
+      unlockPageScroll()
+    })
+
+    collapse.addEventListener('click', function (event) {
+      if (event.target.closest('.nav-link')) {
+        closeMobileNav()
+      }
+    })
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        closeMobileNav()
+      }
+    })
+
+    syncMobileNavState()
+  }
+
   window.addEventListener('scroll', syncNavState, { passive: true });
-  window.addEventListener('resize', syncNavState, { passive: true });
-  window.addEventListener('load', syncNavState);
+  window.addEventListener('resize', function () {
+    syncMobileNavState()
+    syncNavState()
+  }, { passive: true });
+  window.addEventListener('load', function () {
+    setupMobileNav()
+    syncMobileNavState()
+    syncNavState()
+  });
   syncNavState();
 })();
 </script>

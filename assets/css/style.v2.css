@@ -54,6 +54,15 @@
   --panel-bg: rgba(255, 255, 255, 0.55);
   --panel-border: rgba(255, 255, 255, 0.75);
   --panel-shadow: 0 10px 24px rgba(23, 36, 62, 0.08);
+  --mobile-nav-bg: rgba(238, 243, 249, 0.68);
+  --mobile-nav-base-top: rgba(255, 255, 255, 0.86);
+  --mobile-nav-base-bottom: rgba(228, 236, 247, 0.76);
+  --mobile-nav-sheen: rgba(255, 255, 255, 0.3);
+  --mobile-nav-glow: rgba(118, 157, 226, 0.1);
+  --mobile-nav-caustic: rgba(255, 255, 255, 0.36);
+  --mobile-nav-edge: rgba(255, 255, 255, 0.62);
+  --mobile-nav-divider: rgba(69, 80, 101, 0.12);
+  --mobile-nav-shadow: 0 18px 42px rgba(23, 36, 62, 0.14);
   --note-dot-start: #ffffff;
   --note-dot-end: #b6c0d3;
   --note-dot-border: rgba(127, 140, 165, 0.58);
@@ -107,6 +116,15 @@ html[data-theme="dark"] {
   --panel-bg: rgba(16, 26, 45, 0.72);
   --panel-border: rgba(167, 182, 206, 0.18);
   --panel-shadow: 0 10px 24px rgba(2, 8, 23, 0.32);
+  --mobile-nav-bg: rgba(7, 14, 26, 0.68);
+  --mobile-nav-base-top: rgba(16, 27, 47, 0.86);
+  --mobile-nav-base-bottom: rgba(8, 17, 33, 0.78);
+  --mobile-nav-sheen: rgba(244, 248, 255, 0.08);
+  --mobile-nav-glow: rgba(112, 164, 255, 0.12);
+  --mobile-nav-caustic: rgba(255, 255, 255, 0.16);
+  --mobile-nav-edge: rgba(205, 220, 255, 0.22);
+  --mobile-nav-divider: rgba(167, 182, 206, 0.14);
+  --mobile-nav-shadow: 0 24px 54px rgba(2, 8, 23, 0.52);
   --note-dot-start: #d8e6ff;
   --note-dot-end: #4f648f;
   --note-dot-border: rgba(167, 182, 206, 0.24);
@@ -189,15 +207,42 @@ main.content,
 }
 
 .navbar .navbar-toggler-icon {
+  position: relative;
+  display: block;
   width: 1.35rem;
-  height: 1.05rem;
+  height: 2px;
   background-image: none !important;
-  background:
-    linear-gradient(var(--toggler-color), var(--toggler-color)) center 0.1rem / 100% 2px no-repeat,
-    linear-gradient(var(--toggler-color), var(--toggler-color)) center 50% / 100% 2px no-repeat,
-    linear-gradient(var(--toggler-color), var(--toggler-color)) center calc(100% - 0.1rem) / 100% 2px no-repeat !important;
+  background: var(--toggler-color) !important;
   filter: none !important;
   opacity: 1 !important;
+  border-radius: 999px;
+  transition:
+    background-color 220ms ease,
+    transform 220ms ease;
+}
+
+.navbar .navbar-toggler-icon::before,
+.navbar .navbar-toggler-icon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--toggler-color);
+  border-radius: 999px;
+  transition:
+    top 220ms ease,
+    transform 220ms ease,
+    opacity 220ms ease,
+    background-color 220ms ease;
+}
+
+.navbar .navbar-toggler-icon::before {
+  top: -0.42rem;
+}
+
+.navbar .navbar-toggler-icon::after {
+  top: 0.42rem;
 }
 
 .navbar .navbar-toggler {
@@ -207,12 +252,31 @@ main.content,
   box-shadow: none !important;
   outline: none !important;
   padding: 0.2rem 0.35rem !important;
+  position: relative;
+  z-index: 10;
+  transition:
+    margin 220ms ease,
+    transform 220ms ease;
 }
 
 .navbar .navbar-toggler:focus,
 .navbar .navbar-toggler:active {
   box-shadow: none !important;
   outline: none !important;
+}
+
+.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+  background: transparent !important;
+}
+
+.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+  top: 0;
+  transform: rotate(-45deg);
 }
 
 .navbar .nav-link.active,
@@ -735,8 +799,27 @@ section {
   }
 
   #quarto-header .navbar-container {
+    position: relative;
+    min-height: calc(4.15rem + env(safe-area-inset-top));
+    align-items: center;
     padding-left: 1rem !important;
     padding-right: 1rem !important;
+    padding-top: calc(0.55rem + env(safe-area-inset-top)) !important;
+    padding-bottom: 0.55rem !important;
+  }
+
+  #quarto-header .navbar .navbar-brand-container,
+  #quarto-header .navbar .navbar-toggler,
+  #quarto-header .quarto-navbar-tools {
+    position: relative;
+    z-index: 1102;
+  }
+
+  #quarto-header .navbar .navbar-brand-container,
+  #quarto-header .quarto-navbar-tools {
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease;
   }
 
   #quarto-header .navbar .navbar-toggler {
@@ -746,6 +829,195 @@ section {
 
   #quarto-header .quarto-navbar-tools {
     margin-left: 0.75rem;
+  }
+
+  #quarto-header .navbar .navbar-collapse {
+    margin: 0 !important;
+    border: 0 !important;
+  }
+
+  #quarto-header .navbar .navbar-collapse.collapsing,
+  #quarto-header .navbar .navbar-collapse.collapse.show {
+    position: fixed;
+    inset: 0;
+    z-index: 1101;
+    display: block !important;
+    width: 100%;
+    height: 100dvh !important;
+    padding:
+      calc(5.4rem + env(safe-area-inset-top))
+      calc(1.5rem + env(safe-area-inset-right))
+      calc(2rem + env(safe-area-inset-bottom))
+      calc(1.5rem + env(safe-area-inset-left));
+    overflow-y: auto;
+    isolation: isolate;
+    background: var(--mobile-nav-bg);
+    opacity: 0.985;
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(-0.85rem);
+    transform-origin: top center;
+    will-change: clip-path, transform, opacity;
+  }
+
+  #quarto-header .navbar .navbar-collapse.collapsing::before,
+  #quarto-header .navbar .navbar-collapse.collapse.show::before,
+  #quarto-header .navbar .navbar-collapse.collapsing::after,
+  #quarto-header .navbar .navbar-collapse.collapse.show::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  #quarto-header .navbar .navbar-collapse.collapsing::before,
+  #quarto-header .navbar .navbar-collapse.collapse.show::before {
+    z-index: 0;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0)),
+      linear-gradient(145deg, var(--mobile-nav-sheen), rgba(255, 255, 255, 0.04) 34%, transparent 68%),
+      radial-gradient(circle at 18% 12%, var(--mobile-nav-caustic), transparent 22%),
+      radial-gradient(circle at 78% 20%, var(--mobile-nav-glow), transparent 28%),
+      radial-gradient(circle at 52% 108%, rgba(255, 255, 255, 0.08), transparent 24%),
+      linear-gradient(180deg, var(--mobile-nav-base-top), var(--mobile-nav-base-bottom));
+    border: 1px solid var(--mobile-nav-edge);
+    box-shadow:
+      inset 0 1px 0 var(--glass-inset),
+      inset 0 -18px 40px rgba(255, 255, 255, 0.06),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.03),
+      var(--mobile-nav-shadow);
+    backdrop-filter: blur(60px) saturate(170%) contrast(1.02);
+    -webkit-backdrop-filter: blur(60px) saturate(170%) contrast(1.02);
+  }
+
+  #quarto-header .navbar .navbar-collapse.collapsing::after,
+  #quarto-header .navbar .navbar-collapse.collapse.show::after {
+    z-index: 0;
+    inset: 8% -12% 18%;
+    background:
+      radial-gradient(circle at 20% 16%, rgba(255, 255, 255, 0.24), transparent 22%),
+      radial-gradient(circle at 75% 24%, var(--mobile-nav-glow), transparent 26%),
+      radial-gradient(circle at 46% 100%, rgba(255, 255, 255, 0.16), transparent 22%);
+    opacity: 0.48;
+    filter: blur(58px);
+    transform: translate3d(0, 0, 0);
+  }
+
+  #quarto-header .navbar .navbar-collapse.collapsing {
+    transition:
+      clip-path 380ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 380ms cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 200ms ease !important;
+  }
+
+  #quarto-header .navbar .navbar-nav {
+    margin-left: 0 !important;
+    position: relative;
+    z-index: 1;
+  }
+
+  #quarto-header .navbar .navbar-nav-scroll {
+    max-height: none !important;
+  }
+
+  #quarto-header .navbar .navbar-collapse .navbar-nav {
+    align-items: stretch;
+    gap: 0.15rem;
+  }
+
+  #quarto-header .navbar .navbar-collapse .nav-item {
+    width: 100%;
+    opacity: 0;
+    transform: translateY(-0.7rem);
+    transition:
+      opacity 220ms ease,
+      transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  html.mobile-nav-open #quarto-header .navbar .navbar-collapse.collapsing,
+  html.mobile-nav-open #quarto-header .navbar .navbar-collapse.collapse.show {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: translateY(0);
+  }
+
+  html.mobile-nav-open #quarto-header .navbar .navbar-collapse .nav-item {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  #quarto-header .navbar .navbar-collapse .nav-item:nth-child(1) {
+    transition-delay: 80ms;
+  }
+
+  #quarto-header .navbar .navbar-collapse .nav-item:nth-child(2) {
+    transition-delay: 120ms;
+  }
+
+  #quarto-header .navbar .navbar-collapse .nav-item:nth-child(3) {
+    transition-delay: 160ms;
+  }
+
+  #quarto-header .navbar .navbar-collapse .nav-item:nth-child(4) {
+    transition-delay: 200ms;
+  }
+
+  #quarto-header .navbar .navbar-collapse .nav-item:nth-child(5) {
+    transition-delay: 240ms;
+  }
+
+  #quarto-header .navbar .navbar-collapse .nav-item:nth-child(6) {
+    transition-delay: 280ms;
+  }
+
+  #quarto-header .navbar .navbar-collapse .nav-link {
+    display: block;
+    width: 100%;
+    padding: 0.35rem 0;
+    color: var(--text) !important;
+    font-family: inherit;
+    font-size: clamp(1.72rem, 6.1vw, 2.24rem);
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+    font-weight: 500;
+    text-shadow: none;
+  }
+
+  #quarto-header .navbar .navbar-collapse .nav-link .menu-text {
+    display: inline-block;
+    border-bottom: 1px solid transparent;
+    transition:
+      border-color 180ms ease,
+      color 180ms ease;
+  }
+
+  #quarto-header .navbar .navbar-collapse .nav-link:hover .menu-text,
+  #quarto-header .navbar .navbar-collapse .nav-link:focus-visible .menu-text {
+    border-bottom-color: var(--mobile-nav-divider);
+  }
+
+  html.mobile-nav-open #quarto-header,
+  html.mobile-nav-open #quarto-header .navbar-container,
+  html.mobile-nav-open #quarto-header .navbar {
+    background: transparent !important;
+    border-bottom-color: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  html.mobile-nav-open #quarto-header .navbar .navbar-brand-container,
+  html.mobile-nav-open #quarto-header .quarto-navbar-tools {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-0.35rem);
+  }
+
+  html.mobile-nav-open #quarto-header .navbar .navbar-toggler {
+    z-index: 1103;
+  }
+
+  html.mobile-nav-open body {
+    overflow: hidden;
   }
 
   #quarto-header .navbar #quarto-search {
