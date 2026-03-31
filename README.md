@@ -3,7 +3,7 @@
 Source repository for a personal academic website (Quarto + vanilla frontend).
 
 - Live site: https://www.zihanliang.com
-- Purpose: Hosts the Home, CV, Research, Experiences, and Study Notes pages
+- Purpose: Hosts the Home, CV, Research, Experiences, Demos, and Study Notes pages
 
 ## Tech Stack
 
@@ -18,6 +18,7 @@ Source repository for a personal academic website (Quarto + vanilla frontend).
 - `cv.qmd`: CV page (embeds `Zihan_Liang_CV_Public.pdf`)
 - `research.qmd`: Research page, content from `data/research/sections.json`
 - `experiences.qmd`: Experiences page, content from `data/experiences/sections.json`
+- `demo.qmd`: Demo page skeleton, content from `data/demo/sections.json`
 - `notes.qmd`: Study Notes page, content from `data/notes/sections.json`
 
 ## Content and Assets
@@ -25,6 +26,7 @@ Source repository for a personal academic website (Quarto + vanilla frontend).
 - `data/home/`: Home modules (hero/about/news/doing/research/contact)
 - `data/research/sections.json`: Publications, manuscripts, collaborative projects
 - `data/experiences/sections.json`: Education, teaching, industry, leadership experiences
+- `data/demo/sections.json`: Demo page title, subtitle, and project cards
 - `data/notes/sections.json`: Notes catalog and download links
 - `notes/*.pdf`: Downloadable study notes
 - `figures/home/`: Home page images
@@ -36,6 +38,7 @@ Source repository for a personal academic website (Quarto + vanilla frontend).
 - `assets/js/main.js`: Home page data loading and rendering
 - `assets/js/research.js`: Research page rendering
 - `assets/js/experiences.js`: Experiences page rendering
+- `assets/js/demo.js`: Demo page rendering
 - `assets/js/notes.js`: Notes page rendering
 - `assets/js/scroll-animate.js`: Shared scroll-reveal animation
 - `assets/includes/nav-scroll.html`: Extra script include injected into pages
@@ -69,5 +72,5 @@ Core config file: `_quarto.yml`
 - `project.type: website`
 - `project.output-dir: docs`
 - `project.resources`: Files copied to output (`CNAME`, `data/`, `fonts/`, `figures/`, `icon/`, `notes/`, and CV PDF)
-- `website.navbar`: Top navigation (Home/CV/Research/Experiences/Study Notes)
+- `website.navbar`: Top navigation (Home/CV/Research/Experiences/Demos/Study Notes)
 - `format.html.css`: `assets/css/style.css`

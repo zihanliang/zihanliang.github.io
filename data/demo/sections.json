@@ -1,0 +1,29 @@
+{
+  "pageTitle": "Demos",
+  "pageSubtitle": "Explore interactive builds, technical experiments, and public-facing tools designed to turn ideas into something you can actually try.",
+  "items": [
+    {
+      "emoji": "🕸️",
+      "kicker": "Featured Demo",
+      "title": "Rule-based DAG workbench",
+      "description": "Rule-based DAG workbench for user-specified causal graphs, focused on backdoor adjustment.",
+      "tags": [
+        "Rule-based",
+        "Causal DAGs",
+        "Backdoor Adjustment"
+      ],
+      "links": [
+        {
+          "label": "GitHub",
+          "url": "https://github.com/zihanliang/causal-graph-workbench",
+          "variant": "default"
+        },
+        {
+          "label": "Open Demo",
+          "url": "https://www.zihanliang.com/causal-graph-workbench/",
+          "variant": "primary"
+        }
+      ]
+    }
+  ]
+}

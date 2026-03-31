@@ -26,6 +26,8 @@ website:
         href: research.qmd
       - text: "Experiences"
         href: experiences.qmd
+      - text: "Demos"
+        href: demo.qmd
       - text: "Study Notes"
         href: notes.qmd
   page-footer:
