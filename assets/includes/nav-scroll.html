@@ -4,9 +4,7 @@
   let lockedScrollY = 0
 
   function withNextPaint(callback) {
-    window.requestAnimationFrame(function () {
-      window.requestAnimationFrame(callback)
-    })
+    window.requestAnimationFrame(callback)
   }
 
   function syncNavState() {
