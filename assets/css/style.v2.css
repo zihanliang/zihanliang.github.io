@@ -54,21 +54,13 @@
   --panel-bg: rgba(255, 255, 255, 0.55);
   --panel-border: rgba(255, 255, 255, 0.75);
   --panel-shadow: 0 10px 24px rgba(23, 36, 62, 0.08);
-  --mobile-nav-bg: rgba(238, 243, 249, 0.36);
-  --mobile-nav-sheen: rgba(255, 255, 255, 0.3);
   --mobile-nav-divider: rgba(69, 80, 101, 0.16);
-  --mobile-nav-shadow: 0 18px 42px rgba(23, 36, 62, 0.12);
-  --mobile-nav-wash-top: rgba(255, 255, 255, 0.08);
-  --mobile-nav-wash-bottom: rgba(228, 236, 247, 0.12);
   --mobile-nav-scene-blur: 22px;
   --mobile-nav-panel-shift: -0.45rem;
-  --mobile-nav-top-mask-start: rgba(241, 245, 251, 0.84);
-  --mobile-nav-top-mask-end: rgba(241, 245, 251, 0.22);
-  --mobile-nav-top-blur-height: calc(8.6rem + env(safe-area-inset-top));
-  --mobile-nav-top-blur-strength: 24px;
-  --mobile-nav-top-fill: rgba(241, 245, 251, 0.92);
-  --mobile-nav-top-blur-tint-top: rgba(241, 245, 251, 0.34);
-  --mobile-nav-top-blur-tint-bottom: rgba(241, 245, 251, 0.08);
+  --page-background:
+    radial-gradient(circle at 12% 8%, var(--bg-accent-1), transparent 38%),
+    radial-gradient(circle at 88% 96%, var(--bg-accent-2), transparent 35%),
+    var(--bg);
   --note-dot-start: #ffffff;
   --note-dot-end: #b6c0d3;
   --note-dot-border: rgba(127, 140, 165, 0.58);
@@ -122,21 +114,9 @@ html[data-theme="dark"] {
   --panel-bg: rgba(16, 26, 45, 0.72);
   --panel-border: rgba(167, 182, 206, 0.18);
   --panel-shadow: 0 10px 24px rgba(2, 8, 23, 0.32);
-  --mobile-nav-bg: rgba(7, 14, 26, 0.46);
-  --mobile-nav-sheen: rgba(244, 248, 255, 0.08);
   --mobile-nav-divider: rgba(167, 182, 206, 0.18);
-  --mobile-nav-shadow: 0 24px 54px rgba(2, 8, 23, 0.42);
-  --mobile-nav-wash-top: rgba(16, 27, 47, 0.1);
-  --mobile-nav-wash-bottom: rgba(8, 17, 33, 0.14);
   --mobile-nav-scene-blur: 30px;
   --mobile-nav-panel-shift: -0.45rem;
-  --mobile-nav-top-mask-start: rgba(10, 18, 31, 0.88);
-  --mobile-nav-top-mask-end: rgba(10, 18, 31, 0.26);
-  --mobile-nav-top-blur-height: calc(9rem + env(safe-area-inset-top));
-  --mobile-nav-top-blur-strength: 28px;
-  --mobile-nav-top-fill: rgba(9, 17, 31, 0.94);
-  --mobile-nav-top-blur-tint-top: rgba(9, 17, 31, 0.34);
-  --mobile-nav-top-blur-tint-bottom: rgba(9, 17, 31, 0.1);
   --note-dot-start: #d8e6ff;
   --note-dot-end: #4f648f;
   --note-dot-border: rgba(167, 182, 206, 0.24);
@@ -167,10 +147,7 @@ body {
   margin: 0;
   min-height: 100%;
   color: var(--text);
-  background:
-    radial-gradient(circle at 12% 8%, var(--bg-accent-1), transparent 38%),
-    radial-gradient(circle at 88% 96%, var(--bg-accent-2), transparent 35%),
-    var(--bg);
+  background: var(--page-background);
   font-family: "Manrope", sans-serif;
 }
 
@@ -308,17 +285,27 @@ main.content,
 #quarto-header.headroom,
 #quarto-header.headroom--unpinned,
 #quarto-header.headroom--pinned {
-  transform: translateY(0) !important;
+  transform: none !important;
+  transition: none !important;
+  will-change: auto !important;
+  top: 0 !important;
 }
 
-html.nav-scrolled #quarto-header,
-html.nav-scrolled #quarto-header .navbar-container,
-html.nav-scrolled #quarto-header .navbar {
+html.nav-scrolled #quarto-header {
   background: var(--nav-scrolled-bg) !important;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--nav-scrolled-border);
   box-shadow: var(--nav-scrolled-shadow);
+}
+
+html.nav-scrolled #quarto-header .navbar-container,
+html.nav-scrolled #quarto-header .navbar {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom-color: transparent !important;
+  box-shadow: none !important;
 }
 
 #quarto-document-content .anchorjs-link {
@@ -870,7 +857,7 @@ section {
       calc(1.5rem + env(safe-area-inset-left));
     overflow-y: auto;
     isolation: isolate;
-    background: var(--mobile-nav-bg);
+    background: var(--page-background);
     opacity: 0;
     transform: translateY(var(--mobile-nav-panel-shift));
     backdrop-filter: none;
@@ -890,39 +877,12 @@ section {
 
   #quarto-header .navbar .navbar-collapse.collapsing::before,
   #quarto-header .navbar .navbar-collapse.collapse.show::before {
-    z-index: 0;
-    background:
-      linear-gradient(
-        180deg,
-        var(--mobile-nav-top-mask-start) 0,
-        var(--mobile-nav-top-mask-end) calc(5.3rem + env(safe-area-inset-top)),
-        transparent calc(7rem + env(safe-area-inset-top))
-      ),
-      linear-gradient(180deg, var(--mobile-nav-wash-top), var(--mobile-nav-wash-bottom)),
-      linear-gradient(180deg, var(--mobile-nav-sheen), rgba(255, 255, 255, 0.02)),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
-    box-shadow:
-      var(--mobile-nav-shadow);
+    display: none;
   }
 
   #quarto-header .navbar .navbar-collapse.collapsing::after,
   #quarto-header .navbar .navbar-collapse.collapse.show::after {
-    inset: -8px -1px auto -1px;
-    z-index: 0;
-    height: calc(var(--mobile-nav-top-blur-height) + 8px);
-    background:
-      linear-gradient(
-        180deg,
-        var(--mobile-nav-top-fill) 0,
-        var(--mobile-nav-top-fill) calc(env(safe-area-inset-top) + 0.55rem),
-        var(--mobile-nav-top-blur-tint-top) 34%,
-        var(--mobile-nav-top-blur-tint-bottom) 62%,
-        rgba(255, 255, 255, 0) 100%
-      );
-    backdrop-filter: blur(var(--mobile-nav-top-blur-strength)) saturate(138%);
-    -webkit-backdrop-filter: blur(var(--mobile-nav-top-blur-strength)) saturate(138%);
-    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 0, rgba(0, 0, 0, 0) 100%);
-    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 0, rgba(0, 0, 0, 0) 100%);
+    display: none;
   }
 
   #quarto-header .navbar .navbar-collapse.collapsing,
