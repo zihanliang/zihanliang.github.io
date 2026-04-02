@@ -1,10 +1,55 @@
 <script>
 (function () {
   const MOBILE_NAV_QUERY = window.matchMedia('(max-width: 991.98px)')
+  const MOBILE_NAV_EXIT_MS = 280
+  const MOBILE_NAV_SCENE_EXIT_MS = 220
   let lockedScrollY = 0
+  let mobileNavReleaseTimer = 0
+  let mobileNavSceneReleaseTimer = 0
 
   function withNextPaint(callback) {
     window.requestAnimationFrame(callback)
+  }
+
+  function clearMobileNavReleaseTimer() {
+    if (!mobileNavReleaseTimer) return
+
+    window.clearTimeout(mobileNavReleaseTimer)
+    mobileNavReleaseTimer = 0
+  }
+
+  function clearMobileNavSceneReleaseTimer() {
+    if (!mobileNavSceneReleaseTimer) return
+
+    window.clearTimeout(mobileNavSceneReleaseTimer)
+    mobileNavSceneReleaseTimer = 0
+  }
+
+  function getEffectiveScrollY() {
+    return document.body.style.position === 'fixed' ? lockedScrollY : window.scrollY
+  }
+
+  function setMobileNavVisible(visible) {
+    const root = document.documentElement
+
+    if (visible) {
+      root.classList.add('mobile-nav-visible')
+      return
+    }
+
+    root.classList.remove('mobile-nav-visible')
+  }
+
+  function setMobileNavSceneActive(active) {
+    const root = document.documentElement
+
+    if (active) {
+      clearMobileNavSceneReleaseTimer()
+      root.classList.add('mobile-nav-scene-active')
+      return
+    }
+
+    root.classList.remove('mobile-nav-scene-active')
   }
 
   function syncNavState() {
@@ -12,7 +57,7 @@
       return
     }
 
-    const scrolled = window.scrollY > 8;
+    const scrolled = getEffectiveScrollY() > 8;
     if (scrolled) {
       document.documentElement.classList.add('nav-scrolled');
     } else {
@@ -42,24 +87,55 @@
   function unlockPageScroll() {
     if (document.body.style.position !== 'fixed') return
 
+    const restoredScrollY = lockedScrollY
     document.body.style.position = ''
     document.body.style.top = ''
     document.body.style.left = ''
     document.body.style.right = ''
     document.body.style.width = ''
-    window.scrollTo(0, lockedScrollY)
+    window.scrollTo(0, restoredScrollY)
+    lockedScrollY = 0
+    withNextPaint(syncNavState)
   }
 
   function setMobileNavOpen(open) {
     const root = document.documentElement
 
     if (open) {
+      clearMobileNavReleaseTimer()
+      setMobileNavSceneActive(true)
       root.classList.add('mobile-nav-open')
       return
     }
 
+    clearMobileNavReleaseTimer()
+    clearMobileNavSceneReleaseTimer()
+    setMobileNavSceneActive(false)
     root.classList.remove('mobile-nav-open')
+    setMobileNavVisible(false)
     syncNavState()
+  }
+
+  function releaseMobileNavScene() {
+    clearMobileNavSceneReleaseTimer()
+    setMobileNavSceneActive(false)
+  }
+
+  function finalizeMobileNavClose() {
+    clearMobileNavReleaseTimer()
+    releaseMobileNavScene()
+    setMobileNavOpen(false)
+    unlockPageScroll()
+  }
+
+  function scheduleMobileNavRelease() {
+    clearMobileNavReleaseTimer()
+    mobileNavReleaseTimer = window.setTimeout(finalizeMobileNavClose, MOBILE_NAV_EXIT_MS)
+  }
+
+  function scheduleMobileNavSceneRelease() {
+    clearMobileNavSceneReleaseTimer()
+    mobileNavSceneReleaseTimer = window.setTimeout(releaseMobileNavScene, MOBILE_NAV_SCENE_EXIT_MS)
   }
 
   function closeMobileNav() {
@@ -81,8 +157,9 @@
       toggler.classList.add('collapsed')
     }
 
-    setMobileNavOpen(false)
-    window.setTimeout(unlockPageScroll, 380)
+    setMobileNavVisible(false)
+    scheduleMobileNavSceneRelease()
+    scheduleMobileNavRelease()
   }
 
   function syncMobileNavState() {
@@ -108,6 +185,7 @@
       collapse.classList.contains('show') || collapse.classList.contains('collapsing')
 
     setMobileNavOpen(isOpen)
+    setMobileNavVisible(collapse.classList.contains('show'))
     if (isOpen) {
       lockPageScroll()
     } else {
@@ -119,11 +197,17 @@
     const collapse = getNavbarCollapse()
     if (!collapse) return
 
+    const toggler = document.querySelector('.navbar-toggler')
+    if (toggler && toggler.hasAttribute('onclick')) {
+      toggler.removeAttribute('onclick')
+    }
+
     collapse.addEventListener('show.bs.collapse', function () {
       if (isMobileViewport()) {
         lockPageScroll()
+        setMobileNavOpen(true)
         withNextPaint(function () {
-          setMobileNavOpen(true)
+          setMobileNavVisible(true)
         })
       }
     })
@@ -131,18 +215,29 @@
     collapse.addEventListener('shown.bs.collapse', function () {
       if (isMobileViewport()) {
         setMobileNavOpen(true)
+        setMobileNavVisible(true)
       }
     })
 
     collapse.addEventListener('hide.bs.collapse', function () {
       if (isMobileViewport()) {
-        setMobileNavOpen(false)
+        setMobileNavVisible(false)
+        scheduleMobileNavSceneRelease()
+        scheduleMobileNavRelease()
       }
     })
 
+    collapse.addEventListener('transitionend', function (event) {
+      if (!isMobileViewport()) return
+      if (event.target !== collapse || event.propertyName !== 'opacity') return
+      if (document.documentElement.classList.contains('mobile-nav-visible')) return
+      if (!document.documentElement.classList.contains('mobile-nav-open')) return
+
+      releaseMobileNavScene()
+    })
+
     collapse.addEventListener('hidden.bs.collapse', function () {
-      setMobileNavOpen(false)
-      unlockPageScroll()
+      finalizeMobileNavClose()
     })
 
     collapse.addEventListener('click', function (event) {

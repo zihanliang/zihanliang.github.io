@@ -54,15 +54,21 @@
   --panel-bg: rgba(255, 255, 255, 0.55);
   --panel-border: rgba(255, 255, 255, 0.75);
   --panel-shadow: 0 10px 24px rgba(23, 36, 62, 0.08);
-  --mobile-nav-bg: rgba(238, 243, 249, 0.68);
-  --mobile-nav-base-top: rgba(255, 255, 255, 0.86);
-  --mobile-nav-base-bottom: rgba(228, 236, 247, 0.76);
+  --mobile-nav-bg: rgba(238, 243, 249, 0.36);
   --mobile-nav-sheen: rgba(255, 255, 255, 0.3);
-  --mobile-nav-glow: rgba(118, 157, 226, 0.1);
-  --mobile-nav-caustic: rgba(255, 255, 255, 0.36);
-  --mobile-nav-edge: rgba(255, 255, 255, 0.62);
-  --mobile-nav-divider: rgba(69, 80, 101, 0.12);
-  --mobile-nav-shadow: 0 18px 42px rgba(23, 36, 62, 0.14);
+  --mobile-nav-divider: rgba(69, 80, 101, 0.16);
+  --mobile-nav-shadow: 0 18px 42px rgba(23, 36, 62, 0.12);
+  --mobile-nav-wash-top: rgba(255, 255, 255, 0.08);
+  --mobile-nav-wash-bottom: rgba(228, 236, 247, 0.12);
+  --mobile-nav-scene-blur: 22px;
+  --mobile-nav-panel-shift: -0.45rem;
+  --mobile-nav-top-mask-start: rgba(241, 245, 251, 0.84);
+  --mobile-nav-top-mask-end: rgba(241, 245, 251, 0.22);
+  --mobile-nav-top-blur-height: calc(8.6rem + env(safe-area-inset-top));
+  --mobile-nav-top-blur-strength: 24px;
+  --mobile-nav-top-fill: rgba(241, 245, 251, 0.92);
+  --mobile-nav-top-blur-tint-top: rgba(241, 245, 251, 0.34);
+  --mobile-nav-top-blur-tint-bottom: rgba(241, 245, 251, 0.08);
   --note-dot-start: #ffffff;
   --note-dot-end: #b6c0d3;
   --note-dot-border: rgba(127, 140, 165, 0.58);
@@ -116,15 +122,21 @@ html[data-theme="dark"] {
   --panel-bg: rgba(16, 26, 45, 0.72);
   --panel-border: rgba(167, 182, 206, 0.18);
   --panel-shadow: 0 10px 24px rgba(2, 8, 23, 0.32);
-  --mobile-nav-bg: rgba(7, 14, 26, 0.68);
-  --mobile-nav-base-top: rgba(16, 27, 47, 0.86);
-  --mobile-nav-base-bottom: rgba(8, 17, 33, 0.78);
+  --mobile-nav-bg: rgba(7, 14, 26, 0.46);
   --mobile-nav-sheen: rgba(244, 248, 255, 0.08);
-  --mobile-nav-glow: rgba(112, 164, 255, 0.12);
-  --mobile-nav-caustic: rgba(255, 255, 255, 0.16);
-  --mobile-nav-edge: rgba(205, 220, 255, 0.22);
-  --mobile-nav-divider: rgba(167, 182, 206, 0.14);
-  --mobile-nav-shadow: 0 24px 54px rgba(2, 8, 23, 0.52);
+  --mobile-nav-divider: rgba(167, 182, 206, 0.18);
+  --mobile-nav-shadow: 0 24px 54px rgba(2, 8, 23, 0.42);
+  --mobile-nav-wash-top: rgba(16, 27, 47, 0.1);
+  --mobile-nav-wash-bottom: rgba(8, 17, 33, 0.14);
+  --mobile-nav-scene-blur: 30px;
+  --mobile-nav-panel-shift: -0.45rem;
+  --mobile-nav-top-mask-start: rgba(10, 18, 31, 0.88);
+  --mobile-nav-top-mask-end: rgba(10, 18, 31, 0.26);
+  --mobile-nav-top-blur-height: calc(9rem + env(safe-area-inset-top));
+  --mobile-nav-top-blur-strength: 28px;
+  --mobile-nav-top-fill: rgba(9, 17, 31, 0.94);
+  --mobile-nav-top-blur-tint-top: rgba(9, 17, 31, 0.34);
+  --mobile-nav-top-blur-tint-bottom: rgba(9, 17, 31, 0.1);
   --note-dot-start: #d8e6ff;
   --note-dot-end: #4f648f;
   --note-dot-border: rgba(167, 182, 206, 0.24);
@@ -817,20 +829,19 @@ section {
   }
 
   #quarto-header .navbar .navbar-brand-container,
-  #quarto-header .navbar .navbar-toggler,
   #quarto-header .quarto-navbar-tools {
     position: relative;
-    z-index: 1102;
+    z-index: 1101;
   }
 
   #quarto-header .navbar .navbar-brand-container,
   #quarto-header .quarto-navbar-tools {
-    transition:
-      opacity 180ms ease,
-      transform 180ms ease;
+    transition: opacity 120ms ease;
   }
 
   #quarto-header .navbar .navbar-toggler {
+    position: relative;
+    z-index: 1103;
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
@@ -848,7 +859,7 @@ section {
   #quarto-header .navbar .navbar-collapse.collapse.show {
     position: fixed;
     inset: 0;
-    z-index: 1101;
+    z-index: 1102;
     display: block !important;
     width: 100%;
     height: 100dvh !important;
@@ -860,11 +871,11 @@ section {
     overflow-y: auto;
     isolation: isolate;
     background: var(--mobile-nav-bg);
-    opacity: 0.985;
-    clip-path: inset(0 0 100% 0);
-    transform: translateY(-0.85rem);
-    transform-origin: top center;
-    will-change: clip-path, transform, opacity;
+    opacity: 0;
+    transform: translateY(var(--mobile-nav-panel-shift));
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    will-change: opacity, transform;
   }
 
   #quarto-header .navbar .navbar-collapse.collapsing::before,
@@ -881,41 +892,44 @@ section {
   #quarto-header .navbar .navbar-collapse.collapse.show::before {
     z-index: 0;
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0)),
-      linear-gradient(145deg, var(--mobile-nav-sheen), rgba(255, 255, 255, 0.04) 34%, transparent 68%),
-      radial-gradient(circle at 18% 12%, var(--mobile-nav-caustic), transparent 22%),
-      radial-gradient(circle at 78% 20%, var(--mobile-nav-glow), transparent 28%),
-      radial-gradient(circle at 52% 108%, rgba(255, 255, 255, 0.08), transparent 24%),
-      linear-gradient(180deg, var(--mobile-nav-base-top), var(--mobile-nav-base-bottom));
-    border: 1px solid var(--mobile-nav-edge);
+      linear-gradient(
+        180deg,
+        var(--mobile-nav-top-mask-start) 0,
+        var(--mobile-nav-top-mask-end) calc(5.3rem + env(safe-area-inset-top)),
+        transparent calc(7rem + env(safe-area-inset-top))
+      ),
+      linear-gradient(180deg, var(--mobile-nav-wash-top), var(--mobile-nav-wash-bottom)),
+      linear-gradient(180deg, var(--mobile-nav-sheen), rgba(255, 255, 255, 0.02)),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
     box-shadow:
-      inset 0 1px 0 var(--glass-inset),
-      inset 0 -18px 40px rgba(255, 255, 255, 0.06),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.03),
       var(--mobile-nav-shadow);
-    backdrop-filter: blur(60px) saturate(170%) contrast(1.02);
-    -webkit-backdrop-filter: blur(60px) saturate(170%) contrast(1.02);
   }
 
   #quarto-header .navbar .navbar-collapse.collapsing::after,
   #quarto-header .navbar .navbar-collapse.collapse.show::after {
+    inset: -8px -1px auto -1px;
     z-index: 0;
-    inset: 8% -12% 18%;
+    height: calc(var(--mobile-nav-top-blur-height) + 8px);
     background:
-      radial-gradient(circle at 20% 16%, rgba(255, 255, 255, 0.24), transparent 22%),
-      radial-gradient(circle at 75% 24%, var(--mobile-nav-glow), transparent 26%),
-      radial-gradient(circle at 46% 100%, rgba(255, 255, 255, 0.16), transparent 22%);
-    opacity: 0.48;
-    filter: blur(58px);
-    transform: translate3d(0, 0, 0);
+      linear-gradient(
+        180deg,
+        var(--mobile-nav-top-fill) 0,
+        var(--mobile-nav-top-fill) calc(env(safe-area-inset-top) + 0.55rem),
+        var(--mobile-nav-top-blur-tint-top) 34%,
+        var(--mobile-nav-top-blur-tint-bottom) 62%,
+        rgba(255, 255, 255, 0) 100%
+      );
+    backdrop-filter: blur(var(--mobile-nav-top-blur-strength)) saturate(138%);
+    -webkit-backdrop-filter: blur(var(--mobile-nav-top-blur-strength)) saturate(138%);
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 0, rgba(0, 0, 0, 0) 100%);
+    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 0, rgba(0, 0, 0, 0) 100%);
   }
 
   #quarto-header .navbar .navbar-collapse.collapsing,
   #quarto-header .navbar .navbar-collapse.collapse.show {
     transition:
-      clip-path 380ms cubic-bezier(0.16, 1, 0.3, 1),
-      transform 380ms cubic-bezier(0.16, 1, 0.3, 1),
-      opacity 200ms ease !important;
+      opacity 220ms ease,
+      transform 280ms cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
 
   #quarto-header .navbar .navbar-nav {
@@ -937,44 +951,44 @@ section {
     width: 100%;
     opacity: 0;
     transform: translateY(-0.7rem);
+    transition-delay: 0ms;
     transition:
       opacity 220ms ease,
       transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  html.mobile-nav-open #quarto-header .navbar .navbar-collapse.collapsing,
-  html.mobile-nav-open #quarto-header .navbar .navbar-collapse.collapse.show {
-    opacity: 1;
-    clip-path: inset(0 0 0 0);
-    transform: translateY(0);
-  }
-
-  html.mobile-nav-open #quarto-header .navbar .navbar-collapse .nav-item {
+  html.mobile-nav-visible #quarto-header .navbar .navbar-collapse.collapsing,
+  html.mobile-nav-visible #quarto-header .navbar .navbar-collapse.collapse.show {
     opacity: 1;
     transform: translateY(0);
   }
 
-  #quarto-header .navbar .navbar-collapse .nav-item:nth-child(1) {
+  html.mobile-nav-visible #quarto-header .navbar .navbar-collapse .nav-item {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  html.mobile-nav-visible #quarto-header .navbar .navbar-collapse .nav-item:nth-child(1) {
     transition-delay: 80ms;
   }
 
-  #quarto-header .navbar .navbar-collapse .nav-item:nth-child(2) {
+  html.mobile-nav-visible #quarto-header .navbar .navbar-collapse .nav-item:nth-child(2) {
     transition-delay: 120ms;
   }
 
-  #quarto-header .navbar .navbar-collapse .nav-item:nth-child(3) {
+  html.mobile-nav-visible #quarto-header .navbar .navbar-collapse .nav-item:nth-child(3) {
     transition-delay: 160ms;
   }
 
-  #quarto-header .navbar .navbar-collapse .nav-item:nth-child(4) {
+  html.mobile-nav-visible #quarto-header .navbar .navbar-collapse .nav-item:nth-child(4) {
     transition-delay: 200ms;
   }
 
-  #quarto-header .navbar .navbar-collapse .nav-item:nth-child(5) {
+  html.mobile-nav-visible #quarto-header .navbar .navbar-collapse .nav-item:nth-child(5) {
     transition-delay: 240ms;
   }
 
-  #quarto-header .navbar .navbar-collapse .nav-item:nth-child(6) {
+  html.mobile-nav-visible #quarto-header .navbar .navbar-collapse .nav-item:nth-child(6) {
     transition-delay: 280ms;
   }
 
@@ -1004,25 +1018,24 @@ section {
     border-bottom-color: var(--mobile-nav-divider);
   }
 
-  html.mobile-nav-open #quarto-header,
-  html.mobile-nav-open #quarto-header .navbar-container,
-  html.mobile-nav-open #quarto-header .navbar {
-    background: transparent !important;
-    border-bottom-color: transparent !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-  }
-
-  html.mobile-nav-open #quarto-header .navbar .navbar-brand-container,
-  html.mobile-nav-open #quarto-header .quarto-navbar-tools {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-0.35rem);
-  }
-
   html.mobile-nav-open #quarto-header .navbar .navbar-toggler {
     z-index: 1103;
+  }
+
+  body > *:not(#quarto-header):not(script) {
+    transition: none !important;
+  }
+
+  html.mobile-nav-scene-active body > *:not(#quarto-header):not(script) {
+    filter: blur(var(--mobile-nav-scene-blur)) saturate(118%) brightness(0.9);
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+  }
+
+  html.mobile-nav-open body > *:not(#quarto-header):not(script) {
+    pointer-events: none;
+    user-select: none;
   }
 
   html.mobile-nav-open body {
