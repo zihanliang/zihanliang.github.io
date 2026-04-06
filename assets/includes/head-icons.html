@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#f3f5f9">
 <script>
 (function () {
-  const STORAGE_KEY = 'site-theme-preference';
+  const SESSION_THEME_KEY = 'site-theme-override';
   const LIGHT_THEME_COLOR = '#f3f5f9';
   const DARK_THEME_COLOR = '#09111f';
   const LIGHT_START_HOUR = 7;
@@ -16,25 +16,27 @@
     return hour >= DARK_START_HOUR || hour < LIGHT_START_HOUR ? 'dark' : 'light';
   }
 
-  function getStoredTheme() {
+  function getManualThemeOverride() {
     try {
-      const stored = window.localStorage.getItem(STORAGE_KEY);
+      const stored = window.sessionStorage.getItem(SESSION_THEME_KEY);
       return stored === 'light' || stored === 'dark' ? stored : null;
     } catch (error) {
       return null;
     }
   }
 
-  function storeTheme(theme) {
+  function storeManualThemeOverride(theme) {
     try {
-      window.localStorage.setItem(STORAGE_KEY, theme);
+      // Keep manual toggles scoped to the current tab so each new visit
+      // falls back to the visitor's local-time schedule.
+      window.sessionStorage.setItem(SESSION_THEME_KEY, theme);
     } catch (error) {
       // Ignore storage failures so theme switching still works for the session.
     }
   }
 
   function getResolvedTheme() {
-    return getStoredTheme() || getThemeForCurrentTime();
+    return getManualThemeOverride() || getThemeForCurrentTime();
   }
 
   function updateToggleButton(theme) {
@@ -71,7 +73,7 @@
   function toggleTheme() {
     const currentTheme = document.documentElement.getAttribute('data-theme') || getResolvedTheme();
     const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    storeTheme(nextTheme);
+    storeManualThemeOverride(nextTheme);
     applyTheme(nextTheme);
   }
 
@@ -107,13 +109,13 @@
     ensureThemeToggleButton();
   });
   window.addEventListener('focus', function () {
-    if (!getStoredTheme()) syncThemeFromPreference();
+    if (!getManualThemeOverride()) syncThemeFromPreference();
   });
   document.addEventListener('visibilitychange', function () {
-    if (!document.hidden && !getStoredTheme()) syncThemeFromPreference();
+    if (!document.hidden && !getManualThemeOverride()) syncThemeFromPreference();
   });
   window.setInterval(function () {
-    if (!getStoredTheme()) syncThemeFromPreference();
+    if (!getManualThemeOverride()) syncThemeFromPreference();
   }, 60000);
 })();
 </script>
