@@ -591,6 +591,33 @@ section {
 .news-list {
   display: grid;
   gap: 0.7rem;
+  max-height: var(--news-list-max-height);
+  overflow-y: auto;
+  padding-right: 0;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(31, 75, 153, 0.34) transparent;
+}
+
+.news-list.is-scrollable {
+  padding-right: 0.35rem;
+}
+
+.news-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.news-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.news-list::-webkit-scrollbar-thumb {
+  background: rgba(31, 75, 153, 0.28);
+  border-radius: 999px;
+}
+
+.news-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(31, 75, 153, 0.42);
 }
 
 .news-item {

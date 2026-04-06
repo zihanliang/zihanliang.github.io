@@ -7,6 +7,8 @@ const dataFiles = [
   "data/home/contact.json"
 ];
 
+const VISIBLE_NEWS_ITEMS = 3;
+
 async function fetchJson(file) {
   const response = await fetch(file);
   if (!response.ok) {
@@ -86,6 +88,55 @@ function renderNews(news) {
     .join("");
 
   setHtml("news-items", items);
+
+  const newsList = document.getElementById("news-items");
+  if (newsList) {
+    newsList.setAttribute("tabindex", "0");
+    newsList.setAttribute("aria-label", `${news.title || "Recent News"} list`);
+  }
+}
+
+function syncNewsListViewport() {
+  const newsList = document.getElementById("news-items");
+  if (!newsList) return;
+
+  const items = Array.from(newsList.querySelectorAll(".news-item"));
+  if (!items.length) {
+    newsList.style.removeProperty("--news-list-max-height");
+    newsList.classList.remove("is-scrollable");
+    return;
+  }
+
+  const visibleCount = Math.min(VISIBLE_NEWS_ITEMS, items.length);
+  const styles = window.getComputedStyle(newsList);
+  const gap =
+    Number.parseFloat(styles.rowGap || styles.gap || "0") || 0;
+  const viewportHeight =
+    items
+      .slice(0, visibleCount)
+      .reduce((total, item) => total + item.getBoundingClientRect().height, 0) +
+    gap * Math.max(visibleCount - 1, 0);
+
+  newsList.style.setProperty(
+    "--news-list-max-height",
+    `${Math.ceil(viewportHeight)}px`
+  );
+  newsList.classList.toggle("is-scrollable", items.length > VISIBLE_NEWS_ITEMS);
+}
+
+function setupNewsListViewport() {
+  syncNewsListViewport();
+  window.addEventListener("resize", syncNewsListViewport);
+
+  if (document.fonts?.ready) {
+    document.fonts.ready.then(() => {
+      syncNewsListViewport();
+    });
+  }
+
+  window.requestAnimationFrame(() => {
+    syncNewsListViewport();
+  });
 }
 
 function renderResearch(research) {
@@ -154,6 +205,7 @@ async function init() {
     renderResearch(research);
     renderContact(contact);
 
+    setupNewsListViewport();
     setupScrollAnimation();
   } catch (error) {
     console.error("Failed to load page content:", error);
