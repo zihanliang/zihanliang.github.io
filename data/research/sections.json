@@ -6,6 +6,24 @@
       "title": "Publications",
       "entries": [
         {
+          "title": "DART: Mitigating Harm Drift in Difference-Aware LLMs via Distill-Audit-Repair Training",
+          "authors": "Ziwen Pan*, Zihan Liang*, Jad Kabbara, Ali Emami",
+          "status": "Accepted at ACL 2026 Findings",
+          "bullets": [
+            "Identified the problem of harm drift in safety-tuned LLMs—where fine-tuning improves decision accuracy but makes rationales more harmful—and introduced DART, a Distill-Audit-Repair pipeline for improving difference-awareness classification while preserving safer explanations.",
+            "On eight benchmarks, DART improved Llama-3-8B-Instruct accuracy from 39.0% to 68.8%, boosted equal-treatment accuracy from 11.3% to 72.6%, and reduced harm drift cases by 72.6%, showing that accuracy and safety can be improved together."
+          ]
+        },
+        {
+          "title": "Learning Dynamic Representations and Policies from Multimodal Clinical Time-Series with Informative Missingness",
+          "authors": "Zihan Liang*, Ziwen Pan*, Ruoxuan Xiong",
+          "status": "Accepted at ACL 2026 Findings",
+          "bullets": [
+            "Proposed an MNAR-aware multimodal framework for clinical time-series that treats observation patterns as signal rather than noise, combining explicit missingness features, adaptive fusion of sparse clinical text, and action-conditioned latent dynamics to learn patient states for both prediction and offline decision-making.",
+            "Demonstrated strong results on MIMIC-IV and eICU: mortality prediction reached AUROC 0.876 on MIMIC-IV (+3.9% over GRU-D), while the learned treatment policy improved FQE by 20.3% over clinician behavior and delivered the largest gains for high-severity patients."
+          ]
+        },
+        {
           "title": "MambaDATG: Domain-Adaptive Tri-Plane-Gated Pre-training for 3D Abdominal Segmentation",
           "authors": "Y. Shen*, D. Jiang*, Zihan Liang*, Y. Wei*, W. Yang, S. Wang, et al.",
           "status": "Accepted at ICASSP 2026 <span class=\"status-tag status-tag-oral\">Oral</span>",

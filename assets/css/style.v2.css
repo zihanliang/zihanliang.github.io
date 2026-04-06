@@ -276,6 +276,12 @@ main.content,
   transform: rotate(-45deg);
 }
 
+@media (min-width: 992px) {
+  #quarto-header .navbar .navbar-toggler {
+    display: none !important;
+  }
+}
+
 .navbar .nav-link.active,
 .navbar .nav-link[aria-current="page"] {
   color: var(--primary) !important;
@@ -827,6 +833,7 @@ section {
   }
 
   #quarto-header .navbar .navbar-toggler {
+    display: inline-flex !important;
     position: relative;
     z-index: 1103;
     padding-left: 0 !important;
