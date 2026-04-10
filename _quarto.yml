@@ -8,7 +8,7 @@ project:
     - figures/**
     - icon/**
     - notes/**
-    - Zihan_Liang_CV_Public.pdf
+    - pdf/**
 
 website:
   title: "Zihan Liang"
