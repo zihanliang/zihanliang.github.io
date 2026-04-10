@@ -33,26 +33,31 @@
           ]
         },
         {
-          "title": "<a href=\"https://aclanthology.org/2025.emnlp-main.1465/\" target=\"_blank\" rel=\"noopener noreferrer\">Causal Representation Learning from Multimodal Clinical Records under Non-Random Modality Missingness</a>",
+          "title": "Causal Representation Learning from Multimodal Clinical Records under Non-Random Modality Missingness",
           "authors": "Zihan Liang*, Ziwen Pan*, Ruoxuan Xiong",
           "status": "Accepted at EMNLP 2025 Main",
+          "paper": "https://aclanthology.org/2025.emnlp-main.1465/",
+          "code": "https://github.com/CausalMLResearch/CRL-MMNAR",
           "bullets": [
             "Proposed CRL-MMNAR, a causal multimodal framework that treats modality missing-not-at-random as signal—combining missingness-aware fusion (gated by observation patterns) with cross-modal reconstruction + contrastive learning, and a multitask predictor with a cross-fitted rectifier to correct observation-pattern bias.",
             "Demonstrated consistent gains on MIMIC-IV and eICU, including AUC 0.8687→0.9824 for ICU admission (+13.1%) and 0.7989→0.8657 for readmission (+8.4%) on MIMIC-IV, and readmission AUC to 0.9294 (+13.8%) on eICU, with lower Brier scores indicating better calibration."
           ]
         },
         {
-          "title": "<a href=\"https://workshop-proceedings.icwsm.org/abstract.php?id=2025_59\" target=\"_blank\" rel=\"noopener noreferrer\">CareLab at #SMM4H-HeaRD 2025: Insomnia Detection and Food Safety Event Extraction with Domain-Aware Transformers</a>",
+          "title": "CareLab at #SMM4H-HeaRD 2025: Insomnia Detection and Food Safety Event Extraction with Domain-Aware Transformers",
           "authors": "Zihan Liang*, Ziwen Pan*, Sumon Kanti Dey, Azra Ismail",
           "status": "Accepted at AAAI ICSWM 2025",
+          "paper": "https://workshop-proceedings.icwsm.org/abstract.php?id=2025_59",
+          "code": "https://github.com/zihanliang/CARELAB-SMM4H2025",
           "bullets": [
             "Ranked 1st on SMM4H–HeaRD 2025 Task 5, developing a RoBERTa + GPT-4–augmented system with classweighted training and ensembling, achieving F1 = 0.958 and revealing the limits of rule-based span extraction in clinical and food-safety texts."
           ]
         },
         {
-          "title": "<a href=\"https://annualmeeting.mytrb.org/OnlineProgram/Details/24465#\" target=\"_blank\" rel=\"noopener noreferrer\">Dynamic Policy Design for Autonomous Taxi Adoption: A Hierarchical Game-Theoretic Framework</a>",
+          "title": "Dynamic Policy Design for Autonomous Taxi Adoption: A Hierarchical Game-Theoretic Framework",
           "authors": "Zihan Liang, Ziwen Pan",
           "status": "Accepted at TRB Annual Meeting 2026",
+          "paper": "https://annualmeeting.mytrb.org/OnlineProgram/Details/24465#",
           "bullets": [
             "Formulated a three-tier dynamic Stackelberg game modeling interactions among government, platform, and workers in autonomous taxi adoption, deriving equilibrium policies that balance innovation incentives with social welfare.",
             "An extended version is under review at Transportation Research Record."
@@ -76,10 +81,34 @@
       ]
     },
     {
+      "title": "Theses and Dissertations",
+      "entries": [
+        {
+          "title": "Causal Representation Learning under Informative Missingness for Clinical Multimodal Prediction and Offline Decision-Making",
+          "authors": "Zihan Liang",
+          "period": "Advised by Prof. Ruoxuan Xiong",
+          "status": "Emory College of Arts and Sciences Honors Thesis (Highest Honors)",
+          "paper": "https://etd.library.emory.edu/concern/etds/zk51vj64z?locale=en",
+          "bullets": [
+            "Proposed a unified causal representation learning framework that models cross-scale informative missingness (patient-level modality assignment and step-level monitoring intensity) as explicit variables, enabling both prediction and decision-making under MNAR clinical data.",
+            "Developed a two-stage MMNAR pipeline with missingness-aware fusion, cross-modal self-supervision, and a cross-fitted pattern-wise rectifier that corrects residual bias, achieving consistent AUROC gains under severe missingness and distribution shift.",
+            "Introduced MNAR-aware dynamic state learning with action-conditioned latent dynamics and process-aware text modeling, enabling reliable offline policy optimization (IQL) and significant improvements over clinician policies and strong RL baselines."
+          ]
+        }
+      ]
+    },
+    {
       "title": "Collaborative Research Projects",
       "entries": [
         {
-          "title": "Research Assistant at <a href=\"https://www.azraismail.me/the-care-lab\" target=\"_blank\" rel=\"noopener noreferrer\">Collective Action & Research for Equity (CARE) Lab</a>, Emory University",
+          "titleParts": [
+            "Research Assistant at ",
+            {
+              "text": "Collective Action & Research for Equity (CARE) Lab",
+              "url": "https://www.azraismail.me/the-care-lab"
+            },
+            ", Emory University"
+          ],
           "period": "Sept. 2024 - Present",
           "bullets": [
             "Analyzed nearly 1,000 user data points and developed an interactive dashboard for MakerGhat, an India-based organization, utilizing JavaScript, Python, and HTML for seamless data visualization.",
@@ -88,7 +117,13 @@
           ]
         },
         {
-          "title": "Research Assistant at <a href=\"https://geometrynyc.wixsite.com/polymathreu\" target=\"_blank\" rel=\"noopener noreferrer\">Polymath Jr REU Summer Program</a>",
+          "titleParts": [
+            "Research Assistant at ",
+            {
+              "text": "Polymath Jr REU Summer Program",
+              "url": "https://geometrynyc.wixsite.com/polymathreu"
+            }
+          ],
           "period": "Jun. 2025 - Aug. 2025",
           "bullets": [
             "Developed and analyzed mathematical models using ordinary differential equations (ODEs) to study the community transmission of Clostridioides difficile (C. difficile).",
@@ -97,7 +132,14 @@
           ]
         },
         {
-          "title": "Team Leader and Research Assistant at <a href=\"https://ailearning.emory.edu/learning/experiential-learning.html\" target=\"_blank\" rel=\"noopener noreferrer\">AI.Data Lab Program</a> for Emory Office of Sustainability Initiatives",
+          "titleParts": [
+            "Team Leader and Research Assistant at ",
+            {
+              "text": "AI.Data Lab Program",
+              "url": "https://ailearning.emory.edu/learning/experiential-learning.html"
+            },
+            " for Emory Office of Sustainability Initiatives"
+          ],
           "period": "Jan. 2025 - May. 2025",
           "bullets": [
             "Built an ensemble deep learning pipeline to predict vehicle CO2 emissions, using official Canadian datasets and SHAP for explainability.",
