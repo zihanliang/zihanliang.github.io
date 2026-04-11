@@ -13,7 +13,7 @@
           "icon": "🤖",
           "subject": "Machine Learning",
           "language": "English",
-          "file": "notes/ml.pdf"
+          "file": "pdf/notes/ml.pdf"
         }
       ]
     },
@@ -24,31 +24,31 @@
           "icon": "λ",
           "subject": "Linear Algebra",
           "language": "English",
-          "file": "notes/lin_alg.pdf"
+          "file": "pdf/notes/lin_alg.pdf"
         },
         {
           "icon": "∫",
           "subject": "Multivariable Calculus and Vector Analysis",
           "language": "English",
-          "file": "notes/cal3.pdf"
+          "file": "pdf/notes/cal3.pdf"
         },
         {
           "icon": "∂",
           "subject": "Differential Equations",
           "language": "Bilingual",
-          "file": "notes/diff_equ.pdf"
+          "file": "pdf/notes/diff_equ.pdf"
         },
         {
           "icon": "π",
           "subject": "Numerical Analysis",
           "language": "Bilingual",
-          "file": "notes/num_anal.pdf"
+          "file": "pdf/notes/num_anal.pdf"
         },
         {
           "icon": "📘",
           "subject": "Real Analysis",
           "language": "English",
-          "file": "notes/real_analysis.pdf"
+          "file": "pdf/notes/real_analysis.pdf"
         }
       ]
     },
@@ -59,31 +59,31 @@
           "icon": "🧮",
           "subject": "AP Calculus BC",
           "language": "Bilingual",
-          "file": "notes/ap_cal_bc.pdf"
+          "file": "pdf/notes/ap_cal_bc.pdf"
         },
         {
           "icon": "📊",
           "subject": "AP Statistics",
           "language": "Bilingual",
-          "file": "notes/ap_stats.pdf"
+          "file": "pdf/notes/ap_stats.pdf"
         },
         {
           "icon": "⚡",
           "subject": "AP Physics C",
           "language": "Bilingual",
-          "file": "notes/ap_phy_c.pdf"
+          "file": "pdf/notes/ap_phy_c.pdf"
         },
         {
           "icon": "🧪",
           "subject": "AP Chemistry",
           "language": "Bilingual",
-          "file": "notes/ap_chem.pdf"
+          "file": "pdf/notes/ap_chem.pdf"
         },
         {
           "icon": "💹",
           "subject": "College Prep Economics",
           "language": "Bilingual",
-          "file": "notes/college_prep_econ.pdf"
+          "file": "pdf/notes/college_prep_econ.pdf"
         }
       ]
     }
