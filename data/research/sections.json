@@ -9,6 +9,8 @@
           "title": "DART: Mitigating Harm Drift in Difference-Aware LLMs via Distill-Audit-Repair Training",
           "authors": "Ziwen Pan*, Zihan Liang*, Jad Kabbara, Ali Emami",
           "status": "Accepted at ACL 2026 Findings",
+          "paper": "https://arxiv.org/abs/2604.16845",
+          "code": "https://github.com/zihanliang/DART",
           "bullets": [
             "Identified the problem of harm drift in safety-tuned LLMs—where fine-tuning improves decision accuracy but makes rationales more harmful—and introduced DART, a Distill-Audit-Repair pipeline for improving difference-awareness classification while preserving safer explanations.",
             "On eight benchmarks, DART improved Llama-3-8B-Instruct accuracy from 39.0% to 68.8%, boosted equal-treatment accuracy from 11.3% to 72.6%, and reduced harm drift cases by 72.6%, showing that accuracy and safety can be improved together."
@@ -36,7 +38,7 @@
           "title": "Causal Representation Learning from Multimodal Clinical Records under Non-Random Modality Missingness",
           "authors": "Zihan Liang*, Ziwen Pan*, Ruoxuan Xiong",
           "status": "Accepted at EMNLP 2025 Main",
-          "paper": "https://aclanthology.org/2025.emnlp-main.1465/",
+          "paper": "https://arxiv.org/abs/2509.17228",
           "code": "https://github.com/CausalMLResearch/CRL-MMNAR",
           "bullets": [
             "Proposed CRL-MMNAR, a causal multimodal framework that treats modality missing-not-at-random as signal—combining missingness-aware fusion (gated by observation patterns) with cross-modal reconstruction + contrastive learning, and a multitask predictor with a cross-fitted rectifier to correct observation-pattern bias.",
