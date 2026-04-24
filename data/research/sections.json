@@ -20,6 +20,8 @@
           "title": "Learning Dynamic Representations and Policies from Multimodal Clinical Time-Series with Informative Missingness",
           "authors": "Zihan Liang*, Ziwen Pan*, Ruoxuan Xiong",
           "status": "Accepted at ACL 2026 Findings",
+          "paper": "https://arxiv.org/abs/2604.21235",
+          "code": "https://github.com/CausalMLResearch/OPL-MT-MNAR",
           "bullets": [
             "Proposed an MNAR-aware multimodal framework for clinical time-series that treats observation patterns as signal rather than noise, combining explicit missingness features, adaptive fusion of sparse clinical text, and action-conditioned latent dynamics to learn patient states for both prediction and offline decision-making.",
             "Demonstrated strong results on MIMIC-IV and eICU: mortality prediction reached AUROC 0.876 on MIMIC-IV (+3.9% over GRU-D), while the learned treatment policy improved FQE by 20.3% over clinician behavior and delivered the largest gains for high-severity patients."
