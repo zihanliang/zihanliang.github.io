@@ -8,30 +8,6 @@ async function fetchJson(file) {
   return response.json();
 }
 
-function setupScrollAnimation() {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.12 }
-  );
-
-  document.querySelectorAll("[data-animate]").forEach((el) => {
-    observer.observe(el);
-  });
-}
-
-function revealAllAnimatedBlocks() {
-  document.querySelectorAll("[data-animate]").forEach((el) => {
-    el.classList.add("visible");
-  });
-}
-
 function setText(id, value) {
   const el = document.getElementById(id);
   if (el) el.textContent = value;
@@ -83,7 +59,7 @@ function renderCard(item) {
     : "";
 
   return `
-    <article class="demo-card" data-animate>
+    <article class="demo-card">
       <div class="demo-card-head">
         <div class="demo-emoji" aria-hidden="true">${emoji}</div>
         ${kicker}
@@ -100,7 +76,7 @@ function renderCard(item) {
 
 function renderPlaceholderCard() {
   return `
-    <article class="demo-card demo-card-placeholder" data-animate>
+    <article class="demo-card demo-card-placeholder">
       <div class="demo-card-head">
         <div class="demo-emoji" aria-hidden="true">🧪</div>
         <p class="demo-kicker">In Progress</p>
@@ -135,7 +111,6 @@ async function init() {
 
     gridEl.innerHTML = (data.items || []).map(renderCard).join("") + renderPlaceholderCard();
 
-    setupScrollAnimation();
   } catch (error) {
     console.error("Failed to load demo page content:", error);
 
@@ -147,7 +122,6 @@ async function init() {
 
     const gridEl = document.getElementById("demo-grid");
     gridEl.innerHTML = renderPlaceholderCard();
-    revealAllAnimatedBlocks();
   }
 }
 

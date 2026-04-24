@@ -7,7 +7,7 @@ title-block: false
 ---
 
 <div class="site-shell demo-shell">
-  <section class="demo-hero" data-animate>
+  <section class="demo-hero">
     <h2 id="demo-page-title" class="section-title demo-title"></h2>
     <p id="demo-page-subtitle" class="scholar-page-subtitle demo-subtitle"></p>
   </section>

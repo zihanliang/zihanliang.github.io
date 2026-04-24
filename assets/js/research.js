@@ -14,30 +14,6 @@ async function fetchJson(file) {
   return response.json();
 }
 
-function setupScrollAnimation() {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.12 }
-  );
-
-  document.querySelectorAll("[data-animate]").forEach((el) => {
-    observer.observe(el);
-  });
-}
-
-function revealAllAnimatedBlocks() {
-  document.querySelectorAll("[data-animate]").forEach((el) => {
-    el.classList.add("visible");
-  });
-}
-
 function escapeHtml(value) {
   return String(value ?? "")
     .replace(/&/g, "&amp;")
@@ -145,7 +121,7 @@ function renderEntry(entry) {
     : "";
 
   return `
-    <article class="scholar-entry" data-animate>
+    <article class="scholar-entry">
       <h3 class="scholar-entry-title">${renderTitle(entry)}</h3>
       ${primaryMeta ? `<p class="scholar-meta">${primaryMeta}</p>` : ""}
       ${renderVenueRow(entry)}
@@ -158,7 +134,7 @@ function renderEntry(entry) {
 function renderSection(section) {
   const entriesHtml = (section.entries || []).map(renderEntry).join("");
   return `
-    <section class="scholar-section" data-animate>
+    <section class="scholar-section">
       <h2 class="section-title">${escapeHtml(section.title)}</h2>
       <div class="scholar-entry-list">
         ${entriesHtml}
@@ -176,10 +152,8 @@ async function init() {
     sectionsEl.innerHTML = (data.sections || []).map(renderSection).join("");
     footnoteEl.textContent = data.pageFootnote || "";
 
-    setupScrollAnimation();
   } catch (error) {
     console.error("Failed to load research page content:", error);
-    revealAllAnimatedBlocks();
     const sectionsEl = document.getElementById("scholar-sections");
     sectionsEl.innerHTML = `<p class="scholar-page-subtitle">Content failed to load. Please check <code>data/research/sections.json</code>.</p>`;
   }

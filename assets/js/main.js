@@ -61,7 +61,7 @@ function renderDoing(doing) {
   const cards = doing.items
     .map(
       (item) => `
-      <article class="work-card" data-animate>
+      <article class="work-card">
         <img src="${item.image}" alt="${item.title}" class="card-image" />
         <h3>${item.title}</h3>
         <p>${item.description}</p>
@@ -79,7 +79,7 @@ function renderNews(news) {
   const items = (news.items || [])
     .map(
       (item) => `
-      <article class="news-item" data-animate>
+      <article class="news-item">
         <p class="news-meta">${item.date || ""}</p>
         <p class="news-text">${item.text || ""}</p>
       </article>
@@ -168,30 +168,6 @@ function renderContact(contact) {
   );
 }
 
-function setupScrollAnimation() {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.12 }
-  );
-
-  document.querySelectorAll("[data-animate]").forEach((el) => {
-    observer.observe(el);
-  });
-}
-
-function revealAllAnimatedBlocks() {
-  document.querySelectorAll("[data-animate]").forEach((el) => {
-    el.classList.add("visible");
-  });
-}
-
 async function init() {
   try {
     const [hero, about, news, doing, research, contact] = await Promise.all(
@@ -206,10 +182,8 @@ async function init() {
     renderContact(contact);
 
     setupNewsListViewport();
-    setupScrollAnimation();
   } catch (error) {
     console.error("Failed to load page content:", error);
-    revealAllAnimatedBlocks();
     setHtml(
       "hero-text",
       `<p class="hero-title">Content failed to load. Please check <code>data/home/*.json</code>.</p>`

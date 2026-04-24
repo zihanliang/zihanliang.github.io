@@ -8,30 +8,6 @@ async function fetchJson(file) {
   return response.json();
 }
 
-function setupScrollAnimation() {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.12 }
-  );
-
-  document.querySelectorAll("[data-animate]").forEach((el) => {
-    observer.observe(el);
-  });
-}
-
-function revealAllAnimatedBlocks() {
-  document.querySelectorAll("[data-animate]").forEach((el) => {
-    el.classList.add("visible");
-  });
-}
-
 function renderCard(note) {
   const cardInner = `
     <div class="note-icon">${note.icon || "📝"}</div>
@@ -43,14 +19,14 @@ function renderCard(note) {
   if (downloadPath) {
     const filename = (downloadPath.split("/").pop() || "note.pdf").trim();
     return `
-      <a class="note-card" href="${downloadPath}" download="${filename}" data-animate>
+      <a class="note-card" href="${downloadPath}" download="${filename}">
         ${cardInner}
       </a>
     `;
   }
 
   return `
-    <article class="note-card" data-animate>
+    <article class="note-card">
       ${cardInner}
     </article>
   `;
@@ -59,7 +35,7 @@ function renderCard(note) {
 function renderSection(section) {
   const cards = (section.items || []).map(renderCard).join("");
   return `
-    <section class="note-section" data-animate>
+    <section class="note-section">
       <h2 class="section-title">${section.title}</h2>
       <div class="note-grid">
         ${cards}
@@ -77,10 +53,8 @@ async function init() {
       .map((item) => `<li>${item}</li>`)
       .join("");
     sectionsEl.innerHTML = (data.sections || []).map(renderSection).join("");
-    setupScrollAnimation();
   } catch (error) {
     console.error("Failed to load notes page content:", error);
-    revealAllAnimatedBlocks();
     const sectionsEl = document.getElementById("notes-sections");
     sectionsEl.innerHTML = `<p class="scholar-page-subtitle">Content failed to load. Please check <code>data/notes/sections.json</code>.</p>`;
   }

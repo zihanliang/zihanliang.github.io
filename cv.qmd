@@ -7,11 +7,11 @@ title-block: false
 ---
 
 <div class="site-shell cv-shell">
-<div data-animate>
+<div>
 <h2 class="section-title cv-title">Curriculum Vitae</h2>
 </div>
 
-<div class="cv-viewer-wrap" data-animate>
+<div class="cv-viewer-wrap">
 <iframe
 class="cv-viewer"
 src="pdf/Zihan_Liang_CV_Public.pdf#view=FitH"
@@ -19,11 +19,9 @@ title="Curriculum Vitae PDF"
 ></iframe>
 </div>
 
-<div class="cv-download-wrap" data-animate>
+<div class="cv-download-wrap">
 <a class="cv-download-btn" href="pdf/Zihan_Liang_CV_Public.pdf" target="_blank" rel="noopener noreferrer">
 Open CV (PDF)
 </a>
 </div>
 </div>
-
-<script src="assets/js/scroll-animate.js"></script>

@@ -7,7 +7,7 @@ title-block: false
 ---
 
 <div class="site-shell notes-page">
-  <section class="notes-hero" data-animate>
+  <section class="notes-hero">
     <h2 class="section-title notes-title">Incoming Notes</h2>
     <ul id="incoming-notes-list" class="incoming-notes-list"></ul>
   </section>

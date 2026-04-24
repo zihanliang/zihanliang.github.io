@@ -37,6 +37,6 @@ format:
   html:
     toc: false
     theme: default
-    css: assets/css/style.v2.css
+    css: assets/css/style.css
     include-in-header: assets/includes/head-icons.html
     include-after-body: assets/includes/nav-scroll.html
