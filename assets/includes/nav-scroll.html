@@ -3,9 +3,11 @@
   const MOBILE_NAV_QUERY = window.matchMedia('(max-width: 991.98px)')
   const MOBILE_NAV_EXIT_MS = 280
   const MOBILE_NAV_SCENE_EXIT_MS = 220
+  const PAGE_EXIT_MS = 135
   let lockedScrollY = 0
   let mobileNavReleaseTimer = 0
   let mobileNavSceneReleaseTimer = 0
+  const prefetchedUrls = new Set()
 
   function withNextPaint(callback) {
     window.requestAnimationFrame(callback)
@@ -162,6 +164,72 @@
     scheduleMobileNavRelease()
   }
 
+  function getLocalNavigationUrl(link) {
+    if (!link || link.target || link.hasAttribute('download')) return null
+    if (link.closest('[data-no-page-transition]')) return null
+
+    const href = link.getAttribute('href')
+    if (!href || href.startsWith('#')) return null
+    if (/^(mailto|tel|javascript):/i.test(href)) return null
+
+    const url = new URL(href, window.location.href)
+    if (url.origin !== window.location.origin) return null
+
+    const sameDocument =
+      url.pathname === window.location.pathname &&
+      url.search === window.location.search
+
+    if (sameDocument && url.hash) return null
+    if (sameDocument && !url.hash) return null
+
+    return url
+  }
+
+  function prefetchDocument(url) {
+    if (!url || prefetchedUrls.has(url.href)) return
+
+    prefetchedUrls.add(url.href)
+
+    const link = document.createElement('link')
+    link.rel = 'prefetch'
+    link.as = 'document'
+    link.href = url.href
+    document.head.appendChild(link)
+  }
+
+  function setupNavigationPrefetch() {
+    document.querySelectorAll('#quarto-header a[href]').forEach(function (link) {
+      const url = getLocalNavigationUrl(link)
+      if (!url) return
+
+      link.addEventListener('pointerenter', function () {
+        prefetchDocument(url)
+      }, { passive: true })
+
+      link.addEventListener('focus', function () {
+        prefetchDocument(url)
+      }, { passive: true })
+    })
+  }
+
+  function setupPageExitTransition() {
+    document.addEventListener('click', function (event) {
+      if (event.defaultPrevented) return
+      if (event.button !== 0) return
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+
+      const link = event.target.closest('#quarto-header a[href]')
+      const url = getLocalNavigationUrl(link)
+      if (!url) return
+
+      event.preventDefault()
+      document.documentElement.classList.add('page-leaving')
+      window.setTimeout(function () {
+        window.location.href = url.href
+      }, PAGE_EXIT_MS)
+    })
+  }
+
   function syncMobileNavState() {
     const collapse = getNavbarCollapse()
     if (!collapse) return
@@ -262,6 +330,8 @@
   }, { passive: true });
   window.addEventListener('load', function () {
     setupMobileNav()
+    setupNavigationPrefetch()
+    setupPageExitTransition()
     syncMobileNavState()
     syncNavState()
   });

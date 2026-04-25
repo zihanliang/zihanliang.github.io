@@ -1,5 +1,9 @@
 const notesDataFile = "data/notes/sections.json";
 
+function markContentReady() {
+  document.dispatchEvent(new CustomEvent("site:content-ready"));
+}
+
 async function fetchJson(file) {
   const response = await fetch(file);
   if (!response.ok) {
@@ -53,10 +57,12 @@ async function init() {
       .map((item) => `<li>${item}</li>`)
       .join("");
     sectionsEl.innerHTML = (data.sections || []).map(renderSection).join("");
+    markContentReady();
   } catch (error) {
     console.error("Failed to load notes page content:", error);
     const sectionsEl = document.getElementById("notes-sections");
     sectionsEl.innerHTML = `<p class="scholar-page-subtitle">Content failed to load. Please check <code>data/notes/sections.json</code>.</p>`;
+    markContentReady();
   }
 }
 

@@ -6,6 +6,10 @@ const resourceLinkOrder = [
   { key: "poster", label: "Poster" },
 ];
 
+function markContentReady() {
+  document.dispatchEvent(new CustomEvent("site:content-ready"));
+}
+
 async function fetchJson(file) {
   const response = await fetch(file);
   if (!response.ok) {
@@ -151,11 +155,13 @@ async function init() {
 
     sectionsEl.innerHTML = (data.sections || []).map(renderSection).join("");
     footnoteEl.textContent = data.pageFootnote || "";
+    markContentReady();
 
   } catch (error) {
     console.error("Failed to load research page content:", error);
     const sectionsEl = document.getElementById("scholar-sections");
     sectionsEl.innerHTML = `<p class="scholar-page-subtitle">Content failed to load. Please check <code>data/research/sections.json</code>.</p>`;
+    markContentReady();
   }
 }
 

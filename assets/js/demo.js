@@ -1,5 +1,9 @@
 const demoDataFile = "data/demo/sections.json";
 
+function markContentReady() {
+  document.dispatchEvent(new CustomEvent("site:content-ready"));
+}
+
 async function fetchJson(file) {
   const response = await fetch(file);
   if (!response.ok) {
@@ -110,6 +114,7 @@ async function init() {
     );
 
     gridEl.innerHTML = (data.items || []).map(renderCard).join("") + renderPlaceholderCard();
+    markContentReady();
 
   } catch (error) {
     console.error("Failed to load demo page content:", error);
@@ -122,6 +127,7 @@ async function init() {
 
     const gridEl = document.getElementById("demo-grid");
     gridEl.innerHTML = renderPlaceholderCard();
+    markContentReady();
   }
 }
 

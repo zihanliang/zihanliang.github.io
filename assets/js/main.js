@@ -8,6 +8,22 @@ const dataFiles = [
 ];
 
 const VISIBLE_NEWS_ITEMS = 3;
+const imageDimensions = {
+  "figures/home/zihan-liang-profile.jpg": { width: 1280, height: 1707 },
+  "figures/home/whatimdoing-ml.png": { width: 1280, height: 823 },
+  "figures/home/whatimdoing-data.png": { width: 1280, height: 823 },
+  "figures/home/whatimdoing-aicomm.jpg": { width: 1280, height: 823 },
+  "figures/home/whatimdoing-culture.jpg": { width: 1280, height: 823 }
+};
+
+function markContentReady() {
+  document.dispatchEvent(new CustomEvent("site:content-ready"));
+}
+
+function getImageSizeAttrs(src) {
+  const size = imageDimensions[src];
+  return size ? `width="${size.width}" height="${size.height}"` : "";
+}
 
 async function fetchJson(file) {
   const response = await fetch(file);
@@ -33,7 +49,7 @@ function renderHero(hero) {
   setHtml(
     "hero-image-wrap",
     `
-      <img src="${hero.profileImage}" alt="${hero.name}" class="hero-image" />
+      <img src="${hero.profileImage}" alt="${hero.name}" class="hero-image" ${getImageSizeAttrs(hero.profileImage)} loading="eager" decoding="async" fetchpriority="high" />
     `
   );
 }
@@ -62,7 +78,7 @@ function renderDoing(doing) {
     .map(
       (item) => `
       <article class="work-card">
-        <img src="${item.image}" alt="${item.title}" class="card-image" />
+        <img src="${item.image}" alt="${item.title}" class="card-image" ${getImageSizeAttrs(item.image)} loading="lazy" decoding="async" />
         <h3>${item.title}</h3>
         <p>${item.description}</p>
       </article>
@@ -182,12 +198,14 @@ async function init() {
     renderContact(contact);
 
     setupNewsListViewport();
+    markContentReady();
   } catch (error) {
     console.error("Failed to load page content:", error);
     setHtml(
       "hero-text",
       `<p class="hero-title">Content failed to load. Please check <code>data/home/*.json</code>.</p>`
     );
+    markContentReady();
   }
 }
 
