@@ -84,6 +84,11 @@
 
 html {
   color-scheme: light;
+  min-height: 100%;
+  background: var(--page-background);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: 100vw 100vh;
 }
 
 html[data-theme="dark"] {
@@ -147,8 +152,11 @@ body {
   margin: 0;
   min-height: 100%;
   color: var(--text);
-  background: var(--page-background);
   font-family: "Manrope", sans-serif;
+}
+
+body {
+  background: transparent;
 }
 
 .quarto-container,

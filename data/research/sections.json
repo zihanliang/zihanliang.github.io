@@ -93,7 +93,8 @@
           "period": "Advised by Prof. Ruoxuan Xiong",
           "status": "Emory College of Arts and Sciences Honors Thesis (Highest Honors)",
           "paper": "https://etd.library.emory.edu/concern/etds/zk51vj64z?locale=en",
-          "slides": "pdf/slides/emory-college-honors-slides.pdf",
+          "slides": "pdf/slides/emory-college-honors/emory-college-honors-slides.pdf",
+          "poster": "pdf/slides/emory-college-honors/Zihan-Liang-Honors-Poster.pdf",
           "bullets": [
             "Proposed a unified causal representation learning framework that models cross-scale informative missingness (patient-level modality assignment and step-level monitoring intensity) as explicit variables, enabling both prediction and decision-making under MNAR clinical data.",
             "Developed a two-stage MMNAR pipeline with missingness-aware fusion, cross-modal self-supervision, and a cross-fitted pattern-wise rectifier that corrects residual bias, achieving consistent AUROC gains under severe missingness and distribution shift.",
