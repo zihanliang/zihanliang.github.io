@@ -29,7 +29,8 @@
         },
         {
           "title": "MambaDATG: Domain-Adaptive Tri-Plane-Gated Pre-training for 3D Abdominal Segmentation",
-          "authors": "Y. Shen*, D. Jiang*, Zihan Liang*, Y. Wei*, W. Yang, S. Wang, et al.",
+          "authors": "Yaomin Shen*, Dongming Jiang*, Zihan Liang*, Yangbo Wei*, Wenkai Yang, Xiaoxin Sun, Zhen Huang, Suhua Wang, Qingsong Yao",
+          "paper": "https://ieeexplore.ieee.org/document/11462566",
           "status": "Accepted at ICASSP 2026 <span class=\"status-tag status-tag-oral\">Oral</span>",
           "bullets": [
             "Proposed MambaDATG, a tri-plane-gated selective SSM pre-training that fuses axial, coronal, and sagittal scans via voxel gating—capturing directional anisotropy with linear-time efficiency and zero inference overhead.",
