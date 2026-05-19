@@ -1,24 +1,34 @@
 {
   "incomingNotes": [
-    "English Version of \"Introduction to Java Programming and Data Structures\" Notes",
-    "Bilingual Chinese-English Version of \"Data Structures and Algorithms\" Notes",
     "English Version of \"Introduction to Natural Language Processing\" Notes",
     "English Version of \"Introduction to Causal Inference\" Notes"
   ],
   "sections": [
     {
-      "title": "Artificial Intelligence and Machine Learning Notes",
+      "title": "Artificial Intelligence, Machine Learning and Informatics Notes",
       "items": [
         {
           "icon": "🤖",
           "subject": "Machine Learning",
           "language": "English",
           "file": "pdf/notes/ml.pdf"
+        },
+        {
+          "icon": "☕",
+          "subject": "Introduction to Java Programming",
+          "language": "English",
+          "file": "pdf/notes/java_programming.pdf"
+        },
+        {
+          "icon": "🕸️",
+          "subject": "Introduction to Data Structures and Algorithms",
+          "language": "Bilingual",
+          "file": "pdf/notes/data_stru.pdf"
         }
       ]
     },
     {
-      "title": "College Mathematics Course Notes",
+      "title": "Mathematics Notes",
       "items": [
         {
           "icon": "λ",
@@ -45,7 +55,13 @@
           "file": "pdf/notes/num_anal.pdf"
         },
         {
-          "icon": "📘",
+          "icon": "📐",
+          "subject": "Linear Optimization",
+          "language": "Bilingual",
+          "file": "pdf/notes/lin_opt.pdf"
+        },
+        {
+          "icon": "ε",
           "subject": "Real Analysis",
           "language": "English",
           "file": "pdf/notes/real_analysis.pdf"
