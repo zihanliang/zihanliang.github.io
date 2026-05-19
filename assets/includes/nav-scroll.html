@@ -3,6 +3,7 @@
   const MOBILE_NAV_QUERY = window.matchMedia('(max-width: 991.98px)')
   const MOBILE_NAV_EXIT_MS = 280
   const MOBILE_NAV_SCENE_EXIT_MS = 220
+  const NAVIGATION_CONFIG_FILE = 'data/navigation.json'
   let lockedScrollY = 0
   let mobileNavReleaseTimer = 0
   let mobileNavSceneReleaseTimer = 0
@@ -71,6 +72,56 @@
 
   function getNavbarCollapse() {
     return document.getElementById('navbarCollapse')
+  }
+
+  function normalizeNavHref(href) {
+    if (!href) return ''
+
+    try {
+      const url = new URL(href, window.location.href)
+      const path = url.pathname.replace(/\/+$/, '')
+      const fileName = path.split('/').pop() || 'index.html'
+
+      return fileName.replace(/\.qmd$/i, '.html').toLowerCase()
+    } catch (error) {
+      return href.replace(/\.qmd$/i, '.html').toLowerCase()
+    }
+  }
+
+  function getNavConfigPage(config, link) {
+    const linkText = link.textContent.trim().toLowerCase()
+    const linkHref = normalizeNavHref(link.getAttribute('href'))
+
+    return (config.pages || []).find(function (page) {
+      const pageText = String(page.text || '').trim().toLowerCase()
+      const pageHref = normalizeNavHref(page.href)
+
+      return (pageText && pageText === linkText) || (pageHref && pageHref === linkHref)
+    })
+  }
+
+  async function applyNavigationVisibility() {
+    let config
+
+    try {
+      const response = await fetch(NAVIGATION_CONFIG_FILE, { cache: 'no-store' })
+      if (!response.ok) return
+
+      config = await response.json()
+    } catch (error) {
+      return
+    }
+
+    if (!config || !Array.isArray(config.pages)) return
+
+    document.querySelectorAll('.navbar .nav-link').forEach(function (link) {
+      const page = getNavConfigPage(config, link)
+      if (!page) return
+
+      const item = link.closest('.nav-item') || link
+      item.hidden = page.visible === false
+      item.setAttribute('aria-hidden', page.visible === false ? 'true' : 'false')
+    })
   }
 
   function lockPageScroll() {
@@ -262,9 +313,11 @@
   }, { passive: true });
   window.addEventListener('load', function () {
     setupMobileNav()
+    applyNavigationVisibility()
     syncMobileNavState()
     syncNavState()
   });
+  applyNavigationVisibility()
   syncNavState();
 })();
 </script>

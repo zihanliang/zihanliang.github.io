@@ -24,6 +24,7 @@ Source repository for a personal academic website (Quarto + vanilla frontend).
 ## Content and Assets
 
 - `data/home/`: Home modules (hero/about/news/doing/research/contact)
+- `data/navigation.json`: Navbar visibility controls
 - `data/research/sections.json`: Publications, manuscripts, collaborative projects
 - `data/experiences/sections.json`: Education, teaching, industry, leadership experiences
 - `data/demo/sections.json`: Demo page title, subtitle, and project cards
@@ -72,4 +73,5 @@ Core config file: `_quarto.yml`
 - `project.output-dir: docs`
 - `project.resources`: Files copied to output (`CNAME`, `data/`, `fonts/`, `figures/`, `icon/`, `notes/`, and CV PDF)
 - `website.navbar`: Top navigation (Home/CV/Research/Experiences/Demos/Study Notes)
+- `data/navigation.json`: Runtime visibility for navbar entries (`visible: true` or `false`)
 - `format.html.css`: `assets/css/style.css`

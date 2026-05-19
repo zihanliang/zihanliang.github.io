@@ -1,0 +1,34 @@
+{
+  "pages": [
+    {
+      "text": "Home",
+      "href": "index.qmd",
+      "visible": true
+    },
+    {
+      "text": "CV",
+      "href": "cv.qmd",
+      "visible": true
+    },
+    {
+      "text": "Research",
+      "href": "research.qmd",
+      "visible": true
+    },
+    {
+      "text": "Experiences",
+      "href": "experiences.qmd",
+      "visible": true
+    },
+    {
+      "text": "Demos",
+      "href": "demo.qmd",
+      "visible": false
+    },
+    {
+      "text": "Study Notes",
+      "href": "notes.qmd",
+      "visible": true
+    }
+  ]
+}

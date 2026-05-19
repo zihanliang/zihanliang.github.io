@@ -5,24 +5,20 @@
       "title": "Education Experiences",
       "entries": [
         {
+          "title": "Duke University | Incoming Ph.D. Student in Computational Biology and Bioinformatics",
+          "period": "Aug. 2026 - May 2031 (expected)"
+        },
+        {
           "title": "Emory University | Bachelor of Science in Applied Mathematics and Statistics with Highest Honors, with a Minor in Artificial Intelligence",
           "period": "Aug. 2023 - May 2026",
           "bullets": [
             "GPA: 3.99/4.00",
-            {
-              "text": "Data and Decision Sciences Honors Program",
-              "children": [
-                {
-                  "text": "Advisor: <a href=\"https://www.ruoxuanxiong.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Prof. Ruoxuan Xiong</a>"
-                }
-              ]
-            },
             "Awards and Honors: Phi Beta Kappa; Dean's List; American Statistical Association DataFest Best Visualization Award; AI Mathematical Olympiad Bronze Medal",
             {
               "text": "Relevant Courseworks:",
               "children": [
                 {
-                  "text": "Mathematics: Multivariable Calculus, Linear Algebra, Discrete Mathematics, Ordinary Differential Equations, Linear Optimization, Graph Theory, Real Analysis"
+                  "text": "Mathematics: Multivariable Calculus, Linear Algebra, Discrete Mathematics, Ordinary Differential Equations, Linear Optimization, Graph Theory (Graduate Level), Elementary Real Analysis"
                 },
                 {
                   "text": "Statistics & Computation: Mathematical Statistics, Numerical Analysis, Data Structures and Algorithms, Data Science Computing, Machine Learning, Text Data Science, Information Visualization, Experimental Methods, Causal Inference (Doctoral Level)"
@@ -48,20 +44,19 @@
       "title": "Teaching Experiences",
       "entries": [
         {
-          "title": "Teaching Assistant and Grader | Department of Data and Decision Sciences, Emory College - Undergraduate Machine Learning Course",
+          "title": "Teaching Assistant and Grader | Department of Data and Decision Sciences - Undergraduate Machine Learning Course",
           "period": "Jan. 2026 - May 2026",
           "bullets": [
-            "More details coming soon!"
+            "Graded assignments and exams for an undergraduate machine learning course, providing timely and constructive feedback to support student learning.",
+            "Supported students by answering questions on machine learning concepts and coursework."
           ]
         },
         {
           "title": "Teaching Assistant and Grader | <a href=\"https://www.awesomemath.org/summer-program/overview/program-information/\" target=\"_blank\" rel=\"noopener noreferrer\">AwesomeMath</a> - Algebra Course for Mathematical Olympiads",
           "period": "Jun. 2025 - Aug. 2025",
           "bullets": [
-            "Assisted in the instruction of advanced mathematics topics, including algebraic manipulation, polynomial factoring, symmetric and cyclic factoring, partial fractions, AM-GM inequality, trigonometry, and systems of equations, for high school students preparing for math competitions.",
-            "Guided students through challenging problems, provided one-on-one tutoring, and helped build problem-solving skills across mathematical domains.",
-            "Responsible for writing homework solutions, grading assignments, and evaluating exams, ensuring timely feedback to support student performance and understanding."
-          ]
+            "Supported instruction in advanced algebra and mathematical Olympiad topics for high school students, covering inequalities, factoring techniques, trigonometry, and systems of equations.",
+            "Mentored students through challenging problems while managing homework solutions, grading, and exam evaluation to support learning progress and competition preparation."          ]
         }
       ]
     },
@@ -91,7 +86,7 @@
           ]
         },
         {
-          "title": "Founder and President | <a href=\"https://sites.google.com/view/emoryaida\" target=\"_blank\" rel=\"noopener noreferrer\">Emory Artificial Intelligence and Data Association</a>",
+          "title": "Founder and President | Emory Artificial Intelligence and Data Association",
           "period": "Apr. 2024 - Oct. 2025",
           "bullets": [
             "Led EAIDA to become a dynamic AI community, with over 200 general members and over 20 core members, fostering interdisciplinary collaboration in artificial intelligence and data science.",

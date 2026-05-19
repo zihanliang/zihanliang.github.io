@@ -137,22 +137,6 @@
             "Collaborated with a team to identify optimal intervention strategies for controlling the spread of C. difficile in community settings.",
             "Assisted in modifying and implementing code in MATLAB and R to simulate disease dynamics and evaluate mitigation strategies."
           ]
-        },
-        {
-          "titleParts": [
-            "Team Leader and Research Assistant at ",
-            {
-              "text": "AI.Data Lab Program",
-              "url": "https://ailearning.emory.edu/learning/experiential-learning.html"
-            },
-            " for Emory Office of Sustainability Initiatives"
-          ],
-          "period": "Jan. 2025 - May. 2025",
-          "bullets": [
-            "Built an ensemble deep learning pipeline to predict vehicle CO2 emissions, using official Canadian datasets and SHAP for explainability.",
-            "Integrated DNN, XGBoost, and Random Forest models to uncover key emission drivers like fuel type and engine size for 7,300+ vehicles.",
-            "Applied explainable AI (SHAP) to validate model decisions and support sustainable transportation insights at Emory’s Office of Sustainability Initiatives."
-          ]
         }
       ]
     }
