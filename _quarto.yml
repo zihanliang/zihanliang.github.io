@@ -31,7 +31,7 @@ website:
       - text: "Study Notes"
         href: notes.qmd
   page-footer:
-    center: "Department of Data and Decision Sciences, Emory University | zihan.liang@emory.edu | (404) 310-6818<br>© 2025 Zihan Liang. All rights reserved."
+    center: "Department of Data and Decision Sciences, Emory University | zihan.liang@emory.edu <br>© 2025 Zihan Liang. All rights reserved."
 
 format:
   html:
