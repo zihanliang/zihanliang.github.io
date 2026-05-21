@@ -1,7 +1,6 @@
 {
   "incomingNotes": [
-    "English Version of \"Introduction to Natural Language Processing\" Notes",
-    "English Version of \"Introduction to Causal Inference\" Notes"
+    "English Version of \"Introduction to Natural Language Processing\" Notes"
   ],
   "sections": [
     {
@@ -14,14 +13,20 @@
           "file": "pdf/notes/ml.pdf"
         },
         {
+          "icon": "→",
+          "subject": "Causal Inference",
+          "language": "English",
+          "file": "pdf/notes/causal_inference.pdf"
+        },
+        {
           "icon": "☕",
-          "subject": "Introduction to Java Programming",
+          "subject": "Java Programming",
           "language": "English",
           "file": "pdf/notes/java_programming.pdf"
         },
         {
           "icon": "🕸️",
-          "subject": "Introduction to Data Structures and Algorithms",
+          "subject": "Data Structures and Algorithms",
           "language": "Bilingual",
           "file": "pdf/notes/data_stru.pdf"
         }

@@ -21,9 +21,8 @@ function renderCard(note) {
 
   const downloadPath = note.file || note.url;
   if (downloadPath) {
-    const filename = (downloadPath.split("/").pop() || "note.pdf").trim();
     return `
-      <a class="note-card" href="${downloadPath}" download="${filename}">
+      <a class="note-card" href="${downloadPath}" target="_blank" rel="noopener noreferrer">
         ${cardInner}
       </a>
     `;
