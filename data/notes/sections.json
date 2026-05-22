@@ -1,10 +1,17 @@
 {
+  "overview": {
+    "title": "Study Notes",
+    "paragraphs": [
+      "These notes are based on my course notes and my independent summaries from studying different fields outside the classroom. I continue to review and correct them, but mistakes may still remain. If you notice any errors or have suggestions, please feel free to contact me at zihanliangeddie@outlook.com.",
+      "The notes are organized into two language categories: English and Bilingual. English notes are written entirely in English. Bilingual notes combine Chinese and English, so reading them requires native-level Chinese proficiency. These bilingual materials are written especially for Chinese international students like myself."
+    ]
+  },
   "incomingNotes": [
     "English Version of \"Introduction to Natural Language Processing\" Notes"
   ],
   "sections": [
     {
-      "title": "Artificial Intelligence, Machine Learning and Informatics Notes",
+      "title": "Informatics and Artificial Intelligence Notes",
       "items": [
         {
           "icon": "🤖",

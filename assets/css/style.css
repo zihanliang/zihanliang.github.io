@@ -1163,7 +1163,8 @@ section {
   }
 }
 
-.scholar-page {
+.scholar-page,
+.notes-page {
   padding-top: 0.6rem;
 }
 
@@ -1584,10 +1585,32 @@ section {
 }
 
 .notes-title {
-  margin-top: 0 !important;
   margin-bottom: 1.4rem;
   border-bottom: none !important;
   padding-bottom: 0 !important;
+}
+
+.notes-overview {
+  margin-bottom: 3.4rem;
+}
+
+.notes-overview:empty {
+  display: none;
+}
+
+.notes-overview-copy {
+  max-width: 52rem;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.notes-overview-copy p {
+  margin: 0 0 0.8rem;
+}
+
+.notes-overview-copy p:last-child {
+  margin-bottom: 0;
 }
 
 .notes-sections {

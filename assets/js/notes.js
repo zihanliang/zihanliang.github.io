@@ -35,6 +35,19 @@ function renderCard(note) {
   `;
 }
 
+function renderOverview(overview) {
+  if (!overview) return "";
+  const title = overview.title
+    ? `<h2 class="section-title notes-title">${overview.title}</h2>`
+    : "";
+  const paragraphs = (overview.paragraphs || [])
+    .filter(Boolean)
+    .map((paragraph) => `<p>${paragraph}</p>`)
+    .join("");
+
+  return `${title}${paragraphs ? `<div class="notes-overview-copy">${paragraphs}</div>` : ""}`;
+}
+
 function renderSection(section) {
   const cards = (section.items || []).map(renderCard).join("");
   return `
@@ -50,8 +63,10 @@ function renderSection(section) {
 async function init() {
   try {
     const data = await fetchJson(notesDataFile);
+    const overviewEl = document.getElementById("notes-overview");
     const incomingNotesEl = document.getElementById("incoming-notes-list");
     const sectionsEl = document.getElementById("notes-sections");
+    overviewEl.innerHTML = renderOverview(data.overview);
     incomingNotesEl.innerHTML = (data.incomingNotes || [])
       .map((item) => `<li>${item}</li>`)
       .join("");

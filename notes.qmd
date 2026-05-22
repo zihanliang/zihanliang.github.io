@@ -7,6 +7,8 @@ title-block: false
 ---
 
 <div class="site-shell notes-page">
+  <section id="notes-overview" class="notes-overview"></section>
+
   <section class="notes-hero">
     <h2 class="section-title notes-title">Incoming Notes</h2>
     <ul id="incoming-notes-list" class="incoming-notes-list"></ul>
