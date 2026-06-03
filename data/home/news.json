@@ -2,6 +2,10 @@
   "title": "Recent News",
   "items": [
     {
+      "date": "May 2026",
+      "text": "I am excited to announce that I have completed my Bachelor of Science in Applied Mathematics and Statistics, graduating with Highest Honors, at Emory University. I am deeply grateful to my mentor, <a href=\"https://www.ruoxuanxiong.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Prof. Ruoxuan Xiong</a>, for her guidance and support throughout my studies."
+    },
+    {
       "date": "Apr. 2026",
       "text": "Our work “Learning Dynamic Representations and Policies from Multimodal Clinical Time-Series with Informative Missingness” has been accepted to the Findings of ACL 2026."
     },
