@@ -4,9 +4,12 @@
   const MOBILE_NAV_EXIT_MS = 280
   const MOBILE_NAV_SCENE_EXIT_MS = 220
   const NAVIGATION_CONFIG_FILE = 'data/navigation.json'
+  const NAV_CONFIG_LOADING_CLASS = 'nav-config-loading'
+  const NAV_CONFIG_READY_CLASS = 'nav-config-ready'
   let lockedScrollY = 0
   let mobileNavReleaseTimer = 0
   let mobileNavSceneReleaseTimer = 0
+  let navigationVisibilityPromise = null
 
   function withNextPaint(callback) {
     window.requestAnimationFrame(callback)
@@ -100,28 +103,60 @@
     })
   }
 
-  async function applyNavigationVisibility() {
+  function finishNavigationVisibility() {
+    document.documentElement.classList.remove(NAV_CONFIG_LOADING_CLASS)
+    document.documentElement.classList.add(NAV_CONFIG_READY_CLASS)
+  }
+
+  function setNavItemVisibility(link, visible) {
+    const item = link.closest('.nav-item') || link
+
+    if (visible) {
+      item.hidden = false
+      item.removeAttribute('aria-hidden')
+      return
+    }
+
+    item.remove()
+  }
+
+  async function loadNavigationVisibility() {
     let config
 
     try {
       const response = await fetch(NAVIGATION_CONFIG_FILE, { cache: 'no-store' })
-      if (!response.ok) return
+      if (!response.ok) {
+        finishNavigationVisibility()
+        return
+      }
 
       config = await response.json()
     } catch (error) {
+      finishNavigationVisibility()
       return
     }
 
-    if (!config || !Array.isArray(config.pages)) return
+    if (!config || !Array.isArray(config.pages)) {
+      finishNavigationVisibility()
+      return
+    }
 
     document.querySelectorAll('.navbar .nav-link').forEach(function (link) {
       const page = getNavConfigPage(config, link)
       if (!page) return
 
-      const item = link.closest('.nav-item') || link
-      item.hidden = page.visible === false
-      item.setAttribute('aria-hidden', page.visible === false ? 'true' : 'false')
+      setNavItemVisibility(link, page.visible !== false)
     })
+
+    finishNavigationVisibility()
+  }
+
+  function applyNavigationVisibility() {
+    if (!navigationVisibilityPromise) {
+      navigationVisibilityPromise = loadNavigationVisibility()
+    }
+
+    return navigationVisibilityPromise
   }
 
   function lockPageScroll() {

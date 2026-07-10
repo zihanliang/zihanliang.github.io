@@ -31,7 +31,7 @@ website:
       - text: "Study Notes"
         href: notes.qmd
   page-footer:
-    center: "Department of Data and Decision Sciences, Emory University | zihan.liang@emory.edu <br>© 2025 Zihan Liang. All rights reserved."
+    center: "Computational Biology and Bioinformatics Program, Duke University | zihan.liang@duke.edu <br>© 2026 Zihan Liang. All rights reserved."
 
 format:
   html:
