@@ -31,7 +31,7 @@ website:
       - text: "Study Notes"
         href: notes.qmd
   page-footer:
-    center: "Computational Biology and Bioinformatics Program, Duke University | zihan.liang@duke.edu <br>© 2026 Zihan Liang. All rights reserved."
+    center: "Computational Biology and Bioinformatics Program, Duke University | zihan.liang@duke.edu <br><a href=\"zh.html\">中文</a> | © 2026 Zihan Liang. All rights reserved."
 
 format:
   html:

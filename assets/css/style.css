@@ -23,24 +23,115 @@
 }
 
 @font-face {
-  font-family: "LXGW WenKai TC Subset";
-  src: url("../../fonts/LXGW_WenKai_TC/LXGWWenKaiTC-NameSubset.woff2")
-    format("woff2");
+  font-family: "LXGW WenKai";
+  src: url("../../fonts/LXGWWenKai/LXGWWenKai-Light.ttf")
+    format("truetype");
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "LXGW WenKai TC";
-  src: url("../../fonts/LXGW_WenKai_TC/LXGWWenKaiTC-Regular.ttf")
+  font-family: "LXGW WenKai";
+  src: url("../../fonts/LXGWWenKai/LXGWWenKai-Regular.ttf")
     format("truetype");
   font-style: normal;
   font-weight: 400;
   font-display: swap;
 }
 
+@font-face {
+  font-family: "LXGW WenKai";
+  src: url("../../fonts/LXGWWenKai/LXGWWenKai-Bold.ttf")
+    format("truetype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Alibaba PuHuiTi";
+  src: url("../../fonts/AlibabaPuHuiTi/AlibabaPuHuiTi-2-35-Thin.ttf")
+    format("truetype");
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Alibaba PuHuiTi";
+  src: url("../../fonts/AlibabaPuHuiTi/AlibabaPuHuiTi-2-45-Light.ttf")
+    format("truetype");
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Alibaba PuHuiTi";
+  src: url("../../fonts/AlibabaPuHuiTi/AlibabaPuHuiTi-2-55-Regular.ttf")
+    format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Alibaba PuHuiTi";
+  src: url("../../fonts/AlibabaPuHuiTi/AlibabaPuHuiTi-2-65-Medium.ttf")
+    format("truetype");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Alibaba PuHuiTi";
+  src: url("../../fonts/AlibabaPuHuiTi/AlibabaPuHuiTi-2-75-SemiBold.ttf")
+    format("truetype");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Alibaba PuHuiTi";
+  src: url("../../fonts/AlibabaPuHuiTi/AlibabaPuHuiTi-2-85-Bold.ttf")
+    format("truetype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Alibaba PuHuiTi";
+  src: url("../../fonts/AlibabaPuHuiTi/AlibabaPuHuiTi-2-95-ExtraBold.ttf")
+    format("truetype");
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Alibaba PuHuiTi";
+  src: url("../../fonts/AlibabaPuHuiTi/AlibabaPuHuiTi-2-105-Heavy.ttf")
+    format("truetype");
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Alibaba PuHuiTi";
+  src: url("../../fonts/AlibabaPuHuiTi/AlibabaPuHuiTi-2-115-Black.ttf")
+    format("truetype");
+  font-style: normal;
+  font-weight: 950;
+  font-display: swap;
+}
+
 :root {
+  --zh-sans: "Alibaba PuHuiTi", "Manrope", sans-serif;
   --bg: #f3f5f9;
   --surface: #ffffff;
   --text: #1d2430;
@@ -392,6 +483,23 @@ html.nav-scrolled #quarto-header .navbar {
   white-space: nowrap;
 }
 
+.footer .nav-footer-center a {
+  color: var(--primary);
+  font-family: var(--zh-sans);
+  font-weight: 700;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.zh-footer-note {
+  display: inline-block;
+  max-width: min(100%, 46rem);
+  color: var(--muted);
+  font-family: var(--zh-sans);
+  font-weight: 500;
+  white-space: normal;
+}
+
 .quarto-navbar-tools {
   display: flex;
   align-items: center;
@@ -560,7 +668,7 @@ section {
 }
 
 .about-headline .zh-font {
-  font-family: "LXGW WenKai TC Subset", "LXGW WenKai TC", serif;
+  font-family: "LXGW WenKai", serif;
 }
 
 .about-paragraphs p,
@@ -1436,6 +1544,134 @@ section {
   margin-top: 1.6rem;
 }
 
+.zh-page {
+  font-family: "Manrope", "LXGW WenKai", sans-serif;
+}
+
+.zh-page .section-title,
+.zh-subsection-title,
+.zh-hero-title {
+  letter-spacing: 0;
+}
+
+.zh-hero-title {
+  font-family: "LXGW WenKai", "CormorantGaramond", serif;
+  line-height: 1.28;
+}
+
+.zh-hero-emoji {
+  display: inline-block;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  vertical-align: -0.08em;
+}
+
+.zh-cv-link,
+.zh-cv-link:visited,
+.zh-cv-link:hover,
+.zh-cv-link:active {
+  color: var(--primary);
+}
+
+.zh-scholar-block .section-title {
+  border-bottom: none !important;
+  padding-bottom: 0;
+}
+
+.zh-scholar-block > .section-title,
+.zh-contact .section-title,
+.zh-page #zh-hero-meta {
+  font-family: var(--zh-sans);
+}
+
+.zh-scholar-sections {
+  gap: 2.15rem;
+}
+
+.zh-subsection-title {
+  margin: 0 0 0.7rem;
+  color: var(--text);
+  font-family: "LXGW WenKai", "CormorantGaramond", serif;
+  font-size: clamp(1.28rem, 2.2vw, 1.62rem);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.zh-meta-label {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.zh-list-entry {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.35rem 0.8rem;
+  align-items: start;
+  padding: 0.7rem 0.1rem 0.7rem 1rem;
+}
+
+.zh-list-entry::before {
+  content: "-";
+  position: absolute;
+  top: 0.7rem;
+  left: 0;
+  color: var(--muted);
+}
+
+.zh-entry-content {
+  min-width: 0;
+}
+
+.zh-list-entry .scholar-entry-title {
+  margin: 0;
+  font-family: "Manrope", "LXGW WenKai", sans-serif;
+  font-size: clamp(1rem, 1.65vw, 1.16rem);
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.zh-entry-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.16rem 0;
+  margin-top: 0.16rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.zh-entry-details > span + span::before {
+  content: "|";
+  display: inline-block;
+  margin: 0 0.42rem;
+  color: var(--divider);
+}
+
+.zh-list-entry .scholar-resource-links {
+  justify-content: flex-end;
+  padding-top: 0.1rem;
+}
+
+.zh-list-entry .scholar-resource-link {
+  font-size: 0.74rem;
+}
+
+.zh-compact-sections {
+  display: grid;
+  gap: 2.4rem;
+}
+
+.zh-compact-section {
+  margin-bottom: 0;
+}
+
+.zh-contact {
+  margin-bottom: 0.7rem;
+}
+
 @media (max-width: 640px) {
   .scholar-page-subtitle {
     font-size: 0.98rem;
@@ -1443,6 +1679,15 @@ section {
 
   .scholar-entry {
     padding: 0.9rem;
+  }
+
+  .zh-list-entry {
+    grid-template-columns: 1fr;
+  }
+
+  .zh-list-entry .scholar-resource-links {
+    justify-content: flex-start;
+    padding-top: 0;
   }
 }
 
