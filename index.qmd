@@ -3,20 +3,16 @@ title: ""
 page-layout: full
 ---
 
-<div class="site-shell">
-  <section class="hero-grid">
+<div class="site-shell site-shell--home">
+  <section class="hero-grid" aria-label="Introduction">
     <div id="hero-text" class="hero-copy"></div>
     <div id="hero-image-wrap" class="hero-image-wrap"></div>
   </section>
 
-  <section class="about">
-    <p id="about-headline" class="about-headline"></p>
-    <div id="about-paragraphs" class="about-paragraphs"></div>
-  </section>
-
-  <section class="news">
-    <h2 id="news-title" class="section-title"></h2>
-    <div id="news-items" class="news-list"></div>
+  <section class="research">
+    <p id="research-lead" class="research-lead"></p>
+    <div id="research-paragraphs" class="research-paragraphs"></div>
+    <ul id="research-bullets" class="research-bullets"></ul>
   </section>
 
   <section class="doing">
@@ -24,10 +20,9 @@ page-layout: full
     <div id="doing-cards" class="card-grid"></div>
   </section>
 
-  <section class="research">
-    <p id="research-lead" class="research-lead"></p>
-    <div id="research-paragraphs" class="research-paragraphs"></div>
-    <ul id="research-bullets" class="research-bullets"></ul>
+  <section class="news">
+    <h2 id="news-title" class="section-title"></h2>
+    <div id="news-items" class="news-list"></div>
   </section>
 
   <section class="contact">
@@ -37,13 +32,5 @@ page-layout: full
 </div>
   </section>
 </div>
-
-<section class="home-globe">
-  <div class="home-globe-widget">
-```{=html}
-<script type="text/javascript" id="clstr_globe" src="https://clustrmaps.com/globe.js?d=fhp6Q1J-oOgkSVq5QeSwr6mlcOFNiHB8vaWy_8IEP4Q"></script>
-```
-  </div>
-</section>
 
 <script src="assets/js/main.js"></script>

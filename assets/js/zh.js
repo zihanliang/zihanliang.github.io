@@ -211,18 +211,20 @@ function renderHero(homeHero, chineseHome) {
 
   const hero = chineseHome.hero || {};
   const about = chineseHome.about || {};
+  const summary = (about.paragraphs || [])
+    .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`)
+    .join("");
 
   setHtml(
-    "zh-hero-title",
-    `${renderTextWithEmoji(hero.greeting)} <span>${renderTextWithEmoji(hero.name)}</span>${renderTextWithEmoji(hero.tagline)}`
-  );
-  setHtml(
-    "zh-hero-meta",
-    `${escapeHtml(about.name)} | <a href="mailto:${escapeHtml(about.email)}">${escapeHtml(about.email)}</a> | ${escapeHtml(about.affiliation)} | <a class="zh-cv-link" href="pdf/Zihan_Liang_CV_Public.pdf" target="_blank" rel="noopener noreferrer">下载简历</a>`
-  );
-  setHtml(
-    "zh-about-paragraphs",
-    (about.paragraphs || []).map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")
+    "zh-hero-text",
+    `
+      <p class="hero-kicker">${escapeHtml(about.affiliation)}</p>
+      <h1 class="hero-title zh-hero-title">${renderTextWithEmoji(hero.greeting)}<span>${renderTextWithEmoji(hero.name)}</span>${renderTextWithEmoji(hero.tagline)}</h1>
+      <div class="hero-summary">
+        <p class="hero-summary-meta">${escapeHtml(about.name)} · <a href="mailto:${escapeHtml(about.email)}">${escapeHtml(about.email)}</a></p>
+        <div class="hero-summary-copy">${summary}</div>
+      </div>
+    `
   );
   setHtml(
     "zh-hero-image-wrap",
@@ -240,7 +242,7 @@ function renderContact(contact) {
     ["Github", "GitHub"]
   ]);
 
-  setHtml("zh-contact-title", "联系 Contact");
+  setHtml("zh-contact-title", "联系 <span>Contact</span>");
   setHtml(
     "zh-contact-links",
     (contact.items || [])
@@ -295,7 +297,7 @@ async function init() {
   } catch (error) {
     console.error("Failed to load Chinese page content:", error);
     setHtml(
-      "zh-hero-title",
+      "zh-hero-text",
       `内容加载失败。请检查 <code>data/zh/home.json</code>、<code>data/research/sections.json</code> 和 <code>data/experiences/sections.json</code>。`
     );
     renderChineseFooter();

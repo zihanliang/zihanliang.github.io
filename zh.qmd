@@ -6,17 +6,10 @@ page-layout: full
 ---
 
 ```{=html}
-<div class="site-shell zh-page">
-  <section class="hero-grid zh-hero">
-    <div class="hero-copy zh-hero-copy">
-      <p id="zh-hero-title" class="hero-title zh-hero-title"></p>
-    </div>
+<div class="site-shell site-shell--home zh-page" aria-label="梁梓涵中文主页">
+  <section class="hero-grid" aria-label="个人介绍">
+    <div id="zh-hero-text" class="hero-copy"></div>
     <div id="zh-hero-image-wrap" class="hero-image-wrap"></div>
-  </section>
-
-  <section class="about zh-about">
-    <p id="zh-hero-meta" class="about-headline"></p>
-    <div id="zh-about-paragraphs" class="about-paragraphs"></div>
   </section>
 
   <section class="zh-scholar-block">

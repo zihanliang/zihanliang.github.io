@@ -15,7 +15,6 @@ website:
   favicon: icon/favicon-32x32.png
   search: false
   navbar:
-    logo: icon/web-icon.png
     pinned: true
     right:
       - text: "Home"
@@ -36,6 +35,7 @@ website:
 format:
   html:
     toc: false
+    anchor-sections: false
     theme: default
     css: assets/css/style.css
     include-in-header: assets/includes/head-icons.html

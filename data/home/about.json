@@ -1,11 +1,8 @@
 {
   "nameZh": "Zihan Liang 梁梓涵",
   "email": "zihan.liang@duke.edu",
-  "affiliation": "Computational Biology and Bioinformatics Program, Duke University",
+  "affiliation": "Ph.D. Student · Computational Biology and Bioinformatics · Duke University",
   "paragraphs": [
-    "At Duke University, I am starting my PhD in Computational Biology and Bioinformatics.",
-    "My work lies at the intersection of machine learning and statistics, focusing on understanding how models behave in imperfect, real-world settings. I am particularly interested in situations where data is incomplete, biased, or evolving, and how these challenges affect the reliability of learning systems.",
-    "More broadly, I think about machine learning not just as a predictive tool, but as a system that must remain trustworthy under uncertainty. My work often draws on ideas from statistics and causal inference to better understand and improve model behavior.",
-    "I have worked on a range of applied problems—including multimodal healthcare modeling, applied NLP, and sequential decision-making—which has allowed me to study these questions across different domains."
+    "I am a Ph.D. student at Duke University studying reliable machine learning under uncertainty. My work draws on statistics and causal inference to understand incomplete, biased, and evolving data in healthcare and other high-stakes settings."
   ]
 }

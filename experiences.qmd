@@ -5,7 +5,8 @@ title-prefix: ""
 page-layout: full
 ---
 
-<div class="site-shell scholar-page experiences-page">
+<div class="site-shell scholar-page experiences-page" aria-label="Experiences">
+  <h2 id="page-first-title" class="section-title page-first-title" hidden></h2>
   <div id="scholar-sections" class="scholar-sections"></div>
   <p id="scholar-page-footnote" class="scholar-footnote page-footnote"></p>
 </div>

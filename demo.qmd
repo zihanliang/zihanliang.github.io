@@ -6,7 +6,7 @@ page-layout: full
 title-block: false
 ---
 
-<div class="site-shell demo-shell">
+<div class="site-shell demo-shell" aria-label="Demos">
   <section class="demo-hero">
     <h2 id="demo-page-title" class="section-title demo-title"></h2>
     <p id="demo-page-subtitle" class="scholar-page-subtitle demo-subtitle"></p>

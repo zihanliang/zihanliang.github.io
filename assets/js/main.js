@@ -39,11 +39,24 @@ function setHtml(id, html) {
   if (el) el.innerHTML = html;
 }
 
-function renderHero(hero) {
+function renderHero(hero, about) {
+  const nameWithChineseFont = (about.nameZh || "").replace(
+    /([\u3400-\u9FFF]+)/g,
+    '<span class="zh-font">$1</span>'
+  );
+  const summary = (about.paragraphs || [])
+    .map((paragraph) => `<p>${paragraph}</p>`)
+    .join("");
+
   setHtml(
     "hero-text",
     `
-      <p class="hero-title">${hero.greeting} <span>${hero.name}</span>, ${hero.tagline}</p>
+      <p class="hero-kicker">${about.affiliation}</p>
+      <h1 class="hero-title">${hero.greeting} <span>${hero.name}</span> ${hero.tagline}</h1>
+      <div class="hero-summary">
+        <p class="hero-summary-meta">${nameWithChineseFont} · <a href="mailto:${about.email}">${about.email}</a></p>
+        <div class="hero-summary-copy">${summary}</div>
+      </div>
     `
   );
 
@@ -52,23 +65,6 @@ function renderHero(hero) {
     `
       <img src="${hero.profileImage}" alt="${hero.name}" class="hero-image" ${getImageSizeAttrs(hero.profileImage)} loading="eager" decoding="async" fetchpriority="high" />
     `
-  );
-}
-
-function renderAbout(about) {
-  const nameWithChineseFont = (about.nameZh || "").replace(
-    /([\u3400-\u9FFF]+)/g,
-    '<span class="zh-font">$1</span>'
-  );
-
-  setHtml(
-    "about-headline",
-    `${nameWithChineseFont} | <a href="mailto:${about.email}">${about.email}</a> | ${about.affiliation}`
-  );
-
-  setHtml(
-    "about-paragraphs",
-    about.paragraphs.map((p) => `<p>${p}</p>`).join("")
   );
 }
 
@@ -288,8 +284,7 @@ async function init() {
       dataFiles.map((file) => fetchJson(file))
     );
 
-    renderHero(hero);
-    renderAbout(about);
+    renderHero(hero, about);
     renderNews(news);
     renderDoing(doing);
     renderResearch(research);

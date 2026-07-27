@@ -37,15 +37,12 @@ function renderCard(note) {
 
 function renderOverview(overview) {
   if (!overview) return "";
-  const title = overview.title
-    ? `<h2 class="section-title notes-title">${overview.title}</h2>`
-    : "";
   const paragraphs = (overview.paragraphs || [])
     .filter(Boolean)
     .map((paragraph) => `<p>${paragraph}</p>`)
     .join("");
 
-  return `${title}${paragraphs ? `<div class="notes-overview-copy">${paragraphs}</div>` : ""}`;
+  return paragraphs ? `<div class="notes-overview-copy">${paragraphs}</div>` : "";
 }
 
 function renderSection(section) {
@@ -66,6 +63,13 @@ async function init() {
     const overviewEl = document.getElementById("notes-overview");
     const incomingNotesEl = document.getElementById("incoming-notes-list");
     const sectionsEl = document.getElementById("notes-sections");
+    const firstTitleEl = document.getElementById("page-first-title");
+
+    if (firstTitleEl) {
+      firstTitleEl.textContent = data.overview?.title || "";
+      firstTitleEl.hidden = !data.overview?.title;
+    }
+
     overviewEl.innerHTML = renderOverview(data.overview);
     incomingNotesEl.innerHTML = (data.incomingNotes || [])
       .map((item) => `<li>${item}</li>`)

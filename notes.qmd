@@ -6,7 +6,8 @@ page-layout: full
 title-block: false
 ---
 
-<div class="site-shell notes-page">
+<div class="site-shell notes-page" aria-label="Study notes">
+  <h2 id="page-first-title" class="section-title notes-title page-first-title" hidden></h2>
   <section id="notes-overview" class="notes-overview"></section>
 
   <section class="notes-hero">

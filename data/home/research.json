@@ -1,5 +1,5 @@
 {
-  "lead": "I focus on understanding how incomplete, biased, and heterogeneous data affect model reliability and downstream decisions.",
+  "lead": "I study reliable machine learning under incomplete, biased, and heterogeneous data.",
   "paragraphs": [
     "I am interested in missing data, distribution shift, and multimodal learning, and in how these factors affect model reliability and downstream decisions. I draw on tools from causal inference, representation learning, and modern deep learning, with a focus on healthcare and other high-stakes domains."
   ],

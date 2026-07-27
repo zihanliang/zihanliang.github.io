@@ -135,11 +135,11 @@ function renderEntry(entry) {
   `;
 }
 
-function renderSection(section) {
+function renderSection(section, includeTitle = true) {
   const entriesHtml = (section.entries || []).map(renderEntry).join("");
   return `
     <section class="scholar-section">
-      <h2 class="section-title">${escapeHtml(section.title)}</h2>
+      ${includeTitle ? `<h2 class="section-title">${escapeHtml(section.title)}</h2>` : ""}
       <div class="scholar-entry-list">
         ${entriesHtml}
       </div>
@@ -152,8 +152,17 @@ async function init() {
     const data = await fetchJson(researchDataFile);
     const sectionsEl = document.getElementById("scholar-sections");
     const footnoteEl = document.getElementById("scholar-page-footnote");
+    const firstTitleEl = document.getElementById("page-first-title");
+    const [firstSection, ...remainingSections] = data.sections || [];
 
-    sectionsEl.innerHTML = (data.sections || []).map(renderSection).join("");
+    if (firstTitleEl) {
+      firstTitleEl.textContent = firstSection?.title || "";
+      firstTitleEl.hidden = !firstSection?.title;
+    }
+    sectionsEl.innerHTML = [
+      firstSection ? renderSection(firstSection, false) : "",
+      ...remainingSections.map((section) => renderSection(section)),
+    ].join("");
     footnoteEl.textContent = data.pageFootnote || "";
     markContentReady();
 

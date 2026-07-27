@@ -1,6 +1,6 @@
 {
-  "greeting": "👋 I'm",
-  "name": "Zihan Liang",
-  "tagline": "a PhD student at Duke University, working on reliable machine learning under uncertainty.",
+  "greeting": "I study how models",
+  "name": "remain reliable",
+  "tagline": "under uncertainty.",
   "profileImage": "figures/home/zihan-liang-profile.jpg"
 }

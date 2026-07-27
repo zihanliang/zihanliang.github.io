@@ -7,14 +7,24 @@
       "url": "mailto:zihan.liang@duke.edu"
     },
     {
+      "icon": "💼",
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/zihan-liang/"
+    },
+    {
+      "icon": "🆔",
+      "label": "ORCID",
+      "url": "https://orcid.org/0009-0008-3166-3129"
+    },
+    {
       "icon": "📚",
       "label": "Google Scholar",
       "url": "https://scholar.google.com/citations?hl=en&user=qDHioQ8AAAAJ"
     },
     {
-      "icon": "💼",
-      "label": "LinkedIn",
-      "url": "https://www.linkedin.com/in/zihan-liang/"
+      "icon": "🗂️",
+      "label": "DBLP",
+      "url": "https://dblp.org/pid/303/1479-2.html"
     },
     {
       "icon": "💻",
