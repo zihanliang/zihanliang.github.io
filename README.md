@@ -55,14 +55,18 @@ search crawlers can read the complete content without executing JavaScript.
 2. From the repository root, run:
 
 ```bash
+node scripts/render-static-content.mjs
 quarto preview
 ```
 
-This starts a local preview server with live reload.
+The explicit generation command is needed once after a clean clone because the
+generated fragments are intentionally not committed. Subsequent Quarto builds
+refresh them automatically from the JSON sources.
 
 ## Build and Deployment
 
 ```bash
+node scripts/render-static-content.mjs
 quarto render
 ```
 

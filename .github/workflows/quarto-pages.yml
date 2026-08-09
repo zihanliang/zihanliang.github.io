@@ -27,6 +27,11 @@ jobs:
       - name: Setup Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
+      # Quarto resolves include directives before project pre-render hooks.
+      # Generate the ignored fragments explicitly for a clean CI checkout.
+      - name: Generate Static HTML from JSON
+        run: node scripts/render-static-content.mjs
+
       - name: Render Site
         uses: quarto-dev/quarto-actions/render@v2
 
