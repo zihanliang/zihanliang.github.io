@@ -57,7 +57,8 @@ function urlsForFiles(files) {
     "assets/includes/head-icons.html",
     "data/navigation.json",
     "scripts/render-static-content.mjs",
-    "scripts/post-render-seo.mjs"
+    "scripts/post-render-seo.mjs",
+    "scripts/submit-baidu.mjs"
   ]);
 
   for (const file of files) {
@@ -114,7 +115,9 @@ if (process.env.BAIDU_PUSH_DRY_RUN === "1") {
   process.exit(0);
 }
 
-const endpoint = new URL("https://data.zz.baidu.com/urls");
+// Baidu currently publishes this legacy submission endpoint over HTTP. Its
+// HTTPS certificate does not cover the two-level data.zz.baidu.com hostname.
+const endpoint = new URL("http://data.zz.baidu.com/urls");
 endpoint.searchParams.set("site", baiduSite);
 endpoint.searchParams.set("token", token);
 
