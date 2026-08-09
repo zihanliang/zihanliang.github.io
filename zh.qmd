@@ -2,39 +2,10 @@
 title: ""
 pagetitle: "梁梓涵 - 中文主页"
 title-prefix: ""
+description-meta: "梁梓涵，杜克大学计算生物学与生物信息学博士生，研究可靠机器学习、因果推断、多模态学习与临床数据。"
+lang: zh
 page-layout: full
+title-block: false
 ---
 
-```{=html}
-<div class="site-shell site-shell--home zh-page" aria-label="梁梓涵中文主页">
-  <section class="hero-grid" aria-label="个人介绍">
-    <div id="zh-hero-text" class="hero-copy"></div>
-    <div id="zh-hero-image-wrap" class="hero-image-wrap"></div>
-  </section>
-
-  <section class="zh-scholar-block">
-    <h2 class="section-title">论文与成果 <span>Research</span></h2>
-    <div id="zh-paper-sections" class="scholar-sections zh-scholar-sections"></div>
-    <p id="zh-research-footnote" class="scholar-footnote page-footnote"></p>
-  </section>
-
-  <section class="zh-scholar-block">
-    <h2 class="section-title">合作研究项目 <span>Collaborative Research Projects</span></h2>
-    <div id="zh-collaborative-projects" class="scholar-entry-list"></div>
-  </section>
-
-  <section class="zh-scholar-block">
-    <h2 class="section-title">经历 <span>Experiences</span></h2>
-    <div id="zh-experience-sections" class="zh-compact-sections"></div>
-  </section>
-
-  <section class="contact zh-contact">
-    <div class="contact-grid">
-      <h2 id="zh-contact-title" class="section-title"></h2>
-      <ul id="zh-contact-links" class="contact-links"></ul>
-    </div>
-  </section>
-</div>
-
-<script src="assets/js/zh.js"></script>
-```
+{{< include _generated/zh.html >}}

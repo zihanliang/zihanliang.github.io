@@ -42,6 +42,20 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Submit updated URLs to Baidu
+        env:
+          BAIDU_PUSH_TOKEN: ${{ secrets.BAIDU_PUSH_TOKEN }}
+          BAIDU_SITE: www.zihanliang.com
+          BAIDU_SITE_URL: https://www.zihanliang.com
+          BAIDU_BEFORE_SHA: ${{ github.event.before }}
+          BAIDU_CURRENT_SHA: ${{ github.sha }}
+        run: node scripts/submit-baidu.mjs

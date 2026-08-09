@@ -2,17 +2,9 @@
 title: ""
 pagetitle: "Zihan Liang - Demos"
 title-prefix: ""
+description-meta: "Interactive tools and research-driven technical demos created by Zihan Liang, including causal graph and machine learning projects."
 page-layout: full
 title-block: false
 ---
 
-<div class="site-shell demo-shell" aria-label="Demos">
-  <section class="demo-hero">
-    <h2 id="demo-page-title" class="section-title demo-title"></h2>
-    <p id="demo-page-subtitle" class="scholar-page-subtitle demo-subtitle"></p>
-  </section>
-
-  <section id="demo-grid" class="demo-grid" aria-label="Demo projects"></section>
-</div>
-
-<script src="assets/js/demo.js"></script>
+{{< include _generated/demo.html >}}

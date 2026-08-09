@@ -1,6 +1,10 @@
 project:
   type: website
   output-dir: docs
+  pre-render:
+    - node scripts/render-static-content.mjs
+  post-render:
+    - node scripts/post-render-seo.mjs
   resources:
     - CNAME
     - data/**
@@ -12,6 +16,8 @@ project:
 
 website:
   title: "Zihan Liang"
+  description: "Zihan Liang is a Ph.D. student at Duke University researching reliable machine learning, causal inference, multimodal learning, and clinical data."
+  site-url: "https://www.zihanliang.com"
   favicon: icon/favicon-32x32.png
   search: false
   navbar:
@@ -36,6 +42,7 @@ format:
   html:
     toc: false
     anchor-sections: false
+    canonical-url: true
     theme: default
     css: assets/css/style.css
     include-in-header: assets/includes/head-icons.html

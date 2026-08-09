@@ -2,6 +2,7 @@
 title: ""
 pagetitle: "Zihan Liang - CV"
 title-prefix: ""
+description-meta: "Curriculum vitae of Zihan Liang, a Duke University Ph.D. student working on reliable machine learning, causal inference, and clinical data."
 page-layout: full
 title-block: false
 ---

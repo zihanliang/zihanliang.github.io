@@ -1,36 +1,10 @@
 ---
 title: ""
+pagetitle: "Zihan Liang - Reliable Machine Learning and Computational Biology"
+title-prefix: ""
+description-meta: "Zihan Liang is a Duke University Ph.D. student studying reliable machine learning, causal inference, multimodal learning, and clinical data."
 page-layout: full
+title-block: false
 ---
 
-<div class="site-shell site-shell--home">
-  <section class="hero-grid" aria-label="Introduction">
-    <div id="hero-text" class="hero-copy"></div>
-    <div id="hero-image-wrap" class="hero-image-wrap"></div>
-  </section>
-
-  <section class="research">
-    <p id="research-lead" class="research-lead"></p>
-    <div id="research-paragraphs" class="research-paragraphs"></div>
-    <ul id="research-bullets" class="research-bullets"></ul>
-  </section>
-
-  <section class="doing">
-    <h2 id="doing-title" class="section-title"></h2>
-    <div id="doing-cards" class="card-grid"></div>
-  </section>
-
-  <section class="news">
-    <h2 id="news-title" class="section-title"></h2>
-    <div id="news-items" class="news-list"></div>
-  </section>
-
-  <section class="contact">
-<div class="contact-grid">
-<h2 id="contact-title" class="section-title"></h2>
-<ul id="contact-links" class="contact-links"></ul>
-</div>
-  </section>
-</div>
-
-<script src="assets/js/main.js"></script>
+{{< include _generated/index.html >}}

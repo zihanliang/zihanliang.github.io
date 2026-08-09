@@ -2,13 +2,9 @@
 title: ""
 pagetitle: "Zihan Liang - Research"
 title-prefix: ""
+description-meta: "Publications, manuscripts, and research projects by Zihan Liang in reliable machine learning, causal inference, multimodal clinical data, and NLP."
 page-layout: full
+title-block: false
 ---
 
-<div class="site-shell scholar-page" aria-label="Research portfolio">
-  <h2 id="page-first-title" class="section-title page-first-title" hidden></h2>
-  <div id="scholar-sections" class="scholar-sections"></div>
-  <p id="scholar-page-footnote" class="scholar-footnote page-footnote"></p>
-</div>
-
-<script src="assets/js/research.js"></script>
+{{< include _generated/research.html >}}

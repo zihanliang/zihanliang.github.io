@@ -2,20 +2,9 @@
 title: ""
 pagetitle: "Zihan Liang - Study Notes"
 title-prefix: ""
+description-meta: "Study notes by Zihan Liang covering machine learning, causal inference, mathematics, statistics, programming, and college preparation."
 page-layout: full
 title-block: false
 ---
 
-<div class="site-shell notes-page" aria-label="Study notes">
-  <h2 id="page-first-title" class="section-title notes-title page-first-title" hidden></h2>
-  <section id="notes-overview" class="notes-overview"></section>
-
-  <section class="notes-hero">
-    <h2 class="section-title notes-title">Incoming Notes</h2>
-    <ul id="incoming-notes-list" class="incoming-notes-list"></ul>
-  </section>
-
-  <div id="notes-sections" class="notes-sections"></div>
-</div>
-
-<script src="assets/js/notes.js"></script>
+{{< include _generated/notes.html >}}

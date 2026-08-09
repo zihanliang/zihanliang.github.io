@@ -44,6 +44,11 @@ Source repository for a personal academic website (Quarto + vanilla frontend).
 - `assets/includes/nav-scroll.html`: Extra script include injected into pages
 - `assets/css/style.css`: Global site styles
 
+During each Quarto build, `scripts/render-static-content.mjs` reads these same
+JSON files and pre-renders their content into static HTML. The browser scripts
+remain in place for the existing interactions and runtime JSON updates, while
+search crawlers can read the complete content without executing JavaScript.
+
 ## Local Development
 
 1. Install Quarto: https://quarto.org/docs/get-started/
@@ -64,6 +69,12 @@ quarto render
 - Build output is configured as `docs/` in `_quarto.yml`
 - `CNAME` is currently set to `www.zihanliang.com`
 - If you use GitHub Pages, ensure your deployment points to `docs/` (or adjust based on your workflow)
+
+The deployment workflow can submit newly changed canonical page URLs to Baidu
+after a successful deploy. Configure the repository secret
+`BAIDU_PUSH_TOKEN` with the token from Baidu Search Resource Platform to enable
+this step. The token must never be committed to the repository or exposed in
+frontend code.
 
 ## Configuration
 
