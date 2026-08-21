@@ -2,6 +2,10 @@
   "title": "Recent News",
   "items": [
     {
+      "date": "Aug. 2026",
+      "text": "Our work “Two-Sided State-Space Models for Sequential Recommendation with Non-Random Multimodal Review Feedback” has been accepted to the Findings of EMNLP 2026."
+    },
+    {
       "date": "May 2026",
       "text": "I am excited to announce that I have completed my Bachelor of Science in Applied Mathematics and Statistics, graduating with Highest Honors, at Emory University. I am deeply grateful to my mentor, <a href=\"https://www.ruoxuanxiong.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Prof. Ruoxuan Xiong</a>, for her guidance and support throughout my studies."
     },
