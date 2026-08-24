@@ -6,15 +6,18 @@
       "entries": [
         {
           "title": "Duke University | Ph.D. Student in Computational Biology and Bioinformatics",
-          "period": "Aug. 2026 - May 2031 (expected)"
+          "period": "Aug. 2026 - May 2031 (expected)",
+          "bullets": [
+            "PhD Advisor: <a href=\"https://anruzhang.github.io/\" target=\"_blank\" rel=\"noopener noreferrer\">Professor Anru Zhang</a>"
+          ]
         },
         {
           "title": "Emory University | Bachelor of Science in Applied Mathematics and Statistics with Highest Honors, with a Minor in Artificial Intelligence",
           "period": "Aug. 2023 - May 2026",
           "bullets": [
             "GPA: 3.99/4.00",
-            "Research Advisor: <a href=\"https://www.ruoxuanxiong.com\" target=\"_blank\" rel=\"noopener noreferrer\">Ruoxuan Xiong</a> — Independent Research and Honors Program Thesis Advisor",
-            "Awards and Honors: Phi Beta Kappa; Dean's List; American Statistical Association DataFest Best Visualization Award; AI Mathematical Olympiad Bronze Medal",
+            "Independent Research and Honors Program Advisor: <a href=\"https://www.ruoxuanxiong.com\" target=\"_blank\" rel=\"noopener noreferrer\">Professor Ruoxuan Xiong</a>",
+            "Awards and Honors: Phi Beta Kappa; Dean's List; American Statistical Association DataFest Best Visualization Award",
             {
               "text": "Relevant Courseworks:",
               "children": [
@@ -58,20 +61,6 @@
           "bullets": [
             "Supported instruction in advanced algebra and mathematical Olympiad topics for high school students, covering inequalities, factoring techniques, trigonometry, and systems of equations.",
             "Mentored students through challenging problems while managing homework solutions, grading, and exam evaluation to support learning progress and competition preparation."          ]
-        }
-      ]
-    },
-    {
-      "title": "Industry Experiences",
-      "entries": [
-        {
-          "title": "Artificial Intelligence Research Intern | Google China, Inc.",
-          "period": "Jun. 2025 - Aug. 2025",
-          "bullets": [
-            "Conducted systematic optimization of deep learning models on the TT100K traffic sign dataset, improving YOLOv8 and YOLOX detection accuracy by up to +4% mAP through advanced hyperparameter tuning and data augmentation strategies.",
-            "Designed and implemented knowledge distillation and feature transfer frameworks, achieving >15% relative gains in small-object detection and enabling lightweight models to retain over 95% of teacher performance while running at real-time inference speed.",
-            "Executed cross-domain transfer learning experiments (TT100K -> GTSRB, LISA, CTSD, BelgiumTSC), demonstrating significant performance boosts (e.g., +44% mAP in few-shot settings) and validating robust generalization of traffic sign recognition models across cultural and regional variations."
-          ]
         }
       ]
     },

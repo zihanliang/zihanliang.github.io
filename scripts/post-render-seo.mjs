@@ -54,7 +54,7 @@ let normalizedSitemap = sitemap.replace(
   `<loc>${homepageCanonicalUrl}</loc>`
 );
 
-if (normalizedSitemap === sitemap) {
+if (!normalizedSitemap.includes(`<loc>${homepageCanonicalUrl}</loc>`)) {
   throw new Error(`Homepage URL was not found in ${sitemapPath}.`);
 }
 
