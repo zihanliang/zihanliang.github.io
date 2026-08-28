@@ -1,0 +1,69 @@
+% !TeX program = xelatex
+%-------------------------------------------------------------------------------
+% CONFIGURATIONS
+%-------------------------------------------------------------------------------
+% A4 paper size by default, use 'letterpaper' for US letter
+\documentclass[11pt, letterpaper, final]{academic-cv}
+
+% Configure page margins with geometry
+\geometry{left=0.75in, top=0.75in, right=0.75in, bottom=0.75in, footskip=.5cm}
+
+% Specify the location of the included fonts
+\fontdir[fonts/]
+
+% If you would like to change the social information separator from a pipe (|) to something else
+\renewcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
+
+
+%-------------------------------------------------------------------------------
+%	PERSONAL INFORMATION
+%	Comment any of the lines below if they are not required
+%-------------------------------------------------------------------------------
+\name{Zihan Liang}{}
+\position{PhD Student{\enskip\cdotp\enskip}Computational Biology and Bioinformatics Program, Duke}
+\address{Hock Plaza, 2424 Erwin Rd, Durham, NC 27705}
+
+%\mobile{+1 000-000-0000}
+\email{zihan.liang@duke.edu}
+\homepage{www.zihanliang.com}
+\github{zihanliang}
+\linkedin{zihan-liang}
+% \gitlab{my-gitlab-id}
+% \stackoverflow{SO-id}{SO-name}
+% \skype{skype-id}
+% \reddit{reddit-id}
+% \extrainfo{extra informations}
+
+
+%-------------------------------------------------------------------------------
+\begin{document}
+
+% Print the header with above personal information
+% Give optional argument to change alignment(C: center, L: left, R: right)
+\makecvheader
+
+% Print the footer with 3 arguments(<left>, <center>, <right>)
+% Leave any of these blank if they are not needed
+\makecvfooter
+  {August 2026}
+  {Zihan Liang ~~~·~~~ Curriculum Vitae}
+  {\thepage}
+
+
+%-------------------------------------------------------------------------------
+%	CV/RESUME CONTENT
+%	Each section is imported separately, open each file in turn to modify content
+%   Comment out any sections that are not appropriate for your CV
+%-------------------------------------------------------------------------------
+\input{cv/education.tex}
+\input{cv/publications.tex}
+\input{cv/research.tex}
+\input{cv/honors.tex}
+\input{cv/teaching.tex}
+\input{cv/extracurricular.tex}
+\input{cv/additional.tex}
+%\input{cv/professional.tex}
+%\input{cv/presentation.tex}
+%\input{cv/mentoring.tex}
+%-------------------------------------------------------------------------------
+\end{document}

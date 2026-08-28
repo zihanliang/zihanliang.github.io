@@ -13,6 +13,8 @@ project:
     - icon/**
     - notes/**
     - pdf/**
+    - zihan_liang_academic_cv/cv.pdf
+    - zihan_liang_academic_cv/cv-first-page.png
 
 website:
   title: "Zihan Liang"

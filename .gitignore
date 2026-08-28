@@ -2,3 +2,14 @@
 **/*.quarto_ipynb
 /docs/
 /_generated/
+
+# CV build products are recreated from LaTeX during each site deployment.
+/zihan_liang_academic_cv/*.aux
+/zihan_liang_academic_cv/*.fdb_latexmk
+/zihan_liang_academic_cv/*.fls
+/zihan_liang_academic_cv/*.log
+/zihan_liang_academic_cv/*.out
+/zihan_liang_academic_cv/*.pdf
+/zihan_liang_academic_cv/*.xdv
+/zihan_liang_academic_cv/cv-first-page.png
+/zihan_liang_academic_cv/tmp/

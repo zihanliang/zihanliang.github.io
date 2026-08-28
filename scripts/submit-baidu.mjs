@@ -93,7 +93,7 @@ function urlsForFiles(files) {
     if (file.startsWith("data/demo/")) urls.add(pageUrls.demo);
     if (file.startsWith("data/notes/")) urls.add(pageUrls.notes);
     if (file.startsWith("data/zh/")) urls.add(pageUrls.zh);
-    if (file === "pdf/Zihan_Liang_CV_Public.pdf" || file.startsWith("figures/cv/")) {
+    if (file.startsWith("zihan_liang_academic_cv/")) {
       urls.add(pageUrls.cv);
     }
   }

@@ -15,18 +15,18 @@ title-block: false
 <p class="cv-document-kicker">Academic record</p>
 <p class="cv-document-format">PDF document<br><span>Two pages</span></p>
 <div class="cv-document-actions">
-<a class="cv-document-read" href="pdf/Zihan_Liang_CV_Public.pdf" target="_blank" rel="noopener noreferrer">
+<a class="cv-document-read" href="zihan_liang_academic_cv/cv.pdf" target="_blank" rel="noopener noreferrer">
 Read full CV <span aria-hidden="true">↗</span>
 </a>
-<a class="cv-document-download" href="pdf/Zihan_Liang_CV_Public.pdf" download>
+<a class="cv-document-download" href="zihan_liang_academic_cv/cv.pdf" download>
 Download PDF <span aria-hidden="true">↓</span>
 </a>
 </div>
 </aside>
 
 <figure class="cv-preview">
-<a class="cv-preview-link" href="pdf/Zihan_Liang_CV_Public.pdf" target="_blank" rel="noopener noreferrer" aria-label="Open the full curriculum vitae PDF">
-<img src="figures/cv/zihan-liang-cv-first-page.jpg" alt="Preview of the first page of Zihan Liang's curriculum vitae." width="1530" height="1980" fetchpriority="high">
+<a class="cv-preview-link" href="zihan_liang_academic_cv/cv.pdf" target="_blank" rel="noopener noreferrer" aria-label="Open the full curriculum vitae PDF">
+<img src="zihan_liang_academic_cv/cv-first-page.png" alt="Preview of the first page of Zihan Liang's curriculum vitae." width="1700" height="2200" fetchpriority="high">
 </a>
 <figcaption>First page preview</figcaption>
 </figure>

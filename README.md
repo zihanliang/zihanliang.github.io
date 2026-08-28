@@ -15,7 +15,7 @@ Source repository for a personal academic website (Quarto + vanilla frontend).
 ## Page Structure
 
 - `index.qmd`: Home page skeleton, content from `data/home/*.json`
-- `cv.qmd`: CV page (embeds `Zihan_Liang_CV_Public.pdf`)
+- `cv.qmd`: CV page (links to the PDF and first-page preview generated from `zihan_liang_academic_cv/cv.tex` during deployment)
 - `research.qmd`: Research page, content from `data/research/sections.json`
 - `experiences.qmd`: Experiences page, content from `data/experiences/sections.json`
 - `demo.qmd`: Demo page skeleton, content from `data/demo/sections.json`
@@ -51,17 +51,27 @@ search crawlers can read the complete content without executing JavaScript.
 
 ## Local Development
 
-1. Install Quarto: https://quarto.org/docs/get-started/
-2. From the repository root, run:
+1. Install Quarto, XeLaTeX, `latexmk`, and Poppler.
+2. Build the CV assets from the repository root:
+
+```bash
+cd zihan_liang_academic_cv
+latexmk -xelatex -file-line-error -halt-on-error -interaction=nonstopmode cv.tex
+pdftoppm -f 1 -l 1 -singlefile -r 200 -png cv.pdf cv-first-page
+cd ..
+```
+
+3. Render or preview the site:
 
 ```bash
 node scripts/render-static-content.mjs
 quarto preview
 ```
 
-The explicit generation command is needed once after a clean clone because the
-generated fragments are intentionally not committed. Subsequent Quarto builds
-refresh them automatically from the JSON sources.
+The explicit generation commands are needed after a clean clone because the CV
+assets and generated HTML fragments are intentionally not committed. Subsequent
+Quarto builds refresh the HTML fragments automatically from the JSON sources;
+the GitHub Pages workflow always rebuilds the CV assets before rendering.
 
 ## Build and Deployment
 
@@ -86,7 +96,7 @@ Core config file: `_quarto.yml`
 
 - `project.type: website`
 - `project.output-dir: docs`
-- `project.resources`: Files copied to output (`CNAME`, `data/`, `fonts/`, `figures/`, `icon/`, `notes/`, and CV PDF)
+- `project.resources`: Files copied to output (`CNAME`, `data/`, `fonts/`, `figures/`, `icon/`, `notes/`, the generated CV PDF, and its first-page preview)
 - `website.navbar`: Top navigation (Home/CV/Research/Experiences/Demos/Study Notes)
 - `data/navigation.json`: Runtime visibility for navbar entries (`visible: true` or `false`)
 - `format.html.css`: `assets/css/style.css`

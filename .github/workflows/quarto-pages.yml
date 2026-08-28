@@ -27,6 +27,28 @@ jobs:
       - name: Setup Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
+      - name: Compile CV from LaTeX
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: cv.tex
+          working_directory: zihan_liang_academic_cv
+          latexmk_use_xelatex: true
+
+      - name: Generate CV first-page preview
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes poppler-utils
+          pdftoppm \
+            -f 1 \
+            -l 1 \
+            -singlefile \
+            -r 200 \
+            -png \
+            zihan_liang_academic_cv/cv.pdf \
+            zihan_liang_academic_cv/cv-first-page
+          test "$(pdfinfo zihan_liang_academic_cv/cv.pdf | awk '/^Pages:/ { print $2 }')" -eq 2
+          test -s zihan_liang_academic_cv/cv-first-page.png
+
       # Quarto resolves include directives before project pre-render hooks.
       # Generate the ignored fragments explicitly for a clean CI checkout.
       - name: Generate Static HTML from JSON
