@@ -9,9 +9,11 @@
           "title": "Two-Sided State-Space Models for Sequential Recommendation with Non-Random Multimodal Review Feedback",
           "authors": "Ziwen Pan*, Zihan Liang*, Ruoxuan Xiong",
           "status": "Accepted at EMNLP 2026 Findings",
+          "paper": "https://arxiv.org/abs/2609.00165",
+          "code": "https://github.com/CausalMLResearch/TS-SSM",
           "bullets": [
-            "TS-SSM jointly tracks evolving user preferences and item states, treating multimodal reviews—and how they are observed and expressed—as non-random feedback, while capturing cross-item spillovers and the asymmetric persistence of positive and negative reviews.",
-            "Across six Amazon datasets, TS-SSM outperforms strong sequential, multimodal, and debiasing baselines, achieving 14.8%–18.8% relative improvements in Recall@20 over the strongest sequential baseline."
+            "TS-SSM jointly tracks evolving user preferences and item states, treating multimodal reviews—and how they are observed and expressed—as non-random feedback, while capturing cross-item spillovers and the asymmetric persistence of positive and negative review feedback.",
+            "Across six Amazon datasets, TS-SSM consistently outperforms strong baselines, achieving 14.8%–18.8% relative improvements in Recall@20 over the primary sequential baseline, BSARec."
           ]
         },
         {
