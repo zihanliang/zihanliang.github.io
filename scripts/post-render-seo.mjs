@@ -22,6 +22,10 @@ const pageSources = new Map([
   ],
   ["https://www.zihanliang.com/research.html", ["research.qmd", "data/research/sections.json"]],
   [
+    "https://www.zihanliang.com/deadlines.html",
+    ["deadlines.qmd", "data/deadlines-snapshot.json"]
+  ],
+  [
     "https://www.zihanliang.com/experiences.html",
     ["experiences.qmd", "data/experiences/sections.json"]
   ],

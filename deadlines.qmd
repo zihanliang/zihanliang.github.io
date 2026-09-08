@@ -1,0 +1,93 @@
+---
+title: ""
+pagetitle: "Zihan Liang - AI Conference Deadlines"
+title-prefix: ""
+description-meta: "Upcoming AI, machine learning, computer vision, NLP, robotics, and related conference submission deadlines."
+page-layout: full
+title-block: false
+---
+
+```{=html}
+<div class="site-shell deadlines-page" aria-label="AI conference deadlines">
+  <header class="deadlines-hero">
+    <div class="deadlines-hero-copy">
+      <h2 class="section-title deadlines-title">AI Conference Deadlines</h2>
+      <p class="deadlines-intro">
+        Upcoming submission deadlines across machine learning, computer vision,
+        natural language processing, robotics, and related fields.
+      </p>
+    </div>
+    <div class="deadlines-data-meta" aria-live="polite">
+      <span id="deadlines-data-state" class="deadlines-data-state is-loading">
+        <span class="deadlines-data-dot" aria-hidden="true"></span>
+        Loading deadline data
+      </span>
+      <span id="deadlines-data-updated" class="deadlines-data-updated"></span>
+    </div>
+  </header>
+
+  <div class="deadlines-controls" aria-label="Filter conference deadlines">
+    <div class="deadlines-field deadlines-search-field">
+      <label for="deadlines-search">Search</label>
+      <input
+        id="deadlines-search"
+        type="search"
+        inputmode="search"
+        autocomplete="off"
+        placeholder="Conference or location"
+      />
+    </div>
+
+    <div class="deadlines-field">
+      <label for="deadlines-subject">Research area</label>
+      <select id="deadlines-subject">
+        <option value="">All areas</option>
+      </select>
+    </div>
+
+    <label class="deadlines-predicted-toggle" for="deadlines-include-predicted">
+      <input id="deadlines-include-predicted" type="checkbox" checked />
+      <span>Include predicted dates</span>
+    </label>
+  </div>
+
+  <div class="deadlines-results-head">
+    <p id="deadlines-results-summary" class="deadlines-results-summary">Preparing deadlines…</p>
+    <p class="deadlines-timezone">Times shown in <span id="deadlines-local-timezone">your local timezone</span></p>
+  </div>
+
+  <div id="deadlines-loading" class="deadlines-loading" aria-hidden="true">
+    <div class="deadlines-loading-row"></div>
+    <div class="deadlines-loading-row"></div>
+    <div class="deadlines-loading-row"></div>
+  </div>
+
+  <div id="deadlines-list" class="deadlines-list" role="list"></div>
+
+  <div id="deadlines-empty" class="deadlines-empty" hidden>
+    <h2>No matching deadlines</h2>
+    <p>Try another conference name, location, or research area.</p>
+  </div>
+
+  <div id="deadlines-error" class="deadlines-empty deadlines-error" hidden>
+    <h2>Deadline data is temporarily unavailable</h2>
+    <p>Please try again later or visit the source listing directly.</p>
+  </div>
+
+  <div class="deadlines-more-wrap">
+    <button id="deadlines-load-more" class="deadlines-load-more" type="button" hidden>
+      Show more deadlines
+    </button>
+  </div>
+
+  <footer class="deadlines-source-note">
+    <p>
+      Conference data from
+      <a href="https://github.com/mlciv/ai-deadlines" target="_blank" rel="noopener noreferrer">AI Conference Deadlines</a>.
+      Predicted dates are labeled; always verify a deadline on the official conference website.
+    </p>
+  </footer>
+</div>
+
+<script src="assets/js/deadlines.js"></script>
+```

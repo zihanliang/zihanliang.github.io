@@ -1,0 +1,803 @@
+[
+  {
+    "title": "ACL",
+    "year": 2027,
+    "id": "acl27",
+    "full_name": null,
+    "link": "https://2027.aclweb.org/",
+    "deadline": "2027-01-05 23:59:59",
+    "timezone": "UTC-12",
+    "place": "Kyoto, Japan",
+    "date": "August 17-22, 2027",
+    "sub": [
+      "NLP"
+    ],
+    "note": "Predicted deadline based on historical ACL pattern (past deadlines — 2026 Jan 5, 2025 Feb 15, 2024 Feb 15). Please verify on the official conference website. More info <a href='https://2027.aclweb.org/'>here</a>."
+  },
+  {
+    "title": "AIED",
+    "year": 2027,
+    "id": "aied27",
+    "full_name": null,
+    "link": "https://aied-conference.org/2027/call-for-paper",
+    "deadline": "2027-02-02 23:59:59",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "June 29 - July 24, 2027",
+    "sub": [
+      "NLP",
+      "ML",
+      "CV",
+      "EDU"
+    ],
+    "note": "Predicted deadline based on historical AIED pattern (past deadlines — 2026 Feb 2, 2025 Feb 19, 2024 Feb 5). Please verify on the official conference website. More info <a href='https://aied-conference.org/2027/call-for-paper'>here</a>."
+  },
+  {
+    "title": "AISTATS",
+    "year": 2027,
+    "id": "aistats27",
+    "full_name": null,
+    "link": "https://virtual.aistats.org/Conferences/2027/CallForPapers",
+    "deadline": "2026-10-02 23:59:59",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "May 2-5, 2027",
+    "sub": [
+      "ML"
+    ],
+    "note": "Predicted deadline based on historical AISTATS pattern (past deadlines — 2025 Oct 2, 2024 Oct 10, 2023 Oct 16). Please verify on the official conference website. More info <a href='https://virtual.aistats.org/Conferences/2027/CallForPapers'>here</a>."
+  },
+  {
+    "title": "ARR-Oct",
+    "year": 2027,
+    "id": "arr2710",
+    "full_name": null,
+    "link": "https://aclrollingreview.org/dates",
+    "deadline": "2027-10-11 23:59:00",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "TBA",
+    "sub": [
+      "NLP"
+    ],
+    "note": "Predicted — estimated ARR October 2027 cycle, based on the ARR 10-week (70-day) cadence (2026 cycles — Jan 5, Mar 16, May 25, Aug 3, Oct 12). Commitment venues to be confirmed. More info <a href='https://aclrollingreview.org/dates'>here</a>."
+  },
+  {
+    "title": "ARR-Aug",
+    "year": 2027,
+    "id": "arr2708",
+    "full_name": null,
+    "link": "https://aclrollingreview.org/dates",
+    "deadline": "2027-08-02 23:59:00",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "TBA",
+    "sub": [
+      "NLP"
+    ],
+    "note": "Predicted — estimated ARR August 2027 cycle, based on the ARR 10-week (70-day) cadence (2026 cycles — Jan 5, Mar 16, May 25, Aug 3, Oct 12). Commitment venues to be confirmed. More info <a href='https://aclrollingreview.org/dates'>here</a>."
+  },
+  {
+    "title": "ARR-May",
+    "year": 2027,
+    "id": "arr2705",
+    "full_name": null,
+    "link": "https://aclrollingreview.org/dates",
+    "deadline": "2027-05-24 23:59:00",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "TBA",
+    "sub": [
+      "NLP"
+    ],
+    "note": "Predicted — estimated ARR May 2027 cycle, likely committing to EMNLP 2027 and AACL 2027 (by analogy with the May 2026 cycle). Based on the ARR 10-week (70-day) cadence. Please verify on the official ARR dates page. More info <a href='https://aclrollingreview.org/dates'>here</a>."
+  },
+  {
+    "title": "ARR-Mar",
+    "year": 2027,
+    "id": "arr2703",
+    "full_name": null,
+    "link": "https://aclrollingreview.org/dates",
+    "deadline": "2027-03-15 23:59:00",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "TBA",
+    "sub": [
+      "NLP"
+    ],
+    "note": "Predicted — estimated ARR March 2027 cycle, based on the ARR 10-week (70-day) cadence (2026 cycles — Jan 5, Mar 16, May 25, Aug 3, Oct 12). Commitment venues to be confirmed. More info <a href='https://aclrollingreview.org/dates'>here</a>."
+  },
+  {
+    "title": "ARR-Jan",
+    "year": 2027,
+    "id": "arr2701",
+    "full_name": null,
+    "link": "https://aclrollingreview.org/dates",
+    "deadline": "2027-01-04 23:59:00",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "TBA",
+    "sub": [
+      "NLP"
+    ],
+    "note": "Predicted — estimated ARR January 2027 cycle, the likely ACL 2027 commitment cycle. Based on the ARR 10-week (70-day) cadence; 2026 cycles fell on Jan 5, Mar 16, May 25, Aug 3, Oct 12. Please verify on the official ARR dates page. More info <a href='https://aclrollingreview.org/dates'>here</a>."
+  },
+  {
+    "title": "ARR-Oct",
+    "year": 2026,
+    "id": "arr2610",
+    "full_name": null,
+    "link": "https://aclrollingreview.org/dates",
+    "deadline": "2026-10-12 23:59:00",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "TBA",
+    "sub": [
+      "NLP"
+    ],
+    "note": "May commit to NAACL2027 and COLING2027. More info <a href=\"https://aclrollingreview.org/dates\">here</a>."
+  },
+  {
+    "title": "BEA",
+    "year": 2027,
+    "id": "bea27",
+    "full_name": null,
+    "link": "https://sig-edu.org/bea/2027",
+    "deadline": "2027-04-17 23:59:59",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "July 31, 2027",
+    "sub": [
+      "NLP",
+      "ML",
+      "CV",
+      "EDU"
+    ],
+    "note": "Predicted deadline based on historical BEA pattern (past deadlines — 2025 Apr 17, 2025 Apr 17). Please verify on the official conference website. More info <a href='https://sig-edu.org/bea/2027'>here</a>."
+  },
+  {
+    "title": "BMVC",
+    "year": 2027,
+    "id": "bmvc27",
+    "full_name": "The British Machine Vision Conference",
+    "link": "https://bmvc2027.bmva.org/calls/call-for-papers/",
+    "deadline": "2027-05-20 23:59:59",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "November 23-26, 2027",
+    "sub": [
+      "CV"
+    ],
+    "note": "Predicted deadline based on historical BMVC pattern (past deadlines — 2026 May 29, 2024 May 10, 2023 May 12). Please verify on the official conference website. More info <a href='https://bmvc2027.bmva.org/calls/call-for-papers/'>here</a>."
+  },
+  {
+    "title": "CHI",
+    "year": 2027,
+    "id": "chi27",
+    "full_name": "The ACM Conference on Human Factors in Computing Systems",
+    "link": "https://chi2027.acm.org/authors/papers/",
+    "deadline": "2026-09-10 23:59:59",
+    "timezone": "UTC-12",
+    "place": "Pittsburgh, Pennsylvania, USA",
+    "date": "May 10-14, 2027",
+    "sub": [
+      "HCI"
+    ],
+    "note": "CHI 2027 papers (AoE): no abstract deadline. Submission site opens July 30, 2026; full paper deadline September 10, 2026 (includes videos and supplementary materials). Revise-and-resubmit phase with resubmission December 3, 2026; final notification December 17, 2026. More info <a href='https://chi2027.acm.org/authors/papers/#submission-details'>here</a>."
+  },
+  {
+    "title": "CIKM",
+    "year": 2027,
+    "id": "CIKM27",
+    "full_name": null,
+    "link": "http://www.cikmconference.org/",
+    "deadline": "2027-05-23 23:59:59",
+    "timezone": "UTC-12",
+    "place": "Sydney, Australia",
+    "date": "October 25-29, 2027",
+    "sub": [
+      "DM",
+      "KR"
+    ],
+    "note": "Predicted deadline based on historical CIKM pattern (past deadlines — 2026 May 23, 2025 May 23, 2024 May 20). Host Sydney, Australia and dates Oct 25-29, 2027 announced (tentative); submission deadline not yet announced. Please verify on the official conference website. More info <a href='http://www.cikmconference.org/'>here</a>."
+  },
+  {
+    "title": "COLING",
+    "year": 2027,
+    "id": "coling27",
+    "full_name": "The 32nd International Conference on Computational Linguistics",
+    "link": "https://2027.coling-iccl.org/",
+    "deadline": "2026-10-12 23:59:00",
+    "timezone": "UTC-12",
+    "place": "Macau, China",
+    "date": "May 9-14, 2027",
+    "sub": [
+      "NLP"
+    ],
+    "note": "Predicted — COLING 2027 expected to use ARR, with commitment from the October 2026 cycle (ARR submission deadline Oct 12, 2026). Host Macau and dates May 9-14 confirmed; ARR participation not yet officially announced. Please verify on the official conference website. More info <a href='https://2027.coling-iccl.org/'>here</a>."
+  },
+  {
+    "title": "COLM",
+    "year": 2027,
+    "id": "colm27",
+    "full_name": null,
+    "link": "https://colmweb.org/",
+    "deadline": "2027-03-31 23:59:59",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "Oct 06-09, 2027",
+    "sub": [
+      "NLP",
+      "ML"
+    ],
+    "note": "Predicted deadline based on historical COLM pattern (past deadlines — 2026 Mar 31, 2025 Mar 27, 2024 Mar 29). Please verify on the official conference website. More info <a href='https://colmweb.org/'>here</a>."
+  },
+  {
+    "title": "CoNLL",
+    "year": 2027,
+    "id": "conll27",
+    "full_name": null,
+    "link": "https://conll.org/",
+    "deadline": "2027-02-19 23:59:59",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "July 3-4, 2027",
+    "sub": [
+      "NLP"
+    ],
+    "note": "Predicted deadline based on historical CoNLL pattern (past deadlines — 2026 Feb 19, 2023 Jun 30, 2020 Jul 17). Please verify on the official conference website. More info <a href='https://conll.org/'>here</a>."
+  },
+  {
+    "title": "CVPR",
+    "year": 2027,
+    "id": "cvpr27",
+    "full_name": null,
+    "link": "https://cvpr.thecvf.com/Conferences/2027/CallForPapers",
+    "deadline": "2026-11-13 23:59:59",
+    "timezone": "UTC-12",
+    "place": "Seattle, Washington, USA",
+    "date": "June 20-24, 2027",
+    "sub": [
+      "CV"
+    ],
+    "note": "Predicted deadline based on historical CVPR pattern (past deadlines — 2025 Nov 13, 2024 Nov 15, 2023 Nov 17). Please verify on the official conference website. More info <a href='https://cvpr.thecvf.com/Conferences/2027/CallForPapers'>here</a>."
+  },
+  {
+    "title": "ECIR",
+    "year": 2027,
+    "id": "ecir27",
+    "full_name": "European Conference on Information Retrieval",
+    "link": "https://www.ecir2027.co.uk/call-for-full-papers",
+    "deadline": "2026-10-02 23:59:59",
+    "timezone": "UTC+0",
+    "place": "Southampton, UK",
+    "date": "March 21-25, 2027",
+    "sub": [
+      "DM"
+    ],
+    "note": "Full paper abstract and paper deadlines are 11:59 pm GMT. More info <a href='https://www.ecir2027.co.uk/call-for-full-papers'>here</a>."
+  },
+  {
+    "title": "ECML PKDD",
+    "year": 2027,
+    "id": "ecmlpkdd27",
+    "full_name": null,
+    "link": "https://2027.ecmlpkdd.org/",
+    "deadline": "2027-07-22 23:59:59",
+    "timezone": "UTC-12",
+    "place": "Eindhoven, Netherlands",
+    "date": "September 20-24, 2027",
+    "sub": [
+      "ML"
+    ],
+    "note": "Predicted deadline based on historical ECML PKDD pattern (past deadlines — 2025 Jul 22, 2024 Jul 22). Please verify on the official conference website. More info <a href='https://2027.ecmlpkdd.org/'>here</a>."
+  },
+  {
+    "title": "EDM",
+    "year": 2027,
+    "id": "edm27",
+    "full_name": null,
+    "link": "https://educationaldatamining.org/edm2027/call-for-papers/",
+    "deadline": "2027-02-09 23:59:59",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "June 29 - July 03, 2027",
+    "sub": [
+      "NLP",
+      "ML",
+      "CV",
+      "EDU"
+    ],
+    "note": "Predicted deadline based on historical EDM pattern (past deadlines — 2026 Feb 9, 2025 Feb 20, 2024 Feb 19). Please verify on the official conference website. More info <a href='https://educationaldatamining.org/edm2027/call-for-papers/'>here</a>."
+  },
+  {
+    "title": "EMNLP",
+    "year": 2027,
+    "id": "emnlp27",
+    "full_name": null,
+    "link": "https://2027.emnlp.org/",
+    "deadline": "2027-05-25 23:59:59",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "October 24-29, 2027",
+    "sub": [
+      "NLP"
+    ],
+    "note": "Predicted deadline based on historical EMNLP pattern (past deadlines — 2026 May 25, 2025 May 19, 2024 Jun 15). Please verify on the official conference website. More info <a href='https://2027.emnlp.org/'>here</a>."
+  },
+  {
+    "title": "ICASSP",
+    "year": 2027,
+    "id": "icassp27",
+    "full_name": null,
+    "link": "https://2027.ieeeicassp.org/call-for-papers/",
+    "deadline": "2026-09-16 22:59:59",
+    "timezone": "UTC-8",
+    "place": "Toronto, Canada",
+    "date": "May 16-21, 2027",
+    "sub": [
+      "SP"
+    ],
+    "note": "Full paper submission deadline September 16, 2026. Acceptance notification Jan 13, 2027; final paper Jan 27, 2027. Published journal papers due Jan 6, 2027. More info <a href='https://2027.ieeeicassp.org/call-for-papers/'>here</a>."
+  },
+  {
+    "title": "ICCV",
+    "year": 2027,
+    "id": "iccv27",
+    "full_name": null,
+    "link": "https://iccv.thecvf.com/",
+    "deadline": "2027-03-07 23:59:59",
+    "timezone": "UTC-12",
+    "place": "Hong Kong",
+    "date": "October 2027",
+    "sub": [
+      "CV"
+    ],
+    "note": "Predicted deadline based on historical ICCV biennial pattern (past deadlines — 2025 Mar 7, 2023 Mar 8). Host city Hong Kong confirmed by CVF; dates and deadline not yet announced. Please verify on the official conference website. More info <a href='https://www.thecvf.com/?page_id=100'>here</a>."
+  },
+  {
+    "title": "ICDE-2",
+    "year": 2027,
+    "id": "icde27-2",
+    "full_name": null,
+    "link": "https://icde2027.github.io/important-dates.html",
+    "deadline": "2026-11-11 17:00:00",
+    "timezone": "America/Los_Angeles",
+    "place": "Copenhagen, Denmark",
+    "date": "May 17-21, 2027",
+    "sub": [
+      "DM"
+    ],
+    "note": "Research track round 2. All deadlines 5:00 p.m. Pacific Time. More info <a href='https://icde2027.github.io/important-dates.html'>here</a>."
+  },
+  {
+    "title": "ICDM",
+    "year": 2027,
+    "id": "icdm27",
+    "full_name": "IEEE International Conference on Data Mining",
+    "link": "http://icdm2027.neu.edu.cn/",
+    "deadline": "2027-06-06 23:59:59",
+    "timezone": "AoE",
+    "place": "TBA",
+    "date": "November 12-15, 2027",
+    "sub": [
+      "DM"
+    ],
+    "note": "Predicted deadline based on historical ICDM pattern (past deadlines — 2026 Jun 6, 2025 Jun 6, 2024 Jun 14). Please verify on the official conference website. More info <a href='http://icdm2027.neu.edu.cn/'>here</a>."
+  },
+  {
+    "title": "ICLR",
+    "year": 2027,
+    "id": "iclr27",
+    "full_name": null,
+    "link": "https://iclr.cc/Conferences/2027/CallForPapers",
+    "deadline": "2026-09-25 23:59:59",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "Apr 26-28, 2027",
+    "sub": [
+      "ML",
+      "AP",
+      "RO",
+      "CV",
+      "NLP",
+      "SP"
+    ],
+    "note": "Mandatory abstract deadline September 18, 2026 (AoE); paper submission deadline September 25, 2026 (AoE). More info <a href='https://iclr.cc/Conferences/2027/CallForPapers'>here</a>."
+  },
+  {
+    "title": "ICML",
+    "year": 2027,
+    "id": "icml27",
+    "full_name": null,
+    "link": "https://icml.cc/Conferences/2027",
+    "deadline": "2027-01-28 23:59:59",
+    "timezone": "America/Los_Angeles",
+    "place": "TBA",
+    "date": "July 2027",
+    "sub": [
+      "ML"
+    ],
+    "note": "Predicted deadline based on historical ICML pattern (past deadlines — 2026 Jan 28, 2024 Feb 1, 2023 Jan 26). Please verify on the official conference website. More info <a href='https://icml.cc/Conferences/2027'>here</a>."
+  },
+  {
+    "title": "ICRA",
+    "year": 2027,
+    "id": "icra27",
+    "full_name": "IEEE International Conference on Robotics and Automation",
+    "link": "https://2027.ieee-icra.org/announcements/call-for-technical-papers/",
+    "deadline": "2026-09-15 23:59:59",
+    "timezone": "America/Los_Angeles",
+    "place": "Seoul, South Korea",
+    "date": "May 24-28, 2027",
+    "sub": [
+      "RO"
+    ],
+    "note": "Contributed paper submission deadline September 15, 2026 (11:59 PST). More info <a href='https://2027.ieee-icra.org/announcements/call-for-technical-papers/'>here</a>."
+  },
+  {
+    "title": "IJCAI",
+    "year": 2027,
+    "id": "ijcai27",
+    "full_name": "International Joint Conference on Artificial Intelligence",
+    "link": "https://2027.ijcai.org/",
+    "deadline": "2027-01-19 23:59:59",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "August 2027",
+    "sub": [
+      "ML"
+    ],
+    "note": "Predicted deadline based on historical IJCAI pattern (past deadlines — 2025 Jan 23, 2024 Jan 17, 2023 Jan 18). Please verify on the official conference website. More info <a href='https://2027.ijcai.org/'>here</a>."
+  },
+  {
+    "title": "INLG",
+    "year": 2027,
+    "id": "inlg27",
+    "full_name": null,
+    "link": "https://www.siggen.org/INLG-conferences.html",
+    "deadline": "2027-07-15 23:59:59",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "TBA, 2027",
+    "sub": [
+      "NLP"
+    ],
+    "note": "Predicted deadline based on historical INLG pattern (past deadlines — 2026 Jul 18, 2025 Jul 18, 2024 May 31). Please verify on the official conference website. More info <a href='https://www.siggen.org/INLG-conferences.html'>here</a>."
+  },
+  {
+    "title": "InterSpeech",
+    "year": 2027,
+    "id": "interspeech27",
+    "full_name": null,
+    "link": "https://interspeech2027.org/",
+    "deadline": "2027-03-02 23:59:59",
+    "timezone": "UTC-12",
+    "place": "São Paulo, Brazil",
+    "date": "August 29 - September 2, 2027",
+    "sub": [
+      "SP"
+    ],
+    "note": "Predicted deadline based on historical InterSpeech pattern (past deadlines — 2026 Mar 2, 2025 Feb 19, 2024 Mar 1). Please verify on the official conference website. More info <a href='https://interspeech2027.org/'>here</a>."
+  },
+  {
+    "title": "IROS",
+    "year": 2027,
+    "id": "iros27",
+    "full_name": null,
+    "link": "https://iros2027-abudhabi.org/",
+    "deadline": "2027-03-01 23:59:59",
+    "timezone": "America/Los_Angeles",
+    "place": "Florence, Italy",
+    "date": "September 26 - October 1, 2027",
+    "sub": [
+      "RO"
+    ],
+    "note": "Predicted deadline based on historical IROS pattern (past deadlines — 2025 Mar 1, 2024 Mar 1, 2023 Mar 1). Please verify on the official conference website. More info <a href='https://iros2027-abudhabi.org/'>here</a>."
+  },
+  {
+    "title": "IWSDS",
+    "year": 2027,
+    "id": "iwsds27",
+    "full_name": null,
+    "link": "https://sites.google.com/unitn.it/iwsds27/home/",
+    "deadline": "2026-10-28 23:59:59",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "February 26 - March 1, 2027",
+    "sub": [
+      "NLP"
+    ],
+    "note": "Predicted deadline based on historical IWSDS pattern (past deadlines — 2025 Oct 28, 2025 Jan 11, 2023 Nov 17). Please verify on the official conference website. More info <a href='https://sites.google.com/unitn.it/iwsds27/home/'>here</a>."
+  },
+  {
+    "title": "KDD-2",
+    "year": 2027,
+    "id": "kdd26-227",
+    "full_name": null,
+    "link": "https://kdd2027.kdd.org/",
+    "deadline": "2027-02-10 23:59:59",
+    "timezone": "UTC-12",
+    "place": "San Jose, California, USA",
+    "date": "August 1-5, 2027",
+    "sub": [
+      "DM"
+    ],
+    "note": "Predicted deadline based on historical KDD-2 pattern (past deadlines — 2026 Feb 10, 2025 Feb 10). Please verify on the official conference website. More info <a href='https://kdd2027.kdd.org/'>here</a>."
+  },
+  {
+    "title": "Learing at Scale",
+    "year": 2027,
+    "id": "ls27",
+    "full_name": null,
+    "link": "https://learningatscale.hosting.acm.org/las2027/call-for-papers/",
+    "deadline": "2027-02-16 23:59:59",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "June 29-July 03, 2027",
+    "sub": [
+      "NLP",
+      "ML",
+      "CV",
+      "EDU"
+    ],
+    "note": "Predicted deadline based on historical Learing at Scale pattern (past deadlines — 2026 Feb 16, 2025 Feb 20). Please verify on the official conference website. More info <a href='https://learningatscale.hosting.acm.org/las2027/call-for-papers/'>here</a>."
+  },
+  {
+    "title": "LAK",
+    "year": 2027,
+    "id": "lak2027",
+    "full_name": null,
+    "link": "https://www.solaresearch.org/events/lak/lak27/general-call/",
+    "deadline": "2026-09-28 23:59:59",
+    "timezone": "UTC-12",
+    "place": "Recife, Brazil",
+    "date": "March 8-12, 2027",
+    "sub": [
+      "EDU"
+    ],
+    "note": "Research track full/short paper deadline September 28, 2026 (AoE); practitioner reports October 13, 2026. More info <a href='https://www.solaresearch.org/events/lak/lak27/general-call/'>here</a>."
+  },
+  {
+    "title": "LoG",
+    "year": 2027,
+    "id": "log27",
+    "full_name": "Learning on Graphs Conference",
+    "link": "https://logconference.org",
+    "deadline": "2027-09-11 23:59:59",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "November 26 - November 29, 2027",
+    "sub": [
+      "ML",
+      "DM",
+      "KR"
+    ],
+    "note": "Predicted deadline based on historical LoG pattern (past deadlines — 2025 Sep 11, 2024 Sep 11, 2022 Sep 16). Please verify on the official conference website. More info <a href='https://logconference.org'>here</a>."
+  },
+  {
+    "title": "MLSYS",
+    "year": 2027,
+    "id": "mlsys27",
+    "full_name": null,
+    "link": "https://mlsys.org/Conferences/2027/",
+    "deadline": "2026-10-30 23:59:59",
+    "timezone": "America/Los_Angeles",
+    "place": "TBA",
+    "date": "May 17-22, 2027",
+    "sub": [
+      "ML"
+    ],
+    "note": "Predicted deadline based on historical MLSYS pattern (past deadlines — 2025 Oct 30). Please verify on the official conference website. More info <a href='https://mlsys.org/Conferences/2027/'>here</a>."
+  },
+  {
+    "title": "MM",
+    "year": 2027,
+    "id": "mm27",
+    "full_name": null,
+    "link": "https://2027.acmmm.org/",
+    "deadline": "2027-04-08 23:59:59",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "October 28 - November 1, 2027",
+    "sub": [
+      "CV"
+    ],
+    "note": "Predicted deadline based on historical MM pattern (past deadlines — 2025 Apr 8, 2024 Apr 8, 2023 Apr 30). Please verify on the official conference website. More info <a href='https://2027.acmmm.org/'>here</a>."
+  },
+  {
+    "title": "NAACL",
+    "year": 2027,
+    "id": "naacl27",
+    "full_name": null,
+    "link": "https://2027.naacl.org/",
+    "deadline": "2026-10-12 23:59:00",
+    "timezone": "UTC-12",
+    "place": "San Francisco, CA, USA",
+    "date": "June 1-5, 2027",
+    "sub": [
+      "NLP"
+    ],
+    "note": "All submissions via ARR — commit from the October 2026 cycle (ARR submission deadline Oct 12, 2026). More info <a href='https://2027.naacl.org/'>here</a>."
+  },
+  {
+    "title": "NeurIPS",
+    "year": 2027,
+    "id": "neurips27",
+    "full_name": "Conference on Neural Information Processing Systems",
+    "link": "https://neurips.cc/Conferences/FutureMeetings",
+    "deadline": "2027-05-06 23:59:59",
+    "timezone": "UTC",
+    "place": "Europe",
+    "date": "December 2027",
+    "sub": [
+      "ML"
+    ],
+    "note": "Predicted deadline based on historical NeurIPS pattern (past deadlines — 2026 May 6, 2025 May 16, 2024 May 22). Please verify on the official conference website. More info <a href='https://neurips.cc/Conferences/FutureMeetings'>here</a>."
+  },
+  {
+    "title": "RecSys",
+    "year": 2027,
+    "id": "recsys27",
+    "full_name": null,
+    "link": "https://recsys.acm.org/recsys26/recsys-26-call-for-contributions/",
+    "deadline": "2027-04-21 23:59:59",
+    "timezone": "UTC-12",
+    "place": "Hawaii, USA",
+    "date": "September 28 - October 2, 2027",
+    "sub": [
+      "DM"
+    ],
+    "note": "Predicted deadline based on historical RecSys pattern (past deadlines — 2026 Apr 21, 2023 Apr 21, 2022 May 3). Please verify on the official conference website. More info <a href='https://recsys.acm.org/recsys26/recsys-26-call-for-contributions/'>here</a>."
+  },
+  {
+    "title": "RSS",
+    "year": 2027,
+    "id": "rss27",
+    "full_name": "Robotics: Science and Systems",
+    "link": "https://roboticsconference.org/information/cfp/",
+    "deadline": "2027-01-30 23:59:59",
+    "timezone": "UTC-12",
+    "place": "Athens, Greece",
+    "date": "July 6-11, 2027",
+    "sub": [
+      "RO"
+    ],
+    "note": "Predicted deadline based on historical RSS pattern (past deadlines — 2026 Jan 30, 2025 Jan 24, 2024 Feb 2). Please verify on the official conference website. More info <a href='https://roboticsconference.org/information/cfp/'>here</a>."
+  },
+  {
+    "title": "SIGDIAL",
+    "year": 2027,
+    "id": "sigdial27",
+    "full_name": null,
+    "link": "https://2027.sigdial.org/",
+    "deadline": "2027-04-20 23:59:59",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "Aug 01-05, 2027",
+    "sub": [
+      "NLP"
+    ],
+    "note": "Predicted deadline based on historical SIGDIAL pattern (past deadlines — 2026 Apr 20, 2025 Apr 28, 2024 Apr 24). Please verify on the official conference website. More info <a href='https://2027.sigdial.org/'>here</a>."
+  },
+  {
+    "title": "SIGGRAPH",
+    "year": 2027,
+    "id": "siggraph27",
+    "full_name": null,
+    "link": "https://s2027.siggraph.org/",
+    "deadline": "2027-01-24 23:59:59",
+    "timezone": "GMT",
+    "place": "TBA",
+    "date": "July 28 - August 1, 2027",
+    "sub": [
+      "CG"
+    ],
+    "note": "Predicted deadline based on historical SIGGRAPH pattern (past deadlines — 2025 Jan 24, 2024 Jan 24, 2023 Jan 24). Please verify on the official conference website. More info <a href='https://s2027.siggraph.org/'>here</a>."
+  },
+  {
+    "title": "SIGGRAPH Asia",
+    "year": 2027,
+    "id": "siggraphasia27",
+    "full_name": "SIGGRAPH ASIA 2027",
+    "link": "https://asia.siggraph.org/2027/",
+    "deadline": "2027-05-12 23:59:59",
+    "timezone": "UTC-12",
+    "place": "Tokyo, Japan",
+    "date": "November 30 - December 3, 2027",
+    "sub": [
+      "CG"
+    ],
+    "note": "Predicted deadline based on historical SIGGRAPH Asia pattern (past deadlines — 2026 May 12, 2025 May 23, 2024 May 19). Please verify on the official conference website. More info <a href='https://asia.siggraph.org/2027/'>here</a>."
+  },
+  {
+    "title": "SIGIR",
+    "year": 2027,
+    "id": "sigir27",
+    "full_name": null,
+    "link": "https://sigir2027.org/en-AU/pages/attending/key-dates",
+    "deadline": "2027-01-22 23:59:59",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "July 20-24, 2027",
+    "sub": [
+      "DM"
+    ],
+    "note": "Predicted deadline based on historical SIGIR pattern (past deadlines — 2026 Jan 22, 2024 Jan 25, 2023 Jan 31). Please verify on the official conference website. More info <a href='https://sigir2027.org/en-AU/pages/attending/key-dates'>here</a>."
+  },
+  {
+    "title": "SIGMOD-4",
+    "year": 2027,
+    "id": "sigmod27-4",
+    "full_name": null,
+    "link": "https://2027.sigmod.org/",
+    "deadline": "2026-10-17 23:59:00",
+    "timezone": "AoE",
+    "place": "Huntington Beach, California, USA",
+    "date": "June 13-19, 2027",
+    "sub": [
+      "DM"
+    ],
+    "note": null
+  },
+  {
+    "title": "STARSEM",
+    "year": 2027,
+    "id": "starsem27",
+    "full_name": null,
+    "link": "https://starsem2027.github.io/",
+    "deadline": "2027-02-13 23:59:59",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "July 06, 2027",
+    "sub": [
+      "NLP"
+    ],
+    "note": "Predicted deadline based on historical STARSEM pattern (past deadlines — 2026 Feb 13, 2025 May 30, 2023 Mar 24). Please verify on the official conference website. More info <a href='https://starsem2027.github.io/'>here</a>."
+  },
+  {
+    "title": "UAI",
+    "year": 2027,
+    "id": "uai27",
+    "full_name": null,
+    "link": "https://www.auai.org/uai2027/",
+    "deadline": "2027-02-25 23:59:59",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "July 2027",
+    "sub": [
+      "ML"
+    ],
+    "note": "Predicted deadline based on historical UAI pattern (past deadlines — 2026 Feb 25, 2025 Jan 5, 2024 Feb 9). Please verify on the official conference website. More info <a href='https://www.auai.org/uai2027/'>here</a>."
+  },
+  {
+    "title": "UMAP",
+    "year": 2027,
+    "id": "umap27",
+    "full_name": "ACM International Conference on User Modeling, Adaptation and Personalization",
+    "link": "https://www.um.org/umap2027/call-for-full-short-papers/",
+    "deadline": "2027-01-29 23:59:59",
+    "timezone": "UTC-12",
+    "place": "TBA",
+    "date": "June 8-11, 2027",
+    "sub": [
+      "HCI"
+    ],
+    "note": "Predicted deadline based on historical UMAP pattern (past deadlines — 2026 Jan 29). Please verify on the official conference website. More info <a href='https://www.um.org/umap2027/call-for-full-short-papers/'>here</a>."
+  },
+  {
+    "title": "WWW",
+    "year": 2027,
+    "id": "www27",
+    "full_name": null,
+    "link": "https://www2027.thewebconf.org/",
+    "deadline": "2026-10-13 23:59:59",
+    "timezone": "UTC-12",
+    "place": "Dublin, Ireland",
+    "date": "TBA, 2027",
+    "sub": [
+      "DM"
+    ],
+    "note": "Predicted deadline based on historical WWW pattern (past deadlines — 2025 Oct 13, 2022 Oct 13). Please verify on the official conference website. More info <a href='https://www2027.thewebconf.org/'>here</a>."
+  }
+]

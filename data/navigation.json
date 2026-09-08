@@ -29,6 +29,11 @@
       "text": "Study Notes",
       "href": "notes.qmd",
       "visible": true
+    },
+    {
+      "text": "AI Deadlines",
+      "href": "deadlines.qmd",
+      "visible": true
     }
   ]
 }

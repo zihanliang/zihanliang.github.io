@@ -3,7 +3,7 @@
 Source repository for a personal academic website (Quarto + vanilla frontend).
 
 - Live site: https://www.zihanliang.com
-- Purpose: Hosts the Home, CV, Research, Experiences, Demos, and Study Notes pages
+- Purpose: Hosts the Home, CV, Research, AI Conference Deadlines, Experiences, Demos, and Study Notes pages
 
 ## Tech Stack
 
@@ -17,6 +17,7 @@ Source repository for a personal academic website (Quarto + vanilla frontend).
 - `index.qmd`: Home page skeleton, content from `data/home/*.json`
 - `cv.qmd`: CV page (links to the PDF and first-page preview generated from `zihan_liang_academic_cv/cv.tex` during deployment)
 - `research.qmd`: Research page, content from `data/research/sections.json`
+- `deadlines.qmd`: Live AI conference deadline tracker with a published data snapshot fallback
 - `experiences.qmd`: Experiences page, content from `data/experiences/sections.json`
 - `demo.qmd`: Demo page skeleton, content from `data/demo/sections.json`
 - `notes.qmd`: Study Notes page, content from `data/notes/sections.json`
@@ -26,6 +27,7 @@ Source repository for a personal academic website (Quarto + vanilla frontend).
 - `data/home/`: Home modules (hero/about/news/doing/research/contact)
 - `data/navigation.json`: Navbar visibility controls
 - `data/research/sections.json`: Publications, manuscripts, collaborative projects
+- `data/deadlines-snapshot.json`: Fallback snapshot for the conference deadline tracker
 - `data/experiences/sections.json`: Education, teaching, industry, leadership experiences
 - `data/demo/sections.json`: Demo page title, subtitle, and project cards
 - `data/notes/sections.json`: Notes catalog and download links
@@ -38,6 +40,7 @@ Source repository for a personal academic website (Quarto + vanilla frontend).
 
 - `assets/js/main.js`: Home page data loading and rendering
 - `assets/js/research.js`: Research page rendering
+- `assets/js/deadlines.js`: Conference data loading, filtering, timezone conversion, and countdowns
 - `assets/js/experiences.js`: Experiences page rendering
 - `assets/js/demo.js`: Demo page rendering
 - `assets/js/notes.js`: Notes page rendering

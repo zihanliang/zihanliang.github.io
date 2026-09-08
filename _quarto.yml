@@ -37,6 +37,8 @@ website:
         href: demo.qmd
       - text: "Study Notes"
         href: notes.qmd
+      - text: "AI Deadlines"
+        href: deadlines.qmd
   page-footer:
     center: "Computational Biology and Bioinformatics Program, Duke University | zihan.liang@duke.edu <br><a href=\"zh.html\">中文</a> | © 2026 Zihan Liang. All rights reserved."
 
