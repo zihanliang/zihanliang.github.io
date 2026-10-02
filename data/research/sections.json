@@ -1,124 +1,185 @@
 {
-  "pageTitle": "Research Portfolio",
-  "pageSubtitle": "Publications, manuscripts, and collaborative projects. Add, remove, or edit entries by updating this JSON file.",
+  "pageTitle": "Research",
+  "pageIntro": "Papers, manuscripts, and theses on machine learning for clinical and other high-stakes data. A complete list is on <a href=\"https://scholar.google.com/citations?hl=en&user=qDHioQ8AAAAJ\" target=\"_blank\" rel=\"noopener noreferrer\">Google Scholar</a>.",
   "sections": [
     {
+      "id": "publications",
       "title": "Publications",
       "entries": [
         {
+          "id": "ts-ssm",
           "title": "Two-Sided State-Space Models for Sequential Recommendation with Non-Random Multimodal Review Feedback",
           "authors": "Ziwen Pan*, Zihan Liang*, Ruoxuan Xiong",
           "status": "Accepted at EMNLP 2026 Findings",
+          "year": "2026",
+          "venueShort": "EMNLP Findings",
+          "topics": [
+            "Recommender Systems"
+          ],
           "paper": "https://arxiv.org/abs/2609.00165",
           "code": "https://github.com/CausalMLResearch/TS-SSM",
           "bullets": [
-            "TS-SSM jointly tracks evolving user preferences and item states, treating multimodal reviews—and how they are observed and expressed—as non-random feedback, while capturing cross-item spillovers and the asymmetric persistence of positive and negative review feedback.",
-            "Across six Amazon datasets, TS-SSM consistently outperforms strong baselines, achieving 14.8%–18.8% relative improvements in Recall@20 over the primary sequential baseline, BSARec."
+            "TS-SSM jointly tracks evolving user preferences and item states, treating multimodal reviews and how they are expressed as non-random feedback, with cross-item spillovers and asymmetric persistence of positive and negative signals.",
+            "Across six Amazon datasets, it outperforms strong baselines, with 14.8%–18.8% relative gains in Recall@20 over BSARec, the primary sequential baseline."
           ]
         },
         {
+          "id": "dart",
           "title": "DART: Mitigating Harm Drift in Difference-Aware LLMs via Distill-Audit-Repair Training",
           "authors": "Ziwen Pan*, Zihan Liang*, Jad Kabbara, Ali Emami",
           "status": "Accepted at ACL 2026 Findings",
+          "year": "2026",
+          "venueShort": "ACL Findings",
+          "topics": [
+            "LLM Safety"
+          ],
           "paper": "https://arxiv.org/abs/2604.16845",
           "code": "https://github.com/zihanliang/DART",
           "bullets": [
-            "Identified the problem of harm drift in safety-tuned LLMs—where fine-tuning improves decision accuracy but makes rationales more harmful—and introduced DART, a Distill-Audit-Repair pipeline for improving difference-awareness classification while preserving safer explanations.",
-            "On eight benchmarks, DART improved Llama-3-8B-Instruct accuracy from 39.0% to 68.8%, boosted equal-treatment accuracy from 11.3% to 72.6%, and reduced harm drift cases by 72.6%, showing that accuracy and safety can be improved together."
+            "Identified harm drift in safety-tuned LLMs, where fine-tuning raises decision accuracy but makes rationales more harmful, and introduced DART, a Distill-Audit-Repair pipeline that improves difference-aware classification while keeping explanations safe.",
+            "On eight benchmarks, DART raised Llama-3-8B-Instruct accuracy from 39.0% to 68.8% and equal-treatment accuracy from 11.3% to 72.6%, while cutting harm drift cases by 72.6%."
           ]
         },
         {
+          "id": "opl-mt-mnar",
           "title": "Learning Dynamic Representations and Policies from Multimodal Clinical Time-Series with Informative Missingness",
           "authors": "Zihan Liang*, Ziwen Pan*, Ruoxuan Xiong",
           "status": "Accepted at ACL 2026 Findings",
+          "year": "2026",
+          "venueShort": "ACL Findings",
+          "topics": [
+            "Clinical ML"
+          ],
           "paper": "https://arxiv.org/abs/2604.21235",
           "code": "https://github.com/CausalMLResearch/OPL-MT-MNAR",
           "bullets": [
-            "Proposed an MNAR-aware multimodal framework for clinical time-series that treats observation patterns as signal rather than noise, combining explicit missingness features, adaptive fusion of sparse clinical text, and action-conditioned latent dynamics to learn patient states for both prediction and offline decision-making.",
-            "Demonstrated strong results on MIMIC-IV and eICU: mortality prediction reached AUROC 0.876 on MIMIC-IV (+3.9% over GRU-D), while the learned treatment policy improved FQE by 20.3% over clinician behavior and delivered the largest gains for high-severity patients."
+            "An MNAR-aware multimodal framework for clinical time series that treats observation patterns as signal, combining explicit missingness features, adaptive fusion of sparse clinical text, and action-conditioned latent dynamics to learn patient states for prediction and offline decision-making.",
+            "Evaluated on MIMIC-IV and eICU: mortality prediction reached AUROC 0.876 on MIMIC-IV (+3.9% over GRU-D), and the learned treatment policy improved FQE by 20.3% over clinician behavior, with the largest gains for high-severity patients."
           ]
         },
         {
+          "id": "mambadatg",
           "title": "MambaDATG: Domain-Adaptive Tri-Plane-Gated Pre-training for 3D Abdominal Segmentation",
           "authors": "Yaomin Shen*, Dongming Jiang*, Zihan Liang*, Yangbo Wei*, Wenkai Yang, Xiaoxin Sun, Zhen Huang, Suhua Wang, Qingsong Yao",
           "paper": "https://ieeexplore.ieee.org/document/11462566",
           "status": "Accepted at ICASSP 2026 <span class=\"status-tag status-tag-oral\">Oral</span>",
+          "year": "2026",
+          "venueShort": "ICASSP",
+          "badge": "Oral",
+          "topics": [
+            "Medical Imaging"
+          ],
           "bullets": [
-            "Proposed MambaDATG, a tri-plane-gated selective SSM pre-training that fuses axial, coronal, and sagittal scans via voxel gating—capturing directional anisotropy with linear-time efficiency and zero inference overhead.",
-            "Introduced a domain-adaptive MIM stage adapting high-level layers on unlabeled CTs, improving small-organ segmentation (e.g., +1.8 Dice on BTCV) and revealing the tri-plane gate as the key performance driver."
+            "A tri-plane-gated selective SSM pre-training that fuses axial, coronal, and sagittal views through voxel gating, capturing directional anisotropy with linear-time cost and no inference overhead.",
+            "A domain-adaptive masked image modeling stage on unlabeled CTs improves small-organ segmentation (e.g., +1.8 Dice on BTCV), with the tri-plane gate identified as the key performance driver."
           ]
         },
         {
-          "title": "Causal Representation Learning from Multimodal Clinical Records under Non-Random Modality Missingness",
-          "authors": "Zihan Liang*, Ziwen Pan*, Ruoxuan Xiong",
-          "status": "Accepted at EMNLP 2025 Main",
-          "paper": "https://arxiv.org/abs/2509.17228",
-          "code": "https://github.com/CausalMLResearch/CRL-MMNAR",
-          "bullets": [
-            "Proposed CRL-MMNAR, a causal multimodal framework that treats modality missing-not-at-random as signal—combining missingness-aware fusion (gated by observation patterns) with cross-modal reconstruction + contrastive learning, and a multitask predictor with a cross-fitted rectifier to correct observation-pattern bias.",
-            "Demonstrated consistent gains on MIMIC-IV and eICU, including AUC 0.8687→0.9824 for ICU admission (+13.1%) and 0.7989→0.8657 for readmission (+8.4%) on MIMIC-IV, and readmission AUC to 0.9294 (+13.8%) on eICU, with lower Brier scores indicating better calibration."
-          ]
-        },
-        {
-          "title": "CareLab at #SMM4H-HeaRD 2025: Insomnia Detection and Food Safety Event Extraction with Domain-Aware Transformers",
-          "authors": "Zihan Liang*, Ziwen Pan*, Sumon Kanti Dey, Azra Ismail",
-          "status": "Accepted at AAAI ICSWM 2025",
-          "paper": "https://workshop-proceedings.icwsm.org/abstract.php?id=2025_59",
-          "code": "https://github.com/zihanliang/CARELAB-SMM4H2025",
-          "bullets": [
-            "Ranked 1st on SMM4H–HeaRD 2025 Task 5, developing a RoBERTa + GPT-4–augmented system with classweighted training and ensembling, achieving F1 = 0.958 and revealing the limits of rule-based span extraction in clinical and food-safety texts."
-          ]
-        },
-        {
+          "id": "autonomous-taxi",
           "title": "Dynamic Policy Design for Autonomous Taxi Adoption: A Hierarchical Game-Theoretic Framework",
           "authors": "Zihan Liang, Ziwen Pan",
           "status": "Accepted at TRB Annual Meeting 2026",
+          "year": "2026",
+          "venueShort": "TRB Annual Meeting",
+          "topics": [
+            "Transportation Policy"
+          ],
           "paper": "https://annualmeeting.mytrb.org/OnlineProgram/Details/24465#",
           "bullets": [
-            "Formulated a three-tier dynamic Stackelberg game modeling interactions among government, platform, and workers in autonomous taxi adoption, deriving equilibrium policies that balance innovation incentives with social welfare.",
+            "A three-tier dynamic Stackelberg game among government, platform, and workers, yielding equilibrium policies that balance innovation incentives with social welfare in autonomous taxi adoption.",
             "An extended version is under review at Transportation Research Record."
+          ]
+        },
+        {
+          "id": "crl-mmnar",
+          "title": "Causal Representation Learning from Multimodal Clinical Records under Non-Random Modality Missingness",
+          "authors": "Zihan Liang*, Ziwen Pan*, Ruoxuan Xiong",
+          "status": "Accepted at EMNLP 2025 Main",
+          "year": "2025",
+          "venueShort": "EMNLP Main",
+          "topics": [
+            "Clinical ML"
+          ],
+          "paper": "https://arxiv.org/abs/2509.17228",
+          "code": "https://github.com/CausalMLResearch/CRL-MMNAR",
+          "bullets": [
+            "CRL-MMNAR treats non-random modality missingness as signal, combining missingness-aware fusion with cross-modal reconstruction and contrastive learning, plus a multitask predictor with a cross-fitted rectifier that corrects observation-pattern bias.",
+            "On MIMIC-IV, AUC rose from 0.8687 to 0.9824 for ICU admission (+13.1%) and from 0.7989 to 0.8657 for readmission (+8.4%); on eICU, readmission AUC reached 0.9294 (+13.8%), with lower Brier scores indicating better calibration."
+          ]
+        },
+        {
+          "id": "carelab-smm4h",
+          "title": "CareLab at #SMM4H-HeaRD 2025: Insomnia Detection and Food Safety Event Extraction with Domain-Aware Transformers",
+          "authors": "Zihan Liang*, Ziwen Pan*, Sumon Kanti Dey, Azra Ismail",
+          "status": "Accepted at AAAI ICWSM 2025",
+          "year": "2025",
+          "venueShort": "AAAI ICWSM Workshop",
+          "badge": "1st in Task 5",
+          "topics": [
+            "Health NLP"
+          ],
+          "paper": "https://workshop-proceedings.icwsm.org/abstract.php?id=2025_59",
+          "code": "https://github.com/zihanliang/CARELAB-SMM4H2025",
+          "bullets": [
+            "Ranked 1st on SMM4H-HeaRD 2025 Task 5 with a RoBERTa system augmented by GPT-4, class-weighted training, and ensembling, reaching F1 = 0.958.",
+            "Error analysis revealed the limits of rule-based span extraction in clinical and food-safety text."
           ]
         }
       ]
     },
     {
+      "id": "manuscripts",
       "title": "Manuscripts",
       "entries": [
         {
+          "id": "traffic-gnn",
           "title": "Adaptive Spatiotemporal Graph Neural Networks with Trend-Aware Prediction and Validation-Gated Calibration for Traffic Flow Forecasting",
           "authors": "Zihan Liang*, Ziwen Pan*, Shuyang Yu",
           "status": "Under Review at IEEE Transactions on Intelligent Transportation Systems",
           "period": "May 2025 - Present",
+          "venueShort": "Under review · IEEE T-ITS",
+          "topics": [
+            "Spatiotemporal Forecasting"
+          ],
           "bullets": [
-            "Proposed an adaptive spatiotemporal GNN that fuses distance- and correlation-based graphs with dual temporal–spatial encoders and a trend-aware head, achieving state-of-the-art accuracy on PeMS benchmarks.",
-            "Designed a validation-gated calibration pipeline with hour-conditional quantile mapping and AR(1) residual correction, applied only when improving MAPE/MAE to ensure reliable and interpretable post-processing."
+            "An adaptive spatiotemporal GNN that fuses distance- and correlation-based graphs with dual temporal–spatial encoders and a trend-aware head, achieving state-of-the-art accuracy on PeMS benchmarks.",
+            "A validation-gated calibration step, with hour-conditional quantile mapping and AR(1) residual correction, is applied only when it improves MAPE/MAE, keeping post-processing reliable and interpretable."
           ]
         }
       ]
     },
     {
+      "id": "theses",
       "title": "Theses and Dissertations",
       "entries": [
         {
+          "id": "honors-thesis",
           "title": "Causal Representation Learning under Informative Missingness for Clinical Multimodal Prediction and Offline Decision-Making",
           "authors": "Zihan Liang",
           "period": "Advised by Prof. Ruoxuan Xiong",
           "status": "Emory College of Arts and Sciences Honors Thesis (Highest Honors)",
+          "year": "2026",
+          "venueShort": "Emory Honors Thesis",
+          "badge": "Highest Honors",
+          "topics": [
+            "Clinical ML"
+          ],
           "paper": "https://etd.library.emory.edu/concern/etds/zk51vj64z?locale=en",
           "slides": "pdf/slides/emory-college-honors/emory-college-honors-slides.pdf",
           "poster": "pdf/slides/emory-college-honors/Zihan-Liang-Honors-Poster.pdf",
           "bullets": [
-            "Proposed a unified causal representation learning framework that models cross-scale informative missingness (patient-level modality assignment and step-level monitoring intensity) as explicit variables, enabling both prediction and decision-making under MNAR clinical data.",
-            "Developed a two-stage MMNAR pipeline with missingness-aware fusion, cross-modal self-supervision, and a cross-fitted pattern-wise rectifier that corrects residual bias, achieving consistent AUROC gains under severe missingness and distribution shift.",
-            "Introduced MNAR-aware dynamic state learning with action-conditioned latent dynamics and process-aware text modeling, enabling reliable offline policy optimization (IQL) and significant improvements over clinician policies and strong RL baselines."
+            "A unified causal representation learning framework that models informative missingness at two scales, patient-level modality assignment and step-level monitoring intensity, as explicit variables for prediction and decision-making under MNAR clinical data.",
+            "Combines missingness-aware fusion, cross-modal self-supervision, and a cross-fitted rectifier for robust prediction under severe missingness and distribution shift, with MNAR-aware latent dynamics that support offline policy optimization (IQL) beyond clinician policies and strong RL baselines."
           ]
         }
       ]
     },
     {
+      "id": "collaborative-projects",
       "title": "Collaborative Research Projects",
       "entries": [
         {
+          "id": "care-lab",
           "titleParts": [
             "Research Assistant at ",
             {
@@ -128,13 +189,16 @@
             ", Emory University"
           ],
           "period": "Sept. 2024 - May 2026",
+          "topics": [
+            "Data for Social Good"
+          ],
           "bullets": [
-            "Analyzed nearly 1,000 user data points and developed an interactive dashboard for MakerGhat, an India-based organization, utilizing JavaScript, Python, and HTML for seamless data visualization.",
-            "Maintaining a WhatsApp Education Bot using Python and Twilio for MakerGhat, enabling over 15,000 teachers across India to document lesson plans and teaching activities, impacting 600,000+ students and supporting 10,000+ educational projects.",
-            "Developed an offline-first Android app for classroom session recording and metadata management, integrating Google Sheets validation, offline caching, and secure Drive synchronization."
+            "Maintain a WhatsApp education bot (Python, Twilio) for MakerGhat, an India-based organization, that helps 15,000+ teachers document lesson plans and teaching activities, reaching 600,000+ students and 10,000+ educational projects.",
+            "Analyzed nearly 1,000 user data points in an interactive dashboard (JavaScript, Python, HTML) and built an offline-first Android app for classroom session recording with Google Sheets validation, offline caching, and secure Drive sync."
           ]
         },
         {
+          "id": "polymath-reu",
           "titleParts": [
             "Research Assistant at ",
             {
@@ -143,10 +207,12 @@
             }
           ],
           "period": "Jun. 2025 - Aug. 2025",
+          "topics": [
+            "Epidemic Modeling"
+          ],
           "bullets": [
-            "Developed and analyzed mathematical models using ordinary differential equations (ODEs) to study the community transmission of Clostridioides difficile (C. difficile).",
-            "Collaborated with a team to identify optimal intervention strategies for controlling the spread of C. difficile in community settings.",
-            "Assisted in modifying and implementing code in MATLAB and R to simulate disease dynamics and evaluate mitigation strategies."
+            "Developed and analyzed ordinary differential equation models of the community transmission of Clostridioides difficile (C. difficile), implementing simulations in MATLAB and R.",
+            "Worked with the team to evaluate mitigation strategies and identify optimal interventions for controlling community spread."
           ]
         }
       ]

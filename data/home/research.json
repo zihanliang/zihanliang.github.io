@@ -1,12 +1,25 @@
 {
-  "lead": "I study reliable machine learning under incomplete, biased, and heterogeneous data.",
+  "label": "Research",
+  "lead": "Health records capture the process of care, not the disease itself.",
   "paragraphs": [
-    "I am interested in missing data, distribution shift, and multimodal learning, and in how these factors affect model reliability and downstream decisions. I draw on tools from causal inference, representation learning, and modern deep learning, with a focus on healthcare and other high-stakes domains."
+    "What gets recorded, and when, reflects how patients move through the health system as much as how they are doing. I develop machine learning methods for longitudinal and multimodal clinical data, including EHR time series, clinical notes, and medical images, drawing on representation learning, causal inference, and statistics."
   ],
-  "bullets": [
-    "Multimodal Learning under Missingness: modeling MNAR patterns and informative missing signals in clinical and recommendation settings.",
-    "Robust Generalization and Domain Adaptation: building adaptive frameworks that improve cross-dataset transfer and calibration.",
-    "Causal and Reliability-Aware Representation Learning: integrating causal views into deep representation learning for better interpretability.",
-    "Applied NLP under Noise and Imbalance: creating transformer-based systems for robust clinical text understanding."
+  "link": {
+    "label": "Publications",
+    "url": "research.html"
+  },
+  "items": [
+    {
+      "title": "Longitudinal patient representations",
+      "text": "Learning representations of patients from irregular, multimodal EHR histories to support downstream clinical prediction."
+    },
+    {
+      "title": "Informative missingness",
+      "text": "Treating which measurements, notes, and modalities get recorded as signal rather than noise."
+    },
+    {
+      "title": "Reliable clinical prediction",
+      "text": "Calibration, robustness under distribution shift, and causal reasoning so that predictions can inform clinical decisions."
+    }
   ]
 }

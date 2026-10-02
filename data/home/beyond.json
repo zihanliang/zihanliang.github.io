@@ -1,0 +1,21 @@
+{
+  "title": "Beyond Research",
+  "items": [
+    {
+      "title": "AI literacy",
+      "description": "Founded the Emory Artificial Intelligence and Data Association and its “AI for ALL” initiative, growing it to 200+ members across majors."
+    },
+    {
+      "title": "Community",
+      "description": "Led a 100+ person team as President of the Emory Chinese Student Association, with programs reaching 2,000+ students and families."
+    },
+    {
+      "title": "Teaching",
+      "description": "Teaching assistant for an undergraduate machine learning course at Emory and for Olympiad algebra at AwesomeMath."
+    }
+  ],
+  "link": {
+    "label": "All experiences",
+    "url": "experiences.html"
+  }
+}

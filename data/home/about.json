@@ -3,6 +3,6 @@
   "email": "zihan.liang@duke.edu",
   "affiliation": "Ph.D. Student · Computational Biology and Bioinformatics · Duke University",
   "paragraphs": [
-    "I am a Ph.D. student at Duke University studying reliable machine learning under uncertainty. My work draws on statistics and causal inference to understand incomplete, biased, and evolving data in healthcare and other high-stakes settings."
+    "I am a Ph.D. student in Computational Biology and Bioinformatics at Duke University, advised by <a href=\"https://anruzhang.github.io/\" target=\"_blank\" rel=\"noopener noreferrer\">Prof. Anru Zhang</a>. I work in clinical informatics and health data science, building models from electronic health records, clinical notes, and medical images."
   ]
 }

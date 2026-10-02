@@ -2,7 +2,7 @@ const dataFiles = [
   "data/home/hero.json",
   "data/home/about.json",
   "data/home/news.json",
-  "data/home/doing.json",
+  "data/home/beyond.json",
   "data/home/research.json",
   "data/home/contact.json"
 ];
@@ -10,11 +10,7 @@ const dataFiles = [
 const VISIBLE_NEWS_ITEMS = 4;
 const NEWS_SCROLL_TOLERANCE = 2;
 const imageDimensions = {
-  "figures/home/zihan-liang-profile.jpg": { width: 1280, height: 1707 },
-  "figures/home/whatimdoing-ml.png": { width: 1280, height: 823 },
-  "figures/home/whatimdoing-data.png": { width: 1280, height: 823 },
-  "figures/home/whatimdoing-aicomm.jpg": { width: 1280, height: 823 },
-  "figures/home/whatimdoing-culture.jpg": { width: 1280, height: 823 }
+  "figures/home/zihan-liang-profile.jpg": { width: 1280, height: 1707 }
 };
 
 function markContentReady() {
@@ -68,22 +64,27 @@ function renderHero(hero, about) {
   );
 }
 
-function renderDoing(doing) {
-  setHtml("doing-title", doing.title);
+function renderBeyond(beyond) {
+  setHtml("beyond-title", beyond.title);
 
-  const cards = doing.items
+  const link = document.getElementById("beyond-link");
+  if (link && beyond.link) {
+    link.href = beyond.link.url;
+    link.textContent = beyond.link.label;
+  }
+
+  const items = beyond.items
     .map(
       (item) => `
-      <article class="work-card">
-        <img src="${item.image}" alt="${item.title}" class="card-image" ${getImageSizeAttrs(item.image)} loading="lazy" decoding="async" />
+      <li>
         <h3>${item.title}</h3>
         <p>${item.description}</p>
-      </article>
+      </li>
     `
     )
     .join("");
 
-  setHtml("doing-cards", cards);
+  setHtml("beyond-items", items);
 }
 
 function renderNews(news) {
@@ -250,14 +251,31 @@ function setupNewsListViewport() {
 }
 
 function renderResearch(research) {
+  setHtml("research-label", research.label);
   setHtml("research-lead", research.lead);
   setHtml(
     "research-paragraphs",
     research.paragraphs.map((p) => `<p>${p}</p>`).join("")
   );
+
+  const link = document.getElementById("research-link");
+  if (link && research.link) {
+    link.href = research.link.url;
+    link.textContent = research.link.label;
+  }
+
   setHtml(
-    "research-bullets",
-    research.bullets.map((b) => `<li>${b}</li>`).join("")
+    "research-items",
+    research.items
+      .map(
+        (item) => `
+      <li>
+        <h3>${item.title}</h3>
+        <p>${item.text}</p>
+      </li>
+    `
+      )
+      .join("")
   );
 }
 
@@ -280,13 +298,13 @@ function renderContact(contact) {
 
 async function init() {
   try {
-    const [hero, about, news, doing, research, contact] = await Promise.all(
+    const [hero, about, news, beyond, research, contact] = await Promise.all(
       dataFiles.map((file) => fetchJson(file))
     );
 
     renderHero(hero, about);
     renderNews(news);
-    renderDoing(doing);
+    renderBeyond(beyond);
     renderResearch(research);
     renderContact(contact);
 

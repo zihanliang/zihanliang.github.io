@@ -1,95 +1,182 @@
 {
+  "pageTitle": "Experiences",
+  "pageIntro": "Where I have studied, taught, and built communities. The complete record is in my <a href=\"cv.html\">CV</a>.",
   "pageFootnote": "",
   "sections": [
     {
-      "title": "Education Experiences",
+      "id": "education",
+      "title": "Education",
       "entries": [
         {
-          "title": "Duke University | Ph.D. Student in Computational Biology and Bioinformatics",
+          "id": "duke",
+          "short": "Duke Ph.D.",
+          "org": "Duke University",
+          "role": "Ph.D. in Computational Biology and Bioinformatics",
           "period": "Aug. 2026 - May 2031 (expected)",
-          "bullets": [
-            "PhD Advisor: <a href=\"https://anruzhang.github.io/\" target=\"_blank\" rel=\"noopener noreferrer\">Professor Anru Zhang</a>"
+          "details": [
+            "Advisor: <a href=\"https://anruzhang.github.io/\" target=\"_blank\" rel=\"noopener noreferrer\">Prof. Anru Zhang</a>",
+            "Focus: clinical informatics and health data science"
           ]
         },
         {
-          "title": "Emory University | Bachelor of Science in Applied Mathematics and Statistics with Highest Honors, with a Minor in Artificial Intelligence",
+          "id": "emory",
+          "short": "Emory B.S.",
+          "org": "Emory University",
+          "role": "B.S. in Applied Mathematics and Statistics, Minor in Artificial Intelligence",
           "period": "Aug. 2023 - May 2026",
-          "bullets": [
-            "GPA: 3.99/4.00",
-            "Independent Research and Honors Program Advisor: <a href=\"https://www.ruoxuanxiong.com\" target=\"_blank\" rel=\"noopener noreferrer\">Professor Ruoxuan Xiong</a>",
-            "Awards and Honors: Phi Beta Kappa; Dean's List; American Statistical Association DataFest Best Visualization Award",
-            {
-              "text": "Relevant Courseworks:",
-              "children": [
-                {
-                  "text": "Mathematics: Multivariable Calculus, Linear Algebra, Discrete Mathematics, Ordinary Differential Equations, Linear Optimization, Graph Theory (Graduate Level), Elementary Real Analysis"
-                },
-                {
-                  "text": "Statistics & Computation: Mathematical Statistics, Numerical Analysis, Data Structures and Algorithms, Data Science Computing, Machine Learning, Text Data Science, Information Visualization, Experimental Methods, Causal Inference (Doctoral Level)"
-                },
-                {
-                  "text": "Biostatistics & Bioinformatics: <a href=\"https://www.coursera.org/specializations/systems-biology\" target=\"_blank\" rel=\"noopener noreferrer\">Systems Biology and Biotechnology Specialization (Icahn School of Medicine at Mount Sinai)</a>"
-                }
-              ]
-            }
-          ]
+          "details": [
+            "Independent research and honors thesis advisor: <a href=\"https://www.ruoxuanxiong.com\" target=\"_blank\" rel=\"noopener noreferrer\">Prof. Ruoxuan Xiong</a>"
+          ],
+          "highlights": [
+            "Highest Honors",
+            "GPA 3.99 / 4.00",
+            "Phi Beta Kappa",
+            "Dean's List",
+            "ASA DataFest Best Visualization Award"
+          ],
+          "more": {
+            "label": "Relevant coursework",
+            "groups": [
+              {
+                "label": "Mathematics",
+                "items": [
+                  "Multivariable Calculus",
+                  "Linear Algebra",
+                  "Discrete Mathematics",
+                  "Ordinary Differential Equations",
+                  "Linear Optimization",
+                  "Graph Theory (Graduate Level)",
+                  "Elementary Real Analysis"
+                ]
+              },
+              {
+                "label": "Statistics & Computation",
+                "items": [
+                  "Mathematical Statistics",
+                  "Numerical Analysis",
+                  "Data Structures and Algorithms",
+                  "Data Science Computing",
+                  "Machine Learning",
+                  "Text Data Science",
+                  "Information Visualization",
+                  "Experimental Methods",
+                  "Causal Inference (Doctoral Level)"
+                ]
+              },
+              {
+                "label": "Biostatistics & Bioinformatics",
+                "items": [
+                  "<a href=\"https://www.coursera.org/specializations/systems-biology\" target=\"_blank\" rel=\"noopener noreferrer\">Systems Biology and Biotechnology Specialization (Icahn School of Medicine at Mount Sinai)</a>"
+                ]
+              }
+            ]
+          }
         },
         {
-          "title": "Xi'an Tie Yi High School | CollegeBoard AP Program",
+          "id": "tieyi",
+          "short": "High school",
+          "org": "Xi'an Tie Yi High School",
+          "role": "College Board AP Program",
           "period": "Sept. 2020 - May 2023",
-          "bullets": [
-            "GPA: 97.33/100 (unweighted)",
-            "Awards and Honors: American Invitational Mathematics Examination 9 Marks; Canadian Open Mathematics Challenge National Gold Award; Continental Calculus League National Gold; Outstanding Graduate; Recipient of the Excellence Academic Scholarship"
-          ]
+          "highlights": [
+            "GPA 97.33 / 100 (unweighted)",
+            "Outstanding Graduate"
+          ],
+          "more": {
+            "label": "Awards and honors",
+            "groups": [
+              {
+                "label": "Mathematics competitions",
+                "items": [
+                  "American Invitational Mathematics Examination: 9",
+                  "Canadian Open Mathematics Challenge National Gold Award",
+                  "Continental Calculus League National Gold"
+                ]
+              },
+              {
+                "label": "School",
+                "items": [
+                  "Excellence Academic Scholarship"
+                ]
+              }
+            ]
+          }
         }
       ]
     },
     {
-      "title": "Teaching Experiences",
+      "id": "teaching",
+      "title": "Teaching",
       "entries": [
         {
-          "title": "Teaching Assistant and Grader | Emory University Department of Data and Decision Sciences - Machine Learning Course",
+          "id": "emory-ml-ta",
+          "short": "Emory ML TA",
+          "org": "Emory University",
+          "role": "Teaching Assistant and Grader · Machine Learning",
           "period": "Jan. 2026 - May 2026",
-          "bullets": [
-            "Graded assignments and exams for an undergraduate machine learning course, providing timely and constructive feedback to support student learning.",
-            "Supported students by answering questions on machine learning concepts and coursework."
-          ]
+          "details": [
+            "Department of Data and Decision Sciences"
+          ],
+          "summary": "Graded assignments and exams for an undergraduate machine learning course with timely, constructive feedback, and answered students' questions on concepts and coursework."
         },
         {
-          "title": "Teaching Assistant and Grader | <a href=\"https://www.awesomemath.org/summer-program/overview/program-information/\" target=\"_blank\" rel=\"noopener noreferrer\">AwesomeMath</a> - Algebra Course for Mathematical Olympiads",
+          "id": "awesomemath",
+          "short": "AwesomeMath",
+          "org": "AwesomeMath",
+          "orgUrl": "https://www.awesomemath.org/summer-program/overview/program-information/",
+          "role": "Teaching Assistant and Grader · Algebra for Mathematical Olympiads",
           "period": "Jun. 2025 - Aug. 2025",
-          "bullets": [
-            "Supported instruction in advanced algebra and mathematical Olympiad topics for high school students, covering inequalities, factoring techniques, trigonometry, and systems of equations.",
-            "Mentored students through challenging problems while managing homework solutions, grading, and exam evaluation to support learning progress and competition preparation."          ]
+          "summary": "Supported instruction for high school students, mentored them through challenging problems, and handled homework solutions, grading, and exam evaluation for competition preparation.",
+          "highlights": [
+            "Inequalities",
+            "Factoring techniques",
+            "Trigonometry",
+            "Systems of equations"
+          ]
         }
       ]
     },
     {
-      "title": "Leadership Experiences",
+      "id": "leadership",
+      "title": "Leadership",
       "entries": [
         {
-          "title": "President | <a href=\"https://www.emorycsa.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Emory Chinese Student Association</a>",
+          "id": "emory-csa",
+          "short": "Emory CSA",
+          "org": "Emory Chinese Student Association",
+          "orgUrl": "https://www.emorycsa.org/",
+          "role": "President",
           "period": "Apr. 2025 - May 2026",
-          "bullets": [
-            "Led a team of over 100 members to organize and execute cultural, academic, and social events, enhancing community engagement for Chinese students at Emory University.",
-            "Fostered cross-cultural exchange through initiatives such as the annual Summer Pre-Orientation, Mid-Autumn Festival Fair, and academic career development workshops, impacting over 2,000 students and families."
-          ]
+          "metrics": [
+            { "value": "100+", "label": "team members led" },
+            { "value": "2,000+", "label": "students and families reached" }
+          ],
+          "summary": "Organized cultural, academic, and social programs for Chinese students at Emory, including the annual Summer Pre-Orientation, the Mid-Autumn Festival Fair, and career development workshops."
         },
         {
-          "title": "Founder and President | Emory Artificial Intelligence and Data Association",
+          "id": "eaida",
+          "short": "EAIDA",
+          "org": "Emory Artificial Intelligence and Data Association",
+          "role": "Founder and President",
           "period": "Apr. 2024 - Oct. 2025",
-          "bullets": [
-            "Led EAIDA to become a dynamic AI community, with over 200 general members and over 20 core members, fostering interdisciplinary collaboration in artificial intelligence and data science.",
-            "Launched the \"AI for ALL\" initiative, promoting AI literacy among students from diverse academic backgrounds through workshops, discussions, and mentorship programs aimed at making AI more accessible."
-          ]
+          "metrics": [
+            { "value": "200+", "label": "general members" },
+            { "value": "20+", "label": "core members" }
+          ],
+          "summary": "Built an interdisciplinary AI community and launched “AI for ALL,” a series of workshops, discussions, and mentorship programs that bring AI literacy to students from every academic background."
         },
         {
-          "title": "Co-Founder & Standing Council Member | YouthBuild Program",
+          "id": "youthbuild",
+          "short": "YouthBuild",
+          "org": "YouthBuild Program",
+          "role": "Co-Founder and Standing Council Member",
           "period": "Aug. 2022 - Jul. 2024",
-          "bullets": [
-            "Contributed to the drafting and publication of the High School Volunteer Handbook and developed a cloud-based volunteer service sharing platform, equipping over 300 student members with structured resources and fostering collaboration with over 10 public service organizations.",
-            "Organized and led 10+ large-scale offline charity projects in partnership with the Shaanxi Charity Organization."
-          ]
+          "metrics": [
+            { "value": "300+", "label": "student members" },
+            { "value": "10+", "label": "partner organizations" },
+            { "value": "10+", "label": "charity projects led" }
+          ],
+          "summary": "Co-authored the High School Volunteer Handbook, developed a cloud-based platform for sharing volunteer services, and led large-scale offline charity projects with the Shaanxi Charity Organization."
         }
       ]
     }

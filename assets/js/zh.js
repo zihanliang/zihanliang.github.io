@@ -24,10 +24,10 @@ const zhPaperSectionTitles = new Map([
 ]);
 
 const zhExperienceSectionTitles = new Map([
-  ["Education Experiences", "教育经历"],
-  ["Teaching Experiences", "教学经历"],
-  ["Industry Experiences", "行业经历"],
-  ["Leadership Experiences", "领导力经历"]
+  ["Education", "教育经历"],
+  ["Teaching", "教学经历"],
+  ["Industry", "行业经历"],
+  ["Leadership", "领导力经历"]
 ]);
 
 const emojiSequencePattern = /(\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?(?:[\u{1F3FB}-\u{1F3FF}])?(?:\u200D\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?(?:[\u{1F3FB}-\u{1F3FF}])?)*)/gu;
@@ -189,6 +189,13 @@ function renderCollaborativeProjects(researchData) {
   );
 }
 
+function toCompactExperience(entry) {
+  const org = entry.orgUrl
+    ? `<a href="${escapeHtml(entry.orgUrl)}" target="_blank" rel="noopener noreferrer">${entry.org}</a>`
+    : entry.org;
+  return { title: [org, entry.role].filter(Boolean).join(" | "), period: entry.period };
+}
+
 function renderExperiences(experiencesData) {
   const sections = (experiencesData.sections || [])
     .map(
@@ -196,7 +203,7 @@ function renderExperiences(experiencesData) {
         <section class="zh-compact-section">
           <h3 class="zh-subsection-title">${zhExperienceSectionTitles.get(section.title) || escapeHtml(section.title)}</h3>
           <div class="scholar-entry-list">
-            ${(section.entries || []).map(renderCompactEntry).join("")}
+            ${(section.entries || []).map((entry) => renderCompactEntry(toCompactExperience(entry))).join("")}
           </div>
         </section>
       `

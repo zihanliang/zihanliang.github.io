@@ -15,7 +15,7 @@ const pageSources = new Map([
       "data/home/hero.json",
       "data/home/about.json",
       "data/home/news.json",
-      "data/home/doing.json",
+      "data/home/beyond.json",
       "data/home/research.json",
       "data/home/contact.json"
     ]

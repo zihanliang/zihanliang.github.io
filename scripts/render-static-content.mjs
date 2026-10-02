@@ -6,11 +6,7 @@ const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "
 const outputDir = path.join(projectRoot, "_generated");
 
 const imageDimensions = {
-  "figures/home/zihan-liang-profile.jpg": { width: 1280, height: 1707 },
-  "figures/home/whatimdoing-ml.png": { width: 1280, height: 823 },
-  "figures/home/whatimdoing-data.png": { width: 1280, height: 823 },
-  "figures/home/whatimdoing-aicomm.jpg": { width: 1280, height: 823 },
-  "figures/home/whatimdoing-culture.jpg": { width: 1280, height: 823 }
+  "figures/home/zihan-liang-profile.jpg": { width: 1280, height: 1707 }
 };
 
 const resourceLinkOrder = [
@@ -34,11 +30,16 @@ const zhPaperSectionTitles = new Map([
 ]);
 
 const zhExperienceSectionTitles = new Map([
-  ["Education Experiences", "教育经历"],
-  ["Teaching Experiences", "教学经历"],
-  ["Industry Experiences", "行业经历"],
-  ["Leadership Experiences", "领导力经历"]
+  ["Education", "教育经历"],
+  ["Teaching", "教学经历"],
+  ["Industry", "行业经历"],
+  ["Leadership", "领导力经历"]
 ]);
+
+const MONTH_INDEX = {
+  jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5,
+  jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11
+};
 
 const emojiSequencePattern = /(\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?(?:[\u{1F3FB}-\u{1F3FF}])?(?:\u200D\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?(?:[\u{1F3FB}-\u{1F3FF}])?)*)/gu;
 
@@ -113,85 +114,240 @@ function renderResearchBulletItem(item, level) {
   return `<li>${text}${renderResearchBulletList(item?.children || [], level + 1)}</li>`;
 }
 
-function renderResearchVenueRow(entry) {
-  const venueParts = [];
-  if (entry.venue) venueParts.push(escapeHtml(entry.venue));
-  if (entry.status) venueParts.push(entry.status);
-  const venueMeta = venueParts.join(" | ");
+const SELF_NAME = "Zihan Liang";
+
+function renderResearchAuthors(authors) {
+  return escapeHtml(authors).replace(
+    new RegExp(`${SELF_NAME}\\*?`),
+    (name) => `<strong>${name}</strong>`
+  );
+}
+
+function renderResearchTagRow(entry) {
+  const topics = (entry.topics || [])
+    .map((topic) => `<li>${escapeHtml(topic)}</li>`)
+    .join("");
   const resourceLinks = renderResourceLinks(entry);
-  if (!venueMeta && !resourceLinks) return "";
+  if (!topics && !resourceLinks) return "";
   return `
-    <div class="scholar-venue-row">
-      ${venueMeta ? `<p class="scholar-venue">${venueMeta}</p>` : ""}
+    <div class="pub-tag-row">
+      ${topics ? `<ul class="pub-topics">${topics}</ul>` : ""}
       ${resourceLinks}
     </div>
   `;
 }
 
-function renderResearchEntry(entry) {
-  const primaryMeta = [entry.authors, entry.period].filter(Boolean).map(escapeHtml).join(" | ");
+// Papers carry an explicit year and venue; projects fall back to their period.
+function renderResearchEntry(entry, today) {
+  const range = entry.year ? null : parsePeriod(entry.period, today);
+  const years = entry.year ? escapeHtml(entry.year) : renderExperienceYears(range);
+  const venue = entry.venueShort || (range ? entry.period : "");
+  const meta = [
+    entry.authors ? renderResearchAuthors(entry.authors) : "",
+    entry.year && entry.period ? escapeHtml(entry.period) : ""
+  ]
+    .filter(Boolean)
+    .join(" | ");
   const footnote = entry.footnote
     ? `<p class="scholar-footnote">${escapeHtml(entry.footnote)}</p>`
     : "";
   return `
-    <article class="scholar-entry">
-      <h3 class="scholar-entry-title">${renderResearchTitle(entry)}</h3>
-      ${primaryMeta ? `<p class="scholar-meta">${primaryMeta}</p>` : ""}
-      ${renderResearchVenueRow(entry)}
-      ${renderResearchBulletList(entry.bullets || [])}
-      ${footnote}
+    <article class="exp-entry pub-entry" id="${escapeHtml(entry.id || "")}">
+      <div class="exp-when">
+        <p class="exp-years">${years}</p>
+        ${venue ? `<p class="exp-period">${escapeHtml(venue)}</p>` : ""}
+        ${entry.badge ? `<p class="pub-badge">${escapeHtml(entry.badge)}</p>` : ""}
+      </div>
+      <div class="exp-body">
+        <h3 class="pub-title">${renderResearchTitle(entry)}</h3>
+        ${meta ? `<p class="scholar-meta pub-meta">${meta}</p>` : ""}
+        ${renderResearchTagRow(entry)}
+        ${renderResearchBulletList(entry.bullets || [])}
+        ${footnote}
+      </div>
     </article>
   `;
 }
 
-function renderResearchSection(section, includeTitle = true) {
+function renderResearchSection(section, index, today) {
   return `
-    <section class="scholar-section">
-      ${includeTitle ? `<h2 class="section-title">${escapeHtml(section.title)}</h2>` : ""}
-      <div class="scholar-entry-list">
-        ${(section.entries || []).map(renderResearchEntry).join("")}
+    <section class="exp-section" id="${escapeHtml(section.id || "")}">
+      <h2 class="section-title exp-section-title"><span class="exp-section-index">0${index + 1}</span>${escapeHtml(section.title)}</h2>
+      <div class="exp-list pub-list">
+        ${(section.entries || []).map((entry) => renderResearchEntry(entry, today)).join("")}
       </div>
     </section>
   `;
 }
 
-function renderExperienceBulletList(items, level = 0) {
-  if (!items || items.length === 0) return "";
-  const listItems = items.map((item) => renderExperienceBulletItem(item, level)).join("");
-  return `<ul class="scholar-bullets level-${level}">${listItems}</ul>`;
+function getTodayValue(date = new Date()) {
+  return date.getFullYear() + (date.getMonth() + (date.getDate() - 1) / 31) / 12;
 }
 
-function renderExperienceBulletItem(item, level) {
-  if (typeof item === "string") return `<li>${item}</li>`;
-  return `<li>${item?.text || ""}${renderExperienceBulletList(item?.children || [], level + 1)}</li>`;
+// Periods are written as "Aug. 2023 - May 2026"; the end month is inclusive.
+function parsePeriod(period, today) {
+  const matches = [...String(period || "").matchAll(/([A-Za-z]{3})[A-Za-z]*\.?\s+(\d{4})/g)];
+  if (!matches.length) return null;
+  const toValue = (match) => Number(match[2]) + (MONTH_INDEX[match[1].toLowerCase()] ?? 0) / 12;
+  const first = matches[0];
+  const last = matches[matches.length - 1];
+  const ongoing = /present/i.test(period);
+  return {
+    start: toValue(first),
+    end: ongoing ? today : toValue(last) + 1 / 12,
+    startYear: Number(first[2]),
+    endYear: ongoing ? null : Number(last[2])
+  };
 }
 
-function renderExperienceEntry(entry) {
-  const title = entry.titleUrl
-    ? `<a href="${entry.titleUrl}" target="_blank" rel="noopener noreferrer">${entry.title}</a>`
-    : `<span>${entry.title}</span>`;
-  const primaryMeta = [entry.authors, entry.period].filter(Boolean).join(" | ");
-  const venueMeta = [entry.venue, entry.status].filter(Boolean).join(" | ");
-  const footnote = entry.footnote ? `<p class="scholar-footnote">${entry.footnote}</p>` : "";
+function renderExperienceYears(range) {
+  if (!range) return "";
+  if (range.endYear === null) return `${range.startYear}<span>–</span>`;
+  if (range.startYear === range.endYear) return `${range.startYear}`;
+  return `${range.startYear}<span>–</span>${range.endYear}`;
+}
+
+function renderExperienceDetails(details) {
+  if (!details || details.length === 0) return "";
+  return `<ul class="exp-details">${details.map((item) => `<li>${item}</li>`).join("")}</ul>`;
+}
+
+function renderExperienceMetrics(metrics) {
+  if (!metrics || metrics.length === 0) return "";
   return `
-    <article class="scholar-entry">
-      <h3 class="scholar-entry-title">${title}</h3>
-      ${primaryMeta ? `<p class="scholar-meta">${primaryMeta}</p>` : ""}
-      ${venueMeta ? `<p class="scholar-venue">${venueMeta}</p>` : ""}
-      ${renderExperienceBulletList(entry.bullets || [])}
-      ${footnote}
+    <dl class="exp-metrics">${metrics
+      .map(
+        (metric) => `
+      <div class="exp-metric">
+        <dt>${metric.label}</dt>
+        <dd>${metric.value}</dd>
+      </div>
+    `
+      )
+      .join("")}</dl>
+  `;
+}
+
+function renderExperienceHighlights(highlights) {
+  if (!highlights || highlights.length === 0) return "";
+  return `<ul class="exp-chips">${highlights.map((item) => `<li>${item}</li>`).join("")}</ul>`;
+}
+
+function renderExperienceMore(more) {
+  if (!more || !(more.groups || []).length) return "";
+  return `
+    <details class="exp-more">
+      <summary>${more.label || "More"}</summary>
+      <div class="exp-more-groups">${more.groups
+        .map(
+          (group) => `
+        <div class="exp-more-group">
+          <p class="exp-more-label">${group.label}</p>
+          <ul class="exp-more-items">${(group.items || []).map((item) => `<li>${item}</li>`).join("")}</ul>
+        </div>
+      `
+        )
+        .join("")}</div>
+    </details>
+  `;
+}
+
+function renderExperienceEntry(entry, today) {
+  const range = parsePeriod(entry.period, today);
+  const isCurrent = Boolean(range && range.start <= today && today < range.end);
+  const org = entry.orgUrl
+    ? `<a href="${entry.orgUrl}" target="_blank" rel="noopener noreferrer">${entry.org}</a>`
+    : `<span>${entry.org}</span>`;
+  return `
+    <article class="exp-entry${isCurrent ? " is-current" : ""}" id="${entry.id}">
+      <div class="exp-when">
+        <p class="exp-years">${renderExperienceYears(range)}</p>
+        <p class="exp-period">${entry.period || ""}</p>
+        ${isCurrent ? `<p class="exp-now">Now</p>` : ""}
+      </div>
+      <div class="exp-body">
+        <h3 class="exp-org">${org}</h3>
+        <p class="exp-role">${entry.role || ""}</p>
+        ${renderExperienceDetails(entry.details)}
+        ${renderExperienceMetrics(entry.metrics)}
+        ${entry.summary ? `<p class="exp-summary">${entry.summary}</p>` : ""}
+        ${renderExperienceHighlights(entry.highlights)}
+        ${renderExperienceMore(entry.more)}
+      </div>
     </article>
   `;
 }
 
-function renderExperienceSection(section, includeTitle = true) {
+function renderExperienceSection(section, index, today) {
   return `
-    <section class="scholar-section">
-      ${includeTitle ? `<h2 class="section-title">${section.title}</h2>` : ""}
-      <div class="scholar-entry-list">
-        ${(section.entries || []).map(renderExperienceEntry).join("")}
+    <section class="exp-section" id="${section.id}">
+      <h2 class="section-title exp-section-title"><span class="exp-section-index">0${index + 1}</span>${section.title}</h2>
+      <div class="exp-list">
+        ${(section.entries || []).map((entry) => renderExperienceEntry(entry, today)).join("")}
       </div>
     </section>
+  `;
+}
+
+function renderExperienceOverview(sections, today) {
+  const rows = sections.flatMap((section) =>
+    (section.entries || []).map((entry) => ({ section, entry, range: parsePeriod(entry.period, today) }))
+  ).filter((row) => row.range);
+  if (!rows.length) return "";
+
+  const axisStart = Math.floor(Math.min(...rows.map((row) => row.range.start)));
+  const axisEnd = Math.ceil(Math.max(...rows.map((row) => row.range.end)));
+  const span = axisEnd - axisStart;
+  const toPercent = (value) => `${(((value - axisStart) / span) * 100).toFixed(3)}%`;
+  const showNow = today > axisStart && today < axisEnd;
+
+  const ticks = Array.from({ length: span }, (_, i) => axisStart + i)
+    .map(
+      (year, i) => `
+      <span class="exp-gantt-tick${i % 2 ? " is-odd" : ""}" style="left: ${toPercent(year + 0.5)}">
+        ${year}
+      </span>
+    `
+    )
+    .join("");
+
+  const groups = sections
+    .map((section) => {
+      const sectionRows = rows.filter((row) => row.section === section);
+      if (!sectionRows.length) return "";
+      return `
+      <div class="exp-gantt-group exp-gantt-group--${section.id}" role="listitem">
+        <a class="exp-gantt-row exp-gantt-row--heading" href="#${section.id}">
+          <span class="exp-gantt-label">${section.title}</span>
+          <span class="exp-gantt-track" aria-hidden="true"></span>
+        </a>
+        ${sectionRows
+          .map(({ entry, range }) => {
+            const futureStart = Math.max(range.start, Math.min(today, range.end));
+            const solidWidth = ((futureStart - range.start) / (range.end - range.start)) * 100;
+            return `
+          <a class="exp-gantt-row" href="#${entry.id}" aria-label="${entry.org}, ${entry.period}">
+            <span class="exp-gantt-label">${entry.short || entry.org}</span>
+            <span class="exp-gantt-track" aria-hidden="true">
+              <span class="exp-gantt-bar" style="left: ${toPercent(range.start)}; width: calc(${toPercent(range.end)} - ${toPercent(range.start)}); --solid: ${solidWidth.toFixed(2)}%"></span>
+            </span>
+          </a>
+        `;
+          })
+          .join("")}
+      </div>
+    `;
+    })
+    .join("");
+
+  return `
+    <div class="exp-gantt${showNow ? " has-now" : ""}" style="--years: ${span}; --now: ${toPercent(today)}" role="list" aria-label="Timeline of experiences">
+      ${groups}
+      <div class="exp-gantt-axis" aria-hidden="true">
+        <span class="exp-gantt-label"></span>
+        <span class="exp-gantt-ticks">${ticks}${showNow ? `<span class="exp-gantt-now-label">Now</span>` : ""}</span>
+      </div>
+    </div>
   `;
 }
 
@@ -321,6 +477,13 @@ function renderZhPaperEntry(entry) {
   `;
 }
 
+function toZhCompactExperience(entry) {
+  const org = entry.orgUrl
+    ? `<a href="${escapeHtml(entry.orgUrl)}" target="_blank" rel="noopener noreferrer">${entry.org}</a>`
+    : entry.org;
+  return { title: [org, entry.role].filter(Boolean).join(" | "), period: entry.period };
+}
+
 function renderZhCompactEntry(entry) {
   const period = entry?.period
     ? `<div class="zh-entry-details"><span class="zh-entry-period">${escapeHtml(entry.period)}</span></div>`
@@ -335,7 +498,7 @@ function renderZhCompactEntry(entry) {
   `;
 }
 
-function renderHome({ hero, about, news, doing, research, contact }) {
+function renderHome({ hero, about, news, beyond, research, contact }) {
   const nameWithChineseFont = (about.nameZh || "").replace(
     /([\u3400-\u9FFF]+)/g,
     '<span class="zh-font">$1</span>'
@@ -357,24 +520,24 @@ function renderHome({ hero, about, news, doing, research, contact }) {
   </section>
 
   <section class="research">
-    <p id="research-lead" class="research-lead">${research.lead}</p>
-    <div id="research-paragraphs" class="research-paragraphs">${research.paragraphs.map((p) => `<p>${p}</p>`).join("")}</div>
-    <ul id="research-bullets" class="research-bullets">${research.bullets.map((b) => `<li>${b}</li>`).join("")}</ul>
-  </section>
-
-  <section class="doing">
-    <h2 id="doing-title" class="section-title">${doing.title}</h2>
-    <div id="doing-cards" class="card-grid">${doing.items
+    <div class="research-head">
+      <p id="research-label" class="research-label">${research.label}</p>
+      <p id="research-lead" class="research-lead">${research.lead}</p>
+    </div>
+    <div class="research-side">
+      <div id="research-paragraphs" class="research-paragraphs">${research.paragraphs.map((p) => `<p>${p}</p>`).join("")}</div>
+      <a id="research-link" class="text-link" href="${research.link.url}">${research.link.label}</a>
+    </div>
+    <ol id="research-items" class="research-items">${research.items
       .map(
         (item) => `
-      <article class="work-card">
-        <img src="${item.image}" alt="${item.title}" class="card-image" ${getImageSizeAttrs(item.image)} loading="lazy" decoding="async" />
+      <li>
         <h3>${item.title}</h3>
-        <p>${item.description}</p>
-      </article>
+        <p>${item.text}</p>
+      </li>
     `
       )
-      .join("")}</div>
+      .join("")}</ol>
   </section>
 
   <section class="news">
@@ -389,6 +552,25 @@ function renderHome({ hero, about, news, doing, research, contact }) {
     `
       )
       .join("")}</div>
+  </section>
+
+  <section class="beyond">
+    <div class="beyond-grid">
+      <div class="beyond-head">
+        <h2 id="beyond-title" class="section-title beyond-title">${beyond.title}</h2>
+        <a id="beyond-link" class="text-link" href="${beyond.link.url}">${beyond.link.label}</a>
+      </div>
+      <ul id="beyond-items" class="beyond-items">${beyond.items
+        .map(
+          (item) => `
+        <li>
+          <h3>${item.title}</h3>
+          <p>${item.description}</p>
+        </li>
+      `
+        )
+        .join("")}</ul>
+    </div>
   </section>
 
   <section class="contact">
@@ -412,14 +594,16 @@ function renderHome({ hero, about, news, doing, research, contact }) {
 }
 
 function renderResearchPage(data) {
-  const [firstSection, ...remainingSections] = data.sections || [];
+  const today = getTodayValue();
   return `
-<div class="site-shell scholar-page" aria-label="Research portfolio">
-  <h2 id="page-first-title" class="section-title page-first-title">${escapeHtml(firstSection?.title || "")}</h2>
-  <div id="scholar-sections" class="scholar-sections">${[
-    firstSection ? renderResearchSection(firstSection, false) : "",
-    ...remainingSections.map((section) => renderResearchSection(section))
-  ].join("")}</div>
+<div class="site-shell scholar-page research-page" aria-label="Research portfolio">
+  <header class="exp-header">
+    <h2 id="page-first-title" class="section-title page-first-title">${escapeHtml(data.pageTitle || "Research")}</h2>
+    <p id="research-intro" class="exp-intro">${data.pageIntro || ""}</p>
+  </header>
+  <div id="scholar-sections" class="scholar-sections exp-sections">${(data.sections || [])
+    .map((section, index) => renderResearchSection(section, index, today))
+    .join("")}</div>
   <p id="scholar-page-footnote" class="scholar-footnote page-footnote">${escapeHtml(data.pageFootnote || "")}</p>
 </div>
 
@@ -427,14 +611,18 @@ function renderResearchPage(data) {
 }
 
 function renderExperiencesPage(data) {
-  const [firstSection, ...remainingSections] = data.sections || [];
+  const today = getTodayValue();
+  const sections = data.sections || [];
   return `
 <div class="site-shell scholar-page experiences-page" aria-label="Experiences">
-  <h2 id="page-first-title" class="section-title page-first-title">${firstSection?.title || ""}</h2>
-  <div id="scholar-sections" class="scholar-sections">${[
-    firstSection ? renderExperienceSection(firstSection, false) : "",
-    ...remainingSections.map((section) => renderExperienceSection(section))
-  ].join("")}</div>
+  <header class="exp-header">
+    <h2 id="page-first-title" class="section-title page-first-title">${data.pageTitle || "Experiences"}</h2>
+    <p id="exp-intro" class="exp-intro">${data.pageIntro || ""}</p>
+  </header>
+  <section id="exp-overview" class="exp-overview" aria-label="Timeline overview">${renderExperienceOverview(sections, today)}</section>
+  <div id="scholar-sections" class="scholar-sections exp-sections">${sections
+    .map((section, index) => renderExperienceSection(section, index, today))
+    .join("")}</div>
   <p id="scholar-page-footnote" class="scholar-footnote page-footnote">${data.pageFootnote || ""}</p>
 </div>
 
@@ -507,7 +695,7 @@ function renderZhPage({ homeHero, chineseHome, contact, research, experiences })
         <section class="zh-compact-section">
           <h3 class="zh-subsection-title">${zhExperienceSectionTitles.get(section.title) || escapeHtml(section.title)}</h3>
           <div class="scholar-entry-list">
-            ${(section.entries || []).map(renderZhCompactEntry).join("")}
+            ${(section.entries || []).map((entry) => renderZhCompactEntry(toZhCompactExperience(entry))).join("")}
           </div>
         </section>
       `
@@ -575,12 +763,12 @@ function renderZhPage({ homeHero, chineseHome, contact, research, experiences })
 
 await mkdir(outputDir, { recursive: true });
 
-const [hero, about, news, doing, homeResearch, contact, research, experiences, demo, notes, chineseHome] =
+const [hero, about, news, beyond, homeResearch, contact, research, experiences, demo, notes, chineseHome] =
   await Promise.all([
     readJson("data/home/hero.json"),
     readJson("data/home/about.json"),
     readJson("data/home/news.json"),
-    readJson("data/home/doing.json"),
+    readJson("data/home/beyond.json"),
     readJson("data/home/research.json"),
     readJson("data/home/contact.json"),
     readJson("data/research/sections.json"),
@@ -591,7 +779,7 @@ const [hero, about, news, doing, homeResearch, contact, research, experiences, d
   ]);
 
 await Promise.all([
-  writeFragment("index", renderHome({ hero, about, news, doing, research: homeResearch, contact })),
+  writeFragment("index", renderHome({ hero, about, news, beyond, research: homeResearch, contact })),
   writeFragment("research", renderResearchPage(research)),
   writeFragment("experiences", renderExperiencesPage(experiences)),
   writeFragment("demo", renderDemoPage(demo)),
