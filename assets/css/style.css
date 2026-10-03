@@ -380,6 +380,10 @@ section { margin-bottom: clamp(4.3rem, 9vw, 8.5rem); }
   letter-spacing: -0.04em;
 }
 
+/* Home sections (English and Chinese) share one heading size, a full step
+   below the hero title and equal to the research lead. */
+.site-shell--home .section-title { font-size: clamp(1.95rem, 3.1vw, 3.05rem); }
+
 .section-title::after {
   display: none;
 }
@@ -659,10 +663,7 @@ section { margin-bottom: clamp(4.3rem, 9vw, 8.5rem); }
   gap: 2rem;
 }
 
-.beyond-title {
-  margin: 0;
-  font-size: clamp(1.95rem, 3.1vw, 3.05rem);
-}
+.beyond-title { margin: 0; }
 
 .beyond-head .text-link { margin-top: 1rem; }
 
@@ -1537,7 +1538,8 @@ body .cv-document-layout > .cv-preview {
   #quarto-header .navbar .navbar-collapse.collapsing { padding-right: 15px; padding-left: 15px; }
   .hero-title { font-size: clamp(2.55rem, 11.8vw, 3.8rem); }
   .section-title { font-size: clamp(2.15rem, 12vw, 3.3rem); }
-  .beyond-title { font-size: clamp(1.85rem, 9vw, 2.5rem); }
+  .site-shell--home .section-title,
+  .research-lead { font-size: clamp(1.85rem, 9vw, 2.5rem); }
   .deadlines-controls { margin-right: -15px; margin-left: -15px; padding-right: 15px; padding-left: 15px; }
   .deadline-card { margin-right: -8px; margin-left: -8px; }
   .note-grid { grid-template-columns: 1fr; }
