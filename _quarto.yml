@@ -50,4 +50,6 @@ format:
     theme: default
     css: assets/css/style.css
     include-in-header: assets/includes/head-icons.html
-    include-after-body: assets/includes/nav-scroll.html
+    include-after-body:
+      - assets/includes/nav-scroll.html
+      - assets/includes/statcounter.html

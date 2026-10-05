@@ -45,6 +45,7 @@ Source repository for a personal academic website (Quarto + vanilla frontend).
 - `assets/js/demo.js`: Demo page rendering
 - `assets/js/notes.js`: Notes page rendering
 - `assets/includes/nav-scroll.html`: Extra script include injected into pages
+- `assets/includes/statcounter.html`: Invisible Statcounter tracking for project `13358447`, included once on every HTML page
 - `assets/css/style.css`: Global site styles
 
 During each Quarto build, `scripts/render-static-content.mjs` reads these same
