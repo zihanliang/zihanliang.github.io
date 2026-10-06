@@ -14,6 +14,12 @@
       "title": "Informatics and Artificial Intelligence Notes",
       "items": [
         {
+          "icon": "🧠",
+          "subject": "Introduction to Artificial Intelligence",
+          "language": "Bilingual",
+          "file": "pdf/notes/intro-ai.pdf"
+        },
+        {
           "icon": "🤖",
           "subject": "Machine Learning",
           "language": "English",
