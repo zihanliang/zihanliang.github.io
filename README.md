@@ -88,12 +88,6 @@ quarto render
 - `CNAME` is currently set to `www.zihanliang.com`
 - If you use GitHub Pages, ensure your deployment points to `docs/` (or adjust based on your workflow)
 
-The deployment workflow can submit newly changed canonical page URLs to Baidu
-after a successful deploy. Configure the repository secret
-`BAIDU_PUSH_TOKEN` with the token from Baidu Search Resource Platform to enable
-this step. The token must never be committed to the repository or exposed in
-frontend code.
-
 ## Configuration
 
 Core config file: `_quarto.yml`
