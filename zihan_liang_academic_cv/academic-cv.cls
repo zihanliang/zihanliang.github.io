@@ -594,7 +594,8 @@
   \begin{center}
     \setlength\tabcolsep{0pt}
     \setlength{\extrarowheight}{0pt}
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} R{1.7cm} L{\textwidth - 2.0cm}}
+    % Keep reviewer roles on one line, with a 0.3cm gap before the venue.
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} R{3.2cm} L{\textwidth - 3.5cm}}
 }{%
     \end{tabular*}
   \end{center}
