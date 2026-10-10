@@ -34,68 +34,23 @@
             "ASA DataFest Best Visualization Award"
           ],
           "more": {
-            "label": "Relevant coursework",
+            "label": "Selected coursework",
             "groups": [
               {
-                "label": "Mathematics",
+                "label": "Graduate level",
                 "items": [
-                  "Multivariable Calculus",
-                  "Linear Algebra",
-                  "Discrete Mathematics",
-                  "Ordinary Differential Equations",
-                  "Linear Optimization",
-                  "Graph Theory (Graduate Level)",
-                  "Elementary Real Analysis"
+                  "Causal Inference (doctoral)",
+                  "Graph Theory"
                 ]
               },
               {
-                "label": "Statistics & Computation",
+                "label": "Core",
                 "items": [
                   "Mathematical Statistics",
-                  "Numerical Analysis",
-                  "Data Structures and Algorithms",
-                  "Data Science Computing",
+                  "Elementary Real Analysis",
                   "Machine Learning",
-                  "Text Data Science",
-                  "Information Visualization",
-                  "Experimental Methods",
-                  "Causal Inference (Doctoral Level)"
-                ]
-              },
-              {
-                "label": "Biostatistics & Bioinformatics",
-                "items": [
-                  "<a href=\"https://www.coursera.org/specializations/systems-biology\" target=\"_blank\" rel=\"noopener noreferrer\">Systems Biology and Biotechnology Specialization (Icahn School of Medicine at Mount Sinai)</a>"
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "id": "tieyi",
-          "short": "High school",
-          "org": "Xi'an Tie Yi High School",
-          "role": "College Board AP Program",
-          "period": "Sep. 2020 – May 2023",
-          "highlights": [
-            "GPA 97.33 / 100 (unweighted)",
-            "Outstanding Graduate"
-          ],
-          "more": {
-            "label": "Awards and honors",
-            "groups": [
-              {
-                "label": "Mathematics competitions",
-                "items": [
-                  "American Invitational Mathematics Examination: 9",
-                  "Canadian Open Mathematics Challenge National Gold Award",
-                  "Continental Calculus League National Gold"
-                ]
-              },
-              {
-                "label": "School",
-                "items": [
-                  "Excellence Academic Scholarship"
+                  "Numerical Analysis",
+                  "Linear Optimization"
                 ]
               }
             ]
