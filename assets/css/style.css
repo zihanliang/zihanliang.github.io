@@ -459,11 +459,12 @@ section { margin-bottom: clamp(4.3rem, 9vw, 8.5rem); }
 .hero-summary-meta .zh-font { font-family: "LXGW WenKai", serif; }
 .hero-summary-meta a { color: var(--forest); }
 
+/* Same sans face, size, and leading as the research paragraph below. */
 .hero-summary-copy {
   color: var(--ink-soft);
-  font-family: var(--serif);
-  font-size: clamp(1.14rem, 1.55vw, 1.48rem);
-  line-height: 1.52;
+  font-family: var(--sans);
+  font-size: clamp(1.02rem, 1.26vw, 1.17rem);
+  line-height: 1.8;
 }
 
 .hero-summary-copy p { margin: 0; }
@@ -1445,7 +1446,7 @@ body .site-shell.cv-shell {
   .site-shell--home .hero-title { max-width: none; font-size: clamp(2.7rem, 11.5vw, 4.25rem); line-height: 0.98; }
   .hero-summary { margin: clamp(1.5rem, 6vw, 2.2rem) auto 0; }
   .hero-summary-meta { margin-bottom: 0.55rem; font-size: clamp(1.08rem, 5vw, 1.35rem); }
-  .hero-summary-copy { font-size: clamp(1.05rem, 4.8vw, 1.28rem); line-height: 1.58; }
+  .hero-summary-copy { font-size: 1.02rem; line-height: 1.75; }
   .about { grid-template-columns: 1fr; gap: 1.3rem; }
   .about-headline { max-width: 100%; }
   .research-items { grid-template-columns: 1fr; }
