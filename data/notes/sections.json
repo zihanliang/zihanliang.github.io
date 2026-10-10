@@ -2,25 +2,22 @@
   "overview": {
     "title": "Study Notes",
     "paragraphs": [
-      "These notes are based on my course notes and my independent summaries from studying different fields outside the classroom. I continue to review and correct them, but mistakes may still remain. If you notice any errors or have suggestions, please feel free to contact me at liang.zihan@outlook.com.",
-      "The notes are organized into two language categories: English and Bilingual. English notes are written entirely in English. Bilingual notes combine Chinese and English, so reading them requires native-level Chinese proficiency. These bilingual materials are written especially for Chinese international students like myself."
-    ]
+      "Notes from coursework and self-study. Bilingual notes mix Chinese and English and are written with Chinese international students in mind."
+    ],
+    "footnote": "I keep revising these notes. If you spot an error or have a suggestion, please email me at <a href=\"mailto:zihan.liang@duke.edu\">zihan.liang@duke.edu</a>."
   },
-  "incomingNotes": [
-    "English Version of \"Introduction to Natural Language Processing\" Notes"
-  ],
   "sections": [
     {
-      "title": "Informatics and Artificial Intelligence Notes",
+      "title": "Computing and AI",
       "items": [
         {
-          "icon": "🧠",
+          "icon": "∇",
           "subject": "Introduction to Artificial Intelligence",
           "language": "Bilingual",
           "file": "pdf/notes/intro-ai.pdf"
         },
         {
-          "icon": "🤖",
+          "icon": "θ",
           "subject": "Machine Learning",
           "language": "English",
           "file": "pdf/notes/ml.pdf"
@@ -32,21 +29,27 @@
           "file": "pdf/notes/causal_inference.pdf"
         },
         {
-          "icon": "☕",
+          "icon": "{ }",
           "subject": "Java Programming",
           "language": "English",
           "file": "pdf/notes/java_programming.pdf"
         },
         {
-          "icon": "🕸️",
+          "icon": "O(n)",
           "subject": "Data Structures and Algorithms",
           "language": "Bilingual",
           "file": "pdf/notes/data_stru.pdf"
+        },
+        {
+          "icon": "Aa",
+          "subject": "Introduction to Natural Language Processing",
+          "language": "English",
+          "status": "upcoming"
         }
       ]
     },
     {
-      "title": "Mathematics Notes",
+      "title": "Mathematics",
       "items": [
         {
           "icon": "λ",
@@ -67,13 +70,13 @@
           "file": "pdf/notes/diff_equ.pdf"
         },
         {
-          "icon": "π",
+          "icon": "≈",
           "subject": "Numerical Analysis",
           "language": "Bilingual",
           "file": "pdf/notes/num_anal.pdf"
         },
         {
-          "icon": "📐",
+          "icon": "≤",
           "subject": "Linear Optimization",
           "language": "Bilingual",
           "file": "pdf/notes/lin_opt.pdf"
@@ -87,34 +90,34 @@
       ]
     },
     {
-      "title": "High School and College Prep Notes",
+      "title": "High School and College Prep",
       "items": [
         {
-          "icon": "🧮",
+          "icon": "Σ",
           "subject": "AP Calculus BC",
           "language": "Bilingual",
           "file": "pdf/notes/ap_cal_bc.pdf"
         },
         {
-          "icon": "📊",
+          "icon": "σ",
           "subject": "AP Statistics",
           "language": "Bilingual",
           "file": "pdf/notes/ap_stats.pdf"
         },
         {
-          "icon": "⚡",
+          "icon": "Φ",
           "subject": "AP Physics C",
           "language": "Bilingual",
           "file": "pdf/notes/ap_phy_c.pdf"
         },
         {
-          "icon": "🧪",
+          "icon": "⇌",
           "subject": "AP Chemistry",
           "language": "Bilingual",
           "file": "pdf/notes/ap_chem.pdf"
         },
         {
-          "icon": "💹",
+          "icon": "$",
           "subject": "College Prep Economics",
           "language": "Bilingual",
           "file": "pdf/notes/college_prep_econ.pdf"

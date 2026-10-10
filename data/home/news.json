@@ -3,23 +3,23 @@
   "items": [
     {
       "date": "Aug. 2026",
-      "text": "Our work “Two-Sided State-Space Models for Sequential Recommendation with Non-Random Multimodal Review Feedback” has been accepted to the Findings of EMNLP 2026."
+      "text": "I started my Ph.D. in Computational Biology and Bioinformatics at Duke University, conducting research under the guidance of <a href=\"https://anruzhang.github.io/\" target=\"_blank\" rel=\"noopener noreferrer\">Prof. Anru Zhang</a>."
+    },
+    {
+      "date": "Aug. 2026",
+      "text": "Our paper “Two-Sided State-Space Models for Sequential Recommendation with Non-Random Multimodal Review Feedback” has been accepted to Findings of EMNLP 2026."
     },
     {
       "date": "May 2026",
-      "text": "I am excited to announce that I have completed my Bachelor of Science in Applied Mathematics and Statistics, graduating with Highest Honors, at Emory University. I am deeply grateful to my mentor, <a href=\"https://www.ruoxuanxiong.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Prof. Ruoxuan Xiong</a>, for her guidance and support throughout my studies."
+      "text": "I graduated from Emory University with a B.S. in Applied Mathematics and Statistics (Highest Honors). Many thanks to my advisor, <a href=\"https://www.ruoxuanxiong.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Prof. Ruoxuan Xiong</a>, for her guidance."
     },
     {
       "date": "Apr. 2026",
-      "text": "Our work “Learning Dynamic Representations and Policies from Multimodal Clinical Time-Series with Informative Missingness” has been accepted to the Findings of ACL 2026."
-    },
-    {
-      "date": "Apr. 2026",
-      "text": "Our work “DART: Mitigating Harm Drift in Difference-Aware LLMs via Distill-Audit-Repair Training” has been accepted to ACL 2026 Findings."
+      "text": "Two papers accepted to Findings of ACL 2026: “Learning Dynamic Representations and Policies from Multimodal Clinical Time-Series with Informative Missingness” and “DART: Mitigating Harm Drift in Difference-Aware LLMs via Distill-Audit-Repair Training.”"
     },
     {
       "date": "Feb. 2026",
-      "text": "Our work “MambaDATG: Domain-Adaptive Tri-Plane-Gated Pre-training for 3D Abdominal Segmentation” has been accepted as an oral presentation at ICASSP 2026."
+      "text": "Our paper “MambaDATG: Domain-Adaptive Tri-Plane-Gated Pre-training for 3D Abdominal Segmentation” has been accepted as an oral presentation at ICASSP 2026."
     }
   ]
 }

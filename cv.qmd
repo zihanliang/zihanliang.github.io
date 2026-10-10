@@ -8,12 +8,11 @@ title-block: false
 ---
 
 <div class="site-shell cv-shell" aria-label="Curriculum vitae">
+<header class="cv-header">
+<div class="cv-header-text">
 <h2 class="section-title cv-title page-first-title">Curriculum Vitae</h2>
-
-<div class="cv-document-layout">
-<aside class="cv-document-details" aria-label="CV document options">
-<p class="cv-document-kicker">Academic record</p>
-<p class="cv-document-format">PDF document<br><span>Two pages</span></p>
+<p class="exp-intro cv-meta">Two-page PDF, with a preview of the first page below.</p>
+</div>
 <div class="cv-document-actions">
 <a class="cv-document-read" href="zihan_liang_academic_cv/cv.pdf" target="_blank" rel="noopener noreferrer">
 Read full CV <span aria-hidden="true">↗</span>
@@ -22,7 +21,7 @@ Read full CV <span aria-hidden="true">↗</span>
 Download PDF <span aria-hidden="true">↓</span>
 </a>
 </div>
-</aside>
+</header>
 
 <figure class="cv-preview">
 <a class="cv-preview-link" href="zihan_liang_academic_cv/cv.pdf" target="_blank" rel="noopener noreferrer" aria-label="Open the full curriculum vitae PDF">
@@ -30,5 +29,4 @@ Download PDF <span aria-hidden="true">↓</span>
 </a>
 <figcaption>First page preview</figcaption>
 </figure>
-</div>
 </div>

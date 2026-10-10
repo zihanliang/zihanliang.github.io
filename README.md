@@ -3,7 +3,7 @@
 Source repository for a personal academic website (Quarto + vanilla frontend).
 
 - Live site: https://www.zihanliang.com
-- Purpose: Hosts the Home, CV, Research, AI Conference Deadlines, Experiences, Demos, and Study Notes pages
+- Purpose: Hosts the Home, CV, Research, AI Conference Deadlines, Experiences, and Study Notes pages
 
 ## Tech Stack
 
@@ -19,7 +19,6 @@ Source repository for a personal academic website (Quarto + vanilla frontend).
 - `research.qmd`: Research page, content from `data/research/sections.json`
 - `deadlines.qmd`: Live AI conference deadline tracker with a published data snapshot fallback
 - `experiences.qmd`: Experiences page, content from `data/experiences/sections.json`
-- `demo.qmd`: Demo page skeleton, content from `data/demo/sections.json`
 - `notes.qmd`: Study Notes page, content from `data/notes/sections.json`
 
 ## Content and Assets
@@ -29,7 +28,6 @@ Source repository for a personal academic website (Quarto + vanilla frontend).
 - `data/research/sections.json`: Publications, manuscripts, collaborative projects
 - `data/deadlines-snapshot.json`: Fallback snapshot for the conference deadline tracker
 - `data/experiences/sections.json`: Education, teaching, industry, leadership experiences
-- `data/demo/sections.json`: Demo page title, subtitle, and project cards
 - `data/notes/sections.json`: Notes catalog and download links
 - `notes/*.pdf`: Downloadable study notes
 - `figures/home/`: Home page images
@@ -42,8 +40,7 @@ Source repository for a personal academic website (Quarto + vanilla frontend).
 - `assets/js/research.js`: Research page rendering
 - `assets/js/deadlines.js`: Conference data loading, filtering, timezone conversion, and countdowns
 - `assets/js/experiences.js`: Experiences page rendering
-- `assets/js/demo.js`: Demo page rendering
-- `assets/js/notes.js`: Notes page rendering
+- `assets/js/notes.js`: Notes language filter (the catalog and PDF page counts are pre-rendered at build time)
 - `assets/includes/nav-scroll.html`: Extra script include injected into pages
 - `assets/includes/statcounter.html`: Invisible Statcounter tracking for project `13358447`, included once on every HTML page
 - `assets/css/style.css`: Global site styles
@@ -95,6 +92,6 @@ Core config file: `_quarto.yml`
 - `project.type: website`
 - `project.output-dir: docs`
 - `project.resources`: Files copied to output (`CNAME`, `data/`, `fonts/`, `figures/`, `icon/`, `notes/`, the generated CV PDF, and its first-page preview)
-- `website.navbar`: Top navigation (Home/CV/Research/Experiences/Demos/Study Notes)
+- `website.navbar`: Top navigation (Home/CV/Research/Experiences/Study Notes)
 - `data/navigation.json`: Runtime visibility for navbar entries (`visible: true` or `false`)
 - `format.html.css`: `assets/css/style.css`

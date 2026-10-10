@@ -1,4 +1,6 @@
+import { execFile } from "node:child_process";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { promisify } from "node:util";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
@@ -162,6 +164,7 @@ function renderResearchEntry(entry, today) {
         <h3 class="pub-title">${renderResearchTitle(entry)}</h3>
         ${meta ? `<p class="scholar-meta pub-meta">${meta}</p>` : ""}
         ${renderResearchTagRow(entry)}
+        ${entry.tldr ? `<p class="pub-tldr">${escapeHtml(entry.tldr)}</p>` : ""}
         ${renderResearchBulletList(entry.bullets || [])}
         ${footnote}
       </div>
@@ -184,7 +187,7 @@ function getTodayValue(date = new Date()) {
   return date.getFullYear() + (date.getMonth() + (date.getDate() - 1) / 31) / 12;
 }
 
-// Periods are written as "Aug. 2023 - May 2026"; the end month is inclusive.
+// Periods are written as "Aug. 2023 – May 2026"; the end month is inclusive.
 function parsePeriod(period, today) {
   const matches = [...String(period || "").matchAll(/([A-Za-z]{3})[A-Za-z]*\.?\s+(\d{4})/g)];
   if (!matches.length) return null;
@@ -351,84 +354,51 @@ function renderExperienceOverview(sections, today) {
   `;
 }
 
-function renderDemoTags(tags) {
-  if (!tags || tags.length === 0) return "";
-  return `
-    <ul class="demo-tags" aria-label="Project topics">
-      ${tags.map((tag) => `<li>${escapeHtml(tag)}</li>`).join("")}
-    </ul>
-  `;
+const runExecFile = promisify(execFile);
+
+// Page counts come from the PDFs themselves (Poppler's pdfinfo), so they stay
+// correct whenever a note is updated. Without pdfinfo, counts are left out.
+async function readPdfPageCount(relativePath) {
+  try {
+    const { stdout } = await runExecFile("pdfinfo", [path.join(projectRoot, relativePath)]);
+    const match = stdout.match(/^Pages:\s+(\d+)/m);
+    return match ? Number(match[1]) : null;
+  } catch {
+    return null;
+  }
 }
 
-function renderDemoLinks(links) {
-  if (!links || links.length === 0) return "";
-  return `
-    <div class="demo-actions">
-      ${links
-        .map((link) => {
-          const variantClass = link?.variant === "primary" ? " demo-link-primary" : "";
-          return `
-    <a class="demo-link${variantClass}" href="${escapeHtml(link?.url || "#")}" target="_blank" rel="noopener noreferrer">
-      ${escapeHtml(link?.label || "Open")}
-    </a>
-  `;
-        })
-        .join("")}
-    </div>
-  `;
-}
-
-function renderDemoCard(item) {
-  const kicker = item?.kicker ? `<p class="demo-kicker">${escapeHtml(item.kicker)}</p>` : "";
-  return `
-    <article class="demo-card">
-      <div class="demo-card-head">
-        <div class="demo-emoji" aria-hidden="true">${escapeHtml(item?.emoji || "🧪")}</div>
-        ${kicker}
-      </div>
-      <div class="demo-card-copy">
-        <h3 class="demo-card-title">${escapeHtml(item?.title || "Untitled Demo")}</h3>
-        <p class="demo-card-description">${escapeHtml(item?.description || "")}</p>
-      </div>
-      ${renderDemoTags(item?.tags || [])}
-      ${renderDemoLinks(item?.links || [])}
-    </article>
-  `;
-}
-
-function renderDemoPlaceholderCard() {
-  return `
-    <article class="demo-card demo-card-placeholder">
-      <div class="demo-card-head">
-        <div class="demo-emoji" aria-hidden="true">🧪</div>
-        <p class="demo-kicker">In Progress</p>
-      </div>
-      <div class="demo-card-copy">
-        <h3 class="demo-card-title">More Demos Coming Soon</h3>
-        <p class="demo-card-description">
-          This page will continue growing with additional interactive tools, prototypes, and research-driven experiments as they are ready to share.
-        </p>
-      </div>
-      <ul class="demo-tags" aria-label="Upcoming demo topics">
-        <li>Interactive Tools</li>
-        <li>Prototypes</li>
-        <li>Experiments</li>
-      </ul>
-      <p class="demo-placeholder-note">New public-facing demos will be added here soon.</p>
-    </article>
-  `;
+async function addNotePageCounts(data) {
+  await Promise.all(
+    (data.sections || []).flatMap((section) =>
+      (section.items || []).map(async (note) => {
+        if (note.file) note.pages = await readPdfPageCount(note.file);
+      })
+    )
+  );
+  return data;
 }
 
 function renderNoteCard(note) {
+  const upcoming = note.status === "upcoming";
+  const meta = upcoming
+    ? `<span class="note-meta note-meta--upcoming">Coming soon</span>`
+    : note.pages
+      ? `<span class="note-meta">${note.pages} pp.</span>`
+      : "";
   const inner = `
-    <div class="note-icon">${note.icon || "📝"}</div>
+    <div class="note-card-top">
+      <span class="note-icon" aria-hidden="true">${escapeHtml(note.icon || "§")}</span>
+      ${meta}
+    </div>
     <h3 class="note-subject">${note.subject}</h3>
     <p class="note-language">${note.language}</p>
   `;
+  const language = escapeHtml(String(note.language || "").toLowerCase());
   const downloadPath = note.file || note.url;
-  return downloadPath
-    ? `<a class="note-card" href="${downloadPath}" target="_blank" rel="noopener noreferrer">${inner}</a>`
-    : `<article class="note-card">${inner}</article>`;
+  return downloadPath && !upcoming
+    ? `<a class="note-card" data-language="${language}" href="${downloadPath}" target="_blank" rel="noopener noreferrer">${inner}</a>`
+    : `<article class="note-card note-card--upcoming" data-language="${language}">${inner}</article>`;
 }
 
 function renderNotesSection(section) {
@@ -590,7 +560,8 @@ function renderHome({ hero, about, news, beyond, research, contact }) {
   </section>
 </div>
 
-<script src="assets/js/main.js"></script>`;
+<script src="assets/js/main.js"></script>
+<script src="assets/js/hero-photo.js"></script>`;
 }
 
 function renderResearchPage(data) {
@@ -629,42 +600,38 @@ function renderExperiencesPage(data) {
 <script src="assets/js/experiences.js"></script>`;
 }
 
-function renderDemoPage(data) {
-  return `
-<div class="site-shell demo-shell" aria-label="Demos">
-  <section class="demo-hero">
-    <h2 id="demo-page-title" class="section-title demo-title">${escapeHtml(data.pageTitle || "Demo")}</h2>
-    <p id="demo-page-subtitle" class="scholar-page-subtitle demo-subtitle">${escapeHtml(data.pageSubtitle || "")}</p>
-  </section>
-
-  <section id="demo-grid" class="demo-grid" aria-label="Demo projects">${(data.items || [])
-    .map(renderDemoCard)
-    .join("")}${renderDemoPlaceholderCard()}</section>
-</div>
-
-<script src="assets/js/demo.js"></script>`;
-}
-
 function renderNotesPage(data) {
-  const overviewParagraphs = (data.overview?.paragraphs || [])
+  const notes = (data.sections || []).flatMap((section) => section.items || []);
+  const published = notes.filter((note) => note.status !== "upcoming");
+  const totalPages = published.reduce((sum, note) => sum + (note.pages || 0), 0);
+  const allCounted = published.every((note) => note.pages);
+  const stats = [
+    `${published.length} sets of notes`,
+    allCounted ? `${totalPages.toLocaleString("en-US")} pages` : ""
+  ]
     .filter(Boolean)
-    .map((paragraph) => `<p>${paragraph}</p>`)
-    .join("");
+    .join(" · ");
+  const languages = ["English", "Bilingual"];
+  const countFor = (language) => published.filter((note) => note.language === language).length;
+  const filterButton = (value, label, count) =>
+    `<button type="button" class="notes-filter-button" data-filter="${value}" aria-pressed="${value === "all"}">${label} <span>${count}</span></button>`;
+
   return `
 <div class="site-shell notes-page" aria-label="Study notes">
-  <h2 id="page-first-title" class="section-title notes-title page-first-title">${data.overview?.title || ""}</h2>
-  <section id="notes-overview" class="notes-overview">${
-    overviewParagraphs ? `<div class="notes-overview-copy">${overviewParagraphs}</div>` : ""
-  }</section>
-
-  <section class="notes-hero">
-    <h2 class="section-title notes-title">Incoming Notes</h2>
-    <ul id="incoming-notes-list" class="incoming-notes-list">${(data.incomingNotes || [])
-      .map((item) => `<li>${item}</li>`)
-      .join("")}</ul>
-  </section>
+  <header class="notes-header">
+    <div class="exp-header notes-header-text">
+      <h2 id="page-first-title" class="section-title notes-title page-first-title">${data.overview?.title || "Study Notes"}</h2>
+      ${(data.overview?.paragraphs || []).map((p) => `<p class="exp-intro">${p}</p>`).join("")}
+      <p class="notes-stats">${stats}</p>
+    </div>
+    <div class="notes-filter" role="group" aria-label="Filter notes by language">
+      ${filterButton("all", "All", published.length)}
+      ${languages.map((language) => filterButton(language.toLowerCase(), language, countFor(language))).join("")}
+    </div>
+  </header>
 
   <div id="notes-sections" class="notes-sections">${(data.sections || []).map(renderNotesSection).join("")}</div>
+  ${data.overview?.footnote ? `<p class="scholar-footnote page-footnote notes-footnote">${data.overview.footnote}</p>` : ""}
 </div>
 
 <script src="assets/js/notes.js"></script>`;
@@ -758,12 +725,13 @@ function renderZhPage({ homeHero, chineseHome, contact, research, experiences })
   </section>
 </div>
 
-<script src="assets/js/zh.js"></script>`;
+<script src="assets/js/zh.js"></script>
+<script src="assets/js/hero-photo.js"></script>`;
 }
 
 await mkdir(outputDir, { recursive: true });
 
-const [hero, about, news, beyond, homeResearch, contact, research, experiences, demo, notes, chineseHome] =
+const [hero, about, news, beyond, homeResearch, contact, research, experiences, notes, chineseHome] =
   await Promise.all([
     readJson("data/home/hero.json"),
     readJson("data/home/about.json"),
@@ -773,7 +741,6 @@ const [hero, about, news, beyond, homeResearch, contact, research, experiences, 
     readJson("data/home/contact.json"),
     readJson("data/research/sections.json"),
     readJson("data/experiences/sections.json"),
-    readJson("data/demo/sections.json"),
     readJson("data/notes/sections.json"),
     readJson("data/zh/home.json")
   ]);
@@ -782,8 +749,7 @@ await Promise.all([
   writeFragment("index", renderHome({ hero, about, news, beyond, research: homeResearch, contact })),
   writeFragment("research", renderResearchPage(research)),
   writeFragment("experiences", renderExperiencesPage(experiences)),
-  writeFragment("demo", renderDemoPage(demo)),
-  writeFragment("notes", renderNotesPage(notes)),
+  writeFragment("notes", renderNotesPage(await addNotePageCounts(notes))),
   writeFragment(
     "zh",
     renderZhPage({ homeHero: hero, chineseHome, contact, research, experiences })

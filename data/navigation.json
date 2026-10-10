@@ -21,11 +21,6 @@
       "visible": true
     },
     {
-      "text": "Demos",
-      "href": "demo.qmd",
-      "visible": false
-    },
-    {
       "text": "Study Notes",
       "href": "notes.qmd",
       "visible": true

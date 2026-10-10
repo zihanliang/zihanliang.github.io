@@ -10,7 +10,7 @@
           "id": "ts-ssm",
           "title": "Two-Sided State-Space Models for Sequential Recommendation with Non-Random Multimodal Review Feedback",
           "authors": "Ziwen Pan*, Zihan Liang*, Ruoxuan Xiong",
-          "status": "Accepted at EMNLP 2026 Findings",
+          "status": "Accepted to Findings of EMNLP 2026",
           "year": "2026",
           "venueShort": "EMNLP Findings",
           "topics": [
@@ -18,16 +18,13 @@
           ],
           "paper": "https://arxiv.org/abs/2609.00165",
           "code": "https://github.com/CausalMLResearch/TS-SSM",
-          "bullets": [
-            "TS-SSM jointly tracks evolving user preferences and item states, treating multimodal reviews and how they are expressed as non-random feedback, with cross-item spillovers and asymmetric persistence of positive and negative signals.",
-            "Across six Amazon datasets, it outperforms strong baselines, with 14.8%–18.8% relative gains in Recall@20 over BSARec, the primary sequential baseline."
-          ]
+          "tldr": "Jointly models how user preferences and item states evolve in sequential recommendation, treating whether and how users write multimodal reviews as non-random feedback."
         },
         {
           "id": "dart",
           "title": "DART: Mitigating Harm Drift in Difference-Aware LLMs via Distill-Audit-Repair Training",
           "authors": "Ziwen Pan*, Zihan Liang*, Jad Kabbara, Ali Emami",
-          "status": "Accepted at ACL 2026 Findings",
+          "status": "Accepted to Findings of ACL 2026",
           "year": "2026",
           "venueShort": "ACL Findings",
           "topics": [
@@ -35,16 +32,13 @@
           ],
           "paper": "https://arxiv.org/abs/2604.16845",
           "code": "https://github.com/zihanliang/DART",
-          "bullets": [
-            "Identified harm drift in safety-tuned LLMs, where fine-tuning raises decision accuracy but makes rationales more harmful, and introduced DART, a Distill-Audit-Repair pipeline that improves difference-aware classification while keeping explanations safe.",
-            "On eight benchmarks, DART raised Llama-3-8B-Instruct accuracy from 39.0% to 68.8% and equal-treatment accuracy from 11.3% to 72.6%, while cutting harm drift cases by 72.6%."
-          ]
+          "tldr": "Finds that fine-tuning safety-tuned LLMs for difference-aware classification raises accuracy but makes their rationales more harmful, and introduces a distill–audit–repair pipeline that improves accuracy while keeping explanations safe."
         },
         {
           "id": "opl-mt-mnar",
           "title": "Learning Dynamic Representations and Policies from Multimodal Clinical Time-Series with Informative Missingness",
           "authors": "Zihan Liang*, Ziwen Pan*, Ruoxuan Xiong",
-          "status": "Accepted at ACL 2026 Findings",
+          "status": "Accepted to Findings of ACL 2026",
           "year": "2026",
           "venueShort": "ACL Findings",
           "topics": [
@@ -52,10 +46,7 @@
           ],
           "paper": "https://arxiv.org/abs/2604.21235",
           "code": "https://github.com/CausalMLResearch/OPL-MT-MNAR",
-          "bullets": [
-            "An MNAR-aware multimodal framework for clinical time series that treats observation patterns as signal, combining explicit missingness features, adaptive fusion of sparse clinical text, and action-conditioned latent dynamics to learn patient states for prediction and offline decision-making.",
-            "Evaluated on MIMIC-IV and eICU: mortality prediction reached AUROC 0.876 on MIMIC-IV (+3.9% over GRU-D), and the learned treatment policy improved FQE by 20.3% over clinician behavior, with the largest gains for high-severity patients."
-          ]
+          "tldr": "Learns patient states from multimodal ICU time series by treating what gets recorded, and when, as signal, and uses these states for both outcome prediction and offline treatment-policy learning."
         },
         {
           "id": "mambadatg",
@@ -69,10 +60,7 @@
           "topics": [
             "Medical Imaging"
           ],
-          "bullets": [
-            "A tri-plane-gated selective SSM pre-training that fuses axial, coronal, and sagittal views through voxel gating, capturing directional anisotropy with linear-time cost and no inference overhead.",
-            "A domain-adaptive masked image modeling stage on unlabeled CTs improves small-organ segmentation (e.g., +1.8 Dice on BTCV), with the tri-plane gate identified as the key performance driver."
-          ]
+          "tldr": "Pre-trains a state-space model for 3D abdominal CT segmentation that fuses axial, coronal, and sagittal views through voxel-level gating, improving small-organ segmentation at no extra inference cost."
         },
         {
           "id": "autonomous-taxi",
@@ -85,16 +73,13 @@
             "Transportation Policy"
           ],
           "paper": "https://annualmeeting.mytrb.org/OnlineProgram/Details/24465#",
-          "bullets": [
-            "A three-tier dynamic Stackelberg game among government, platform, and workers, yielding equilibrium policies that balance innovation incentives with social welfare in autonomous taxi adoption.",
-            "An extended version is under review at Transportation Research Record."
-          ]
+          "tldr": "Models autonomous-taxi adoption as a three-tier game among government, platform, and workers, and derives dynamic policies that balance innovation incentives with social welfare."
         },
         {
           "id": "crl-mmnar",
           "title": "Causal Representation Learning from Multimodal Clinical Records under Non-Random Modality Missingness",
           "authors": "Zihan Liang*, Ziwen Pan*, Ruoxuan Xiong",
-          "status": "Accepted at EMNLP 2025 Main",
+          "status": "Accepted at EMNLP 2025 (Main Conference)",
           "year": "2025",
           "venueShort": "EMNLP Main",
           "topics": [
@@ -102,16 +87,13 @@
           ],
           "paper": "https://arxiv.org/abs/2509.17228",
           "code": "https://github.com/CausalMLResearch/CRL-MMNAR",
-          "bullets": [
-            "CRL-MMNAR treats non-random modality missingness as signal, combining missingness-aware fusion with cross-modal reconstruction and contrastive learning, plus a multitask predictor with a cross-fitted rectifier that corrects observation-pattern bias.",
-            "On MIMIC-IV, AUC rose from 0.8687 to 0.9824 for ICU admission (+13.1%) and from 0.7989 to 0.8657 for readmission (+8.4%); on eICU, readmission AUC reached 0.9294 (+13.8%), with lower Brier scores indicating better calibration."
-          ]
+          "tldr": "Treats which modalities are missing from clinical records as signal, and corrects the bias that this non-random missingness introduces into prediction."
         },
         {
           "id": "carelab-smm4h",
           "title": "CareLab at #SMM4H-HeaRD 2025: Insomnia Detection and Food Safety Event Extraction with Domain-Aware Transformers",
           "authors": "Zihan Liang*, Ziwen Pan*, Sumon Kanti Dey, Azra Ismail",
-          "status": "Accepted at AAAI ICWSM 2025",
+          "status": "Accepted at ICWSM 2025 Workshop (SMM4H-HeaRD)",
           "year": "2025",
           "venueShort": "AAAI ICWSM Workshop",
           "badge": "1st in Task 5",
@@ -120,10 +102,7 @@
           ],
           "paper": "https://workshop-proceedings.icwsm.org/abstract.php?id=2025_59",
           "code": "https://github.com/zihanliang/CARELAB-SMM4H2025",
-          "bullets": [
-            "Ranked 1st on SMM4H-HeaRD 2025 Task 5 with a RoBERTa system augmented by GPT-4, class-weighted training, and ensembling, reaching F1 = 0.958.",
-            "Error analysis revealed the limits of rule-based span extraction in clinical and food-safety text."
-          ]
+          "tldr": "Domain-aware transformer systems for insomnia detection in clinical text and food-safety event extraction, ranking first on Task 5 of the shared task."
         }
       ]
     },
@@ -136,15 +115,12 @@
           "title": "Adaptive Spatiotemporal Graph Neural Networks with Trend-Aware Prediction and Validation-Gated Calibration for Traffic Flow Forecasting",
           "authors": "Zihan Liang*, Ziwen Pan*, Shuyang Yu",
           "status": "Under Review at IEEE Transactions on Intelligent Transportation Systems",
-          "period": "May 2025 - Present",
+          "period": "May 2025 – Present",
           "venueShort": "Under review · IEEE T-ITS",
           "topics": [
             "Spatiotemporal Forecasting"
           ],
-          "bullets": [
-            "An adaptive spatiotemporal GNN that fuses distance- and correlation-based graphs with dual temporal–spatial encoders and a trend-aware head, achieving state-of-the-art accuracy on PeMS benchmarks.",
-            "A validation-gated calibration step, with hour-conditional quantile mapping and AR(1) residual correction, is applied only when it improves MAPE/MAE, keeping post-processing reliable and interpretable."
-          ]
+          "tldr": "An adaptive spatiotemporal graph network for traffic forecasting, with a calibration step that is applied only when it improves validation error."
         }
       ]
     },
@@ -167,10 +143,7 @@
           "paper": "https://etd.library.emory.edu/concern/etds/zk51vj64z?locale=en",
           "slides": "pdf/slides/emory-college-honors/emory-college-honors-slides.pdf",
           "poster": "pdf/slides/emory-college-honors/Zihan-Liang-Honors-Poster.pdf",
-          "bullets": [
-            "A unified causal representation learning framework that models informative missingness at two scales, patient-level modality assignment and step-level monitoring intensity, as explicit variables for prediction and decision-making under MNAR clinical data.",
-            "Combines missingness-aware fusion, cross-modal self-supervision, and a cross-fitted rectifier for robust prediction under severe missingness and distribution shift, with MNAR-aware latent dynamics that support offline policy optimization (IQL) beyond clinician policies and strong RL baselines."
-          ]
+          "tldr": "Brings the clinical work above into one causal representation learning framework that models informative missingness at two scales, which modalities a patient has and how closely they are monitored, for both prediction and offline decision-making."
         }
       ]
     },
@@ -188,7 +161,7 @@
             },
             ", Emory University"
           ],
-          "period": "Sept. 2024 - May 2026",
+          "period": "Sep. 2024 – May 2026",
           "topics": [
             "Data for Social Good"
           ],
@@ -206,7 +179,7 @@
               "url": "https://geometrynyc.wixsite.com/polymathreu"
             }
           ],
-          "period": "Jun. 2025 - Aug. 2025",
+          "period": "Jun. 2025 – Aug. 2025",
           "topics": [
             "Epidemic Modeling"
           ],

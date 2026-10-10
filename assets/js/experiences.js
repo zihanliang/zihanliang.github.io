@@ -26,7 +26,7 @@ function getTodayValue(date = new Date()) {
   return date.getFullYear() + (date.getMonth() + (date.getDate() - 1) / 31) / 12;
 }
 
-// Periods are written as "Aug. 2023 - May 2026"; the end month is inclusive.
+// Periods are written as "Aug. 2023 – May 2026"; the end month is inclusive.
 function parsePeriod(period, today) {
   const matches = [...String(period || "").matchAll(/([A-Za-z]{3})[A-Za-z]*\.?\s+(\d{4})/g)];
   if (!matches.length) return null;

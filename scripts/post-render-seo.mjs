@@ -29,7 +29,6 @@ const pageSources = new Map([
     "https://www.zihanliang.com/experiences.html",
     ["experiences.qmd", "data/experiences/sections.json"]
   ],
-  ["https://www.zihanliang.com/demo.html", ["demo.qmd", "data/demo/sections.json"]],
   ["https://www.zihanliang.com/notes.html", ["notes.qmd", "data/notes/sections.json"]],
   ["https://www.zihanliang.com/cv.html", ["cv.qmd", "zihan_liang_academic_cv/cv.pdf"]],
   [
