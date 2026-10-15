@@ -741,6 +741,7 @@ section { margin-bottom: clamp(4.3rem, 9vw, 8.5rem); }
 
 .contact-links li:nth-child(odd) { padding-right: 1.3rem; }
 .contact-links li:nth-child(even) { padding-left: 1.3rem; border-left: 1px solid var(--line); }
+.contact-links li:last-child:nth-child(odd) { grid-column: 1 / -1; padding-right: 0; }
 .contact-icon { width: 1.2rem; font-size: 1rem; text-align: center; filter: grayscale(1); }
 .contact-links a { color: var(--ink); font-size: 0.93rem; font-weight: 700; text-decoration: none; }
 .contact-links a:hover { color: var(--forest); }
