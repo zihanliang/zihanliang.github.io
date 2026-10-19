@@ -313,6 +313,121 @@ local function fallback_figures(doc, ready, pdf)
   })
 end
 
+-- ---------------------------------------------------------------------------
+-- Images: lazy loading with declared sizes, so pages stay light on phones and
+-- do not jump as pictures arrive.
+
+local function read_bytes(file, count)
+  local handle = io.open(file, "rb")
+  if not handle then return nil end
+  local data = handle:read(count)
+  handle:close()
+  return data
+end
+
+local function uint(data, offset, length, little_endian)
+  local value = 0
+  for i = 0, length - 1 do
+    local byte = data:byte(offset + (little_endian and (length - 1 - i) or i))
+    value = value * 256 + byte
+  end
+  return value
+end
+
+-- Pixel width and height of a PNG, JPEG, GIF, or SVG file, or nil.
+local function image_size(file)
+  local head = read_bytes(file, 65536)
+  if not head or #head < 24 then return nil end
+  if head:sub(1, 8) == "\137PNG\r\n\26\n" then
+    return uint(head, 17, 4), uint(head, 21, 4)
+  end
+  if head:sub(1, 3) == "GIF" then
+    return uint(head, 7, 2, true), uint(head, 9, 2, true)
+  end
+  if head:sub(1, 2) == "\255\216" then
+    local i = 3
+    while i + 9 <= #head do
+      if head:byte(i) ~= 255 then return nil end
+      local marker = head:byte(i + 1)
+      local length = uint(head, i + 2, 2)
+      if marker >= 192 and marker <= 207 and marker ~= 196 and marker ~= 200 and marker ~= 204 then
+        return uint(head, i + 7, 2), uint(head, i + 5, 2)
+      end
+      i = i + 2 + length
+    end
+    return nil
+  end
+  local svg = head:match("<svg[^>]*>")
+  if svg then
+    local function length(name)
+      local number, unit = svg:match(name .. '="([%d%.]+)(%a*)"')
+      if not number then return nil end
+      local scale = ({ pt = 4 / 3, px = 1, [""] = 1, mm = 96 / 25.4, cm = 96 / 2.54, ["in"] = 96 })[unit]
+      return scale and math.floor(tonumber(number) * scale + 0.5)
+    end
+    local w, h = length("width"), length("height")
+    if not (w and h) then
+      local vw, vh = svg:match('viewBox="[%d%.%-]+ [%d%.%-]+ ([%d%.]+) ([%d%.]+)"')
+      w, h = vw and math.floor(tonumber(vw) + 0.5), vh and math.floor(tonumber(vh) + 0.5)
+    end
+    return w, h
+  end
+  return nil
+end
+
+local function url_decode(path)
+  return (path:gsub("%%(%x%x)", function(hex) return string.char(tonumber(hex, 16)) end))
+end
+
+local function prepare_images(doc, figure_dir)
+  local note_dir = pandoc.path.directory(quarto.doc.input_file)
+  return doc:walk({
+    Image = function(image)
+      image.attributes["loading"] = "lazy"
+      image.attributes["decoding"] = "async"
+      if image.src:match("^%a+:") then return image end
+
+      local file
+      local figure = image.src:match("^figures/(fig%-%d+%.svg)$")
+      if figure and figure_dir then
+        file = pandoc.path.join({ figure_dir, figure })
+      else
+        file = pandoc.path.join({ note_dir, url_decode(image.src) })
+      end
+      local w, h = image_size(file)
+      if not (w and h and w > 0 and h > 0) then return image end
+
+      -- The ratio reserves space before the image loads; explicit sizes only
+      -- when the source did not set its own width.
+      local style = image.attributes["style"]
+      image.attributes["style"] = (style and (style .. "; ") or "") .. string.format("aspect-ratio: %d / %d", w, h)
+      if not image.attributes["width"] and not image.attributes["height"] then
+        image.attributes["width"] = tostring(w)
+        image.attributes["height"] = tostring(h)
+      end
+      return image
+    end
+  })
+end
+
+-- MathJax typesets formulas only as they come near the screen, without the
+-- accessibility enrichment, speech, and menu that made long notes take tens of
+-- seconds (and sometimes crash) on phones.
+local MATHJAX_CONFIG = [[
+<script>
+window.MathJax = {
+  loader: { load: ["ui/lazy"] },
+  options: {
+    enableEnrichment: false,
+    enableSpeech: false,
+    enableBraille: false,
+    enableExplorer: false,
+    enableMenu: false
+  }
+};
+</script>
+]]
+
 local function read_latex(page)
   local folder = note_folder()
   local work = pandoc.path.join({ quarto.project.directory, "_generated", "latex-notes", pandoc.path.filename(folder) })
@@ -383,6 +498,12 @@ function Pandoc(doc)
     note = pandoc.read(markdown or "", "markdown")
     note.blocks = merge_figure_captions(note.blocks)
   end
+
+  local figure_dir = source:match("%.tex$") and pandoc.path.join({
+    quarto.project.directory, "_generated", "latex-notes", pandoc.path.filename(note_folder()), "figures", "svg"
+  })
+  note = prepare_images(note, figure_dir)
+  quarto.doc.include_text("in-header", MATHJAX_CONFIG)
 
   local body = {}
   local toc = {}

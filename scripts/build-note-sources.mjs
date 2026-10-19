@@ -21,7 +21,8 @@
 //   node scripts/build-note-sources.mjs            prepare, compile, finish
 //   node scripts/build-note-sources.mjs --prepare  write stubs and .tex files only
 //   node scripts/build-note-sources.mjs --finish   read compiled output only
-//   node scripts/build-note-sources.mjs --publish  copy figure SVGs into docs/
+//   node scripts/build-note-sources.mjs --publish  copy figure SVGs into docs/ and tidy
+//                                                  the rendered reader pages
 //
 // Compiling needs latexmk and pdflatex; splitting figures needs Poppler
 // (pdfinfo, pdftocairo). Without them the pages still render, with links to
@@ -585,6 +586,17 @@ async function publishFigures(note) {
   await Promise.all(files.map((file) => copyFile(path.join(svgDir, file), path.join(outDir, file))));
 }
 
+// Quarto's template loads a render-blocking ES6 polyfill from a third-party CDN
+// whenever MathJax is used. Every browser that runs MathJax 4 already has ES6,
+// so reader pages drop it.
+const POLYFILL_TAG = /\s*<script src="https:\/\/cdnjs\.cloudflare\.com\/polyfill\/[^"]*"><\/script>/g;
+
+async function tidyPage(note) {
+  const page = path.join(projectRoot, "docs", note.folder, "index.html");
+  const html = await readFile(page, "utf8").catch(() => null);
+  if (html) await writeIfChanged(page, html.replace(POLYFILL_TAG, ""));
+}
+
 // ---------------------------------------------------------------------------
 
 const notes = await readWebNotes();
@@ -592,7 +604,8 @@ const latexNotes = notes.filter((note) => note.isLatex);
 
 if (mode === "--publish") {
   await Promise.all(latexNotes.map(publishFigures));
-  console.log("Published LaTeX note figures.");
+  await Promise.all(notes.map(tidyPage));
+  console.log("Published LaTeX note figures and tidied reader pages.");
   process.exit(0);
 }
 

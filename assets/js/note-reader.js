@@ -131,30 +131,47 @@
     if (desktop.matches) revealCurrent();
   }
 
-  function update() {
-    // A section becomes current once its heading passes the upper third of the screen.
-    const threshold = Math.min(window.innerHeight * 0.35, 280);
-    let active = null;
-    for (const entry of targets) {
-      if (entry.element.getBoundingClientRect().top > threshold) break;
-      active = entry;
-    }
-    setCurrent(active || targets[0] || null);
+  // The current section is the deepest one crossing a line in the upper third
+  // of the screen. An IntersectionObserver tracks that line, so scrolling never
+  // measures the page (which, with thousands of formulas, is slow on phones).
+  const indexOf = new Map(targets.map((entry, index) => [entry.element, index]));
+  const crossing = new Set();
+  let observer = null;
+
+  function pick() {
+    let best = -1;
+    crossing.forEach((index) => {
+      if (index > best) best = index;
+    });
+    if (best >= 0) setCurrent(targets[best]);
+    else if (!current || window.scrollY < 40) setCurrent(targets[0] || null);
   }
 
-  let frame = 0;
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(() => {
-        frame = 0;
-        update();
-      });
-    },
-    { passive: true }
-  );
-  // Anchor jumps and MathJax typesetting move headings after the first pass.
-  ["resize", "load", "hashchange"].forEach((type) => window.addEventListener(type, update));
-  update();
+  function observe() {
+    if (observer) observer.disconnect();
+    crossing.clear();
+    const line = Math.round(Math.min(window.innerHeight * 0.35, 280));
+    const below = Math.max(0, window.innerHeight - line - 1);
+    observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const index = indexOf.get(entry.target);
+          if (entry.isIntersecting) crossing.add(index);
+          else crossing.delete(index);
+        });
+        pick();
+      },
+      { rootMargin: `-${line}px 0px -${below}px 0px` }
+    );
+    targets.forEach((entry) => observer.observe(entry.element));
+  }
+
+  // Phones resize the viewport as the address bar shows and hides.
+  let resizeTimer = 0;
+  window.addEventListener("resize", () => {
+    window.clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(observe, 200);
+  });
+  observe();
+  pick();
 })();

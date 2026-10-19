@@ -103,6 +103,13 @@ writes a generated `notes/<name>/index.qmd` stub for it (ignored by git), and
   and `\dirtree` trees become SVG figures. Boxes defined with tcolorbox keep their
   titles. Compiles rerun only when the source changes.
 
+Reader pages are built to stay light on phones, where a long note can hold
+several thousand formulas: MathJax typesets formulas only as they near the
+screen (its accessibility enrichment, speech, and menu are off), images load
+lazily with their sizes declared, off-screen sections skip rendering
+(`content-visibility`), the contents highlight uses an `IntersectionObserver`,
+and the post-render step drops the render-blocking polyfill Quarto adds for MathJax.
+
 Compiling needs a TeX Live with every package the note uses (the deploy workflow
 uses a full TeX Live). If a compile fails, the page still renders, with links to the
 PDF in place of the figures and pandoc's own theorem numbering; the build log names

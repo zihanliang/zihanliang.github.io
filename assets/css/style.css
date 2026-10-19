@@ -1464,6 +1464,10 @@ a.note-card--reader:hover::after { transform: translateX(0); }
 .note-article { max-width: 780px; min-width: 0; color: var(--ink); font-family: var(--sans), "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 1rem; line-height: 1.85; }
 .note-article > section:first-child > h2:first-child { margin-top: 0; }
 .note-article section { margin-bottom: 0; }
+/* Long notes hold thousands of formulas: the browser skips layout and paint
+   for sections far from the screen (they stay searchable and linkable). */
+.note-article section.level3,
+.note-article section.level2:not(:has(> section.level3)) { content-visibility: auto; contain-intrinsic-size: auto 1200px; }
 .note-article section[id],
 .note-article a[id] { scroll-margin-top: calc(73px + 1.5rem); }
 .note-article p,
