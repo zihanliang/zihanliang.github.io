@@ -1,0 +1,115 @@
+\lecture{9.2}{Multidimensional Exposures}
+\label{lec:9-2}
+
+\subsection{Radiation Oncology Example}
+
+Some exposures are naturally high-dimensional. In radiation oncology, the
+treatment is not simply ``radiation'' versus ``no radiation.'' A patient receives
+a spatial dose distribution across tissues. For head and neck cancer, dose to
+salivary glands may affect xerostomia, food intake, and weight loss. Minor
+changes in where dose is delivered can matter clinically even if the total dose
+is similar.
+
+Let $A$ denote a vector of radiation-dose summaries and let $Y$ denote a
+secondary outcome such as severe weight loss. A causal question may be:
+what would the mean outcome be if every patient received dose map $a$ rather
+than dose map $a'$?
+\[
+  \E\{\Ya{a}\}-\E\{\Ya{a'}\}.
+\]
+The difficulty is that $a$ and $a'$ may be high-dimensional objects rather than
+simple scalar doses.
+
+\subsection{3D Dose Maps}
+
+A raw radiation plan can be represented as a three-dimensional voxel map:
+\[
+  A=(A_1,\ldots,A_p),
+\]
+where $A_j$ is the dose delivered to voxel $j$. The dimension $p$ may be very
+large. The causal response surface
+\[
+  a\mapsto \E\{\Ya{a}\}
+\]
+is therefore a function over a high-dimensional exposure space.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  cell/.style={draw, minimum size=.42cm},
+  arr/.style={-{Latex[length=2.2mm]}, thick}
+]
+\foreach \x in {0,...,4} {
+  \foreach \y in {0,...,3} {
+    \pgfmathtruncatemacro{\shade}{20+8*\x+10*\y}
+    \node[cell, fill=blue!\shade] at (.42*\x,.42*\y) {};
+  }
+}
+\node[right=2.0cm of current bounding box.east] (vec) {$A=(A_1,\ldots,A_p)$};
+\draw[arr] (1.1,.8) -- (vec);
+\end{tikzpicture}
+\caption{A spatial exposure such as radiation dose can be encoded as a high-dimensional vector.}
+\label{fig:ch9-dose-map}
+\end{figure}
+
+\subsection{Dose-Volume Summaries}
+
+Clinical analyses often replace the full map with lower-dimensional summaries,
+such as the dose received by each percentile of a gland's volume. For example,
+$A_k$ might be the dose at the $k$th percentile, $k=1,\ldots,100$. This
+summarizes localization but still leaves a high-dimensional ordered vector.
+
+Such summaries are useful, but they are not automatically causal. If two dose
+maps have the same summary but different biological effects, the summary loses
+causally relevant information. If the summary is associated with confounders
+such as tumor location or disease severity, associational prediction may not
+recover causal effects.
+
+\subsection{High-Dimensional Text Exposures}
+
+In natural language processing applications, the exposure may be a document,
+message, or clinical note. The intervention might alter wording, tone, content,
+or information ordering. Text can be encoded as word counts, embeddings, topics,
+or transformer features, but each representation changes the meaning of the
+intervention.
+
+For causal inference, one must specify what it means to intervene on text. A
+change in a word embedding is not automatically a meaningful intervention unless
+it corresponds to an interpretable change in text generation.
+
+\subsection{Neuroimaging Exposures}
+
+Neuroimaging studies may treat patterns of neural activity, connectivity, or
+regional activation as exposures. These exposures are structured, correlated,
+and high-dimensional. A causal claim might concern the effect of activity in a
+network on behavior, but manipulating one region while holding the rest fixed
+may be biologically impossible.
+
+\subsection{Environmental Mixtures}
+
+Environmental epidemiology often studies mixtures: particulate matter, ozone,
+heavy metals, temperature, humidity, and other exposures occurring jointly.
+The causal effect of one pollutant may depend on the levels of others, and the
+positivity condition may fail because some mixtures are never observed.
+
+\subsection{Why Multidimensional Treatments Complicate Causal Interpretation}
+
+Multidimensional exposures create several linked problems:
+\begin{itemize}
+  \item \textbf{Estimand complexity}: the response surface
+  $\E\{\Ya{a}\}$ is indexed by a high-dimensional $a$.
+  \item \textbf{Intervention meaning}: not every vector $a$ corresponds to a
+  feasible intervention.
+  \item \textbf{Positivity}: the observed data may cover only a small region of
+  the exposure space.
+  \item \textbf{Confounding}: high-dimensional exposures are often assigned by
+  complex clinical, environmental, or social processes.
+  \item \textbf{Interpretability}: even if a model predicts well, the estimated
+  causal contrast may not map to an actionable intervention.
+\end{itemize}
+
+\begin{keyidea}
+High-dimensional exposure analysis begins with defining a meaningful
+intervention. Dimension reduction and machine learning are useful only after the
+causal estimand is scientifically interpretable.
+\end{keyidea}

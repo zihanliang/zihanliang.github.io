@@ -1,0 +1,145 @@
+\lecture{9.5}{Instrumental Variables}
+\label{lec:9-5}
+
+\subsection{IV Graph}
+
+An instrumental variable is a variable $Z$ that affects treatment $A$ but is
+otherwise unrelated to the outcome $Y$ except through $A$. It is useful when
+there is unmeasured confounding between $A$ and $Y$.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=1.35cm,
+  box/.style={draw, rounded corners=2pt, minimum width=.9cm, minimum height=.7cm},
+  arr/.style={-{Latex[length=2.3mm]}, thick},
+  bi/.style={<->, >=Latex, thick, dashed}
+]
+\node[box] (Z) {$Z$};
+\node[box, right=of Z] (A) {$A$};
+\node[box, right=of A] (Y) {$Y$};
+\node[box, above=of A] (U) {$U$};
+\draw[arr] (Z) -- (A);
+\draw[arr] (A) -- (Y);
+\draw[arr] (U) -- (A);
+\draw[arr] (U) -- (Y);
+\end{tikzpicture}
+\caption{Instrumental variable graph: $Z$ affects $Y$ only through $A$, while $U$ confounds $A$ and $Y$.}
+\label{fig:ch9-iv-graph}
+\end{figure}
+
+\subsection{Relevance}
+
+\begin{assumptionbox}
+The instrument must be associated with treatment:
+\[
+  Z \nci A.
+\]
+In linear models this is often expressed as
+\[
+  \Cov(Z,A)\ne 0.
+\]
+\end{assumptionbox}
+
+Relevance is partly empirically checkable because $Z$ and $A$ are observed.
+Weak relevance leads to unstable IV estimates.
+
+\subsection{Marginal Ignorability}
+
+\begin{assumptionbox}
+The instrument is marginally independent of the potential outcomes:
+\[
+  Y(a,z)\ci Z
+  \qquad\text{for all }a,z.
+\]
+\end{assumptionbox}
+
+This says $Z$ is as-if randomized with respect to the outcome process. In
+practice, this is a scientific assumption: an observed association between $Z$
+and baseline covariates may cast doubt on it, but no observed-data test can
+prove it.
+
+\subsection{Exclusion Restriction}
+
+\begin{assumptionbox}
+The instrument has no direct effect on the outcome:
+\[
+  Y(a,z)=Y(a)
+  \qquad\text{for all }a,z.
+\]
+\end{assumptionbox}
+
+The exclusion restriction rules out all pathways from $Z$ to $Y$ except through
+$A$. It is often the most controversial IV assumption.
+
+\subsection{Linear Model Assumption}
+
+In the simplest linear structural model, suppose variables are standardized and
+\[
+  A=\gamma_{az}Z+\gamma_{au}U+\epsilon_A,
+\]
+\[
+  Y=\gamma_{ya}A+\gamma_{yu}U+\epsilon_Y.
+\]
+The causal effect of $A$ on $Y$ is $\gamma_{ya}$. Because $U$ is unobserved,
+the ordinary association between $A$ and $Y$ is confounded.
+
+\subsection{IV Estimand}
+
+Under the IV assumptions and the linear model,
+\[
+  \Cov(Z,Y)=\gamma_{ya}\Cov(Z,A).
+\]
+Therefore
+\[
+  \gamma_{ya}=\frac{\Cov(Z,Y)}{\Cov(Z,A)}.
+\]
+If variables are standardized, covariances can be written as correlations:
+\[
+  \gamma_{ya}=\frac{\operatorname{Corr}(Z,Y)}
+  {\operatorname{Corr}(Z,A)}.
+\]
+
+\subsection{Wald Ratio Intuition}
+
+For a binary instrument, the Wald estimand is
+\[
+  \frac{\E(Y\given Z=1)-\E(Y\given Z=0)}
+       {\E(A\given Z=1)-\E(A\given Z=0)}.
+\]
+The numerator is the effect of the instrument on the outcome. The denominator is
+the effect of the instrument on the treatment. If the instrument affects the
+outcome only by shifting treatment, the ratio rescales the intention-to-treat
+effect by the amount of treatment movement induced by the instrument.
+With a binary instrument and a binary or otherwise nonlinear treatment setting,
+the Wald ratio is commonly interpreted as a LATE or CACE only under additional
+assumptions such as monotonicity, exclusion, and appropriate independence
+assumptions; without them, it is not automatically the population ATE.
+
+\begin{identificationbox}
+In a linear IV model with relevance, instrument ignorability, and exclusion,
+\[
+  \text{causal effect of }A\text{ on }Y
+  =
+  \frac{\Cov(Z,Y)}{\Cov(Z,A)}.
+\]
+\end{identificationbox}
+
+\subsection{Limitations of IV Analysis}
+
+IV analysis is powerful but fragile. Limitations include:
+\begin{itemize}
+  \item exclusion restrictions are untestable and often scientifically strong;
+  \item weak instruments produce unstable estimates;
+  \item linear IV identifies a model-specific effect, not necessarily a
+  nonparametric ATE;
+  \item with heterogeneous treatment effects, additional assumptions are needed
+  to interpret the estimand as an effect for a particular subpopulation;
+  \item invalid instruments can amplify rather than reduce bias.
+\end{itemize}
+
+\begin{keyidea}
+An instrument replaces adjustment for unmeasured confounding with different
+untestable assumptions: the instrument must move treatment, be as-if randomized,
+and affect the outcome only through treatment.
+\end{keyidea}

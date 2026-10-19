@@ -1,0 +1,151 @@
+\lecture{2.6}{Causal Parameters and Causal Effects}
+\label{lec:2-6}
+
+\subsection{Population-Level Causal Parameters}
+
+Because individual causal effects are generally unobservable, causal inference usually focuses on population-level summaries of potential outcomes.
+
+\begin{definition}[Population-level causal parameter]
+A \emph{population-level causal parameter} is a summary of the distribution of one or more potential outcomes in a target population.
+\end{definition}
+
+Examples include:
+\[
+\E\{\Yone\},\qquad
+\E\{\Yzero\},\qquad
+\Prob(\Yone=1),\qquad
+\operatorname{median}\{\Yone\}.
+\]
+These are not summaries of the observed treatment groups. They are summaries of outcomes under specified interventions.
+
+\subsection{Average Causal Effect}
+
+The most common causal effect compares average potential outcomes under two interventions.
+
+\begin{definition}[Average causal effect]
+For two treatment levels $a$ and $a'$, the \emph{average causal effect} on the additive scale is
+\[
+\E\{\Ya{a}\}-\E\{\Ya{a'}\}.
+\]
+\end{definition}
+
+For the early imaging example, the average causal effect of imaging versus no imaging on disability is
+\[
+\E\{\Yone\}-\E\{\Yzero\}.
+\]
+If higher values of $Y$ indicate worse disability, then a positive value means the mean disability would be higher under early imaging than under no early imaging. A negative value means the mean disability would be lower under early imaging.
+
+\subsection{Average Treatment Effect}
+
+For binary treatment, the average causal effect is often called the average treatment effect.
+
+\begin{definition}[Average treatment effect]
+For binary treatment $A\in\{0,1\}$, the \emph{average treatment effect} is
+\[
+\ATE=\E(\Yone-\Yzero).
+\]
+When expectations are finite,
+\[
+\ATE=\E(\Yone)-\E(\Yzero).
+\]
+\end{definition}
+
+The second equality is a consequence of linearity of expectation:
+\[
+\E(\Yone-\Yzero)
+=\E(\Yone)+\E(-\Yzero)
+=\E(\Yone)-\E(\Yzero).
+\]
+This equality is important because it shows that the ATE can be expressed using the two marginal mean potential outcomes.
+
+\subsection{Marginal Distributions of Counterfactuals}
+
+The ATE depends only on the marginal distributions of $\Yone$ and $\Yzero$. To see this, suppose the potential outcomes are discrete. Then
+\[
+\E(\Yone-\Yzero)
+=
+\sum_{y_0}\sum_{y_1}(y_1-y_0)
+\Prob(\Yone=y_1,\Yzero=y_0).
+\]
+Distribute the sum:
+\[
+=
+\sum_{y_0}\sum_{y_1}y_1\Prob(\Yone=y_1,\Yzero=y_0)
+-
+\sum_{y_0}\sum_{y_1}y_0\Prob(\Yone=y_1,\Yzero=y_0).
+\]
+For the first term, move $y_1$ outside the sum over $y_0$:
+\[
+\sum_{y_1}y_1\sum_{y_0}\Prob(\Yone=y_1,\Yzero=y_0)
+=
+\sum_{y_1}y_1\Prob(\Yone=y_1)
+=
+\E(\Yone).
+\]
+For the second term,
+\[
+\sum_{y_0}y_0\sum_{y_1}\Prob(\Yone=y_1,\Yzero=y_0)
+=
+\sum_{y_0}y_0\Prob(\Yzero=y_0)
+=
+\E(\Yzero).
+\]
+Therefore
+\[
+\E(\Yone-\Yzero)=\E(\Yone)-\E(\Yzero).
+\]
+
+\begin{identificationbox}
+This derivation is not yet an identification result from observed data. It is a counterfactual distribution result: the additive ATE depends only on the marginal distributions of $\Yone$ and $\Yzero$, not on their joint distribution.
+\end{identificationbox}
+
+\subsection{Cross-World Quantities}
+
+Some causal quantities depend on the joint distribution of potential outcomes under incompatible interventions. For example,
+\[
+\E\left(\frac{\Yone}{\Yzero}\right)
+\]
+requires the pair $(\Yone,\Yzero)$ for the same unit.
+
+For discrete potential outcomes,
+\[
+\E\left(\frac{\Yone}{\Yzero}\right)
+=
+\sum_{y_0}\sum_{y_1}
+\frac{y_1}{y_0}
+\Prob(\Yone=y_1,\Yzero=y_0),
+\]
+when the ratio is well-defined. This expression depends on the joint probabilities $\Prob(\Yone=y_1,\Yzero=y_0)$, not merely the separate marginal distributions.
+
+\subsection{Why Cross-World Assumptions Are Problematic}
+
+The problem is that no ordinary experiment can observe both $\Yone$ and $\Yzero$ for the same unit at the same time. An experiment assigning everyone to $A=1$ can reveal features of the distribution of $\Yone$. An experiment assigning everyone to $A=0$ can reveal features of the distribution of $\Yzero$. Neither experiment reveals how $\Yone$ and $\Yzero$ are paired within individuals.
+
+Any claim about their joint distribution requires assumptions linking outcomes across mutually exclusive worlds. These are called cross-world assumptions. Such assumptions may be mathematically convenient, but they are often difficult to justify scientifically.
+
+\begin{keyidea}
+Causal parameters based on marginal distributions of potential outcomes are usually preferable because they correspond more directly to ideal experiments. Parameters requiring the joint distribution of incompatible potential outcomes demand stronger cross-world assumptions.
+\end{keyidea}
+
+\subsection{Risk Differences, Ratios, and Other Contrasts}
+
+When $Y$ is binary, $\E\{\Ya{a}\}=\Prob\{\Ya{a}=1\}$ is the risk under intervention $a$. Several contrasts are common:
+\[
+\text{Risk difference}=
+\Prob(\Yone=1)-\Prob(\Yzero=1),
+\]
+\[
+\text{Risk ratio}=
+\frac{\Prob(\Yone=1)}{\Prob(\Yzero=1)},
+\]
+\[
+\text{Odds ratio}=
+\frac{\Prob(\Yone=1)/\Prob(\Yone=0)}
+{\Prob(\Yzero=1)/\Prob(\Yzero=0)}.
+\]
+
+For continuous outcomes, one may compare means, medians, variances, quantiles, or probabilities of exceeding a clinically meaningful threshold:
+\[
+\Prob(\Yone>c)-\Prob(\Yzero>c).
+\]
+The best contrast depends on the scientific question, the outcome scale, and interpretability.

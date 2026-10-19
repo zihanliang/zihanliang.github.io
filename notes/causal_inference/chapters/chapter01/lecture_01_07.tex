@@ -1,0 +1,254 @@
+\lecture{1.7}{Regression as Conditional Expectation Estimation}
+\label{lec:1-7}
+
+\subsection{Regression as Estimation of $\E(Y\given A,W)$}
+
+In this course, regression will be used primarily as a tool for estimating conditional expectations. This is broader than the common habit of treating regression coefficients as the main scientific output.
+
+\begin{definition}[Regression function]
+For outcome $Y$, treatment or exposure $A$, and covariates $W$, the regression function is the conditional mean
+\[
+\Qbar(a,w)=\E(Y\given A=a,W=w).
+\]
+An estimator of this function will be denoted $\hat Q_n(a,w)$ or $\Qbar_n(a,w)$.
+\end{definition}
+
+The regression function is a machine: input a subgroup specification $(a,w)$, output the mean of $Y$ among units in that subgroup.
+
+\begin{estimationbox}
+Regression workflow for estimating $\E(Y\given A,W)$:
+\begin{enumerate}
+  \item Choose a regression method and a set of predictors involving $A$ and $W$.
+  \item Fit the regression using the observed data $(Y_i,A_i,W_i)$.
+  \item Obtain an estimated function $\Qbar_n(a,w)$.
+  \item Evaluate $\Qbar_n(a,w)$ at covariate and treatment values of scientific interest.
+\end{enumerate}
+\end{estimationbox}
+
+\subsection{Linear Regression}
+
+A main-terms linear regression model for a scalar covariate $W$ is
+\[
+\E(Y\given A,W)=\beta_0+\beta_1A+\beta_2W.
+\]
+After fitting the model, the estimated regression function is
+\[
+\Qbar_n(a,w)=\hat\beta_0+\hat\beta_1a+\hat\beta_2w.
+\]
+
+For example, if the fitted coefficients are
+\[
+\hat\beta_0=3.27,\qquad
+\hat\beta_1=0.17,\qquad
+\hat\beta_2=-0.18,
+\]
+then
+\[
+\Qbar_n(a,w)=3.27+0.17a-0.18w.
+\]
+The estimated mean outcome for untreated people in age group 4 is
+\[
+\Qbar_n(0,4)=3.27+0.17(0)-0.18(4)=2.55.
+\]
+The estimated mean outcome for treated people in age group 7 is
+\[
+\Qbar_n(1,7)=3.27+0.17(1)-0.18(7)=2.18.
+\]
+
+The coefficient $\hat\beta_1$ is the modeled difference between treatment groups holding $W$ fixed by one unit of the model. Whether that coefficient is itself a meaningful scientific estimand depends on the question and on the model. The safer general view is that the fitted model estimates a conditional mean function.
+
+\subsection{Logistic Regression}
+
+When the outcome is binary, a conditional mean must lie between 0 and 1. Logistic regression ensures this by modeling the log-odds and then transforming back to a probability.
+
+\begin{definition}[Expit function]
+The expit function is
+\[
+\expit(x)=\frac{\exp(x)}{1+\exp(x)}
+=\frac{1}{1+\exp(-x)}.
+\]
+It maps every real number to a value in $(0,1)$.
+\end{definition}
+
+A main-terms logistic regression model is
+\[
+\E(Y\given A,W)
+=\Prob(Y=1\given A,W)
+=\expit(\gamma_0+\gamma_1A+\gamma_2W).
+\]
+After fitting,
+\[
+\Qbar_n(a,w)=\expit(\hat\gamma_0+\hat\gamma_1a+\hat\gamma_2w).
+\]
+
+If logistic regression is used to estimate the treatment mechanism rather than the outcome regression, one might write
+\[
+g(w)=\Prob(A=1\given W=w)
+=\expit(\alpha_0+\alpha_1w),
+\]
+with fitted estimator
+\[
+g_n(w)=\expit(\hat\alpha_0+\hat\alpha_1w).
+\]
+For example, if $\hat\alpha_0=-0.44$ and $\hat\alpha_1=0.07$, then
+\[
+g_n(2)=\expit(-0.44+0.07\cdot 2)\approx 0.43,
+\]
+and
+\[
+g_n(5)=\expit(-0.44+0.07\cdot 5)\approx 0.48.
+\]
+
+\subsection{Generalized Linear Models}
+
+Linear and logistic regression are examples of generalized linear models (GLMs). A GLM specifies a conditional mean through a link function:
+\[
+h\{\E(Y\given X)\}=\eta(X),
+\]
+where $X$ denotes predictors, $h$ is the link function, and $\eta(X)$ is a linear predictor.
+
+For linear regression, $h(u)=u$, so
+\[
+\E(Y\given X)=\eta(X).
+\]
+For logistic regression, $h(u)=\logit(u)$, so
+\[
+\logit\{\E(Y\given X)\}=\eta(X),
+\qquad
+\E(Y\given X)=\expit\{\eta(X)\}.
+\]
+
+In causal inference applications, GLMs are often used as nuisance regressions: intermediate models needed to estimate a target causal parameter. The final target is often not a regression coefficient.
+
+\subsection{Main-Terms Models}
+
+A main-terms model includes predictors additively on the scale of the linear predictor. With scalar $W$,
+\[
+\eta(A,W)=\beta_0+\beta_1A+\beta_2W.
+\]
+For several covariates $W=(W_1,\ldots,W_p)$,
+\[
+\eta(A,W)=\beta_0+\beta_1A+\beta_2W_1+\cdots+\beta_{p+1}W_p.
+\]
+
+Main-terms models borrow information across subgroups by imposing a simple structure. In the linear model above, the difference between $A=1$ and $A=0$ is the same at every value of $W$:
+\[
+\Qbar_n(1,w)-\Qbar_n(0,w)=\hat\beta_1.
+\]
+That restriction can be useful when data are limited, but it can be wrong if treatment-outcome associations vary across covariate values.
+
+\subsection{Interaction Models}
+
+Interaction models allow the relationship between one predictor and the outcome to depend on another predictor. A linear model with an $A$ by $W$ interaction is
+\[
+\E(Y\given A,W)=\beta_0+\beta_1A+\beta_2W+\beta_3AW.
+\]
+The fitted function is
+\[
+\Qbar_n(a,w)=\hat\beta_0+\hat\beta_1a+\hat\beta_2w+\hat\beta_3aw.
+\]
+Now the fitted difference between treatment groups at covariate value $w$ is
+\[
+\Qbar_n(1,w)-\Qbar_n(0,w)=\hat\beta_1+\hat\beta_3w.
+\]
+Thus the treatment contrast on the outcome scale is allowed to vary with $W$.
+
+Polynomial terms are another way to add flexibility:
+\[
+\eta(A,W)=\beta_0+\beta_1A+\beta_2W+\beta_3W^2.
+\]
+The choice of regression formula determines what patterns can and cannot be represented by the fitted conditional mean.
+
+\subsection{Using \texttt{glm} in R}
+
+The R function \texttt{glm} fits generalized linear models. Suppose a data frame \texttt{covid19} contains:
+\begin{itemize}
+  \item \texttt{out}: an outcome variable $Y$;
+  \item \texttt{treat}: a binary treatment variable $A$;
+  \item \texttt{age\_grp}: an age group covariate $W$.
+\end{itemize}
+
+A main-terms linear regression for $\E(Y\given A,W)$ is fit by:
+\begin{lstlisting}[language=R]
+fit1 <- glm(out ~ treat + age_grp, data = covid19)
+coef(fit1)
+\end{lstlisting}
+
+If the coefficient output is approximately
+\begin{lstlisting}
+(Intercept)      treat    age_grp
+     3.2714     0.1692    -0.1780
+\end{lstlisting}
+then the fitted conditional mean is
+\[
+\Qbar_n(a,w)=3.2714+0.1692a-0.1780w.
+\]
+
+A main-terms logistic regression for the treatment probability $\Prob(A=1\given W)$ is fit by:
+\begin{lstlisting}[language=R]
+fit2 <- glm(treat ~ age_grp, data = covid19, family = binomial())
+coef(fit2)
+\end{lstlisting}
+
+If the fitted coefficients are approximately $-0.4391$ for the intercept and $0.0729$ for \texttt{age\_grp}, then
+\[
+g_n(w)=\expit(-0.4391+0.0729w).
+\]
+
+\subsection{Prediction with \texttt{newdata}}
+
+After fitting a regression, \texttt{predict} evaluates the fitted conditional mean at specified covariate values. For example:
+\begin{lstlisting}[language=R]
+aw_values <- data.frame(
+  treat = c(0, 1),
+  age_grp = c(4, 7)
+)
+
+predict(fit1, newdata = aw_values, type = "response")
+\end{lstlisting}
+
+The object \texttt{aw\_values} contains two subgroup specifications: $(A=0,W=4)$ and $(A=1,W=7)$. The call to \texttt{predict} returns the fitted means $\Qbar_n(0,4)$ and $\Qbar_n(1,7)$.
+
+For logistic regression, \texttt{type = "response"} returns probabilities rather than log-odds:
+\begin{lstlisting}[language=R]
+w_values <- data.frame(age_grp = c(2, 5))
+predict(fit2, newdata = w_values, type = "response")
+\end{lstlisting}
+
+These are estimates of $\Prob(A=1\given W=2)$ and $\Prob(A=1\given W=5)$ under the fitted logistic model.
+
+\subsection{Regression Output as Subgroup Mean Estimates}
+
+Regression output should be translated back into conditional mean estimates. Coefficients are ingredients for constructing the function $\Qbar_n$ or $g_n$.
+
+\begin{keyidea}
+A fitted regression is an estimated function. It takes subgroup-defining variables as input and returns an estimated subgroup mean or subgroup probability.
+\end{keyidea}
+
+Sometimes we need a function such as
+\[
+w\mapsto \E(Y\given A=1,W=w)
+\]
+rather than the full function $(a,w)\mapsto \E(Y\given A=a,W=w)$. There are two common approaches.
+
+\paragraph{Pooling.}
+Fit a regression using all observations and include $A$ and $W$ as predictors. If
+\[
+\Qbar_n(a,w)=\hat\beta_0+\hat\beta_1a+\hat\beta_2w,
+\]
+then estimate the treated conditional mean by setting $a=1$:
+\[
+\Qbar_{n,1}(w)=\Qbar_n(1,w)=\hat\beta_0+\hat\beta_1+\hat\beta_2w.
+\]
+
+\paragraph{Stratifying.}
+Restrict the data to observations with $A=1$ and regress $Y$ on $W$ in that subset. A main-terms stratified fit might yield
+\[
+\Qbar_{n,1}(w)=\hat\eta_0+\hat\eta_1w.
+\]
+
+Pooling borrows information across treatment groups through the model structure. Stratifying avoids imposing a common structure across treatment groups but may use less data. Later causal estimators will use both ideas, often with more flexible regression methods.
+
+\begin{remark}
+Regression coefficients can be scientifically meaningful in special settings, but the general causal inference workflow is different: define the target estimand first, identify it in terms of observed-data quantities, and then use regression as needed to estimate those quantities.
+\end{remark}

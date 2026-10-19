@@ -1,0 +1,186 @@
+\lecture{6.5}{Writing Custom SuperLearner Wrappers}
+\label{lec:6-5}
+
+\subsection{Wrapper Function Structure}
+
+A Super Learner wrapper is an R function that tells \texttt{SuperLearner()} how to fit
+a candidate algorithm and how to generate predictions during cross-validation. Built-in
+wrappers such as \texttt{SL.glm} follow the same structure custom wrappers must
+follow.
+
+The wrapper must return a list with two named components:
+\[
+\texttt{pred},\qquad \texttt{fit}.
+\]
+The \texttt{pred} component contains predictions on \texttt{newX}. The \texttt{fit}
+component stores the fitted object or any information needed for later prediction.
+
+\subsection{Required Inputs}
+
+A standard wrapper has the form:
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+SL.myalgorithm <- function(Y, X, newX, family, obsWeights, ...) {
+  # fit model using Y and X
+  # predict on newX
+  # return list(pred = pred, fit = fit)
+}
+\end{lstlisting}
+\end{implementationbox}
+
+The key inputs are:
+\begin{itemize}
+\item \texttt{Y}: training outcomes;
+\item \texttt{X}: training predictors;
+\item \texttt{newX}: validation or prediction predictors;
+\item \texttt{family}: outcome family;
+\item \texttt{obsWeights}: observation weights, if supplied;
+\item \texttt{...}: additional arguments passed by the package.
+\end{itemize}
+
+The \texttt{...} argument is important. It allows the wrapper to ignore arguments it
+does not use without failing.
+
+\subsection{Returning \texttt{pred} and \texttt{fit}}
+
+The \texttt{pred} vector must have length \texttt{nrow(newX)}. The \texttt{fit} object
+can be any list, but it should contain everything needed for future calls to
+\texttt{predict()}.
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+out <- list(pred = pred, fit = fit)
+return(out)
+\end{lstlisting}
+\end{implementationbox}
+
+It is useful to assign a class to the \texttt{fit} object:
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+class(out$fit) <- "SL.myalgorithm"
+\end{lstlisting}
+\end{implementationbox}
+
+The class allows R to dispatch to a custom prediction method later.
+
+\subsection{Writing Prediction Methods}
+
+When \texttt{predict()} is called on a Super Learner object containing a custom wrapper,
+R must know how to predict from the custom fitted object. If the class is
+\texttt{"SL.myalgorithm"}, R looks for a function named
+\texttt{predict.SL.myalgorithm()}.
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+predict.SL.myalgorithm <- function(object, newdata, ...) {
+  pred <- predict(object$fitted_model, newdata = newdata, type = "response")
+  return(pred)
+}
+\end{lstlisting}
+\end{implementationbox}
+
+The exact prediction call depends on the object stored inside \texttt{fit}. If
+\texttt{fit} stores a \texttt{glm}, use \texttt{predict.glm}. If it stores a random
+forest, use the prediction method for that random forest object.
+
+\subsection{Custom Quadratic GLM Wrapper}
+
+The following wrapper fits a linear regression with quadratic terms in $W_1$ and
+$W_2$:
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+SL.quadglm <- function(Y, X, newX, family, obsWeights, ...) {
+  X <- as.data.frame(X)
+  newX <- as.data.frame(newX)
+
+  fit_glm <- glm(Y ~ W1 + I(W1^2) + W2 + I(W2^2) + A,
+                 data = X,
+                 family = family,
+                 weights = obsWeights)
+
+  pred <- predict(fit_glm, newdata = newX, type = "response")
+
+  fit <- list(fitted_model = fit_glm)
+  class(fit) <- "SL.quadglm"
+
+  list(pred = pred, fit = fit)
+}
+
+predict.SL.quadglm <- function(object, newdata, ...) {
+  predict(object$fitted_model, newdata = as.data.frame(newdata),
+          type = "response")
+}
+\end{lstlisting}
+\end{implementationbox}
+
+This wrapper assumes the columns \texttt{W1}, \texttt{W2}, and \texttt{A} exist in
+\texttt{X}. If those names are absent, the wrapper will fail. Custom wrappers should
+therefore be written with clear expectations about input variable names.
+
+\subsection{Custom Propensity Score Wrapper}
+
+For the simulated data, the true propensity score has a $W_1W_2$ interaction. A custom
+wrapper can fit that logistic regression:
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+SL.truepropensity <- function(Y, X, newX, family, obsWeights, ...) {
+  X <- as.data.frame(X)
+  newX <- as.data.frame(newX)
+
+  fit_glm <- glm(Y ~ W1 + W2 + W1:W2,
+                 data = X,
+                 family = binomial(),
+                 weights = obsWeights)
+
+  pred <- predict(fit_glm, newdata = newX, type = "response")
+
+  fit <- list(fitted_model = fit_glm)
+  class(fit) <- "SL.truepropensity"
+
+  list(pred = pred, fit = fit)
+}
+
+predict.SL.truepropensity <- function(object, newdata, ...) {
+  predict(object$fitted_model, newdata = as.data.frame(newdata),
+          type = "response")
+}
+\end{lstlisting}
+\end{implementationbox}
+
+This learner can be included in a propensity score library:
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+sl_fit_g <- SuperLearner(
+  Y = A,
+  X = data.frame(W1 = W1, W2 = W2),
+  SL.library = c("SL.glm", "SL.mean", "SL.truepropensity"),
+  family = binomial(),
+  method = "method.CC_nloglik",
+  cvControl = list(V = 2)
+)
+\end{lstlisting}
+\end{implementationbox}
+
+\subsection{Logistic-Linear Ensembles}
+
+For binary outcomes or treatments, \texttt{method.CC\_nloglik} uses a
+logistic-linear ensemble. If $g_{n,k}(w)$ is the predicted probability from candidate
+$k$, the ensemble has the form
+\[
+g_{n,\omega}(w)
+=
+\expit\left\{\sum_{k=1}^K\omega_k\logit(g_{n,k}(w))\right\}.
+\]
+This combines candidates on the log odds scale and maps the result back to a
+probability. The weights still satisfy $\omega_k\ge 0$ and $\sum_k\omega_k=1$.
+
+\begin{keyidea}
+A wrapper is the contract between an algorithm and \texttt{SuperLearner()}: fit on
+training data, predict on new data, and store enough information to predict again
+later.
+\end{keyidea}

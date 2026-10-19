@@ -392,13 +392,73 @@ function renderNoteCard(note) {
       ${meta}
     </div>
     <h3 class="note-subject">${note.subject}</h3>
-    <p class="note-language">${note.language}</p>
+    <p class="note-language">${note.language}${note.source && !upcoming ? `<span class="note-format">Read online</span>` : ""}</p>
   `;
   const language = escapeHtml(String(note.language || "").toLowerCase());
   const downloadPath = note.file || note.url;
-  return downloadPath && !upcoming
-    ? `<a class="note-card" data-language="${language}" href="${downloadPath}" target="_blank" rel="noopener noreferrer">${inner}</a>`
-    : `<article class="note-card note-card--upcoming" data-language="${language}">${inner}</article>`;
+  if (upcoming || !(downloadPath || note.source)) {
+    return `<article class="note-card note-card--upcoming" data-language="${language}">${inner}</article>`;
+  }
+  // Notes with a web version (Markdown or LaTeX source) open their reader page on this site.
+  return note.source
+    ? `<a class="note-card note-card--reader" data-language="${language}" href="${path.posix.dirname(notePagePath(note))}/">${inner}</a>`
+    : `<a class="note-card" data-language="${language}" href="${downloadPath}" target="_blank" rel="noopener noreferrer">${inner}</a>`;
+}
+
+// Each web note lives in its own folder (notes/<name>/), and its reader page is
+// that folder's index.html, rendered from a stub by scripts/build-note-sources.mjs.
+function notePagePath(note) {
+  return `${path.posix.dirname(note.source)}/index.html`;
+}
+
+// Header shown at the top of a note's reader page. Quarto inserts it through
+// scripts/note-reader.lua, so links are written relative to the reader page.
+function renderNoteReaderHeader(note, sectionTitle) {
+  const pageDir = path.posix.dirname(notePagePath(note));
+  const relative = (target) => path.posix.relative(pageDir, target);
+  const pdf = note.file ? relative(note.file) : note.url;
+  const stats = [note.language, note.pages ? `${note.pages} pp. PDF` : ""].filter(Boolean).join(" · ");
+  const actions = pdf
+    ? `
+      <div class="cv-document-actions note-reader-actions">
+        <a class="cv-document-read" href="${escapeHtml(pdf)}" target="_blank" rel="noopener noreferrer">
+          Open PDF <span aria-hidden="true">↗</span>
+        </a>
+        <a class="cv-document-download" href="${escapeHtml(pdf)}" download>
+          Download PDF <span aria-hidden="true">↓</span>
+        </a>
+      </div>`
+    : "";
+
+  return `
+<header class="note-reader-header">
+  <a class="note-reader-back" href="${relative("notes.html")}"><span aria-hidden="true">←</span> Study Notes</a>
+  <div class="note-reader-heading">
+    <div class="note-reader-heading-text">
+      ${sectionTitle ? `<p class="note-reader-kicker">${escapeHtml(sectionTitle)}</p>` : ""}
+      <h1 class="section-title note-reader-title page-first-title">${note.subject}</h1>
+      <p class="notes-stats">${escapeHtml(stats)}</p>
+    </div>${actions}
+  </div>
+</header>`;
+}
+
+// Per-page data for scripts/note-reader.lua, keyed by the note folder (notes/<name>).
+function buildNoteReaderPages(data) {
+  const pages = {};
+  for (const section of data.sections || []) {
+    for (const note of section.items || []) {
+      if (!note.source || note.status === "upcoming") continue;
+      const subject = String(note.subject || "").replace(/<[^>]+>/g, "");
+      pages[path.posix.dirname(note.source)] = {
+        pagetitle: `Zihan Liang - ${subject}`,
+        description: `${subject}: ${String(note.language || "").toLowerCase()} study notes by Zihan Liang, readable online with a downloadable PDF.`,
+        header: renderNoteReaderHeader(note, section.title),
+        pdf: note.file ? path.posix.relative(path.posix.dirname(notePagePath(note)), note.file) : note.url
+      };
+    }
+  }
+  return pages;
 }
 
 function renderNotesSection(section) {
@@ -745,11 +805,18 @@ const [hero, about, news, beyond, homeResearch, contact, research, experiences, 
     readJson("data/zh/home.json")
   ]);
 
+await addNotePageCounts(notes);
+
 await Promise.all([
   writeFragment("index", renderHome({ hero, about, news, beyond, research: homeResearch, contact })),
   writeFragment("research", renderResearchPage(research)),
   writeFragment("experiences", renderExperiencesPage(experiences)),
-  writeFragment("notes", renderNotesPage(await addNotePageCounts(notes))),
+  writeFragment("notes", renderNotesPage(notes)),
+  writeFile(
+    path.join(outputDir, "note-pages.json"),
+    `${JSON.stringify(buildNoteReaderPages(notes), null, 2)}\n`,
+    "utf8"
+  ),
   writeFragment(
     "zh",
     renderZhPage({ homeHero: hero, chineseHome, contact, research, experiences })

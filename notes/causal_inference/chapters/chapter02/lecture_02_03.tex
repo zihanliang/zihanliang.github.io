@@ -1,0 +1,119 @@
+\lecture{2.3}{Causal Models and DAGs}
+\label{lec:2-3}
+
+\subsection{Why Graphical Models}
+
+Causal questions require assumptions about how variables relate to one another. Graphical models provide a compact way to state those assumptions before analyzing the data.
+
+Graphs are useful for three reasons. First, they force the analyst to name the variables believed to be relevant. Second, they make assumed causal relationships visible. Third, they translate scientific claims into mathematical restrictions that can be studied systematically.
+
+\begin{keyidea}
+A causal graph is a disciplined way to draw assumptions before drawing conclusions.
+\end{keyidea}
+
+For example, in a study of antihistamine use and asthma incidence among children, suppose:
+\begin{itemize}
+  \item $X_1$ is air pollution level;
+  \item $X_2$ is biological sex;
+  \item $X_3$ is bronchial reactivity;
+  \item $A$ is antihistamine treatment;
+  \item $Y$ is asthma incidence.
+\end{itemize}
+Subject-matter knowledge may suggest that pollution influences bronchial reactivity and antihistamine use, sex influences bronchial reactivity and asthma, and antihistamine use may influence asthma.
+
+\subsection{Directed Acyclic Graphs}
+
+\begin{definition}[Directed acyclic graph]
+A \emph{directed acyclic graph} (DAG) is a graph consisting of nodes and directed edges, with no directed cycle. A directed cycle is a path following arrow directions that starts and ends at the same node.
+\end{definition}
+
+"Directed" means arrows have arrowheads. "Acyclic" means a variable cannot be its own cause through a sequence of arrows such as $A\to B\to C\to A$.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.8cm,>=Latex]
+  \node[draw, circle, fill=blue!5] (A) {$A$};
+  \node[draw, circle, fill=blue!5, right=of A] (B) {$B$};
+  \node[draw, circle, fill=blue!5, below=of A] (C) {$C$};
+  \node[draw, circle, fill=blue!5, right=of C] (D) {$D$};
+  \node[draw, circle, fill=blue!5, right=of D] (E) {$E$};
+  \draw[->, thick] (A) -- (B);
+  \draw[->, thick] (A) -- (C);
+  \draw[->, thick] (B) -- (D);
+  \draw[->, thick] (C) -- (D);
+  \draw[->, thick] (D) -- (E);
+\end{tikzpicture}
+\caption{A directed acyclic graph with five nodes.}
+\end{figure}
+
+\subsection{Nodes and Edges}
+
+\begin{definition}[Nodes and edges]
+The \emph{nodes} or \emph{vertices} of a DAG represent variables. A \emph{directed edge} $X\to Y$ is an arrow from node $X$ to node $Y$. Two nodes are \emph{adjacent} if they are connected by an edge.
+\end{definition}
+
+A node can represent a scalar variable, such as treatment $A$, or a vector of variables, such as
+\[
+W=(W_1,\ldots,W_{30}),
+\]
+where $W$ is a baseline survey with 30 items. Whether variables should be collapsed into one node depends on the scientific question. If one survey item is the exposure of interest, it should not be hidden inside a broad $W$ node.
+
+\subsection{Parents, Children, Ancestors, Descendants}
+
+\begin{definition}[Family relationships in a DAG]
+If $X\to Y$, then $X$ is a \emph{parent} of $Y$ and $Y$ is a \emph{child} of $X$. An \emph{ancestor} of $Y$ is any node with a directed path into $Y$. A \emph{descendant} of $X$ is any node reached by a directed path out of $X$.
+\end{definition}
+
+In the five-node graph above,
+\[
+\pa(D)=\{B,C\},
+\qquad
+\ch(A)=\{B,C\}.
+\]
+The ancestors of $E$ are $A,B,C,D$, and the descendants of $A$ are $B,C,D,E$.
+
+\subsection{Causal Meaning of Arrows}
+
+A causal DAG gives arrows a causal interpretation. An arrow $X\to Y$ means that $X$ is a direct cause of $Y$ relative to the variables included in the graph.
+
+"Direct" is relative to the graph. If $X\to M\to Y$ and there is no arrow $X\to Y$, the graph says that $X$ may affect $Y$ through $M$ but has no direct effect on $Y$ not mediated by $M$, among the variables represented.
+
+For the antihistamine example, one possible DAG is:
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.8cm,>=Latex]
+  \node[draw, circle, fill=blue!5] (X1) {$X_1$\\air};
+  \node[draw, circle, fill=blue!5, below=of X1] (X2) {$X_2$\\sex};
+  \node[draw, circle, fill=green!5, right=1.8cm of $(X1)!0.5!(X2)$] (X3) {$X_3$\\bronchial};
+  \node[draw, circle, fill=orange!6, right=of X3] (A) {$A$\\anti-\\histamine};
+  \node[draw, circle, fill=red!5, right=of A] (Y) {$Y$\\asthma};
+  \draw[->, thick] (X1) -- (X3);
+  \draw[->, thick] (X2) -- (X3);
+  \draw[->, thick] (X3) -- (A);
+  \draw[->, thick]
+  (X3) to[out=35,in=145]
+  (Y);
+  \draw[->, thick] (X2) to[bend right=25] (Y);
+  \draw[->, thick] (A) -- (Y);
+\end{tikzpicture}
+\caption{A possible causal DAG for antihistamine treatment and asthma.}
+\end{figure}
+
+\subsection{Meaning of Absent Arrows}
+
+Absent arrows are as important as present arrows. If a causal DAG omits $X\to Y$, it asserts that $X$ has no direct causal effect on $Y$ once the other variables in the graph are included.
+
+For example, if the graph includes $X_1\to X_3\to Y$ but no $X_1\to Y$, it says that air pollution affects asthma only through the represented intermediate variables, not directly. This is a strong scientific claim.
+
+If the analyst is unsure whether a direct effect exists, a conservative strategy is to leave the arrow in. Removing an arrow encodes knowledge; it should not be done merely to simplify the graph.
+
+\subsection{DAGs as Scientific Assumptions}
+
+A DAG is not estimated mechanically from the data in the ordinary causal workflow. It represents assumptions supplied by design knowledge and subject-matter reasoning. Data can sometimes contradict implications of a DAG, but many causal features of a DAG are not testable from observed data alone.
+
+\begin{assumptionbox}
+Using a causal DAG means accepting the causal claims encoded by its arrows and missing arrows. The graph is part of the causal model, not a decorative summary of associations.
+\end{assumptionbox}
+
+DAG construction should therefore be collaborative. Domain experts often know mechanisms that are invisible in a spreadsheet. A useful graph may also reveal discomfort: important variables were not measured, intervention timing is unclear, or some arrows cannot be confidently removed. That discomfort is scientifically productive because it clarifies what the data can and cannot support.

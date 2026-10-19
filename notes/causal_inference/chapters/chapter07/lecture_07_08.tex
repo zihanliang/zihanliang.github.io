@@ -1,0 +1,100 @@
+\lecture{7.8}{Doubly Robust Inference with Flexible Learners}
+\label{lec:7-8}
+
+\subsection{Flexible Nuisance Estimation}
+
+Flexible learners are attractive because they reduce reliance on simple parametric
+models for $\Qbar$ and $g$. However, flexible nuisance estimation complicates
+inference. Consistency of AIPTW or TMLE can hold if either nuisance function is
+consistently estimated, but standard Wald inference usually requires more: a tractable
+asymptotic linear expansion with consistently estimable variance.
+
+When both nuisance functions are consistently estimated at adequate rates, standard
+AIPTW and standard TMLE often have valid influence-function-based inference. The
+harder question is what happens when only one nuisance function is consistently
+estimated and flexible methods are used.
+
+\subsection{Standard TMLE}
+
+Standard TMLE targets the efficient influence function equation
+\[
+\frac{1}{n}\sum_{i=1}^nD_n^*(O_i)\approx 0,
+\]
+where $D_n^*$ is the efficient influence function with $\Qbar_n^*$ and $g_n$ plugged
+in. This targeting step gives TMLE the same first-order expansion as AIPTW when the
+nuisance estimators behave well.
+
+Standard TMLE is doubly robust for consistency: if either $\Qbar_n$ or $g_n$ is
+consistent, the parameter estimate can still be consistent. But this does not
+automatically guarantee valid confidence intervals when the other nuisance estimator
+is inconsistent and flexible estimation is used.
+
+\subsection{TMLE for Doubly Robust Inference}
+
+Doubly robust inference means more than doubly robust consistency. It means the
+estimator has a usable asymptotic normal distribution and variance estimator even
+when only one nuisance component is consistently estimated.
+
+Specialized TMLEs can be constructed to target additional equations beyond the usual
+efficient influence-function equation. These methods may update both the outcome
+regression and the propensity score, often iteratively, to remove additional second-order
+terms that would otherwise prevent valid inference.
+
+The technical details are advanced, but the practical message is clear: standard AIPTW
+and standard TMLE should not be assumed to deliver valid inference under arbitrary
+flexible nuisance estimation if one nuisance function is badly inconsistent.
+
+\subsection{Sample-Size Effects}
+
+Finite-sample performance depends strongly on sample size. In small samples,
+flexible learners can overfit, estimated propensity scores can be unstable, and
+influence-function approximations can be poor. As sample size grows, flexible
+regression can better approximate the nuisance functions, and coverage of
+influence-function intervals often improves.
+
+The rate at which coverage improves depends on the complexity of the true nuisance
+functions, the learner library, positivity, and the amount of outcome noise.
+
+\subsection{Coverage Probability}
+
+Coverage probability is the repeated-sampling probability that a confidence interval
+contains the true parameter. A nominal 95\% interval has good coverage if, across many
+repeated samples, it contains the target about 95\% of the time.
+
+Simulation studies comparing naive g-computation, standard TMLE, and TMLE designed
+for doubly robust inference often show that coverage can be poor at small sample
+sizes, especially when one nuisance regression is misspecified. Methods designed for
+doubly robust inference can improve coverage in such settings, but they are more
+complex and require careful implementation.
+
+\subsection{Practical Cautions}
+
+\begin{estimationbox}
+Practical guidance for flexible doubly robust estimation:
+\begin{itemize}
+\item Use rich but pre-specified nuisance-function libraries.
+\item Inspect estimated propensity scores and clever covariates for extreme values.
+\item Use cross-fitting or sample splitting when required by the estimator's theory.
+\item Report whether inference relies on both nuisance functions being consistently
+estimated or on a method designed for doubly robust inference.
+\item Treat small-sample Wald intervals cautiously when weights or influence-function
+values are highly variable.
+\end{itemize}
+\end{estimationbox}
+
+Flexible learners are valuable, but they do not make inference automatic. The more
+adaptive the nuisance estimation procedure, the more important it is to use an
+estimator and inference procedure whose theoretical conditions match the analysis.
+
+\begin{keyidea}
+Doubly robust consistency says that the point estimator can remain consistent if one
+nuisance function is correct. Doubly robust inference is stronger: it asks for valid
+standard errors and confidence intervals under that same one-correct-nuisance
+scenario.
+\end{keyidea}
+
+\begin{assumptionbox}
+No amount of flexible nuisance estimation can diagnose unmeasured confounding from
+the observed data alone. Doubly robust inference concerns statistical robustness after
+identification assumptions have been accepted.
+\end{assumptionbox}

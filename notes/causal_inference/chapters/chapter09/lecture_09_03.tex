@@ -1,0 +1,123 @@
+\lecture{9.3}{Causal Dimension Reduction}
+\label{lec:9-3}
+
+\subsection{Lower-Dimensional Treatment Representations}
+
+When $A\in\R^p$ is high-dimensional, direct estimation of
+$a\mapsto\E\{\Ya{a}\}$ is often infeasible. A natural strategy is to replace
+$A$ by a lower-dimensional representation
+\[
+  G=g(A)\in\R^d,\qquad d<p.
+\]
+The goal is not merely to compress $A$, but to preserve the causal information
+in $A$ that is relevant for $Y$.
+
+\subsection{Effect-Preserving Maps $g(A)$}
+
+\begin{definition}[Effect-preserving representation]
+A map $g:\mathcal{A}\rightarrow\mathcal{G}$ is effect-preserving for the mean
+counterfactual outcome if
+\[
+  \E\{\Ya{a}\}=\theta\{g(a)\}
+\]
+for some function $\theta$ and for all exposure values $a$ in the target set.
+\end{definition}
+
+This means that any two exposure values with the same reduced representation
+have the same mean counterfactual outcome:
+\[
+  g(a)=g(a')\quad\Rightarrow\quad \E\{\Ya{a}\}=\E\{\Ya{a'}\}.
+\]
+The reduced feature $g(A)$ is then sufficient for the causal effect of $A$ on
+the mean outcome.
+
+\subsection{Linear Dimension Reduction $g(A;\beta)$}
+
+A common model is a linear reduction:
+\[
+  g(A;\beta)=\beta^\top A,
+\]
+or, for $d>1$,
+\[
+  g(A;\beta)=\beta^\top A,\qquad \beta\in\R^{p\times d}.
+\]
+The causal dimension-reduction condition becomes
+\[
+  \E\{\Ya{a}\}=\theta(\beta^\top a).
+\]
+Here $\beta$ defines directions in the exposure space that are causally relevant
+for the outcome.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  box/.style={draw, rounded corners=2pt, minimum width=2.8cm, minimum height=.8cm},
+  arr/.style={-{Latex[length=2.3mm]}, thick},
+  node distance=1.1cm
+]
+\node[box] (A) {High-dimensional\\ exposure $A\in\R^p$};
+\node[box, right=of A] (G) {Reduced exposure\\ $g(A)\in\R^d$};
+\node[box, right=of G] (Y) {Causal response\\ $\E\{\Ya{a}\}$};
+\draw[arr] (A) -- node[above] {$g$} (G);
+\draw[arr] (G) -- node[above] {$\theta$} (Y);
+\end{tikzpicture}
+\caption{Causal dimension reduction seeks a low-dimensional exposure summary that preserves counterfactual means.}
+\label{fig:ch9-causal-dimred}
+\end{figure}
+
+\subsection{Why PCA Is Insufficient}
+
+Principal component analysis finds directions that explain variation in the
+exposure distribution. It does not use the outcome and does not distinguish
+causal signal from confounding. A principal component can explain large
+variation in $A$ while having no causal effect on $Y$, and a low-variance
+component can be highly relevant to $Y$.
+
+More importantly, preserving the association between $A$ and $Y$ is not enough.
+Because
+\[
+  \E\{\Ya{a}\}\ne \E(Y\given A=a)
+\]
+in the presence of confounding, a dimension-reduction method that optimizes
+prediction of $Y$ from $A$ may preserve confounded associations rather than
+causal effects.
+
+\subsection{Confounding-Aware Dimension Reduction}
+
+Under conditional exchangeability,
+\[
+  \E\{\Ya{a}\}=\E\{\E(Y\given A=a,W)\}.
+\]
+A confounding-aware reduction must therefore preserve the standardized outcome
+regression, not merely the raw conditional mean $\E(Y\given A=a)$. The
+covariates $W$ enter because the causal response at $a$ is obtained by averaging
+over the target population distribution of $W$.
+
+One conceptual approach is to search for $\beta$ such that
+\[
+  \E\{\E(Y\given A=a,W)\}
+  =
+  \theta(\beta^\top a)
+\]
+over the exposure values of interest.
+
+\subsection{Causal Sufficient Dimension Reduction}
+
+\begin{definition}[Causal sufficient dimension reduction]
+A reduction $g(A)$ is causally sufficient for the mean effect of $A$ if the
+counterfactual mean depends on $a$ only through $g(a)$:
+\[
+  \E\{\Ya{a}\}=\E\{\Ya{a'}\}
+  \quad\text{whenever}\quad g(a)=g(a').
+\]
+\end{definition}
+
+This definition is about counterfactual distributions, not the observed exposure
+distribution. Estimating such a reduction requires causal assumptions, adequate
+support, and a method that accounts for confounding.
+
+\begin{keyidea}
+Causal dimension reduction is not ordinary compression. It asks for a
+low-dimensional representation that preserves intervention effects, not just
+variation in the exposure or prediction of the observed outcome.
+\end{keyidea}

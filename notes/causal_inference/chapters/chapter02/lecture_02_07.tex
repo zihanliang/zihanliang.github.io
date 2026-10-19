@@ -1,0 +1,114 @@
+\lecture{2.7}{Marginal and Conditional Causal Effects}
+\label{lec:2-7}
+
+\subsection{Marginal ATE}
+
+The marginal average treatment effect summarizes the effect in the entire target population:
+\[
+\ATE=\E(\Yone-\Yzero).
+\]
+It averages over all sources of variation in the population, including baseline covariates. In the early imaging example, the marginal ATE answers:
+\begin{quote}
+What is the average difference in disability if everyone in the target population received early imaging versus if no one received early imaging?
+\end{quote}
+
+The marginal ATE is often the primary public health or policy estimand because it describes the average impact of a population-level intervention.
+
+\subsection{Conditional ATE}
+
+A conditional average treatment effect restricts the comparison to a subgroup defined by covariates.
+
+\begin{definition}[Conditional average treatment effect]
+For covariates $W$, the \emph{conditional average treatment effect} at covariate value $w$ is
+\[
+\CATE(w)=\E(\Yone-\Yzero\given W=w).
+\]
+\end{definition}
+
+If $W$ is baseline pain severity, then $\CATE(w)$ is the average effect of early imaging among patients with baseline pain severity $w$.
+
+\subsection{Subgroup-Specific Causal Effects}
+
+Subgroup-specific causal effects are conditional effects for scientifically meaningful groups. If $W$ is categorical, such as low, moderate, and severe baseline pain, then
+\[
+\E(\Yone-\Yzero\given W=\text{severe})
+\]
+is the ATE among patients with severe baseline pain.
+
+The marginal ATE is a weighted average of conditional ATEs:
+\[
+\ATE
+=\E\{\E(\Yone-\Yzero\given W)\}.
+\]
+For discrete $W$,
+\[
+\ATE
+=
+\sum_w \E(\Yone-\Yzero\given W=w)\Prob(W=w).
+\]
+This is the tower rule applied to the individual-level contrast $\Yone-\Yzero$.
+
+\subsection{Causal Effect Modification}
+
+\begin{definition}[Causal effect modification]
+There is \emph{causal effect modification} by $W$ on the additive scale if
+\[
+\E(\Yone-\Yzero\given W=w)
+\]
+varies with $w$.
+\end{definition}
+
+For example, early imaging might have little average effect among patients with mild baseline pain but a different effect among patients with severe neurological symptoms. If the conditional causal effect differs across baseline severity levels, severity modifies the causal effect.
+
+\begin{example}[A finite population]
+Suppose a population of ten individuals has potential outcomes shown below.
+\[
+\begin{array}{c|ccc|c}
+\text{ID} & W & \Yone & \Yzero & \Yone-\Yzero\\
+\hline
+1 & 2 & 2 & 3 & -1\\
+2 & 1 & 10 & 5 & 5\\
+3 & 1 & 8 & 7 & 1\\
+4 & 1 & 6 & 3 & 3\\
+5 & 0 & 2 & 0 & 2\\
+6 & 2 & 3 & 6 & -3\\
+7 & 0 & 4 & 0 & 4\\
+8 & 1 & 0 & 5 & -5\\
+9 & 2 & 7 & 0 & 7\\
+10 & 0 & 6 & 9 & -3
+\end{array}
+\]
+The marginal ATE is the average of the ten individual contrasts:
+\[
+\ATE=\frac{-1+5+1+3+2-3+4-5+7-3}{10}=1.
+\]
+The conditional effects are
+\[
+\CATE(0)=\frac{2+4-3}{3}=1,
+\]
+\[
+\CATE(1)=\frac{5+1+3-5}{4}=1,
+\]
+\[
+\CATE(2)=\frac{-1-3+7}{3}=1.
+\]
+In this example the marginal and subgroup effects are all equal on the additive scale, so there is no additive effect modification by $W$.
+\end{example}
+
+\subsection{Difference between Statistical Interaction and Causal Effect Heterogeneity}
+
+Statistical interaction refers to variation in an observed-data association across levels of a covariate. For example, a regression model might show that
+\[
+\E(Y\given A=1,W=w)-\E(Y\given A=0,W=w)
+\]
+varies with $w$.
+
+Causal effect heterogeneity refers to variation in a counterfactual contrast:
+\[
+\E(\Yone-\Yzero\given W=w).
+\]
+These are not the same object. Observed statistical interactions can arise from confounding, selection, measurement, or model scale. Conversely, causal effect heterogeneity can exist even when a particular regression model fails to show an interaction.
+
+\begin{keyidea}
+Effect modification is scale-specific and causal. It concerns whether a causal contrast, such as a risk difference or mean difference, varies across subgroups.
+\end{keyidea}

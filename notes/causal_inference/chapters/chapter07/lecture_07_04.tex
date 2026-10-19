@@ -1,0 +1,156 @@
+\lecture{7.4}{AIPTW Implementation in R}
+\label{lec:7-4}
+
+\subsection{Fitting the Outcome Regression}
+
+To compute AIPTW, first estimate the outcome regression
+\[
+\Qbar(a,w)=\E(Y\given A=a,W=w).
+\]
+For a binary outcome, logistic regression is a simple starting point:
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+# dat contains Y, A, and W variables
+or_fit <- glm(Y ~ A + W, data = dat, family = binomial())
+
+dat1 <- dat
+dat1$A <- 1
+Qbar_1W <- predict(or_fit, newdata = dat1, type = "response")
+
+dat0 <- dat
+dat0$A <- 0
+Qbar_0W <- predict(or_fit, newdata = dat0, type = "response")
+\end{lstlisting}
+\end{implementationbox}
+
+The objects \texttt{Qbar\_1W} and \texttt{Qbar\_0W} are estimates of
+$\Qbar(1,W_i)$ and $\Qbar(0,W_i)$ for every observed individual.
+
+\subsection{Fitting the Propensity Score}
+
+Next estimate the propensity score:
+\[
+g_1(w)=\Prob(A=1\given W=w).
+\]
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+ps_fit <- glm(A ~ W, data = dat, family = binomial())
+
+g_1W <- predict(ps_fit, newdata = dat, type = "response")
+g_0W <- 1 - g_1W
+\end{lstlisting}
+\end{implementationbox}
+
+In practice, both $\Qbar_n$ and $g_n$ can be estimated using Super Learner. The
+subsequent AIPTW calculations are the same once predicted values are available.
+
+\subsection{Computing AIPTW for $\E\{\Yone\}$}
+
+For treatment level $1$,
+\[
+\psi_{n,\AIPTW}(1)
+=
+\frac{1}{n}\sum_{i=1}^n
+\left[
+\Qbar_n(1,W_i)
++
+\frac{\ind(A_i=1)}{g_{n,1}(W_i)}
+\{Y_i-\Qbar_n(1,W_i)\}
+\right].
+\]
+In R:
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+A <- dat$A
+Y <- dat$Y
+
+aiptw_ey1 <- mean(Qbar_1W + (A == 1) / g_1W * (Y - Qbar_1W))
+\end{lstlisting}
+\end{implementationbox}
+
+This expression is often safer than writing separate means for the g-computation and
+augmentation terms because it keeps the individual contribution visible.
+
+\subsection{Computing AIPTW for $\E\{\Yzero\}$}
+
+For treatment level $0$,
+\[
+\psi_{n,\AIPTW}(0)
+=
+\frac{1}{n}\sum_{i=1}^n
+\left[
+\Qbar_n(0,W_i)
++
+\frac{\ind(A_i=0)}{g_{n,0}(W_i)}
+\{Y_i-\Qbar_n(0,W_i)\}
+\right].
+\]
+In R:
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+aiptw_ey0 <- mean(Qbar_0W + (A == 0) / g_0W * (Y - Qbar_0W))
+\end{lstlisting}
+\end{implementationbox}
+
+\subsection{Computing the ATE}
+
+The AIPTW ATE estimator is
+\[
+\widehat{\ATE}_{\AIPTW}
+=
+\psi_{n,\AIPTW}(1)-\psi_{n,\AIPTW}(0).
+\]
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+aiptw_ate <- aiptw_ey1 - aiptw_ey0
+\end{lstlisting}
+\end{implementationbox}
+
+Equivalently, define individual ATE contributions
+\[
+D_{i,n}
+=
+\Qbar_n(1,W_i)-\Qbar_n(0,W_i)
++
+\frac{A_i}{g_{n,1}(W_i)}\{Y_i-\Qbar_n(1,W_i)\}
+-
+\frac{1-A_i}{g_{n,0}(W_i)}\{Y_i-\Qbar_n(0,W_i)\}.
+\]
+Then
+\[
+\widehat{\ATE}_{\AIPTW}=\frac{1}{n}\sum_{i=1}^nD_{i,n}.
+\]
+
+\subsection{Practical Coding Workflow}
+
+\begin{estimationbox}
+AIPTW coding workflow:
+\begin{enumerate}
+\item Fit or otherwise estimate $\Qbar_n(A,W)$.
+\item Predict $\Qbar_n(1,W_i)$ and $\Qbar_n(0,W_i)$ for every individual.
+\item Fit or otherwise estimate $g_{n,1}(W)$.
+\item Compute $g_{n,0}(W_i)=1-g_{n,1}(W_i)$.
+\item Form $\psi_{n,\AIPTW}(1)$ and $\psi_{n,\AIPTW}(0)$.
+\item Subtract to estimate the ATE.
+\item Compute influence-function-based standard errors as described in the next
+lecture.
+\end{enumerate}
+\end{estimationbox}
+
+Always check the range of estimated propensity scores. Extremely small values of
+$g_{n,1}(W_i)$ among treated observations or $g_{n,0}(W_i)$ among untreated
+observations can create unstable residual corrections.
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+summary(g_1W)
+summary(g_0W)
+summary((A == 1) / g_1W)
+summary((A == 0) / g_0W)
+\end{lstlisting}
+\end{implementationbox}

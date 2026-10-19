@@ -1,0 +1,150 @@
+\lecture{6.4}{Basic Calls to \texttt{SuperLearner}}
+\label{lec:6-4}
+
+\subsection{Main Arguments: \texttt{Y}, \texttt{X}, \texttt{SL.library}, \texttt{family}, \texttt{method}, \texttt{cvControl}}
+
+The function \texttt{SuperLearner()} automates the cross-validation and ensemble
+construction described in the previous lectures. Its most important arguments are:
+\begin{itemize}
+\item \texttt{Y}: the outcome to be predicted;
+\item \texttt{X}: a data frame or matrix of predictors;
+\item \texttt{SL.library}: candidate algorithms;
+\item \texttt{family}: the outcome family, commonly \texttt{gaussian()} or
+\texttt{binomial()};
+\item \texttt{method}: the metalearner and loss used to choose weights;
+\item \texttt{cvControl}: options controlling the internal cross-validation.
+\end{itemize}
+
+For outcome regression, \texttt{Y} is the observed outcome and \texttt{X} contains
+$(A,W)$. For propensity score estimation, \texttt{Y} is the treatment $A$ and
+\texttt{X} contains $W$.
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+set.seed(123)
+
+sl_fit1 <- SuperLearner(
+  Y = Y,
+  X = data.frame(W1 = W1, W2 = W2, A = A),
+  SL.library = c("SL.glm", "SL.mean"),
+  family = gaussian(),
+  method = "method.CC_LS",
+  cvControl = list(V = 2),
+  verbose = FALSE
+)
+\end{lstlisting}
+\end{implementationbox}
+
+\subsection{Continuous vs Binary Outcomes}
+
+For a continuous outcome regression, use \texttt{family = gaussian()} and a loss such
+as squared-error loss. A common metalearner is \texttt{method.CC\_LS}, a convex
+combination chosen to minimize least-squares loss.
+
+For a binary outcome or binary treatment mechanism, use \texttt{family = binomial()}.
+For predicted probabilities, a natural loss is negative log-likelihood. A useful
+metalearner is \texttt{method.CC\_nloglik}.
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+# Outcome regression for continuous Y
+fit_Q <- SuperLearner(Y = Y,
+                      X = data.frame(A = A, W1 = W1, W2 = W2),
+                      SL.library = c("SL.glm", "SL.mean"),
+                      family = gaussian(),
+                      method = "method.CC_LS")
+
+# Propensity score for binary A
+fit_g <- SuperLearner(Y = A,
+                      X = data.frame(W1 = W1, W2 = W2),
+                      SL.library = c("SL.glm", "SL.mean"),
+                      family = binomial(),
+                      method = "method.CC_nloglik")
+\end{lstlisting}
+\end{implementationbox}
+
+\subsection{Interpreting Printed Output}
+
+Printing a \texttt{SuperLearner} object shows the call, the cross-validated risk of
+each candidate, and the final ensemble coefficients. A typical table has columns:
+\[
+\text{Risk},\qquad \text{Coef}.
+\]
+The risk column describes candidate performance under the chosen cross-validated
+loss. The coefficient column gives the ensemble weight assigned to each candidate.
+
+\subsection{Risk}
+
+The reported risk is not the full-data training error. It is an internal
+cross-validated risk estimate for each candidate algorithm. For Gaussian outcomes
+with \texttt{method.CC\_LS}, this risk is mean squared prediction error. For binomial
+outcomes with \texttt{method.CC\_nloglik}, it is negative log-likelihood risk.
+
+Risk values are comparable only when they use the same outcome and same loss. A
+mean squared-error risk for $Y$ should not be numerically compared with a
+negative-log-likelihood risk for $A$.
+
+\subsection{Coefficients}
+
+The coefficients are the estimated ensemble weights. If a candidate has coefficient
+zero, it does not contribute to the final Super Learner prediction. This does not mean
+the candidate is scientifically impossible or universally poor; it means that, given the
+other candidates and the selected loss, the metalearner did not need that candidate to
+reduce cross-validated risk.
+
+\begin{keyidea}
+The risk table scores individual algorithms. The coefficients describe the ensemble.
+An algorithm can have mediocre individual risk but still receive weight if its
+predictions complement the predictions of other learners.
+\end{keyidea}
+
+\subsection{Super Learner Predictions}
+
+The object returned by \texttt{SuperLearner()} contains fitted predictions for the
+observed rows:
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+head(sl_fit1$SL.predict)
+\end{lstlisting}
+\end{implementationbox}
+
+Predictions for new observations are obtained with \texttt{predict()}:
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+new_obs <- data.frame(A = 1, W1 = 0, W2 = 0)
+
+new_predictions <- predict(sl_fit1, newdata = new_obs)
+new_predictions$pred
+\end{lstlisting}
+\end{implementationbox}
+
+The returned \texttt{pred} component is the ensemble prediction.
+
+\subsection{Library Predictions}
+
+The same prediction call also returns predictions from each library member:
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+new_predictions$library.predict
+\end{lstlisting}
+\end{implementationbox}
+
+Inside the fitted object, useful components include:
+\begin{itemize}
+\item \texttt{SL.predict}: Super Learner predictions in the original data;
+\item \texttt{library.predict}: full-data predictions from each candidate;
+\item \texttt{coef}: ensemble weights;
+\item \texttt{cvRisk}: internal cross-validated risk estimates;
+\item \texttt{fitLibrary}: fitted candidate algorithms;
+\item \texttt{validRows}: validation fold membership.
+\end{itemize}
+
+\begin{estimationbox}
+For causal estimation, the fitted Super Learner is still a nuisance-function estimator.
+To use it in g-computation, predict $\Qbar_n(1,W_i)$ and $\Qbar_n(0,W_i)$ using
+treatment-specific prediction datasets. To use it for IPTW, estimate $g_{n,1}(W_i)$
+and form inverse probability weights.
+\end{estimationbox}

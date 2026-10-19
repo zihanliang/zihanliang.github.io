@@ -1,0 +1,75 @@
+\lecture{3.5}{Assumptions for Identifying the ATE}
+\label{lec:3-5}
+
+\subsection{Consistency}
+
+To identify the ATE, the observed outcome must be linked to the relevant potential outcome.
+
+\begin{assumptionbox}
+\textbf{Consistency.} If a unit is observed with $A=a$, then
+\[
+Y=\Ya{a}.
+\]
+For binary $A$,
+\[
+Y=A\Yone+(1-A)\Yzero.
+\]
+\end{assumptionbox}
+
+Consistency requires that the treatment versions represented by $A=a$ are well-defined enough that the observed treatment corresponds to the intervention used to define $\Ya{a}$.
+
+\subsection{Conditional Randomization}
+
+The second assumption is conditional randomization, also called conditional exchangeability or conditional ignorability.
+
+\begin{assumptionbox}
+\textbf{Conditional randomization.} For $a\in\{0,1\}$,
+\[
+\Ya{a}\ci A\given W.
+\]
+Within strata of measured covariates $W$, the observed treatment carries no information about the potential outcome under treatment level $a$.
+\end{assumptionbox}
+
+This assumption is usually the hardest to justify in observational studies. It says that $W$ contains enough information to control confounding.
+
+\subsection{Positivity}
+
+Even if treatment is as-if randomized within covariate strata, we must have observed treatment variation within those strata.
+
+\begin{assumptionbox}
+\textbf{Positivity.} For each treatment level $a\in\{0,1\}$,
+\[
+\Prob(A=a\given W=w)>0
+\]
+for every covariate value $w$ with $\Prob(W=w)>0$.
+\end{assumptionbox}
+
+In words, every covariate subgroup in the target population must have some chance of receiving each treatment level. If no mildly ill patients ever receive a risky experimental treatment, then the observed data contain no direct information about outcomes under that treatment for mildly ill patients.
+
+\subsection{Why Positivity Is Partly Empirically Checkable}
+
+Unlike exchangeability, positivity is stated in terms of the observed data distribution. It involves $\Prob(A=a\given W=w)$, not counterfactual outcomes. Therefore it can be partly checked.
+
+For discrete $W$, one can inspect whether each covariate stratum contains both treated and untreated observations. For continuous or high-dimensional $W$, exact strata may be sparse, so analysts examine estimated propensity scores
+\[
+g_a(W)=\Prob(A=a\given W)
+\]
+and check whether they are close to zero.
+
+Empirical checks are not perfect. A finite sample may fail to show a treatment level in a subgroup even if the population probability is positive. Conversely, a few observations in a subgroup do not guarantee enough information for stable estimation. Still, positivity has observable implications.
+
+\subsection{Why Positivity Matters for Observed Conditional Means}
+
+The G-computation formula will involve terms such as
+\[
+\E(Y\given A=a,W=w).
+\]
+This conditional mean is defined from the observed data distribution only when $\Prob(A=a,W=w)>0$. Since
+\[
+\Prob(A=a,W=w)=\Prob(A=a\given W=w)\Prob(W=w),
+\]
+if $\Prob(W=w)>0$ but $\Prob(A=a\given W=w)=0$, then the subgroup $(A=a,W=w)$ does not exist in the observed population. The conditional mean cannot be learned from observed outcomes.
+
+\begin{keyidea}
+Exchangeability says treated and untreated people are comparable within $W$ strata. Positivity says both treated and untreated people actually exist within those strata.
+\end{keyidea}

@@ -1,0 +1,129 @@
+\lecture{6.7}{Evaluating the Super Learner}
+\label{lec:6-7}
+
+\subsection{\texttt{CV.SuperLearner}}
+
+The function \texttt{SuperLearner()} uses internal cross-validation to choose ensemble
+weights. That internal risk is useful for comparing library algorithms, but it is not by
+itself an external evaluation of the final Super Learner procedure. To estimate the
+out-of-sample risk of the Super Learner itself, use \texttt{CV.SuperLearner()}.
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+set.seed(1234)
+
+cv_sl <- CV.SuperLearner(
+  Y = Y,
+  X = data.frame(W1 = W1, W2 = W2, A = A),
+  family = gaussian(),
+  method = "method.CC_LS",
+  SL.library = c("SL.glm", "SL.mean", "SL.quadglm"),
+  cvControl = list(V = 2),
+  innerCvControl = list(list(V = 2), list(V = 2))
+)
+\end{lstlisting}
+\end{implementationbox}
+
+\subsection{Nested Cross-Validation}
+
+Evaluation of the Super Learner requires nested cross-validation. There are two
+levels:
+\begin{itemize}
+\item outer folds estimate the out-of-sample risk of the whole Super Learner
+procedure;
+\item inner folds, inside each outer training set, choose the Super Learner ensemble
+weights.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=1.1cm,
+  box/.style={draw, rounded corners=2pt, minimum width=3.0cm, minimum height=.75cm},
+  small/.style={draw, rounded corners=2pt, minimum width=2.35cm, minimum height=.62cm},
+  arr/.style={-{Latex[length=2.5mm]}, thick}
+]
+\node[box] (data) {Full data};
+\node[box, below left=1cm and .8cm of data] (outertrain) {Outer training};
+\node[box, below right=1cm and .8cm of data] (outervalid) {Outer validation};
+\node[small, below=.9cm of outertrain] (inner) {Inner CV\\chooses weights};
+\node[small, below=.9cm of outervalid] (risk) {Evaluate\\risk};
+\draw[arr] (data) -- (outertrain);
+\draw[arr] (data) -- (outervalid);
+\draw[arr] (outertrain) -- (inner);
+\draw[arr] (inner) -- node[above] {trained SL} (risk);
+\draw[arr] (outervalid) -- (risk);
+\end{tikzpicture}
+\caption{Nested cross-validation evaluates the entire Super Learner procedure.}
+\label{fig:ch6-nested-cv}
+\end{figure}
+
+If the same folds used to choose weights were also used to evaluate the final Super
+Learner, the risk estimate would be optimistic. Nested cross-validation avoids this by
+holding out outer validation observations from every part of fitting and weight
+selection.
+
+\subsection{Cross-Validated Risk Estimates}
+
+\texttt{CV.SuperLearner()} returns risk estimates for:
+\begin{itemize}
+\item each candidate algorithm;
+\item the discrete Super Learner;
+\item the ensemble Super Learner.
+\end{itemize}
+
+For continuous outcomes with squared-error loss, the risk is estimated mean squared
+prediction error:
+\[
+\widehat R_{CV}
+=
+\frac{1}{n}\sum_{i=1}^n
+\{Y_i-\hat Q_{-v(i)}(A_i,W_i)\}^2,
+\]
+where $\hat Q_{-v(i)}$ denotes the prediction rule trained without the outer validation
+fold containing observation $i$.
+
+\subsection{Confidence Intervals for Risk}
+
+Plots from \texttt{CV.SuperLearner()} often display estimated risk and approximate
+confidence intervals. These intervals quantify uncertainty in the estimated predictive
+risk, not uncertainty in a causal effect. They are useful for judging whether apparent
+risk differences are meaningful or mostly noise.
+
+If two algorithms have very similar risk estimates with overlapping intervals, it is not
+reasonable to claim that one is clearly better. The ensemble can still use both, or put
+weight on only one, depending on the metalearner optimization.
+
+\subsection{Discrete Super Learner}
+
+The discrete Super Learner is the single candidate with the best cross-validated risk.
+When evaluating results, it is helpful to compare:
+\[
+\text{best single candidate},\qquad
+\text{discrete Super Learner},\qquad
+\text{ensemble Super Learner}.
+\]
+In some datasets, the ensemble improves on all individual candidates. In others, the
+best single candidate performs about as well as the ensemble.
+
+\subsection{Comparing Super Learner to Candidate Algorithms}
+
+The following questions guide interpretation:
+\begin{itemize}
+\item Does the ensemble have lower estimated risk than the best single candidate?
+\item Are risk differences large relative to their uncertainty?
+\item Which algorithms receive nonzero weight?
+\item Are any algorithms unstable, slow, or producing warnings?
+\item Does the selected library behave differently for $\Qbar$ than for $g$?
+\end{itemize}
+
+\begin{keyidea}
+\texttt{SuperLearner()} fits an ensemble for use in analysis. \texttt{CV.SuperLearner()}
+evaluates how well the entire ensemble-building procedure predicts new data.
+\end{keyidea}
+
+\begin{estimationbox}
+For causal effect estimation, nested evaluation is a diagnostic for nuisance-function
+prediction. It does not prove that the resulting causal estimator is unbiased, because
+causal validity still depends on identification assumptions and adequate positivity.
+\end{estimationbox}

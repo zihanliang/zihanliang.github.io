@@ -1,0 +1,157 @@
+\lecture{8.2}{Sequential Identification Assumptions}
+\label{lec:8-2}
+
+\subsection{Sequential Randomized Trials}
+
+The cleanest way to learn the mean counterfactual outcome $\E\{Y(\abar)\}$ is
+to run a trial that randomizes treatment at each time point. In a sequentially
+randomized trial, treatment $A_k$ is assigned by a known randomization mechanism
+after observing the history available at time $k$.
+
+For a fixed regime $\abar=(a_0,\ldots,a_K)$, randomization implies that treatment
+at each time is independent of the relevant counterfactual outcome within the
+history strata used by the trial:
+\[
+  Y(\abar) \ci A_k \given \Lbar_k,\Abar_{k-1}
+  \qquad \text{for } k=0,\ldots,K.
+\]
+At $k=0$, the conditioning set is just $L_0$.
+
+Plainly, among people with the same history up to time $k$, the next treatment
+assignment is as if randomized with respect to what would happen under the
+regime $\abar$. This is the longitudinal analogue of conditional randomization
+for a point treatment.
+
+\subsection{Observational Longitudinal Studies}
+
+In observational longitudinal studies, treatment is not assigned by the analyst.
+Patients and clinicians make decisions using information that evolves over time.
+Some of this information is measured and included in $\Lbar_k$; some may be
+unmeasured.
+
+The inferential challenge is that the observed treatment process may be
+informative about future outcomes. For example, a patient may discontinue
+chemotherapy because disease is progressing, or a smoker may quit because early
+respiratory symptoms have appeared. If those health changes are also associated
+with the final outcome, treated and untreated histories are not automatically
+comparable.
+
+\subsection{Time-Varying Confounding}
+
+\begin{definition}[Time-varying confounder]
+A time-varying confounder is a covariate $L_k$ that predicts later treatment
+$A_k$ or $A_{k+1}$ and also predicts the outcome, while possibly being affected
+by earlier treatment.
+\end{definition}
+
+This dual role is what makes longitudinal confounding different from ordinary
+baseline confounding. A later covariate can be necessary for controlling
+confounding of later treatment, yet inappropriate to condition on naively when
+estimating effects of earlier treatment because it lies on a causal pathway from
+earlier treatment to the outcome.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=1.2cm,
+  box/.style={draw, rounded corners=2pt, minimum width=1.0cm, minimum height=.72cm},
+  arr/.style={-{Latex[length=2.3mm]}, thick}
+]
+\node[box] (L0) {$L_0$};
+\node[box, right=of L0] (A0) {$A_0$};
+\node[box, right=of A0] (L1) {$L_1$};
+\node[box, right=of L1] (A1) {$A_1$};
+\node[box, right=of A1] (Y) {$Y$};
+\draw[arr] (L0) -- (A0);
+\draw[arr] (L0) to[bend left=25] (L1);
+\draw[arr] (L0) to[bend left=35] (Y);
+\draw[arr] (A0) -- (L1);
+\draw[arr] (A0) to[bend left=25] (Y);
+\draw[arr] (L1) -- (A1);
+\draw[arr] (L1) to[bend left=25] (Y);
+\draw[arr] (A1) -- (Y);
+\end{tikzpicture}
+\caption{Treatment-confounder feedback: $L_1$ is affected by $A_0$ and also confounds the effect of $A_1$ on $Y$.}
+\label{fig:ch8-time-varying-confounding}
+\end{figure}
+
+\subsection{Sequential Randomization}
+
+\begin{assumptionbox}
+For a fixed static regime $\abar=(a_0,\ldots,a_K)$, the sequential
+randomization assumption is
+\[
+  Y(\abar) \ci A_k \given \Lbar_k,\Abar_{k-1}=\abar_{k-1}
+  \qquad k=0,\ldots,K.
+\]
+Equivalently, among individuals whose observed treatment history has followed
+the regime through time $k-1$, the next treatment decision is independent of the
+counterfactual outcome under the full regime after conditioning on the measured
+covariate history.
+\end{assumptionbox}
+
+The restriction $\Abar_{k-1}=\abar_{k-1}$ appears because, when identifying
+$Y(\abar)$, the relevant risk set at time $k$ consists of individuals who have
+remained compatible with the regime up to that time. If a person has already
+deviated from the regime, later treatment decisions for that person do not
+directly reveal outcomes under the full regime $\abar$ without further modeling.
+
+\subsection{Sequential Exchangeability}
+
+Sequential exchangeability is another name for the same identifying condition.
+It emphasizes comparability: after conditioning on the measured history, those
+who receive $A_k=a_k$ and those who do not are exchangeable with respect to the
+future counterfactual outcome under $\abar$.
+
+For two treatment times and regime $(1,1)$, the assumption is
+\[
+  Y(1,1) \ci A_0 \given L_0,
+\]
+and
+\[
+  Y(1,1) \ci A_1 \given L_0,A_0=1,L_1.
+\]
+The first line says baseline treatment is unconfounded within baseline covariate
+strata. The second says the second treatment is unconfounded within strata of
+the history observed among people treated at baseline.
+
+This assumption is not empirically verifiable. The observed data can show
+whether treatment depends on measured covariates, but cannot show whether
+treatment depends on unmeasured determinants of the counterfactual outcome.
+
+\subsection{Longitudinal Positivity}
+
+\begin{assumptionbox}
+For every history with positive probability under the regime of interest,
+the probability of receiving the regime-compatible treatment must be positive:
+\[
+  \Prob(A_k=a_k \given \Lbar_k=\lbar_k,\Abar_{k-1}=\abar_{k-1})>0
+  \qquad k=0,\ldots,K.
+\]
+\end{assumptionbox}
+
+For the always-treated regime $(1,\ldots,1)$ this becomes
+\[
+  \Prob(A_0=1\given L_0=l_0)>0,
+\]
+\[
+  \Prob(A_1=1\given \Lbar_1=\lbar_1,A_0=1)>0,
+\]
+and so on through time $K$.
+
+Longitudinal positivity is more fragile than single-timepoint positivity because
+probabilities multiply over time. Even if every time-specific probability is
+moderate, the probability of observing the entire treatment sequence can be
+small:
+\[
+  \prod_{k=0}^K
+  \Prob(A_k=a_k\given \Lbar_k,\Abar_{k-1}=\abar_{k-1}).
+\]
+Small products lead to unstable inverse probability weights and can make some
+static regimes impossible to learn in a given population.
+
+\begin{keyidea}
+Identification of a longitudinal regime requires local exchangeability and local
+positivity at every treatment decision. A failure at one time point can break
+identification of the entire treatment sequence.
+\end{keyidea}

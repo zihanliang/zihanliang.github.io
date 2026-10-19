@@ -1,0 +1,154 @@
+\lecture{9.4}{Sensitivity Analysis for Unmeasured Confounding}
+\label{lec:9-4}
+
+\subsection{Violation of Conditional Ignorability}
+
+For a binary treatment, the usual identification proof for $\E\{\Yone\}$ starts
+from
+\[
+  \E\{\Yone\}
+  =
+  \sum_w\sum_a
+  \E(\Yone\given A=a,W=w)\Prob(A=a\given W=w)\Prob(W=w).
+\]
+Split the sum over $a$:
+\[
+\begin{aligned}
+  \E\{\Yone\}
+  &=
+  \sum_w \E(\Yone\given A=1,W=w)\Prob(A=1\given W=w)\Prob(W=w)\\
+  &\quad+
+  \sum_w \E(\Yone\given A=0,W=w)\Prob(A=0\given W=w)\Prob(W=w).
+\end{aligned}
+\]
+The first conditional mean is identified by consistency:
+\[
+  \E(\Yone\given A=1,W=w)=\E(Y\given A=1,W=w).
+\]
+The second conditional mean concerns untreated individuals under treatment:
+\[
+  \E(\Yone\given A=0,W=w).
+\]
+It is not observed directly.
+
+If $\Yone\ci A\given W$, then
+\[
+  \E(\Yone\given A=0,W=w)
+  =
+  \E(\Yone\given A=1,W=w)
+  =
+  \E(Y\given A=1,W=w),
+\]
+and the usual adjustment formula follows. If conditional ignorability fails,
+this replacement is not justified.
+
+\subsection{Non-Identifiable Counterfactual Components}
+
+The unidentified piece is the distribution of $\Yone$ among those with $A=0$.
+Similarly, identification of $\E\{\Yzero\}$ requires information about $\Yzero$
+among those with $A=1$. These are counterfactual components that the observed
+data do not reveal without assumptions.
+
+\begin{keyidea}
+Unmeasured confounding breaks identification because some counterfactual
+outcome distributions are never observed in the treatment groups where they are
+needed.
+\end{keyidea}
+
+\subsection{Bounds Without Sensitivity Parameters}
+
+If $Y$ is bounded, partial identification is possible without specifying a
+sensitivity model. Suppose $Y\in[0,1]$. Then
+\[
+  0\le \E(\Yone\given A=0,W=w)\le 1.
+\]
+Therefore $\E\{\Yone\}$ is bounded by replacing the unidentified component with
+0 or 1:
+\[
+\begin{aligned}
+  \sum_w &\E(Y\given A=1,W=w)\Prob(A=1\given W=w)\Prob(W=w)\\
+  &\le \E\{\Yone\}\\
+  &\le
+  \sum_w
+  \left[
+  \E(Y\given A=1,W=w)\Prob(A=1\given W=w)
+  +\Prob(A=0\given W=w)
+  \right]\Prob(W=w).
+\end{aligned}
+\]
+These bounds are honest but often wide.
+
+\subsection{Bounds With Sensitivity Parameters}
+
+Sensitivity parameters narrow the set of plausible counterfactual distributions
+by restricting the magnitude of unmeasured confounding. For example, one might
+bound the difference
+\[
+  \left|
+  \E(\Yone\given A=0,W=w)-\E(\Yone\given A=1,W=w)
+  \right|
+  \le \delta.
+\]
+For each value of $\delta$, this yields an interval of possible values for
+$\E\{\Yone\}$ and therefore for the ATE. Reporting the range over plausible
+$\delta$ values makes the dependence on untestable assumptions explicit.
+
+\subsection{Point Identification With Sensitivity Parameters}
+
+Another approach specifies a sensitivity model that maps observed outcome
+distributions to the unobserved counterfactual distributions. Once the
+sensitivity parameter is fixed, the causal parameter becomes identified.
+
+\subsection{Robins Sensitivity Model}
+
+One useful model relates the density of $\Yone$ among untreated individuals to
+the density among treated individuals:
+\[
+  p(y_1\given A=0,W)
+  =
+  \frac{
+  p(y_1\given A=1,W)\exp\{\gamma S(y_1)\}
+  }{
+  \E[\exp\{\gamma S(Y)\}\given A=1,W]
+  }.
+\]
+Here $S(\cdot)$ is a specified function and $\gamma$ is a sensitivity parameter.
+When $\gamma=0$, the two conditional distributions are equal, corresponding to
+no unmeasured confounding for $\Yone$ within strata of $W$.
+
+Under this model,
+\[
+  \E(\Yone\given A=0,W=w)
+  =
+  \frac{
+  \E[Y\exp\{\gamma S(Y)\}\given A=1,W=w]
+  }{
+  \E[\exp\{\gamma S(Y)\}\given A=1,W=w]
+  }.
+\]
+Thus, for fixed $\gamma$,
+\[
+\begin{aligned}
+  \E\{\Yone\}
+  &=
+  \sum_w \E(Y\given A=1,W=w)\Prob(A=1\given W=w)\Prob(W=w)\\
+  &\quad+
+  \sum_w
+  \frac{
+  \E[Y\exp\{\gamma S(Y)\}\given A=1,W=w]
+  }{
+  \E[\exp\{\gamma S(Y)\}\given A=1,W=w]
+  }
+  \Prob(A=0\given W=w)\Prob(W=w).
+\end{aligned}
+\]
+
+\begin{estimationbox}
+A sensitivity analysis workflow is:
+\begin{enumerate}
+  \item Choose a sensitivity model and interpret its parameter scale.
+  \item Select a scientifically plausible grid of sensitivity values.
+  \item Estimate the identified functional at each value.
+  \item Report how the causal conclusion changes across the grid.
+\end{enumerate}
+\end{estimationbox}

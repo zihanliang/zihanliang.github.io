@@ -1,0 +1,142 @@
+\lecture{5.7}{Practical Interpretation of Super Learner Results}
+\label{lec:5-7}
+
+\subsection{Candidate Algorithms}
+
+A Super Learner analysis should report the candidate library. The library is part of
+the estimator. Two analyses with different libraries are using different statistical
+procedures, even if both are called Super Learner.
+
+Common candidate algorithms include:
+\begin{itemize}
+\item generalized linear models;
+\item models with interactions or polynomial terms;
+\item penalized regressions such as lasso and ridge;
+\item generalized additive models;
+\item multivariate adaptive regression splines;
+\item regression trees and random forests;
+\item gradient boosting;
+\item Bayesian additive regression trees;
+\item support vector machines;
+\item neural networks;
+\item simple empirical or intercept-only benchmarks.
+\end{itemize}
+
+The library should include algorithms with different levels of flexibility. It is often
+useful to include simple benchmark models because they can perform well when the
+sample is small or the signal is simple.
+
+\subsection{Cross-Validated Risk Tables}
+
+Super Learner output often includes a table of cross-validated risks. For squared-error
+loss, lower risk means lower estimated out-of-sample mean squared error. For negative
+log-likelihood loss, lower risk means better predicted probabilities.
+
+A risk table might have the following conceptual form:
+\[
+\begin{array}{lcc}
+\toprule
+\text{Algorithm} & \text{CV risk for }\Qbar & \text{CV risk for }g\\
+\midrule
+\text{GLM} & 1.000 & 1.000\\
+\text{GAM} & 0.994 & 0.987\\
+\text{Random forest} & 0.997 & 0.989\\
+\text{BART} & 0.988 & 4.462\\
+\text{Super Learner} & 0.986 & 0.983\\
+\bottomrule
+\end{array}
+\]
+Risks are sometimes reported relative to a reference method, such as GLM. A relative
+risk below 1 means the algorithm had lower cross-validated risk than the reference.
+A relative risk above 1 means it performed worse by the chosen loss.
+
+\subsection{Super Learner Weights}
+
+The ensemble weights describe how the final prediction function is assembled:
+\[
+\Qbar_{n,SL}(a,w)=\sum_{k=1}^K\omega_k\Qbar_{n,k}(a,w).
+\]
+A large weight means that an algorithm contributes substantially to the final ensemble
+prediction. A zero weight means that the algorithm did not improve the ensemble risk
+given the other algorithms in the library.
+
+Weights should not be interpreted as posterior probabilities that a model is true. A
+Super Learner library is not a list of mutually exclusive scientific models. It is a
+collection of prediction algorithms. The weights are chosen for predictive performance
+under a loss function, not for causal interpretation.
+
+\subsection{Why Zero Weights Are Common}
+
+Zero weights are common because many algorithms make similar predictions. If two
+algorithms are highly correlated, the ensemble may need only one of them. An
+algorithm can also receive zero weight because it predicts poorly, because it is
+redundant with better algorithms, or because adding it would increase validation risk.
+
+Zero weight does not necessarily mean an algorithm is useless in all datasets. It means
+that, in this dataset and this library, the cross-validated metalearner did not find it
+helpful for reducing the chosen risk.
+
+\begin{keyidea}
+Super Learner weights are performance weights, not truth weights. They summarize
+how candidate predictions were combined to minimize cross-validated loss.
+\end{keyidea}
+
+\subsection{Outcome Regression vs Propensity Score Performance}
+
+The same algorithm can perform differently for $\Qbar$ and $g$. The outcome
+regression predicts $Y$ from $(A,W)$, while the propensity score predicts $A$ from
+$W$. These are different statistical tasks.
+
+For example, a flexible tree-based method might capture nonlinear outcome patterns
+well but produce unstable propensity scores near zero or one. A generalized additive
+model might predict treatment assignment well because the treatment mechanism is
+smooth, while offering little improvement for a noisy outcome.
+
+This distinction is important for causal estimators. In g-computation, the outcome
+regression is the central nuisance function. In IPTW, the propensity score is central.
+In doubly robust estimators introduced later, both nuisance functions matter, and their
+estimation quality can affect bias, variance, and confidence interval behavior.
+
+\subsection{Reporting Model Libraries and Sensitivity Analyses}
+
+Transparent reporting should include:
+\begin{itemize}
+\item the candidate algorithms;
+\item important tuning parameter grids;
+\item the loss function;
+\item the number of cross-validation folds;
+\item whether candidates used screening or preprocessing;
+\item the cross-validated risks;
+\item the selected discrete learner or ensemble weights;
+\item any convergence failures or algorithms removed before analysis.
+\end{itemize}
+
+Sensitivity analyses are useful because Super Learner performance depends on the
+library. A narrow library cannot choose a method that was not included. Analysts
+should examine whether conclusions change when the library is expanded, when
+highly unstable algorithms are removed, or when alternative reasonable losses are
+used.
+
+\begin{implementationbox}
+Practical reporting template:
+\begin{lstlisting}
+Outcome regression:
+  Loss: squared-error or negative log-likelihood
+  Folds: V-fold cross-validation
+  Library: GLM, GAM, lasso, random forest, ...
+  Selected/weighted algorithms: report CV risks and weights
+
+Propensity score:
+  Loss: Bernoulli negative log-likelihood
+  Folds: V-fold cross-validation
+  Library: GLM, GAM, lasso, random forest, ...
+  Diagnostics: predicted probabilities and weight summaries
+\end{lstlisting}
+\end{implementationbox}
+
+\begin{estimationbox}
+When Super Learner is used inside a causal analysis, it should be described as part
+of the estimator of the causal parameter. Report the causal assumptions separately
+from the regression performance. Good cross-validated prediction does not verify
+exchangeability, consistency, or positivity.
+\end{estimationbox}

@@ -1,0 +1,137 @@
+\lecture{1.5}{Expectation and Conditional Expectation}
+\label{lec:1-5}
+
+\subsection{Expected Value}
+
+The expected value is the population average of a random variable.
+
+\begin{definition}[Expected value]
+For a discrete random variable $W$, the expected value, expectation, or mean is
+\[
+\E(W)=\sum_w w\,\Prob(W=w),
+\]
+where the sum is over all possible values of $W$. For a continuous random variable with density $f_W$, the expected value is
+\[
+\E(W)=\int w f_W(w)\,dw,
+\]
+provided the integral is well-defined.
+\end{definition}
+
+The discrete formula says: multiply each possible value by the proportion of the population with that value, then add across values. If $W$ is age, $\E(W)$ is the average age in the target population. If $W$ is systolic blood pressure, $\E(W)$ is the population mean systolic blood pressure.
+
+\subsection{Expectation of Transformations}
+
+Expectations can also be taken after transforming variables.
+
+\begin{definition}[Expectation of a transformation]
+For a function $f$, the expectation of $f(W)$ is
+\[
+\E\{f(W)\}=\sum_w f(w)\Prob(W=w)
+\]
+in the discrete case, or
+\[
+\E\{f(W)\}=\int f(w)f_W(w)\,dw
+\]
+in the continuous case.
+\end{definition}
+
+Examples include:
+\[
+\E(W^2), \qquad \E\{\log(W)\}, \qquad \E\{\ind(W\ge 65)\}.
+\]
+The last example is especially important because indicator functions convert events into numerical variables.
+
+\subsection{Binary Variables and Probabilities}
+
+If $Y$ is binary, with possible values 0 and 1, then its expectation equals the probability that it is 1:
+\[
+\E(Y)
+=\sum_{y=0}^1 y\Prob(Y=y)
+=0\cdot \Prob(Y=0)+1\cdot \Prob(Y=1)
+=\Prob(Y=1).
+\]
+More generally, for any event $B$,
+\[
+\E\{\ind(B)\}=\Prob(B).
+\]
+
+\begin{keyidea}
+Means and probabilities are not separate ideas for binary variables. The mean of a 0/1 variable is the proportion of the population with value 1.
+\end{keyidea}
+
+This fact is used constantly. If $Y$ is a disease indicator, then $\E(Y)$ is disease prevalence. If $A$ is a treatment indicator, then $\E(A)$ is the proportion treated.
+
+\subsection{Conditional Expectation as Subgroup Mean}
+
+Conditional expectation is the mean within a subgroup.
+
+\begin{definition}[Conditional expectation for a discrete conditioning event]
+For a discrete variable $W$ and an event $A=a$ with $\Prob(A=a)>0$,
+\[
+\E(W\given A=a)=\sum_w w\,\Prob(W=w\given A=a).
+\]
+\end{definition}
+
+For example, if $W$ is age and $A=1$ indicates monoclonal antibody receipt, then
+\[
+\E(W\given A=1)
+\]
+is the average age among monoclonal antibody recipients. It is not the average age in the whole population.
+
+If $Y$ is binary, then
+\[
+\E(Y\given A=1)=\Prob(Y=1\given A=1).
+\]
+Thus the conditional mean of a binary outcome is a conditional probability.
+
+\subsection{Conditional Mean as a Function}
+
+A conditional mean can be viewed as a function of the conditioning variables. The notation
+\[
+\E(W\given A)
+\]
+does not represent a single number until $A$ is fixed. It is a random variable whose value depends on the subgroup to which the unit belongs:
+\[
+\E(W\given A)
+=
+\begin{cases}
+\E(W\given A=0), & A=0,\\
+\E(W\given A=1), & A=1.
+\end{cases}
+\]
+
+In contrast, $\E(W\given A=a)$ is a number once $a$ is specified.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.8cm,>=Latex]
+  \node[draw, rounded corners, fill=blue!5, minimum width=3.3cm] (input) {Input subgroup\\$A=a$};
+  \node[draw, rounded corners, fill=yellow!10, right=of input, minimum width=3.5cm] (machine) {Conditional mean\\function};
+  \node[draw, rounded corners, fill=green!6, right=of machine, minimum width=3.5cm] (output) {Output number\\$\E(W\given A=a)$};
+  \draw[->, thick] (input) -- (machine);
+  \draw[->, thick] (machine) -- (output);
+\end{tikzpicture}
+\caption{A conditional expectation can be understood as a function that maps subgroup labels to subgroup means.}
+\end{figure}
+
+\subsection{Interpreting $\E(Y\given A,W)$}
+
+The expression $\E(Y\given A,W)$ is a conditional mean function of both treatment and covariates. If $A$ is binary and $W$ is age, then
+\[
+(a,w)\mapsto \E(Y\given A=a,W=w)
+\]
+maps each treatment-age subgroup to the mean outcome in that subgroup.
+
+If $Y$ is binary, then
+\[
+\E(Y\given A=a,W=w)=\Prob(Y=1\given A=a,W=w).
+\]
+For instance,
+\[
+\E(Y\given A=1,W=65)
+\]
+is the outcome prevalence among treated 65-year-olds. It should not be interpreted as the outcome that would occur if a particular person were treated. It is a descriptive mean among people actually observed with $A=1$ and $W=65$.
+
+\begin{remark}
+The expression $\E(Y\given A,W)$ is often estimated by regression. A fitted regression model is therefore best understood as an estimated conditional mean function. This interpretation is more fundamental for this course than interpreting individual regression coefficients.
+\end{remark}

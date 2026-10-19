@@ -1,0 +1,154 @@
+\lecture{2.9}{Types of Interventions and Consistency}
+\label{lec:2-9}
+
+\subsection{Static Interventions}
+
+The simplest interventions are static interventions.
+
+\begin{definition}[Static intervention]
+A \emph{static intervention} assigns the same fixed treatment value or treatment regime to every unit in the target population.
+\end{definition}
+
+For a binary point treatment, examples are:
+\[
+\doop(A=1): \text{ assign everyone to treatment},
+\]
+\[
+\doop(A=0): \text{ assign everyone to no treatment}.
+\]
+The corresponding potential outcomes are $\Yone$ and $\Yzero$.
+
+Not all interventions are static. A stochastic intervention assigns treatment according to a specified probability distribution. A dynamic intervention assigns treatment according to a rule depending on a person's evolving history. For example, an HIV treatment rule might switch therapy when CD4 count falls below a threshold.
+
+\subsection{Well-Defined Interventions}
+
+A causal question is only as clear as its intervention.
+
+\begin{definition}[Well-defined intervention]
+An intervention is \emph{well-defined} if it specifies the action sufficiently clearly that the relevant potential outcome has a stable meaning across units and settings.
+\end{definition}
+
+"Early imaging" may be ambiguous. Does it mean recommending imaging, ordering imaging, completing imaging, obtaining MRI only, obtaining any lumbar imaging, or ensuring imaging within a particular number of days? These versions may have different effects.
+
+Similarly, "the effect of BMI" is ambiguous unless the intervention is specified. Reducing BMI by diet, exercise, medication, or surgery may have different biological and social consequences. A causal question should describe the action, not only the variable label.
+
+\begin{assumptionbox}
+When using potential outcome notation $\Ya{a}$, we assume that the intervention level $a$ is defined clearly enough that the counterfactual outcome is meaningful. Ambiguous treatment versions can make consistency and interpretation fail.
+\end{assumptionbox}
+
+\subsection{Hypothetical Interventions}
+
+Some interventions are hypothetical but still useful. A policy may not yet exist, or a trial may not be feasible, but the intervention can be described coherently enough to define a causal parameter.
+
+For example, one might ask what would happen if all eligible patients received a reminder phone call, even if such a reminder system has not yet been implemented. The intervention is hypothetical but imaginable.
+
+Other questions are more difficult. Asking for "the causal effect of race" is problematic if no well-defined intervention on race is specified. More precise questions may target interventions on discriminatory treatment, names on resumes, neighborhood assignment, income, educational access, or other manipulable social conditions. These questions may not capture every meaning of race, but they define clearer intervention contrasts.
+
+\subsection{Manipulability}
+
+Some scholars argue that causal effects should be defined only for variables that are manipulable. Others allow causal questions about nonmanipulable attributes if the counterfactual contrast is scientifically meaningful and carefully interpreted.
+
+The practical lesson is not that every variable must be physically manipulable in a laboratory. The lesson is that the analyst must say what intervention, policy, or hypothetical change gives meaning to the potential outcome.
+
+\begin{keyidea}
+Causal inference is about effects of interventions. When the intervention is vague, the causal parameter is vague.
+\end{keyidea}
+
+\subsection{Causal Consistency}
+
+Consistency links potential outcomes to observed outcomes.
+
+\begin{assumptionbox}
+\textbf{Causal consistency.} If a unit is observed to receive treatment level $A=a$, then its observed outcome equals its potential outcome under that treatment level:
+\[
+Y=\Ya{a}\quad\text{for units with }A=a.
+\]
+For binary treatment, this can be written as
+\[
+Y=A\Yone+(1-A)\Yzero.
+\]
+\end{assumptionbox}
+
+The binary formula is worth unpacking. If $A=1$, then
+\[
+A\Yone+(1-A)\Yzero=1\cdot \Yone+0\cdot \Yzero=\Yone.
+\]
+If $A=0$, then
+\[
+A\Yone+(1-A)\Yzero=0\cdot \Yone+1\cdot \Yzero=\Yzero.
+\]
+Thus the formula says exactly that the observed outcome is the potential outcome corresponding to the treatment actually received.
+
+\begin{example}[Observed and ideal data]
+In an ideal data table for binary treatment, each patient has $A$, $\Yzero$, and $\Yone$:
+\[
+\begin{array}{c|ccc}
+\text{ID} & A & \Yzero & \Yone\\
+\hline
+1 & 1 & 1 & 0\\
+2 & 0 & 0 & 0\\
+3 & 0 & 1 & 1\\
+4 & 1 & 0 & 1
+\end{array}
+\]
+The observed data contain $A$ and $Y$:
+\[
+\begin{array}{c|cc}
+\text{ID} & A & Y\\
+\hline
+1 & 1 & 0\\
+2 & 0 & 0\\
+3 & 0 & 1\\
+4 & 1 & 1
+\end{array}
+\]
+For each row, the observed $Y$ equals the potential outcome under the observed treatment.
+\end{example}
+
+\subsection{Statistical Consistency vs Causal Consistency}
+
+Causal consistency is different from statistical consistency. Statistical consistency is a property of an estimator:
+\[
+\hat\psi_n \overset{P}{\longrightarrow} \psi.
+\]
+It says that, with increasing sample size, the estimator approaches the target parameter.
+
+Causal consistency is an assumption about the relationship between observed outcomes and potential outcomes. It says that the observed outcome under the observed treatment agrees with the corresponding counterfactual outcome.
+
+The two ideas share a word but belong to different parts of the roadmap. Statistical consistency concerns estimation. Causal consistency concerns the definition and linkage of causal and observed data.
+
+\subsection{Measured and Unmeasured Variables}
+
+Before assessing whether a causal parameter can be identified, the analyst must mark which variables in the causal model are measured. A SWIG or DAG may include:
+\begin{itemize}
+  \item measured baseline covariates $W$;
+  \item measured treatment $A$;
+  \item measured outcome $Y$;
+  \item unmeasured common causes $U$;
+  \item post-treatment variables $Z$ or mediators $M$.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.8cm,>=Latex]
+  \node[draw, circle, fill=blue!5] (W) {$W$\\measured};
+  \node[draw, circle, fill=gray!12, above=of W] (U) {$U$\\unmeasured};
+  \node[draw, circle, fill=green!5, right=of W] (A) {$A$};
+  \node[draw, rectangle, fill=gray!10, below=.6cm of A, minimum width=.8cm] (a) {$a$};
+  \node[draw, circle, fill=purple!7, right=of A] (Z) {$Z(a)$};
+  \node[draw, circle, fill=orange!8, right=of Z] (Y) {$Y(a)$};
+  \draw[->, thick] (W) -- (A);
+  \draw[->, thick] (U) -- (A);
+  \draw[->, thick] (U) to[bend left=15] (Y);
+  \draw[->, thick] (W) to[bend right=20] (Y);
+  \draw[->, thick] (a) -- (Z);
+  \draw[->, thick] (Z) -- (Y);
+\end{tikzpicture}
+\caption{A SWIG can distinguish measured covariates, unmeasured variables, fixed interventions, and counterfactual descendants.}
+\end{figure}
+
+This distinction will matter for identification. If all common causes of treatment and outcome are measured, one set of identification strategies may be plausible. If important common causes are unmeasured, different strategies or stronger assumptions may be required.
+
+\begin{keyidea}
+Chapter 2 defines the language of causal questions: interventions, potential outcomes, causal parameters, graphs, SWIGs, and consistency. Chapter 3 asks when these causal quantities can be learned from observed data.
+\end{keyidea}

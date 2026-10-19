@@ -1,0 +1,146 @@
+\lecture{9.6}{Nonparametric Identification with Unmeasured Variables}
+\label{lec:9-6}
+
+\subsection{Observed and Unobserved Variables}
+
+Let $V$ denote observed variables and $U$ denote unobserved variables. A causal
+graph may be defined over $V\cup U$, but the analyst only observes the marginal
+distribution $p(V)$. The identification question is:
+\[
+  \E\{\Ya{a}\}\quad =\quad ?\quad \text{a function of }p(V).
+\]
+Nonparametric identification means the answer must hold for every distribution
+compatible with the graph, without imposing linearity, normality, or other
+parametric restrictions.
+
+\subsection{Adjustment Failure}
+
+The adjustment formula works when there is a measured set $Z$ satisfying the
+appropriate graphical criterion:
+\[
+  \E\{\Ya{a}\}=\E\{\E(Y\given A=a,Z)\}.
+\]
+If an unmeasured variable lies on an open noncausal path from $A$ to $Y$, no
+observed adjustment set may block the path.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=1.25cm,
+  box/.style={draw, rounded corners=2pt, minimum width=.9cm, minimum height=.7cm},
+  arr/.style={-{Latex[length=2.3mm]}, thick}
+]
+\node[box] (U) {$U$};
+\node[box, below left=of U] (A) {$A$};
+\node[box, below right=of U] (Y) {$Y$};
+\draw[arr] (U) -- (A);
+\draw[arr] (U) -- (Y);
+\draw[arr] (A) -- (Y);
+\end{tikzpicture}
+\caption{Unmeasured common cause $U$ creates an open noncausal path between $A$ and $Y$.}
+\label{fig:ch9-unmeasured-confounding}
+\end{figure}
+
+\subsection{Valid Adjustment Sets}
+
+If $U$ is absent, the parents of $A$ in the causal DAG often provide a valid
+adjustment set:
+\[
+  \Ya{a}\ci A\given \pa(A).
+\]
+If $U$ is present but an observed set blocks all noncausal paths, the effect is
+still identified by adjustment. For example, if $Z$ blocks the back-door path
+from $A$ to $Y$, then
+\[
+  \E\{\Ya{a}\}=\E\{\E(Y\given A=a,Z)\}.
+\]
+
+\subsection{Non-Identification}
+
+If no valid adjustment set exists, the effect may or may not be identified by
+some other functional. Non-identification means more than failure of a favorite
+method. It means there exist two causal models that imply the same observed
+distribution $p(V)$ but different values of $\E\{\Ya{a}\}$.
+
+\begin{definition}[Non-identification]
+A causal parameter $\psi$ is not identified from $p(V)$ in a model $\M$ if there
+exist two distributions $P_1,P_2\in\M$ such that
+\[
+  p_1(V)=p_2(V)
+  \qquad\text{but}\qquad
+  \psi(P_1)\ne \psi(P_2).
+\]
+\end{definition}
+
+\subsection{Linear SEM Counterexamples}
+
+A simple linear structural equation model illustrates the problem. Suppose
+\[
+  A=\alpha U+\epsilon_A,
+\]
+\[
+  Y=\gamma A+\beta U+\epsilon_Y,
+\]
+with independent errors. The observed association between $A$ and $Y$ can be
+written schematically as
+\[
+  \rho_{AY}=\gamma+\alpha\beta.
+\]
+The causal effect is $\gamma$, while $\alpha\beta$ is the spurious association
+through the unmeasured common cause. The observed data provide one association
+but there are two unknown components. Infinitely many pairs
+$(\gamma,\alpha\beta)$ can produce the same $\rho_{AY}$.
+
+For example, if $\rho_{AY}=0.6$, then both of the following are compatible with
+the same observed association:
+\[
+  \gamma=0.6,\ \alpha\beta=0,
+  \qquad\text{and}\qquad
+  \gamma=0.1,\ \alpha\beta=0.5.
+\]
+The observed distribution alone cannot choose between them.
+
+\subsection{Using Submodels to Prove Non-Identification}
+
+Non-identification in a simple submodel can be enough to prove
+non-identification in a larger model. Let $\M_{\mathrm{sub}}$ be a statistical
+model contained in a larger model $\M_{\mathrm{super}}$:
+\[
+  \M_{\mathrm{sub}}\subset \M_{\mathrm{super}}.
+\]
+If a causal parameter is identified in the larger model, then it must also be
+identified in every smaller submodel:
+\[
+  \psi \text{ identified in } \M_{\mathrm{super}}
+  \Rightarrow
+  \psi \text{ identified in } \M_{\mathrm{sub}}.
+\]
+Taking the contrapositive,
+\[
+  \psi \text{ not identified in } \M_{\mathrm{sub}}
+  \Rightarrow
+  \psi \text{ not identified in } \M_{\mathrm{super}}.
+\]
+This is why a linear structural equation counterexample can prove a
+nonparametric non-identification result. If even a restricted linear submodel
+contains two distributions with the same observed law and different causal
+effects, then the larger nonparametric model also contains those two
+distributions.
+
+The reverse implication is false. Identification in a linear Gaussian submodel
+does not imply identification in the unrestricted nonparametric model. A linear
+model may use algebraic restrictions that are not implied by the graph alone.
+
+\subsection{Why Machine Learning Cannot Solve Non-Identification}
+
+Machine learning can estimate complex functions of the observed distribution
+$p(V)$. It cannot recover information that is not contained in $p(V)$. If two
+causal models have the same observed distribution but different causal effects,
+any algorithm trained only on observed data must return the same output for both
+models, while the correct causal answers differ.
+
+\begin{keyidea}
+Non-identification is not a failure of modeling flexibility. It is a logical
+failure of information: the observed distribution does not contain enough
+information to determine the causal parameter under the assumed model.
+\end{keyidea}

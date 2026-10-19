@@ -1,0 +1,176 @@
+\lecture{8.10}{Time-to-Event and Competing Risks}
+\label{lec:8-10}
+
+\subsection{Longitudinal Data With Event Times}
+
+Time-to-event data can be represented using the same longitudinal structure as
+time-varying treatments. Let $T$ be the event time of interest and let $C$ be a
+right-censoring time. The observed time is
+\[
+  \widetilde T=\min(T,C),
+\]
+with event indicator
+\[
+  \Delta=\ind(T\le C).
+\]
+For causal questions, one often wants the counterfactual cumulative incidence
+\[
+  \Prob\{T(a)\le t\}
+\]
+or its longitudinal analogue under a treatment or censoring intervention.
+
+Discretize time into intervals $1,\ldots,t$. Define
+\[
+  L_j=\ind(\text{event has occurred by time } j),
+\]
+and let $A_j$ indicate remaining uncensored through the relevant interval. Then
+\[
+  \Prob\{T(a)\le t\}=\Prob\{L_t(a)=1\}.
+\]
+The event process $L_j$ is a counting process with an absorbing state: once
+$L_j=1$, all later $L_s$ for $s>j$ must also equal 1.
+
+\subsection{Censoring}
+
+Right censoring can be viewed as a time-varying process that prevents later
+outcomes from being observed. If $A_j=1$ denotes not being censored through time
+$j$, then estimating a full-data event probability can be framed as estimating
+the outcome under the intervention
+\[
+  A_1=A_2=\cdots=A_t=1,
+\]
+that is, the intervention that eliminates censoring.
+
+\begin{assumptionbox}
+Identification under censoring requires sequential exchangeability for the
+censoring process:
+\[
+  L_t(\bar a) \ci A_j \given \Lbar_j,\Abar_{j-1}
+  \qquad j=1,\ldots,t.
+\]
+In words, among people with the same observed history, remaining uncensored is
+independent of the counterfactual event status that would be observed under the
+no-censoring intervention.
+\end{assumptionbox}
+
+\subsection{Sequential Regression for Survival Outcomes}
+
+Consider estimating $\Prob\{L_3(1,1,1)=1\}$, the cumulative incidence by time 3
+under no censoring. A sequential regression algorithm works backward:
+
+\begin{enumerate}
+  \item Estimate
+  \[
+    \Qbar_3(\Lbar_2)=\E(L_3\given \Abar_3=\mathbf{1},\Lbar_2).
+  \]
+  If $L_2=1$, then $\Qbar_3(\Lbar_2)=1$ by the absorbing event structure.
+  Therefore only histories with $L_2=0$ require a regression model.
+  \item Build a pseudo-outcome $\Qbar_{3,n}$ that equals 1 for those with
+  $L_2=1$ and equals the fitted probability for those with $L_2=0$.
+  \item Estimate
+  \[
+    \Qbar_2(\Lbar_1)=\E\{\Qbar_3(\Lbar_2)\given \Abar_2=\mathbf{1},\Lbar_1\}.
+  \]
+  If $L_1=1$, then $\Qbar_2(\Lbar_1)=1$.
+  \item Continue backward and average the final prediction over baseline
+  covariates.
+\end{enumerate}
+
+\begin{lstlisting}[language=R]
+# L1, L2, L3 are indicators of event by times 1, 2, 3.
+# A1, A2, A3 are indicators of remaining uncensored.
+
+full_data$Q3n <- NA
+full_data$Q3n[full_data$L2 == 1] <- 1
+
+fit_data_Q3 <- subset(
+  full_data,
+  A1 == 1 & A2 == 1 & A3 == 1 & L2 == 0
+)
+fit_Q3 <- glm(L3 ~ L0, data = fit_data_Q3, family = binomial())
+
+pred_data <- full_data[full_data$L2 == 0, ]
+full_data$Q3n[full_data$L2 == 0] <-
+  predict(fit_Q3, newdata = pred_data, type = "response")
+
+full_data$Q2n <- NA
+full_data$Q2n[full_data$L1 == 1] <- 1
+
+fit_data_Q2 <- subset(full_data, A1 == 1 & A2 == 1 & L1 == 0)
+fit_Q2 <- glm(Q3n ~ L0, data = fit_data_Q2, family = binomial())
+
+pred_data <- full_data[full_data$L1 == 0, ]
+full_data$Q2n[full_data$L1 == 0] <-
+  predict(fit_Q2, newdata = pred_data, type = "response")
+
+fit_data_Q1 <- subset(full_data, A1 == 1)
+fit_Q1 <- glm(Q2n ~ L0, data = fit_data_Q1, family = binomial())
+full_data$Q1n <- predict(fit_Q1, newdata = full_data, type = "response")
+
+cuminc_3 <- mean(full_data$Q1n)
+\end{lstlisting}
+
+\subsection{Competing Risks}
+
+In competing risks, the first event may be one of several types. Let
+$J\in\{1,\ldots,m\}$ denote event type. The observed event indicator may take
+values
+\[
+  \Delta=0 \text{ for censoring},\qquad
+  \Delta=j \text{ for an event of type } j.
+\]
+For discrete time, define
+\[
+  L_{kj}=\ind(\text{event of type } j \text{ has occurred by time } k),
+\]
+and collect these into
+\[
+  L_k=(L_{k1},\ldots,L_{km}).
+\]
+The type-$j$ cumulative incidence is
+\[
+  \Prob\{T(a)\le t,J(a)=j\}=\Prob\{L_{tj}(a)=1\}.
+\]
+
+The absorbing structure is more restrictive than in the single-event case. If a
+type 1 event occurred by time $k$, then type 1 remains occurred at all later
+times and no other first-event type can occur later. For two event types:
+\[
+  L_{k1}=1 \Rightarrow L_{s1}=1,\ L_{s2}=0
+  \quad\text{for }s>k.
+\]
+
+\subsection{Counterfactual Cumulative Incidence}
+
+The counterfactual cumulative incidence under treatment or no censoring is a
+standard longitudinal counterfactual mean. The outcome is the event indicator by
+time $t$, and the intervention may set treatment, censoring, or both.
+
+For example, with no censoring through time $t$,
+\[
+  \psi_j(t)=\E\{L_{tj}(\mathbf{1})\}
+  =
+  \Prob\{T(\mathbf{1})\le t,J(\mathbf{1})=j\}.
+\]
+Contrasts of $\psi_j(t)$ across treatment regimes are causal contrasts of
+cumulative incidence curves.
+
+\subsection{Practical Estimation Issues}
+
+Survival and competing-risk estimation require the analyst to respect deterministic
+history restrictions:
+\begin{itemize}
+  \item do not fit event regressions among people who already had the event when
+  the outcome is already known;
+  \item set the pseudo-outcome to 1 after the target event has occurred;
+  \item set the pseudo-outcome to 0 after a competing first event has occurred
+  when estimating the cumulative incidence of a different event type;
+  \item define censoring indicators carefully so that future outcomes are not
+  used after censoring.
+\end{itemize}
+
+\begin{keyidea}
+Time-to-event data become longitudinal data after discretization. The main extra
+work is enforcing the absorbing-state logic of event histories and, for competing
+risks, the mutually exclusive nature of first-event types.
+\end{keyidea}

@@ -1,0 +1,212 @@
+\lecture{4.3}{G-Computation Using Regression Models}
+\label{lec:4-3}
+
+\subsection{Prediction-Based Implementation}
+
+Empirical g-computation by hand is transparent, but it becomes cumbersome when $W$
+has many components. Regression provides a systematic way to estimate
+$\Qbar(a,w)=\E(Y\given A=a,W=w)$ and then evaluate the fitted regression under
+counterfactual treatment values.
+
+The generic regression-based g-computation estimator is
+\[
+\psi_n(a)=\frac{1}{n}\sum_{i=1}^n \Qbar_n(a,W_i),
+\]
+where $\Qbar_n$ is a fitted outcome regression. The estimated ATE is
+\[
+\widehat{\ATE}_{\mathrm{gcomp}}
+=
+\frac{1}{n}\sum_{i=1}^n
+\left\{\Qbar_n(1,W_i)-\Qbar_n(0,W_i)\right\}.
+\]
+
+This estimator has two conceptually distinct stages. First, estimate conditional
+outcome means from the observed data. Second, average predicted outcomes under
+treatment levels that may differ from the treatment actually observed for a given
+individual.
+
+\subsection{Using \texttt{predict()} with Counterfactual Treatment Values}
+
+In software, the most stable way to implement g-computation is to create two
+modified copies of the covariate data:
+\[
+\text{data}^{(1)}=(W_i,A_i=1)_{i=1}^n,\qquad
+\text{data}^{(0)}=(W_i,A_i=0)_{i=1}^n.
+\]
+The fitted outcome model is then used to predict the outcome for every row of each
+modified dataset.
+
+\begin{implementationbox}
+Generic R pattern for g-computation:
+\begin{lstlisting}[language=R]
+# fit an outcome regression
+fit_Q <- glm(Y ~ A + W, data = dat, family = gaussian())
+
+# create treatment-specific prediction datasets
+dat1 <- dat
+dat1$A <- 1
+dat0 <- dat
+dat0$A <- 0
+
+# predict under each treatment level
+Q1 <- predict(fit_Q, newdata = dat1, type = "response")
+Q0 <- predict(fit_Q, newdata = dat0, type = "response")
+
+# estimate counterfactual means and ATE
+psi1 <- mean(Q1)
+psi0 <- mean(Q0)
+ate  <- psi1 - psi0
+\end{lstlisting}
+\end{implementationbox}
+
+The argument \texttt{newdata} is crucial. It asks the fitted regression to evaluate
+the conditional mean at covariate-treatment combinations chosen by the analyst, not
+only at the treatment values actually observed.
+
+\subsection{Saturated GLMs}
+
+For discrete covariates, a saturated generalized linear model can reproduce the
+empirical subgroup means. With binary $A$ and binary $W$, a saturated linear model is
+\[
+\E(Y\given A=a,W=w)
+=
+\beta_0+\beta_1a+\beta_2w+\beta_3aw.
+\]
+If a Gaussian working model with identity link is fit by least squares, the predictions
+at the four $(a,w)$ combinations equal the four observed subgroup sample means.
+
+For a binary outcome, a saturated logistic model can be written as
+\[
+\logit\{\Prob(Y=1\given A=a,W=w)\}
+=
+\beta_0+\beta_1a+\beta_2w+\beta_3aw.
+\]
+Its fitted probabilities can match the empirical risks in each subgroup, provided the
+data do not have complete separation and each subgroup contains observations. The
+link function changes the parameterization, but saturation still means that no
+subgroup restriction is imposed beyond the chosen covariate coding.
+
+\subsection{Main-Terms GLMs}
+
+In practice, analysts often use smoother, lower-dimensional regressions. A main-terms
+linear outcome model is
+\[
+\Qbar_n(a,w)=\hat\beta_0+\hat\beta_1 a+\hat\beta_2^\top w.
+\]
+The g-computation estimator is then
+\[
+\psi_n(a)
+=
+\frac{1}{n}\sum_{i=1}^n
+\left(\hat\beta_0+\hat\beta_1 a+\hat\beta_2^\top W_i\right)
+=
+\hat\beta_0+\hat\beta_1 a+\hat\beta_2^\top \bar W_n,
+\]
+where $\bar W_n=n^{-1}\sum_i W_i$. Therefore,
+\[
+\widehat{\ATE}_{\mathrm{gcomp}}
+=
+\psi_n(1)-\psi_n(0)
+=
+\hat\beta_1.
+\]
+This equality is a special property of the identity-link linear main-terms model. It
+does not hold for most other models.
+
+If the model includes a treatment-covariate interaction,
+\[
+\Qbar_n(a,w)=\hat\beta_0+\hat\beta_1 a+\hat\beta_2^\top w+\hat\beta_3^\top(aw),
+\]
+then
+\[
+\widehat{\ATE}_{\mathrm{gcomp}}
+=
+\frac{1}{n}\sum_{i=1}^n
+\left(\hat\beta_1+\hat\beta_3^\top W_i\right)
+=
+\hat\beta_1+\hat\beta_3^\top \bar W_n.
+\]
+The coefficient $\hat\beta_1$ is the estimated treatment contrast when $W=0$, not the
+population-average treatment effect unless $\bar W_n=0$ or $\hat\beta_3=0$.
+
+\subsection{Logistic Regression G-Computation}
+
+Suppose $Y$ is binary and we fit a main-terms logistic regression
+\[
+\Qbar_n(a,w)
+=
+\expit(\hat\gamma_0+\hat\gamma_1a+\hat\gamma_2^\top w).
+\]
+The g-computation estimator is
+\[
+\psi_n(1)
+=
+\frac{1}{n}\sum_{i=1}^n
+\expit(\hat\gamma_0+\hat\gamma_1+\hat\gamma_2^\top W_i),
+\]
+\[
+\psi_n(0)
+=
+\frac{1}{n}\sum_{i=1}^n
+\expit(\hat\gamma_0+\hat\gamma_2^\top W_i),
+\]
+and
+\[
+\widehat{\ATE}_{\mathrm{gcomp}}
+=
+\frac{1}{n}\sum_{i=1}^n
+\left[
+\expit(\hat\gamma_0+\hat\gamma_1+\hat\gamma_2^\top W_i)
+-
+\expit(\hat\gamma_0+\hat\gamma_2^\top W_i)
+\right].
+\]
+
+\begin{implementationbox}
+Logistic regression g-computation in R:
+\begin{lstlisting}[language=R]
+fit_Q <- glm(Y ~ A + W, data = dat, family = binomial())
+
+dat1 <- dat
+dat1$A <- 1
+dat0 <- dat
+dat0$A <- 0
+
+Q1 <- predict(fit_Q, newdata = dat1, type = "response")
+Q0 <- predict(fit_Q, newdata = dat0, type = "response")
+
+psi1 <- mean(Q1)
+psi0 <- mean(Q0)
+ate  <- psi1 - psi0
+\end{lstlisting}
+\end{implementationbox}
+
+\subsection{Why Logistic Coefficients Are Not ATEs}
+
+The coefficient $\hat\gamma_1$ in a logistic regression is a conditional log odds ratio
+parameter. It compares the log odds of the outcome between treatment groups at a
+fixed value of $W$, assuming the model is correctly specified on the log odds scale.
+The ATE is a marginal risk difference:
+\[
+\E\{\Yone\}-\E\{\Yzero\}.
+\]
+These are different objects.
+
+There are three reasons the logistic treatment coefficient is not generally an ATE.
+First, it is on the log odds scale, whereas the ATE is a mean difference or risk
+difference. Second, it is conditional on $W$, whereas the ATE averages over the
+population distribution of $W$. Third, the expit function is nonlinear, so averaging
+after applying the inverse-logit is not the same as applying the inverse-logit after
+averaging:
+\[
+\frac{1}{n}\sum_{i=1}^n \expit(\eta_i)
+\neq
+\expit\left(\frac{1}{n}\sum_{i=1}^n \eta_i\right)
+\]
+in general.
+
+\begin{keyidea}
+For regression-based g-computation, the causal estimate is the average contrast of
+predicted counterfactual outcomes. Regression coefficients are intermediate
+nuisance quantities. They are not automatically causal effects.
+\end{keyidea}

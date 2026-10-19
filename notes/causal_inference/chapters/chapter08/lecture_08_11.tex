@@ -1,0 +1,172 @@
+\lecture{8.11}{Dynamic Treatment Rules}
+\label{lec:8-11}
+
+\subsection{Static vs Dynamic Regimes}
+
+A static regime assigns the same treatment sequence to everyone:
+\[
+  \abar=(a_0,\ldots,a_K).
+\]
+Examples are always treat, never treat, or treat at visits 0 and 1 only.
+
+A dynamic regime assigns treatment according to observed history. It is a
+sequence of rules
+\[
+  d=(d_0,\ldots,d_K),
+\]
+where
+\[
+  A_k=d_k(\Lbar_k,\Abar_{k-1}).
+\]
+The rule may depend on laboratory values, symptoms, adverse events, previous
+treatment, or other information available at time $k$.
+
+\subsection{Rule-Based Interventions}
+
+\begin{definition}[Dynamic treatment rule]
+A dynamic treatment rule is an intervention that sets treatment at each time to
+a deterministic or stochastic function of the individual's observed history up
+to that time.
+\end{definition}
+
+For example, in inflammatory bowel disease, a drug may be recommended only while
+liver function remains adequate:
+\[
+  d_k(\Lbar_k)=
+  \begin{cases}
+  1, & \text{if recent liver function is adequate},\\
+  0, & \text{otherwise}.
+  \end{cases}
+\]
+This rule is more realistic than ``always treat'' if treatment is contraindicated
+after signs of liver damage.
+
+\subsection{Treatment Decisions Based on Evolving Covariates}
+
+Dynamic regimes are often clinically natural because real treatment decisions
+respond to evolving information. A rule might say:
+\begin{itemize}
+  \item continue chemotherapy if tumor response is adequate and toxicity is mild;
+  \item intensify antihypertensive therapy if blood pressure remains high;
+  \item stop a medication if a severe adverse event occurs;
+  \item initiate rescue therapy if symptoms cross a threshold.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=1.05cm,
+  box/.style={draw, rounded corners=2pt, minimum width=1.15cm, minimum height=.72cm},
+  rule/.style={draw, rounded corners=2pt, fill=gray!8, minimum width=2.1cm, minimum height=.72cm},
+  arr/.style={-{Latex[length=2.2mm]}, thick}
+]
+\node[box] (L0) {$L_0$};
+\node[rule, right=of L0] (d0) {$A_0=d_0(L_0)$};
+\node[box, right=of d0] (L1) {$L_1$};
+\node[rule, right=of L1] (d1) {$A_1=d_1(\Lbar_1,A_0)$};
+\node[right=of d1] (dots) {$\cdots$};
+\node[box, right=of dots] (Y) {$Y(d)$};
+\draw[arr] (L0) -- (d0);
+\draw[arr] (d0) -- (L1);
+\draw[arr] (L1) -- (d1);
+\draw[arr] (d1) -- (dots);
+\draw[arr] (dots) -- (Y);
+\end{tikzpicture}
+\caption{A dynamic rule maps the evolving observed history into treatment decisions.}
+\label{fig:ch8-dynamic-rule}
+\end{figure}
+
+\subsection{Counterfactual Outcomes Under Dynamic Rules}
+
+Let $Y(d)$ denote the outcome that would be observed if treatment were assigned
+according to rule $d$ at every time point. The causal mean under the rule is
+\[
+  \psi(d)=\E\{Y(d)\}.
+\]
+A causal contrast between two rules is
+\[
+  \psi(d)-\psi(d')
+  =
+  \E\{Y(d)\}-\E\{Y(d')\}.
+\]
+
+The consistency assumption for a dynamic rule states that if an individual's
+observed treatment history happens to agree with the rule at every time, then
+the observed outcome equals the counterfactual outcome under that rule:
+\[
+  \text{if } A_k=d_k(\Lbar_k,\Abar_{k-1})\text{ for all }k,
+  \quad Y=Y(d).
+\]
+
+\subsection{Identification Extensions}
+
+Identification conditions are the dynamic-rule versions of the static-regime
+conditions. Sequential exchangeability becomes
+\[
+  Y(d) \ci A_k \given \Lbar_k,\Abar_{k-1}
+\]
+among histories compatible with the rule up to time $k-1$. Positivity requires
+positive probability of receiving the rule-recommended treatment:
+\[
+  \Prob\{A_k=d_k(\Lbar_k,\Abar_{k-1})
+  \given \Lbar_k,\Abar_{k-1}\}>0
+\]
+for histories that can occur under the rule.
+
+The g-computation formula is obtained by replacing fixed values $a_k$ with rule
+values $d_k(\Lbar_k,\Abar_{k-1})$. For example, the time-specific treatment
+mechanism used in IPTW is evaluated at the rule-recommended treatment:
+\[
+  g_k^d(\Lbar_k,\Abar_{k-1})
+  =
+  \Prob\{A_k=d_k(\Lbar_k,\Abar_{k-1})
+  \given \Lbar_k,\Abar_{k-1}\}.
+\]
+The dynamic-regime weight is
+\[
+  H_d=
+  \prod_{k=0}^K
+  \frac{\ind\{A_k=d_k(\Lbar_k,\Abar_{k-1})\}}
+  {g_k^d(\Lbar_k,\Abar_{k-1})}.
+\]
+
+\begin{identificationbox}
+Under consistency, sequential exchangeability, and positivity for the dynamic
+rule $d$,
+\[
+  \E\{Y(d)\}
+  =
+  \E\left[
+    \prod_{k=0}^K
+    \frac{\ind\{A_k=d_k(\Lbar_k,\Abar_{k-1})\}}
+    {\Prob\{A_k=d_k(\Lbar_k,\Abar_{k-1})
+      \given \Lbar_k,\Abar_{k-1}\}}
+    Y
+  \right],
+\]
+and an analogous dynamic g-computation formula is obtained by recursively
+setting each treatment to the value recommended by $d$.
+\end{identificationbox}
+
+Dynamic regimes can reduce positivity problems because they avoid treatment
+assignments that are impossible or clinically inappropriate for some histories.
+For example, ``treat while liver function permits'' may be identifiable in a
+population where ``always treat regardless of liver damage'' is not.
+
+\subsection{Optimal Dynamic Regimes}
+
+A separate line of work asks which rule among a class of candidate rules
+maximizes a desired outcome:
+\[
+  d_{\mathrm{opt}}\in \argmax_{d\in\mathcal{D}}\E\{Y(d)\}.
+\]
+This is an optimal dynamic treatment regime problem. It is harder than
+estimating the value of a pre-specified rule because the same data are used to
+select the rule and estimate its value. Valid inference must account for this
+selection step.
+
+\begin{keyidea}
+Dynamic treatment rules replace fixed treatment values with history-dependent
+decisions. They are often more realistic, more clinically interpretable, and
+less vulnerable to structural positivity violations than static regimes.
+\end{keyidea}

@@ -1,0 +1,161 @@
+\lecture{8.8}{Doubly Robust Longitudinal Estimation}
+\label{lec:8-8}
+
+\subsection{Longitudinal AIPTW}
+
+Longitudinal augmented inverse probability weighting combines the sequential
+outcome-regression representation with the longitudinal weighting
+representation. For the always-treated regime, define
+\[
+  \gbar_{j,n}(\Lbar_j)=\prod_{m=0}^j g_{m,n}(\Lbar_m),
+\]
+and let $\Qbar_{j,n}$ estimate the sequential outcome regressions from
+\cref{lec:8-3}. The baseline plug-in part is the sequential g-computation
+estimate
+\[
+  \frac{1}{n}\sum_{i=1}^n \Qbar_{1,n}(L_{0i}).
+\]
+The weighted residual corrections are applied after this baseline averaging. For
+$j=0,\ldots,K-1$, define
+\[
+  \Delta_{ji}
+  =
+  \Qbar_{j+2,n}(\Lbar_{j+1,i})
+  -
+  \Qbar_{j+1,n}(\Lbar_{j,i}),
+\]
+and define the final residual as
+\[
+  \Delta_{Ki}
+  =
+  Y_i-\Qbar_{K+1,n}(\Lbar_{K,i}).
+\]
+The longitudinal AIPTW estimator can then be written as
+\[
+  \psi_{n,\AIPTW}
+  =
+  \frac{1}{n}\sum_{i=1}^n \Qbar_{1,n}(L_{0i})
+  +
+  \frac{1}{n}\sum_{i=1}^n
+  \sum_{j=0}^K
+  \frac{A_{0i}\cdots A_{ji}}{\gbar_{j,n}(\Lbar_{j,i})}
+  \Delta_{ji},
+\]
+with the convention that $\Qbar_{K+1,n}(\Lbar_K)$ is the final outcome
+regression. The baseline plug-in term is not weighted; only the residual
+corrections are weighted by regime-following inverse probabilities.
+
+For $K=1$ and regime $(1,1)$, this becomes
+\[
+\begin{aligned}
+  \psi_{n,\AIPTW}
+  &=
+  \frac{1}{n}\sum_{i=1}^n \Qbar_{1,n}(L_{0i})\\
+  &\quad+
+  \frac{1}{n}\sum_{i=1}^n
+  \frac{A_{0i}}{g_{0,n}(L_{0i})}
+  \{\Qbar_{2,n}(L_{0i},L_{1i})-\Qbar_{1,n}(L_{0i})\}\\
+  &\quad+
+  \frac{1}{n}\sum_{i=1}^n
+  \frac{A_{0i}A_{1i}}{g_{0,n}(L_{0i})g_{1,n}(\Lbar_{1i})}
+  \{Y_i-\Qbar_{2,n}(L_{0i},L_{1i})\}.
+\end{aligned}
+\]
+The first line is sequential g-computation. The second and third lines are
+weighted residual corrections at time 0 and time 1.
+
+\subsection{Nuisance Functions Over Time}
+
+Longitudinal doubly robust estimation uses two nuisance sequences:
+\[
+  \Qbar=(\Qbar_1,\ldots,\Qbar_{K+1}),
+  \qquad
+  g=(g_0,\ldots,g_K).
+\]
+The $\Qbar$ sequence describes outcome and pseudo-outcome regressions. The $g$
+sequence describes the treatment process. The estimator uses both because each
+sequence can help correct errors in the other.
+
+\subsection{Double Robustness in Multi-Timepoint Settings}
+
+\begin{definition}[Longitudinal double robustness]
+A longitudinal estimator is doubly robust if it consistently estimates
+$\E\{Y(\abar)\}$ when either the required outcome-regression sequence is
+consistently estimated or the required treatment-mechanism sequence is
+consistently estimated, under the other identification assumptions.
+\end{definition}
+
+For multiple time points, there are also mixed robustness patterns. Roughly, the
+estimator can remain consistent when the treatment mechanism is consistently
+estimated for earlier parts of the process and the outcome regressions are
+consistently estimated for later parts. The exact statement depends on the
+recursive representation of the estimator, but the practical message is that
+longitudinal AIPTW has more robustness than pure g-computation or pure IPTW.
+Mixed robustness is not an arbitrary mix-and-match property: the exact
+combinations of correctly estimated $\Qbar$- and $g$-components that yield
+consistency depend on the recursive estimator and its indexing.
+
+\subsection{Correct $\Qbar$-Sequence}
+
+If the sequential outcome regressions are consistently estimated, then the
+g-computation component already converges to the target:
+\[
+  \frac{1}{n}\sum_{i=1}^n\Qbar_{1,n}(L_{0i})
+  \rightarrow \E\{Y(\abar)\}.
+\]
+The weighted residual augmentation terms have mean approximately zero because
+the residuals
+\[
+  \Delta_{ji}
+\]
+are centered correctly given the earlier histories. Thus the estimator remains
+consistent even if the propensity scores are not consistently estimated, provided
+the weights are well behaved.
+
+\subsection{Correct $g$-Sequence}
+
+If the treatment mechanisms are consistently estimated, the weighted residual
+terms correct bias in the outcome regressions. The intuition is the same as in
+the point-treatment AIPTW estimator. The inverse probability weights make the
+observed regime-compatible histories representative of the target population,
+and the residual terms repair the g-computation plug-in estimate.
+
+For $K=1$, if $g_{0,n}$ and $g_{1,n}$ converge to the true treatment mechanisms,
+then the weighted residuals at the two stages remove the drift caused by
+incorrect $\Qbar_{1,n}$ and $\Qbar_{2,n}$.
+
+\subsection{Mixed Robustness Patterns Over Time}
+
+With many treatment times, robustness can be more nuanced. For example, an
+estimator may be consistent if:
+\begin{itemize}
+  \item the treatment mechanisms are correct through early time points, and
+  \item the outcome regressions are correct from a later time point onward.
+\end{itemize}
+This occurs because backward recursion only needs enough correct information to
+bridge each step between the final outcome and baseline. However, this should
+not be interpreted as permission to fit careless models. A misspecified nuisance
+function can still harm finite-sample performance, inflate variance, and damage
+inference. The valid mixed-robustness patterns are estimator-specific, not
+arbitrary choices of some correct $g$ terms and some correct $\Qbar$ terms.
+
+\begin{estimationbox}
+The longitudinal AIPTW workflow is:
+\begin{enumerate}
+  \item Fit all time-specific propensity score models $g_{0,n},\ldots,g_{K,n}$.
+  \item Fit the sequential outcome regressions
+  $\Qbar_{K+1,n},\ldots,\Qbar_{1,n}$.
+  \item Compute the g-computation plug-in estimate
+  $n^{-1}\sum_i\Qbar_{1,n}(L_{0i})$.
+  \item Add weighted residual corrections at each time point.
+  \item Estimate uncertainty using the empirical variance of the estimated
+  influence-function contributions, with caution when nuisance fits are highly
+  adaptive.
+\end{enumerate}
+\end{estimationbox}
+
+\begin{keyidea}
+Longitudinal AIPTW corrects sequential g-computation by adding weighted residuals
+at every treatment time. Its robustness comes from using both the outcome
+process and the treatment process.
+\end{keyidea}

@@ -1,0 +1,274 @@
+\lecture{1.1}{Populations, Parameters, Estimators, and Inference}
+\label{lec:1-1}
+
+\subsection{Target Population}
+
+Statistics begins with a scientific question about a population. The population is not merely the data set on the analyst's computer. It is the collection of units about which we want to learn.
+
+\begin{definition}[Target population]
+The \emph{target population} is the collection of units, real or conceptual, to which the scientific conclusion is intended to apply. A unit might be a person, hospital, county, clinic visit, gene, school, or any other entity on which variables can be defined.
+\end{definition}
+
+In many applications the target population is partly hypothetical. For example, suppose the scientific goal is to learn the average systolic blood pressure among adults in the United States between ages 65 and 100. We cannot observe every such person in every possible setting in which they might have been sampled. Nevertheless, the target population is the conceptual object that defines what the analysis is trying to describe.
+
+This distinction matters because the same data can be used to answer different population-level questions. A data set from three health systems might be used to learn about patients in those systems, about patients in similar integrated health systems, or about a broader national patient population. These are different targets. The data may be identical, but the scientific claim changes when the population changes.
+
+\begin{keyidea}
+The data are not the final object of interest. The data are evidence about a population quantity that we cannot observe directly.
+\end{keyidea}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  >=Latex,
+  box/.style={
+    draw,
+    rounded corners,
+    align=center,
+    minimum height=1.45cm,
+    text width=3.2cm
+  },
+  arrow/.style={->, thick}
+]
+
+  \node[box, fill=blue!4] (pop)
+    {Target population\\\small all units of\\\small scientific interest};
+
+  \node[box, fill=green!5, right=2.1cm of pop] (sample)
+    {Observed sample\\\small units measured};
+
+  \node[box, fill=orange!6, right=2.1cm of sample] (inference)
+    {Statistical inference\\\small learn about\\\small population};
+
+  \draw[arrow] (pop) -- node[above]{sampling} (sample);
+  \draw[arrow] (sample) -- node[above]{estimation} (inference);
+
+  \draw[arrow]
+    (inference.south) -- ++(0,-0.55)
+    -- node[below]{claims refer back to}
+    ($(pop.south)+(0,-0.55)$)
+    -- (pop.south);
+
+\end{tikzpicture}
+\caption{A sample is a finite piece of evidence about a larger target population.}
+\end{figure}
+
+\subsection{Target Parameter and Estimand}
+
+After specifying the population, the next task is to specify the number, function, or distributional feature we want to learn.
+
+\begin{definition}[Target parameter]
+A \emph{target parameter} is a well-defined summary of the target population distribution. It is the quantity the analysis aims to learn. The word \emph{estimand} is often used synonymously, especially when emphasizing the quantity to be estimated.
+\end{definition}
+
+Examples include:
+\begin{itemize}
+  \item the population mean systolic blood pressure, $\E(W)$;
+  \item the population prevalence of HIV infection, $\Prob(Y=1)$;
+  \item the difference in mean blood pressure between people observed to take statins and people observed not to take statins, $\E(Y\given A=1)-\E(Y\given A=0)$;
+  \item a regression function such as $w \mapsto \E(Y\given W=w)$.
+\end{itemize}
+
+A parameter is not the same thing as an observed data point. If one patient has systolic blood pressure 135, that is a measurement. The population mean systolic blood pressure is a property of the distribution of blood pressure in the population. It would still be well-defined even before drawing a sample.
+
+\begin{example}[A descriptive parameter]
+Let $W$ denote age and $Y$ denote systolic blood pressure for members of a target population. The parameter $\E(Y)$ is the average systolic blood pressure in that population. The parameter $\E(Y\given W\ge 65)$ is the average systolic blood pressure among the subgroup of the population aged at least 65.
+\end{example}
+
+At this point in the course, most parameters are descriptive statistical parameters. Later, causal inference will introduce counterfactual parameters such as $\E\{\Ya{1}\}-\E\{\Ya{0}\}$, which describe populations under interventions. The same discipline applies: first define the population, then define the parameter.
+
+\subsection{Data as a Sample from a Population}
+
+Let $O$ denote the full observed data record for one unit. In a simple study we may observe
+\[
+O=(W,A,Y),
+\]
+where $W$ is a vector of baseline covariates, $A$ is an exposure or treatment, and $Y$ is an outcome. A sample of size $n$ is written
+\[
+O_1,\ldots,O_n.
+\]
+A common statistical model assumes that these observations are independent and identically distributed:
+\[
+O_1,\ldots,O_n \iid P,
+\]
+where $P$ is the population distribution.
+
+\begin{definition}[Iid sample]
+The observations $O_1,\ldots,O_n$ are \emph{independent and identically distributed}, written $O_i \iid P$, if each observation has the same population distribution $P$ and the value of one observation does not affect the distribution of another.
+\end{definition}
+
+The iid assumption is a mathematical idealization. It is reasonable for some sampling schemes and unreasonable for others. For example, measurements from unrelated patients sampled independently from a clinic may be close to iid. Measurements from repeated visits of the same patient are not iid unless the unit is redefined or the dependence is modeled.
+
+The distribution $P$ determines the target parameter. For instance, if the parameter is the population mean of $Y$, then
+\[
+\psi(P)=\E_P(Y).
+\]
+The notation $\psi(P)$ reminds us that a parameter is a function of the population distribution. If the population distribution changed, the parameter would generally change.
+
+\subsection{Point Estimates and Estimators}
+
+Because the population distribution $P$ is unknown, the target parameter $\psi(P)$ is unknown. Statistical inference uses the sample to construct an estimate.
+
+\begin{definition}[Estimator and point estimate]
+An \emph{estimator} is a rule or algorithm that maps a data set to a numerical estimate of a target parameter. A \emph{point estimate} is the numerical value produced by the estimator in the observed data.
+\end{definition}
+
+For example, suppose the target parameter is the population mean $\psi=\E(Y)$. The sample mean estimator is
+\[
+\hat\psi_n=\frac{1}{n}\sum_{i=1}^n Y_i.
+\]
+The expression $\hat\psi_n$ is the estimator as a formula. After observing the actual $Y_1,\ldots,Y_n$, the resulting number is the point estimate.
+
+\begin{estimationbox}
+For the population mean $\psi=\E(Y)$:
+\[
+\text{estimand: } \psi=\E(Y), \qquad
+\text{estimator: } \hat\psi_n=\frac{1}{n}\sum_{i=1}^n Y_i.
+\]
+The estimator is the recipe. The point estimate is the recipe's output on the observed data.
+\end{estimationbox}
+
+The distinction between estimand, estimator, and estimate is essential.
+\begin{itemize}
+  \item The estimand is the population quantity we want.
+  \item The estimator is the method used to learn it from data.
+  \item The estimate is the number obtained in this particular sample.
+\end{itemize}
+
+\subsection{Standard Errors}
+
+If the study were repeated on a new random sample from the same population, the estimate would usually change. A standard error describes this repeated-sampling variability.
+
+\begin{definition}[Standard error]
+The \emph{standard error} of an estimator $\hat\psi_n$ is the standard deviation of its sampling distribution:
+\[
+\operatorname{SE}(\hat\psi_n)=\sqrt{\Var(\hat\psi_n)}.
+\]
+An \emph{estimated standard error} is a data-based estimate of this quantity.
+\end{definition}
+
+For the sample mean under iid sampling with $\Var(Y)=\sigma^2<\infty$,
+\[
+\Var(\hat\psi_n)
+=\Var\left(\frac{1}{n}\sum_{i=1}^n Y_i\right)
+=\frac{1}{n^2}\sum_{i=1}^n \Var(Y_i)
+=\frac{n\sigma^2}{n^2}
+=\frac{\sigma^2}{n}.
+\]
+Thus
+\[
+\operatorname{SE}(\hat\psi_n)=\frac{\sigma}{\sqrt n}.
+\]
+Since $\sigma$ is unknown, it is commonly replaced by the sample standard deviation $s_n$, yielding
+\[
+\widehat{\operatorname{SE}}(\hat\psi_n)=\frac{s_n}{\sqrt n}.
+\]
+
+The standard error is not the same as the standard deviation of $Y$. The standard deviation of $Y$ describes variability among individuals in the population. The standard error describes variability of the estimator across repeated samples.
+
+\subsection{Confidence Intervals}
+
+A point estimate gives one best guess. A confidence interval gives a range of values that accounts for sampling variability.
+
+Many estimators used in large samples are approximately Normal:
+\[
+\hat\psi_n \approx \operatorname{Normal}\{\psi,\operatorname{SE}(\hat\psi_n)^2\}.
+\]
+When an estimator is approximately Normal and its standard error can be estimated, a common Wald-style $95\%$ confidence interval is
+\[
+\hat\psi_n \pm 1.96\,\widehat{\operatorname{SE}}(\hat\psi_n).
+\]
+
+\begin{definition}[Frequentist confidence interval]
+A procedure for constructing $95\%$ confidence intervals has $95\%$ coverage if, under repeated sampling from the same population, approximately $95\%$ of the intervals it produces contain the true target parameter.
+\end{definition}
+
+The interpretation is about the procedure, not about the fixed realized interval. In frequentist inference the parameter $\psi$ is treated as fixed. The random object is the interval, because the interval changes from sample to sample.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1.0cm,y=0.42cm,>=Latex]
+
+  % axes
+  \draw[->] (-4.2,0) -- (4.5,0) node[right] {$\hat\psi_n$};
+  \draw[->] (0,0) -- (0,4.4);
+
+  % normal curve
+  \draw[
+    domain=-3.6:3.6,
+    smooth,
+    variable=\x,
+    blue,
+    thick
+  ]
+  plot ({\x},{3.2*exp(-0.5*\x*\x)});
+
+  % true parameter line
+  \draw[red,thick]
+    (0,-0.12) -- (0,3.45)
+    node[above] {$\psi$};
+
+  % CI markers
+  \draw[orange!80!black,thick]
+    (-1.96,-0.12) -- (-1.96,0.42);
+
+  \draw[orange!80!black,thick]
+    (1.96,-0.12) -- (1.96,0.42);
+
+  % interval arrow
+  \draw[<->,orange!80!black,thick]
+    (-1.96,0.32)
+    -- 
+    (1.96,0.32);
+
+  % interval label BELOW the line
+  \node[
+    orange!80!black,
+    font=\small
+  ]
+  at (0,0.82)
+  {$\pm 1.96\,\operatorname{SE}$};
+
+  % top title with proper spacing
+  \node[align=center]
+    at (0,5.5)
+    {Approximate sampling distribution};
+
+\end{tikzpicture}
+
+\caption{
+A Wald interval uses the approximate Normal sampling distribution of the estimator.
+}
+\end{figure}
+
+\subsection{Hypothesis Tests}
+
+A hypothesis test turns data into a decision about a proposed value or claim.
+
+\begin{definition}[Null and alternative hypotheses]
+A \emph{null hypothesis} $H_0$ is a default claim about the target parameter, often representing no difference or no association. An \emph{alternative hypothesis} $H_1$ is the claim against which the null is compared.
+\end{definition}
+
+For example, if $\psi$ is a difference in population means, a common null hypothesis is
+\[
+H_0:\psi=0,
+\]
+with a two-sided alternative
+\[
+H_1:\psi\ne 0.
+\]
+If $\hat\psi_n$ is approximately Normal, a Wald test statistic is
+\[
+Z=\frac{\hat\psi_n-\psi_0}{\widehat{\operatorname{SE}}(\hat\psi_n)},
+\]
+where $\psi_0$ is the value specified by the null hypothesis. Under $H_0$ and appropriate regularity conditions, $Z$ is approximately standard Normal. Large values of $\abs{Z}$ are evidence against $H_0$.
+
+The $p$-value for a two-sided Wald test is
+\[
+p=2\{1-\Phi(\abs{Z})\},
+\]
+where $\Phi$ is the standard Normal cumulative distribution function.
+
+\begin{keyidea}
+Point estimates, standard errors, confidence intervals, and hypothesis tests are all tools for learning about a target parameter. None of them is meaningful until the target population and target parameter have been clearly defined.
+\end{keyidea}

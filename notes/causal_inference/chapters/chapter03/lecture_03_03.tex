@@ -1,0 +1,172 @@
+\lecture{3.3}{d-Separation in DAGs}
+\label{lec:3-3}
+
+\subsection{Paths}
+
+d-Separation is a graphical rule for reading conditional independence statements
+from a DAG. It answers questions such as whether $X\ci Y\given Z$ is implied by
+a graph, under the assumption that the distribution is Markov with respect to the
+DAG.
+
+\begin{definition}[Path]
+A \emph{path} between two nodes is a sequence of adjacent nodes connecting them, with no node repeated. The arrows on the path do not need to point in the same direction.
+\end{definition}
+
+For example, in $A\to B\to D\leftarrow F$, the sequence $A,B,D,F$ is a path from $A$ to $F$, even though the last arrow points into $D$.
+
+\subsection{Forks}
+
+A fork has the form
+\[
+X\leftarrow Z\to Y.
+\]
+Here $Z$ is a common cause of $X$ and $Y$.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.6cm,>=Latex]
+  \node[draw, circle, fill=blue!5] (Z) {$Z$};
+  \node[draw, circle, fill=green!5, below left=of Z] (X) {$X$};
+  \node[draw, circle, fill=orange!7, below right=of Z] (Y) {$Y$};
+  \draw[->, thick] (Z) -- (X);
+  \draw[->, thick] (Z) -- (Y);
+\end{tikzpicture}
+\caption{A fork: $X$ and $Y$ share a common cause $Z$.}
+\end{figure}
+
+Forks are open unless we condition on the middle node. Thus typically
+\[
+X\nci Y,
+\qquad
+X\ci Y\given Z
+\]
+as implied by this simple graph. Intuitively, warm weather may cause both ice cream sales and visits to the beach. Conditioning on weather removes the common-cause explanation for their association.
+
+\subsection{Chains}
+
+A chain has the form
+\[
+X\to Z\to Y
+\]
+or
+\[
+X\leftarrow Z\leftarrow Y.
+\]
+The middle node transmits association along a directed pathway.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.8cm,>=Latex]
+  \node[draw, circle, fill=green!5] (X) {$X$};
+  \node[draw, circle, fill=blue!5, right=of X] (Z) {$Z$};
+  \node[draw, circle, fill=orange!7, right=of Z] (Y) {$Y$};
+  \draw[->, thick] (X) -- (Z);
+  \draw[->, thick] (Z) -- (Y);
+\end{tikzpicture}
+\caption{A chain: association flows through the middle node $Z$.}
+\end{figure}
+
+Chains are open unless we condition on the middle node:
+\[
+X\nci Y,
+\qquad
+X\ci Y\given Z.
+\]
+If $X$ affects $Y$ only through $Z$, then once $Z$ is known, $X$ provides no additional information about $Y$.
+
+\subsection{Colliders}
+
+A collider has the form
+\[
+X\to Z\leftarrow Y.
+\]
+The arrows on the path collide at $Z$.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.6cm,>=Latex]
+  \node[draw, circle, fill=blue!5] (Z) {$Z$};
+  \node[draw, circle, fill=green!5, above left=of Z] (X) {$X$};
+  \node[draw, circle, fill=orange!7, above right=of Z] (Y) {$Y$};
+  \draw[->, thick] (X) -- (Z);
+  \draw[->, thick] (Y) -- (Z);
+\end{tikzpicture}
+\caption{A collider: $Z$ is a common effect of $X$ and $Y$.}
+\end{figure}
+
+Colliders behave differently from forks and chains. A collider blocks the path unless we condition on the collider or one of its descendants:
+\[
+X\ci Y,
+\qquad
+X\nci Y\given Z.
+\]
+For example, a car failing to start may be caused by a dead battery or an empty fuel tank. Before knowing whether the car starts, battery status and fuel status might be independent. After learning the car failed to start, evidence that the battery is fine makes an empty fuel tank more likely.
+
+\subsection{Collider Descendants}
+
+Conditioning on a descendant of a collider can also open the path. If
+\[
+X\to Z\leftarrow Y,\qquad Z\to D,
+\]
+then conditioning on $D$ can induce dependence between $X$ and $Y$.
+
+The reason is that $D$ carries information about the collider $Z$. If $D$ is "taken to the mechanic" and $Z$ is "car fails to start," then observing $D$ gives partial information about $Z$, which can create dependence between the causes of $Z$.
+
+\subsection{Blocking and Opening Paths}
+
+A path is blocked by a conditioning set $S$ if at least one of the following occurs:
+\begin{itemize}
+  \item the path contains a chain or fork whose middle node is in $S$;
+  \item the path contains a collider such that neither the collider nor any descendant of the collider is in $S$.
+\end{itemize}
+
+Equivalently:
+\begin{itemize}
+  \item conditioning on non-colliders blocks paths;
+  \item conditioning on colliders or their descendants opens paths.
+\end{itemize}
+
+\subsection{d-Separation Rules}
+
+\begin{definition}[d-separation]
+Two nodes $X$ and $Y$ are \emph{d-separated} by a set $S$ if every path between $X$ and $Y$ is blocked by $S$. If at least one path remains open, $X$ and $Y$ are \emph{d-connected} given $S$.
+\end{definition}
+
+If a DAG represents the data-generating process and $X$ and $Y$ are d-separated by $S$, then the graph implies
+\[
+X\ci Y\given S.
+\]
+
+\subsection{Practice Examples}
+
+Consider the DAG:
+\[
+A\to B,\quad A\to C,\quad B\to D,\quad C\to D,\quad F\to D,\quad D\to E.
+\]
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.5cm,>=Latex]
+  \node[draw, circle, fill=blue!5] (A) {$A$};
+  \node[draw, circle, fill=blue!5, above right=of A] (B) {$B$};
+  \node[draw, circle, fill=blue!5, below right=of A] (C) {$C$};
+  \node[draw, circle, fill=blue!5, right=2cm of A] (D) {$D$};
+  \node[draw, circle, fill=blue!5, right=of D] (E) {$E$};
+  \node[draw, circle, fill=blue!5, below=of D] (F) {$F$};
+  \draw[->, thick] (A) -- (B);
+  \draw[->, thick] (A) -- (C);
+  \draw[->, thick] (B) -- (D);
+  \draw[->, thick] (C) -- (D);
+  \draw[->, thick] (F) -- (D);
+  \draw[->, thick] (D) -- (E);
+\end{tikzpicture}
+\caption{Practice DAG for d-separation.}
+\end{figure}
+
+Is $A\ci E\given C$? No. The path $A\to B\to D\to E$ remains open.
+
+Is $A\ci F$? Yes. The paths $A\to B\to D\leftarrow F$ and $A\to C\to D\leftarrow F$ are both blocked at the collider $D$.
+
+Is $B\ci C\given A$? Yes. The fork path $B\leftarrow A\to C$ is blocked by conditioning on $A$, and the path $B\to D\leftarrow C$ is blocked by collider $D$.
+
+Is $B\ci C\given A,D$? No. Conditioning on collider $D$ opens $B\to D\leftarrow C$.

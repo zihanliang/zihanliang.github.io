@@ -1,0 +1,153 @@
+\lecture{6.8}{Reporting a Super Learner Analysis}
+\label{lec:6-8}
+
+\subsection{Number of Folds}
+
+A report should state the number of cross-validation folds used to train and evaluate
+the Super Learner. Common choices are $V=5$ and $V=10$. If nested cross-validation
+was used, report both the outer folds and the inner folds.
+
+For example, one might write:
+\begin{quote}
+The Super Learner was trained using ten-fold cross-validation to choose ensemble
+weights. Predictive performance of the full Super Learner procedure was evaluated
+using nested ten-fold cross-validation.
+\end{quote}
+
+\subsection{Candidate Algorithms}
+
+The candidate library is part of the estimator and must be reported. Include the
+algorithm names, important tuning parameters, and whether any variable screening
+procedures were paired with each learner.
+
+\[
+\begin{array}{lll}
+\toprule
+\text{Learner} & \text{Description} & \text{Screener}\\
+\midrule
+\texttt{SL.glm} & \text{main-terms GLM} & \text{All variables}\\
+\texttt{SL.mean} & \text{intercept-only model} & \text{All variables}\\
+\texttt{SL.ranger} & \text{random forest} & \text{All variables}\\
+\texttt{SL.glm} & \text{main-terms GLM} & \texttt{screen.corP}\\
+\bottomrule
+\end{array}
+\]
+
+Large libraries are often best placed in an appendix table.
+
+\subsection{Ensemble Construction}
+
+State whether the analysis used a discrete Super Learner or an ensemble Super
+Learner. For ensemble Super Learner, describe the metalearner. For continuous
+outcomes, a convex least-squares ensemble is common. For binary outcomes or
+propensity scores, a logistic-linear ensemble minimizing negative log-likelihood is
+often appropriate.
+
+\subsection{Loss Functions}
+
+The loss function determines what the Super Learner is optimizing. Reports should
+state the loss separately for each nuisance function:
+\begin{itemize}
+\item outcome regression with continuous $Y$: mean squared-error loss;
+\item outcome regression with binary $Y$: Bernoulli negative log-likelihood or
+another valid binary-outcome loss;
+\item propensity score: Bernoulli negative log-likelihood for treatment prediction.
+\end{itemize}
+
+\subsection{Cross-Validated Risk Summaries}
+
+Risk summaries should include the Super Learner, the discrete Super Learner, and the
+candidate algorithms. A clear table includes the risk estimate, an uncertainty summary
+when available, and the ensemble weight.
+
+\[
+\begin{array}{lccc}
+\toprule
+\text{Learner} & \text{CV risk} & \text{Weight} & \text{Comment}\\
+\midrule
+\texttt{SL.glm\_All} & 1.03 & 0.40 & \text{stable benchmark}\\
+\texttt{SL.mean\_All} & 2.72 & 0.00 & \text{intercept only}\\
+\texttt{SL.quadglm\_All} & 1.05 & 0.60 & \text{quadratic terms}\\
+\text{Super Learner} & 1.01 & -- & \text{ensemble}\\
+\bottomrule
+\end{array}
+\]
+
+\subsection{Sensitivity Analyses}
+
+Super Learner results depend on the candidate library, loss function, and
+cross-validation design. Sensitivity analyses can examine whether conclusions change
+when:
+\begin{itemize}
+\item additional flexible learners are added;
+\item unstable or extremely slow learners are removed;
+\item the number of folds is changed;
+\item required confounders are forced into every candidate;
+\item alternative reasonable losses are used;
+\item propensity score learners producing extreme weights are excluded or modified.
+\end{itemize}
+
+\subsection{Methods Write-Up}
+
+A concise methods paragraph for an outcome regression might read:
+
+\begin{quote}
+The outcome regression was estimated using Super Learner. Candidate algorithms
+included generalized linear models, penalized regression, generalized additive models,
+random forests, and multivariate adaptive regression splines, with selected learners
+paired with pre-specified screening rules. Ensemble weights were chosen to minimize
+ten-fold cross-validated mean squared-error loss using a convex least-squares
+metalearner.
+\end{quote}
+
+For a propensity score:
+
+\begin{quote}
+The propensity score was estimated using Super Learner with treatment as the outcome
+and baseline covariates as predictors. Ensemble weights were chosen to minimize
+ten-fold cross-validated Bernoulli negative log-likelihood using a logistic-linear
+metalearner.
+\end{quote}
+
+\subsection{Results Write-Up}
+
+A results paragraph should summarize which learners contributed meaningfully and how
+the ensemble compared with individual candidates:
+
+\begin{quote}
+For the outcome regression, the Super Learner placed nonzero weight on five
+candidate algorithms, with the largest weights assigned to a random forest and a
+generalized additive model. Nested cross-validation suggested that the ensemble had
+lower estimated risk than any single candidate. For the propensity score, the ensemble
+performed similarly to the best individual learner, and predicted treatment
+probabilities showed no severe near-zero or near-one instability.
+\end{quote}
+
+Avoid interpreting weights as evidence that a scientific model is true. They describe
+predictive contributions under the chosen loss.
+
+\subsection{Appendix Tables}
+
+Appendix tables should make the analysis reproducible. At minimum, include:
+\begin{itemize}
+\item wrapper function names;
+\item plain-language descriptions of each algorithm;
+\item tuning parameters;
+\item screening rules;
+\item cross-validated risks;
+\item Super Learner weights;
+\item software versions when important.
+\end{itemize}
+
+\begin{assumptionbox}
+Reporting Super Learner details does not replace reporting causal identification
+assumptions. The final causal analysis should separately state the target causal
+parameter, consistency, exchangeability, positivity, the adjustment set, and the
+statistical estimator.
+\end{assumptionbox}
+
+\begin{estimationbox}
+A complete Super Learner report lets another analyst reconstruct the nuisance
+estimation procedure: folds, library, screeners, losses, metalearner, risk summaries,
+weights, and sensitivity analyses.
+\end{estimationbox}

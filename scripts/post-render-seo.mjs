@@ -44,6 +44,16 @@ const pageSources = new Map([
   ]
 ]);
 
+// Study-note reader pages (notes/<name>/index.html), dated by their Markdown or LaTeX source.
+const notesCatalog = JSON.parse(await readFile(path.join(projectRoot, "data/notes/sections.json"), "utf8"));
+for (const note of (notesCatalog.sections || []).flatMap((section) => section.items || [])) {
+  if (!note.source || note.status === "upcoming") continue;
+  pageSources.set(
+    `https://www.zihanliang.com/${path.posix.dirname(note.source)}/index.html`,
+    [note.source, note.file, "data/notes/sections.json"].filter(Boolean)
+  );
+}
+
 async function latestModification(relativePaths) {
   const stats = await Promise.all(
     relativePaths.map((relativePath) => stat(path.join(projectRoot, relativePath)))

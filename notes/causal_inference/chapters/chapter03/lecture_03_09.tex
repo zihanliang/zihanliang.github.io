@@ -1,0 +1,149 @@
+\lecture{3.9}{Equivalence and Extensions}
+\label{lec:3-9}
+
+\subsection{Equivalence of G-Computation and IPTW Identification}
+
+G-computation and IPTW look different, but they are algebraically equivalent as identification formulas. For $a=1$,
+\[
+\E\left\{\frac{\ind(A=1)Y}{\Prob(A=1\given W)}\right\}
+=
+\E\{\E(Y\given A=1,W)\}.
+\]
+The derivation follows from repeated use of the tower rule:
+\[
+\E\left\{\frac{\ind(A=1)Y}{g_1(W)}\right\}
+=
+\E\left[
+\E\left\{
+\frac{\ind(A=1)Y}{g_1(W)}
+\given A,W
+\right\}
+\right]
+\]
+\[
+=
+\E\left[
+\frac{\ind(A=1)}{g_1(W)}
+\E(Y\given A,W)
+\right]
+=
+\E\left[
+\frac{\ind(A=1)}{g_1(W)}
+\E(Y\given A=1,W)
+\right]
+\]
+\[
+=
+\E\left[
+\E\left\{
+\frac{\ind(A=1)}{g_1(W)}
+\E(Y\given A=1,W)
+\given W
+\right\}
+\right]
+\]
+\[
+=
+\E\left[
+\frac{\E(Y\given A=1,W)}{g_1(W)}
+\E\{\ind(A=1)\given W\}
+\right]
+=
+\E\{\E(Y\given A=1,W)\}.
+\]
+
+\subsection{Conditioning on the Propensity Score}
+
+The propensity score is a balancing score. Under conditional randomization and positivity,
+\[
+(\Yone,\Yzero)\ci A\given g(W),
+\]
+where $g(W)=\Prob(A=1\given W)$.
+
+The intuition is that within groups of people who have the same probability of treatment, the covariate information relevant to treatment assignment has been balanced sufficiently for exchangeability.
+
+The ATE can therefore also be identified by
+\[
+\ATE
+=
+\E\left[
+\E(Y\given A=1,g(W))
+-
+\E(Y\given A=0,g(W))
+\right],
+\]
+where the outer expectation is over the population distribution of $g(W)$.
+
+\subsection{Collider Bias}
+
+Colliders are a major reason that "adjust for everything" is not a valid causal strategy. Consider a picnic example:
+\begin{itemize}
+  \item $A=1$ means chicken salad, $A=0$ means egg salad;
+  \item $Y=1$ means a person already has influenza;
+  \item $C=1$ means fever after the picnic.
+\end{itemize}
+Suppose egg salad is tainted and causes fever, influenza also causes fever, and the sandwich does not cause influenza. Then $C$ is a collider:
+\[
+A\to C\leftarrow Y.
+\]
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.8cm,>=Latex]
+  \node[draw, circle, fill=green!5] (A) {$A$\\sandwich};
+  \node[draw, rectangle, fill=gray!12, below=.55cm of A] (a) {$a$};
+  \node[draw, circle, fill=blue!5, right=of A] (C) {$C(a)$\\fever};
+  \node[draw, circle, fill=orange!8, right=of C] (Y) {$Y$\\flu};
+  \draw[->, thick] (a) -- (C);
+  \draw[->, thick] (Y) -- (C);
+\end{tikzpicture}
+\caption{Conditioning on fever opens a path between sandwich type and influenza.}
+\end{figure}
+
+Since $Y$ is not downstream of $A$, there is no causal effect of sandwich on influenza. Unconditionally, $A$ and $Y$ may be independent. But conditioning on fever induces dependence: among people with fever, knowing the person ate chicken salad makes influenza more likely because chicken salad did not explain the fever.
+
+\begin{keyidea}
+Conditioning can create bias when the conditioned variable is a collider or a descendant of a collider.
+\end{keyidea}
+
+\subsection{Causal Effect among Compliers}
+
+In some randomized studies, assignment $Z$ is randomized but treatment actually taken $A$ is not fully controlled. Some participants comply with assignment, while others do not. A common causal target is the effect among compliers:
+\[
+\E\{Y(1)-Y(0)\given A(1)=1,A(0)=0\},
+\]
+where $A(z)$ is the treatment that would be taken under assignment $Z=z$.
+
+This estimand is not an ordinary ATE in the full population. It is an effect in a latent subgroup defined by joint potential treatment behaviors under two assignment levels.
+
+\subsection{Principal Stratification}
+
+Principal stratification defines subgroups using potential values of an intermediate variable. For example, in a vaccine study, one might ask for the effect of vaccination on growth among children who would have been infected without vaccination:
+\[
+\E\{G(1)-G(0)\given I(0)=1\}.
+\]
+Here $I(0)$ is infection status under no vaccination and $G(a)$ is growth under vaccination level $a$.
+
+Principal strata can be scientifically appealing, but they often involve cross-world or partially latent quantities. Identification typically requires assumptions beyond standard exchangeability and positivity.
+
+\subsection{Transition from Identification to Estimation}
+
+This chapter has produced observed-data parameters for causal quantities. For example,
+\[
+\E\{\Ya{a}\}
+=
+\E\{\E(Y\given A=a,W)\}
+\]
+and
+\[
+\E\{\Ya{a}\}
+=
+\E\left\{
+\frac{\ind(A=a)Y}{\Prob(A=a\given W)}
+\right\}.
+\]
+These formulas do not yet tell us how to estimate the quantities in finite samples. They tell us what must be estimated: outcome regressions, propensity scores, covariate distributions, and expectations.
+
+\begin{estimationbox}
+The next step is estimation. Once identification has converted counterfactual parameters into observed-data parameters, we can construct estimators such as plug-in G-computation estimators, IPTW estimators, and later doubly robust estimators.
+\end{estimationbox}

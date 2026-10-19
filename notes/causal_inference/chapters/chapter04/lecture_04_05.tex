@@ -1,0 +1,176 @@
+\lecture{4.5}{Comparing G-Computation and IPTW}
+\label{lec:4-5}
+
+\subsection{When Empirical G-Computation and IPTW Coincide}
+
+In the fully discrete setting, if both nuisance functions are estimated by empirical
+subgroup proportions and means, empirical g-computation and empirical IPTW give the
+same point estimate. This equality is not a general property of all g-computation and
+IPTW estimators. It is a special algebraic feature of saturated discrete estimation.
+
+\begin{proposition}[Equivalence under empirical discrete estimation]
+Suppose $W$ is discrete, every relevant $(A=a,W=w)$ cell is nonempty, and
+\[
+\Qbar_n(a,w)
+=
+\frac{\sum_{i=1}^nY_i\ind(A_i=a,W_i=w)}
+       {\sum_{i=1}^n\ind(A_i=a,W_i=w)},
+\qquad
+g_{n,a}(w)
+=
+\frac{\sum_{i=1}^n\ind(A_i=a,W_i=w)}
+       {\sum_{i=1}^n\ind(W_i=w)}.
+\]
+Then
+\[
+\frac{1}{n}\sum_{i=1}^n \Qbar_n(a,W_i)
+=
+\frac{1}{n}\sum_{i=1}^n
+\frac{\ind(A_i=a)}{g_{n,a}(W_i)}Y_i.
+\]
+\end{proposition}
+
+\begin{proof}
+Let $n_w=\sum_i\ind(W_i=w)$ and $n_{aw}=\sum_i\ind(A_i=a,W_i=w)$.
+The g-computation estimator can be written as
+\[
+\sum_w \Qbar_n(a,w)\frac{n_w}{n}.
+\]
+Substituting the empirical subgroup mean,
+\[
+\sum_w
+\left\{
+\frac{\sum_iY_i\ind(A_i=a,W_i=w)}{n_{aw}}
+\right\}
+\frac{n_w}{n}.
+\]
+Substituting $g_{n,a}(w)=n_{aw}/n_w$ gives
+\[
+\frac{1}{n}\sum_w
+\sum_i
+Y_i\ind(A_i=a,W_i=w)
+\frac{1}{g_{n,a}(w)}.
+\]
+For each observation $i$, only the term with $w=W_i$ contributes, so the expression
+equals
+\[
+\frac{1}{n}\sum_{i=1}^n
+\frac{\ind(A_i=a)}{g_{n,a}(W_i)}Y_i,
+\]
+which is the IPTW estimator.
+\end{proof}
+
+\subsection{Why the Equivalence Is Special}
+
+The proof above uses two facts. First, $\Qbar_n(a,w)$ is the empirical mean in exactly
+the same strata used to estimate $g_{n,a}(w)$. Second, the empirical covariate
+distribution gives each stratum weight $n_w/n$. If either nuisance function is
+estimated by a model that smooths across strata, the exact cancellation in the proof
+usually disappears.
+
+\begin{keyidea}
+G-computation and IPTW are equivalent as identification formulas under the causal
+assumptions. Their finite-sample estimators need not be equal, because the fitted
+outcome regression and fitted propensity score can approximate different parts of the
+observed-data distribution in different ways.
+\end{keyidea}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=1.45cm,
+  box/.style={draw, rounded corners=2pt, minimum width=3.2cm, minimum height=.8cm},
+  arr/.style={-{Latex[length=2.5mm]}, thick}
+]
+\node[box] (id) {Same identified\\ $\psi(a)$};
+\node[box, below left=1.1cm and 1.2cm of id] (gcomp) {Estimate\\ $\Qbar(a,w)$};
+\node[box, below right=1.1cm and 1.2cm of id] (iptw) {Estimate\\ $g_a(w)$};
+\node[box, below=1.2cm of gcomp] (pg) {Average\\ predictions};
+\node[box, below=1.2cm of iptw] (pi) {Average\\ weighted outcomes};
+\draw[arr] (id) -- (gcomp);
+\draw[arr] (id) -- (iptw);
+\draw[arr] (gcomp) -- (pg);
+\draw[arr] (iptw) -- (pi);
+\draw[arr, dashed] (pg) -- node[below] {equal only in special cases} (pi);
+\end{tikzpicture}
+\caption{The two methods estimate the same causal parameter through different nuisance functions.}
+\label{fig:ch4-gcomp-iptw-comparison}
+\end{figure}
+
+\subsection{High-Dimensional Discrete Covariates}
+
+Empirical stratification becomes fragile when $W$ has many discrete components.
+If $W=(W_1,\ldots,W_p)$ and each $W_j$ is binary, then $W$ can take $2^p$ possible
+values. Even moderate $p$ can create many sparse or empty strata.
+
+Sparse strata create two problems. For g-computation, $\Qbar_n(a,w)$ is unstable when
+only a few observations have $A=a$ and $W=w$, and undefined when no such observation
+exists. For IPTW, $g_{n,a}(w)$ is unstable when treatment counts are small, and the
+weights $1/g_{n,a}(w)$ can become extremely large.
+
+\subsection{Continuous Covariates}
+
+If $W$ contains a continuous component, exact empirical stratification usually fails.
+In a continuous distribution, the probability that two individuals have exactly the
+same covariate vector is often zero. Then the subgroup
+\[
+\{i:W_i=w\}
+\]
+may contain only one observation or none, making empirical subgroup means unusable.
+
+This is not a conceptual problem for the estimand. The counterfactual mean
+\[
+\psi(a)=\E\{\Qbar(a,W)\}
+\]
+is still well-defined. The difficulty is statistical: we must estimate the smooth
+conditional mean or treatment probability from finite data.
+
+\subsection{Need for Regression Smoothing}
+
+Regression smoothing borrows information across similar covariate values. Instead of
+estimating a separate mean for every exact $w$, a model might assume
+\[
+\Qbar(a,w)=\beta_0+\beta_1a+\beta_2^\top w
+\]
+or
+\[
+g_1(w)=\expit(\alpha_0+\alpha_1^\top w).
+\]
+These restrictions reduce variance, but they introduce the possibility of model
+misspecification. A simple main-terms model may be too rigid if the true outcome
+regression has nonlinearities or treatment-covariate interactions.
+
+The central estimation tradeoff is therefore:
+\[
+\text{less smoothing} \Rightarrow \text{lower modeling bias but higher variance},
+\]
+\[
+\text{more smoothing} \Rightarrow \text{lower variance but higher risk of bias}.
+\]
+
+\subsection{Variance and Instability}
+
+IPTW estimators are especially sensitive to near-violations of positivity. If
+$g_{n,1}(W_i)=0.02$, then a treated individual receives weight $50$. A small number of
+such observations can strongly influence the weighted mean.
+
+G-computation can also be unstable or biased, but the failure mode is different. A
+poor outcome regression may extrapolate into covariate-treatment combinations with
+little support. For example, if very old individuals are almost never treated, then
+$\Qbar_n(1,w)$ for very old $w$ is largely determined by model assumptions rather
+than direct data.
+
+\begin{estimationbox}
+Practical comparison:
+\begin{itemize}
+\item Empirical g-computation and empirical IPTW coincide in low-dimensional
+discrete settings with nonempty cells.
+\item Regression-based g-computation and regression-based IPTW usually differ.
+\item G-computation relies most directly on the quality of the outcome regression.
+\item IPTW relies most directly on the quality of the propensity score and on stable
+positivity.
+\item Large weights, empty cells, and extrapolation are diagnostic signs that the
+data may not contain enough information for the desired causal contrast without
+strong modeling assumptions.
+\end{itemize}
+\end{estimationbox}

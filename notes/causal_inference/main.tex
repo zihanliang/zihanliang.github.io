@@ -1,0 +1,320 @@
+% Encoding and base class
+\documentclass[12pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% Geometry and typography
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{microtype}
+\usepackage{setspace}
+\setstretch{1.12}
+\addtolength{\parskip}{.45\baselineskip}
+\setcounter{tocdepth}{2}
+
+% Colors and figures
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes,calc}
+\tikzset{every node/.style={align=center}}
+\usepackage{tikz-cd}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% Math packages
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+\mathtoolsset{showonlyrefs,centercolon}
+\numberwithin{equation}{section}
+\usepackage{siunitx}
+\usepackage{bbm}
+
+% Graphics, tables, and trees
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{multirow}
+\usepackage{fancyvrb}
+
+% Hyperlinks and clever references
+\usepackage[pdfusetitle,unicode,bookmarks=false]{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!60!black,
+  citecolor=blue!60!black,
+  urlcolor=blue!60!black
+}
+\usepackage[nameinlink,capitalize]{cleveref}
+
+% Lists
+\usepackage{enumitem}
+\setlist{itemsep=2pt,topsep=4pt}
+
+% Code listings
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  numbers=left,
+  numberstyle=\tiny,
+  keywordstyle=\color{blue!70!black},
+  commentstyle=\color{green!50!black},
+  stringstyle=\color{red!70!black}
+}
+
+% Date/time
+\usepackage{datetime}
+\newdateformat{mydate}{\THEDAY~\monthname[\THEMONTH] \THEYEAR}
+
+% ---------- Custom causal inference commands ----------
+% Common operators
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator{\expit}{expit}
+\DeclareMathOperator{\logit}{logit}
+\DeclareMathOperator{\plim}{plim}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Bias}{Bias}
+\DeclareMathOperator{\pa}{pa}
+\DeclareMathOperator{\ch}{ch}
+\DeclareMathOperator{\an}{an}
+\DeclareMathOperator{\de}{de}
+
+% Probability and expectation
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\ind}{\mathbbm{1}}
+\newcommand{\given}{\,\vert\,}
+\newcommand{\iid}{\overset{\mathrm{iid}}{\sim}}
+\newcommand{\ci}{\perp\!\!\!\perp}
+\newcommand{\nci}{\not\!\perp\!\!\!\perp}
+
+% Common sets
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+
+% Vectors, matrices, and norms
+\newcommand{\vect}[1]{\bm{#1}}
+\newcommand{\mat}[1]{\bm{#1}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+
+% Derivatives
+\newcommand{\dd}[2]{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
+\newcommand{\pp}[2]{\frac{\partial #1}{\partial #2}}
+
+% Causal notation
+\newcommand{\doop}{\operatorname{do}}
+\newcommand{\Ya}[1]{Y(#1)}
+\newcommand{\Yone}{Y(1)}
+\newcommand{\Yzero}{Y(0)}
+\newcommand{\Abar}{\overline{A}}
+\newcommand{\abar}{\overline{a}}
+\newcommand{\Lbar}{\overline{L}}
+\newcommand{\lbar}{\overline{l}}
+\newcommand{\Qbar}{\overline{Q}}
+\newcommand{\gbar}{\overline{g}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\Oobs}{O}
+\newcommand{\obs}{\mathrm{obs}}
+\newcommand{\mis}{\mathrm{mis}}
+\newcommand{\ATE}{\operatorname{ATE}}
+\newcommand{\CATE}{\operatorname{CATE}}
+\newcommand{\ATT}{\operatorname{ATT}}
+\newcommand{\ATC}{\operatorname{ATC}}
+\newcommand{\IPTW}{\operatorname{IPTW}}
+\newcommand{\AIPTW}{\operatorname{AIPTW}}
+\newcommand{\TMLE}{\operatorname{TMLE}}
+\newcommand{\EIF}{\operatorname{EIF}}
+
+% ---------- Document structure helpers ----------
+\newcommand{\chapterheading}[2]{%
+  \clearpage
+  \phantomsection
+  \section*{Chapter #1. #2}%
+  \addcontentsline{toc}{part}{Chapter #1. #2}%
+}
+
+\newcommand{\lecture}[2]{%
+  \refstepcounter{section}%
+  \section*{Lecture #1. #2}%
+  \addcontentsline{toc}{section}{Lecture #1. #2}%
+}
+
+% ---------- Theorem-like environments ----------
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{problem}[theorem]{Problem}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{intuition}[theorem]{Intuition}
+
+% ---------- Custom boxes ----------
+\usepackage[most]{tcolorbox}
+\tcbset{colback=blue!2!white,colframe=blue!40!black,sharp corners,boxrule=.4pt}
+
+\newenvironment{keyidea}{
+  \begin{tcolorbox}[colback=yellow!5!white,
+                    colframe=yellow!50!black,
+                    title=Key Idea,
+                    breakable,
+                    enhanced,
+                    sharp corners,
+                    boxrule=0.8pt,
+                    left=6pt, right=6pt, top=6pt, bottom=6pt]
+}{
+  \end{tcolorbox}
+}
+
+\newtcolorbox{assumptionbox}{
+  colback=red!2!white,
+  colframe=red!45!black,
+  title=Causal Assumption,
+  breakable,
+  enhanced
+}
+
+\newtcolorbox{identificationbox}{
+  colback=green!2!white,
+  colframe=green!40!black,
+  title=Identification Result,
+  breakable,
+  enhanced
+}
+
+\newtcolorbox{estimationbox}{
+  colback=orange!2!white,
+  colframe=orange!45!black,
+  title=Estimation Notes,
+  breakable,
+  enhanced
+}
+
+\newtcolorbox{implementationbox}{
+  colback=gray!4!white,
+  colframe=gray!55!black,
+  title=Implementation Notes,
+  breakable,
+  enhanced
+}
+
+% ---------- Metadata ----------
+\title{Notes on Introduction to Causal Inference}
+\author{Zihan Liang}
+\date{\mydate\today}
+
+% ---------- Begin document ----------
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\chapterheading{1}{Review of Key Statistical Concepts}
+\input{chapters/chapter01/lecture_01_01}
+\input{chapters/chapter01/lecture_01_02}
+\input{chapters/chapter01/lecture_01_03}
+\input{chapters/chapter01/lecture_01_04}
+\input{chapters/chapter01/lecture_01_05}
+\input{chapters/chapter01/lecture_01_06}
+\input{chapters/chapter01/lecture_01_07}
+
+\chapterheading{2}{Asking Causal Questions}
+\input{chapters/chapter02/lecture_02_01}
+\input{chapters/chapter02/lecture_02_02}
+\input{chapters/chapter02/lecture_02_03}
+\input{chapters/chapter02/lecture_02_04}
+\input{chapters/chapter02/lecture_02_05}
+\input{chapters/chapter02/lecture_02_06}
+\input{chapters/chapter02/lecture_02_07}
+\input{chapters/chapter02/lecture_02_08}
+\input{chapters/chapter02/lecture_02_09}
+
+\chapterheading{3}{Identification of Causal Parameters and the ATE}
+\input{chapters/chapter03/lecture_03_01}
+\input{chapters/chapter03/lecture_03_02}
+\input{chapters/chapter03/lecture_03_03}
+\input{chapters/chapter03/lecture_03_04}
+\input{chapters/chapter03/lecture_03_05}
+\input{chapters/chapter03/lecture_03_06}
+\input{chapters/chapter03/lecture_03_07}
+\input{chapters/chapter03/lecture_03_08}
+\input{chapters/chapter03/lecture_03_09}
+
+\chapterheading{4}{Basic Estimation of the Average Treatment Effect}
+\input{chapters/chapter04/lecture_04_01}
+\input{chapters/chapter04/lecture_04_02}
+\input{chapters/chapter04/lecture_04_03}
+\input{chapters/chapter04/lecture_04_04}
+\input{chapters/chapter04/lecture_04_05}
+\input{chapters/chapter04/lecture_04_06}
+\input{chapters/chapter04/lecture_04_07}
+
+\chapterheading{5}{Super Learning}
+\input{chapters/chapter05/lecture_05_01}
+\input{chapters/chapter05/lecture_05_02}
+\input{chapters/chapter05/lecture_05_03}
+\input{chapters/chapter05/lecture_05_04}
+\input{chapters/chapter05/lecture_05_05}
+\input{chapters/chapter05/lecture_05_06}
+\input{chapters/chapter05/lecture_05_07}
+
+\chapterheading{6}{Super Learning Lab}
+\input{chapters/chapter06/lecture_06_01}
+\input{chapters/chapter06/lecture_06_02}
+\input{chapters/chapter06/lecture_06_03}
+\input{chapters/chapter06/lecture_06_04}
+\input{chapters/chapter06/lecture_06_05}
+\input{chapters/chapter06/lecture_06_06}
+\input{chapters/chapter06/lecture_06_07}
+\input{chapters/chapter06/lecture_06_08}
+
+\chapterheading{7}{Efficient, Doubly Robust Estimation of the ATE}
+\input{chapters/chapter07/lecture_07_01}
+\input{chapters/chapter07/lecture_07_02}
+\input{chapters/chapter07/lecture_07_03}
+\input{chapters/chapter07/lecture_07_04}
+\input{chapters/chapter07/lecture_07_05}
+\input{chapters/chapter07/lecture_07_06}
+\input{chapters/chapter07/lecture_07_07}
+\input{chapters/chapter07/lecture_07_08}
+
+\chapterheading{8}{Identification and Inference for Time-Varying Interventions}
+\input{chapters/chapter08/lecture_08_01}
+\input{chapters/chapter08/lecture_08_02}
+\input{chapters/chapter08/lecture_08_03}
+\input{chapters/chapter08/lecture_08_04}
+\input{chapters/chapter08/lecture_08_05}
+\input{chapters/chapter08/lecture_08_06}
+\input{chapters/chapter08/lecture_08_07}
+\input{chapters/chapter08/lecture_08_08}
+\input{chapters/chapter08/lecture_08_09}
+\input{chapters/chapter08/lecture_08_10}
+\input{chapters/chapter08/lecture_08_11}
+
+\chapterheading{9}{Miscellaneous Topics}
+\input{chapters/chapter09/lecture_09_01}
+\input{chapters/chapter09/lecture_09_02}
+\input{chapters/chapter09/lecture_09_03}
+\input{chapters/chapter09/lecture_09_04}
+\input{chapters/chapter09/lecture_09_05}
+\input{chapters/chapter09/lecture_09_06}
+\input{chapters/chapter09/lecture_09_07}
+\input{chapters/chapter09/lecture_09_08}
+\input{chapters/chapter09/lecture_09_09}
+\input{chapters/chapter09/lecture_09_10}
+
+\end{document}

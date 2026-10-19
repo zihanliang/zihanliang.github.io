@@ -1,0 +1,145 @@
+\lecture{5.6}{Super Learner Ensembles}
+\label{lec:5-6}
+
+\subsection{Weighted Combinations of Estimators}
+
+The discrete Super Learner chooses one candidate algorithm. But different algorithms
+may capture different features of the data. A regression tree may capture threshold
+effects, a generalized additive model may capture smooth nonlinearities, and a lasso
+model may be stable in moderately high dimensions. Instead of choosing exactly one,
+we can combine them.
+
+Let $\Qbar_{n,1},\ldots,\Qbar_{n,K}$ be fitted candidate outcome regressions. A
+weighted ensemble has the form
+\[
+\Qbar_{n,\omega}(a,w)
+=
+\sum_{k=1}^K \omega_k \Qbar_{n,k}(a,w),
+\]
+where $\omega=(\omega_1,\ldots,\omega_K)$ is a vector of weights.
+
+\subsection{Convex Combinations}
+
+Super Learner commonly uses convex combinations:
+\[
+\omega_k\ge 0,\qquad \sum_{k=1}^K\omega_k=1.
+\]
+The set of all such weights is the simplex
+\[
+\Delta_K=\left\{\omega\in\R^K:\omega_k\ge 0,\ \sum_{k=1}^K\omega_k=1\right\}.
+\]
+
+Convex combinations have a simple interpretation. If $\omega_3=0.70$ and
+$\omega_5=0.30$, the ensemble prediction is 70\% from algorithm 3 and 30\% from
+algorithm 5. Algorithms with weight zero do not contribute to the final prediction.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=1.15cm,
+  box/.style={draw, rounded corners=2pt, minimum width=2.7cm, minimum height=.75cm},
+  arr/.style={-{Latex[length=2.5mm]}, thick}
+]
+\node[box] (a1) {Algorithm 1\\ $\Qbar_{n,1}$};
+\node[box, below=of a1] (a2) {Algorithm 2\\ $\Qbar_{n,2}$};
+\node[box, below=of a2] (a3) {Algorithm 3\\ $\Qbar_{n,3}$};
+\node[box, right=2.2cm of a2] (ens) {Ensemble\\ $\sum_k\omega_k\Qbar_{n,k}$};
+\draw[arr] (a1) -- node[above, sloped] {$\omega_1$} (ens);
+\draw[arr] (a2) -- node[above] {$\omega_2$} (ens);
+\draw[arr] (a3) -- node[below, sloped] {$\omega_3$} (ens);
+\end{tikzpicture}
+\caption{A Super Learner ensemble combines candidate predictions using learned weights.}
+\label{fig:ch5-ensemble}
+\end{figure}
+
+\subsection{Choosing Weights by Cross-Validated Risk Minimization}
+
+The Super Learner chooses $\omega$ to minimize cross-validated risk. For each fold
+$v$, each candidate algorithm is trained on the training folds and predicts the
+validation fold. For a proposed weight vector $\omega$, the ensemble prediction in
+the validation fold is
+\[
+\Qbar_{n,\omega,v}(a,w)
+=
+\sum_{k=1}^K\omega_k\Qbar_{n,k,v}(a,w).
+\]
+The cross-validated risk of the ensemble is
+\[
+R_{CV,n}(\omega)
+=
+\frac{1}{V}\sum_{v=1}^V
+\frac{1}{|\mathcal V_v|}
+\sum_{i\in\mathcal V_v}
+L(\Qbar_{n,\omega,v})(W_i,A_i,Y_i).
+\]
+The selected weights are
+\[
+\omega_{CV}
+=
+\argmin_{\omega\in\Delta_K}R_{CV,n}(\omega).
+\]
+After the weights are selected, each candidate algorithm is refit on the full dataset,
+and the final Super Learner is
+\[
+\Qbar_{n,SL}(a,w)
+=
+\sum_{k=1}^K\omega_{CV,k}\Qbar_{n,k}^{\mathrm{full}}(a,w).
+\]
+
+\subsection{Oracle Inequalities}
+
+The theoretical appeal of Super Learner comes from oracle inequalities. An oracle is
+an imaginary procedure that knows the true risks of all candidates and chooses the
+best one. The analyst cannot implement the oracle because true risk depends on the
+unknown data-generating distribution.
+
+An oracle inequality states, under regularity conditions, that the cross-validation
+selector or ensemble performs nearly as well as the oracle, up to a term that becomes
+small as sample size grows. A simplified version of the message is
+\[
+\text{risk of Super Learner}
+\le
+\text{risk of oracle choice}
++
+\text{small remainder}.
+\]
+The remainder depends on sample size and on the size of the candidate library. This
+supports the practical strategy of including a diverse pre-specified library rather than
+trying to guess a single correct model.
+
+\begin{keyidea}
+The oracle is the best procedure in the chosen library for the data-generating
+distribution. Super Learner uses cross-validation to approximate that oracle without
+knowing the truth.
+\end{keyidea}
+
+\subsection{Model Stacking}
+
+Combining candidate predictions is often called stacking. The idea is to treat the
+out-of-fold predictions from the candidate algorithms as inputs to a second-stage
+learner, sometimes called the metalearner. In the convex Super Learner, the
+metalearner is a constrained regression that finds nonnegative weights summing to
+one.
+
+Stacking differs from ordinary model averaging based on subjective preference. The
+weights are chosen to minimize a pre-specified cross-validated loss. This makes the
+ensemble a fully specified estimator rather than a post-hoc compromise among models.
+
+\subsection{Super Learner vs Single Best Algorithm}
+
+The discrete Super Learner is guaranteed to choose one candidate. The ensemble Super
+Learner can choose one candidate by putting all weight on it, but it can also combine
+multiple candidates when that lowers cross-validated risk. Thus the ensemble contains
+the discrete choice as a special case.
+
+\begin{estimationbox}
+Ensemble Super Learner workflow:
+\begin{enumerate}
+\item Pre-specify candidate algorithms and a valid loss function.
+\item Generate out-of-fold predictions for every algorithm.
+\item Choose convex weights minimizing cross-validated risk.
+\item Refit all candidate algorithms on the full dataset.
+\item Combine full-data predictions using the selected weights.
+\item Use the resulting nuisance function estimate inside the causal estimator.
+\end{enumerate}
+\end{estimationbox}

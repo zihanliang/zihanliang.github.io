@@ -1,0 +1,213 @@
+\lecture{3.6}{G-Computation Identification Formula}
+\label{lec:3-6}
+
+\subsection{Derivation of $\E\{\Ya{a}\}$}
+
+Assume consistency, conditional randomization, and positivity. For a discrete covariate vector $W$, begin with the counterfactual mean:
+\[
+\E\{\Ya{a}\}.
+\]
+Apply the tower rule by averaging over covariate strata:
+\[
+\E\{\Ya{a}\}
+=
+\sum_w \E\{\Ya{a}\given W=w\}\Prob(W=w).
+\]
+Use conditional randomization, $\Ya{a}\ci A\given W$, to add the event $A=a$ inside the conditional expectation:
+\[
+\E\{\Ya{a}\given W=w\}
+=
+\E\{\Ya{a}\given A=a,W=w\}.
+\]
+Then use consistency. Among units with $A=a$, the observed outcome equals $\Ya{a}$:
+\[
+\E\{\Ya{a}\given A=a,W=w\}
+=
+\E(Y\given A=a,W=w).
+\]
+Substituting gives
+\[
+\E\{\Ya{a}\}
+=
+\sum_w \E(Y\given A=a,W=w)\Prob(W=w).
+\]
+Equivalently,
+\[
+\E\{\Ya{a}\}
+=
+\E\{\E(Y\given A=a,W)\}.
+\]
+
+\begin{identificationbox}
+\textbf{G-computation identification formula.} Under consistency, conditional randomization, and positivity,
+\[
+\E\{\Ya{a}\}
+=
+\E\{\E(Y\given A=a,W)\}.
+\]
+Therefore
+\[
+\ATE
+=
+\E\{\E(Y\given A=1,W)-\E(Y\given A=0,W)\}.
+\]
+\end{identificationbox}
+
+\subsection{Role of the Tower Rule}
+
+The tower rule is the first step:
+\[
+\E\{\Ya{a}\}
+=\sum_w \E\{\Ya{a}\given W=w\}\Prob(W=w).
+\]
+It says that the population mean counterfactual outcome is a weighted average of covariate-specific counterfactual means. The weights are the covariate distribution in the whole target population.
+
+\subsection{Role of Conditional Randomization}
+
+Conditional randomization justifies replacing the counterfactual mean in the whole $W=w$ stratum with the counterfactual mean among the observed treatment subgroup:
+\[
+\E\{\Ya{a}\given W=w\}
+=
+\E\{\Ya{a}\given A=a,W=w\}.
+\]
+In words, within the stratum $W=w$, people who actually received $A=a$ are representative of everyone in that stratum with respect to $\Ya{a}$.
+
+\subsection{Role of Consistency}
+
+Consistency changes the counterfactual outcome into an observed outcome among those who received $A=a$:
+\[
+\E\{\Ya{a}\given A=a,W=w\}
+=
+\E(Y\given A=a,W=w).
+\]
+This is where the expression becomes fully observed-data based.
+
+\subsection{Interpretation as Standardization}
+
+The formula
+\[
+\sum_w \E(Y\given A=a,W=w)\Prob(W=w)
+\]
+standardizes treatment-specific outcome means to the covariate distribution of the whole population.
+
+For each $w$:
+\begin{enumerate}
+  \item compute the average observed outcome among people with $A=a$ and $W=w$;
+  \item weight that subgroup mean by the population prevalence $\Prob(W=w)$;
+  \item sum over all covariate strata.
+\end{enumerate}
+
+\subsection{G-Computation Intuition}
+
+Within each $W=w$ stratum, conditional randomization makes the observed comparison between $A=1$ and $A=0$ fair. The subgroup-specific causal contrast is
+\[
+\E(Y\given A=1,W=w)-\E(Y\given A=0,W=w).
+\]
+The population ATE averages these fair subgroup comparisons using the target population distribution of $W$:
+\[
+\ATE
+=
+\sum_w
+\left\{
+\E(Y\given A=1,W=w)-\E(Y\given A=0,W=w)
+\right\}\Prob(W=w).
+\]
+
+\subsection{Worked Discrete Example}
+
+Let $Y$ indicate death due to cancer, let $A=1$ denote a risky treatment and
+$A=0$ denote standard treatment, and let $W=1$ denote severe disease. Consider a
+population of 320 people with the following observed counts:
+\[
+\begin{array}{c|cc|cc}
+& \multicolumn{2}{c|}{W=0} & \multicolumn{2}{c}{W=1}\\
+& A=0 & A=1 & A=0 & A=1\\
+\hline
+Y=1 & 60 & 10 & 30 & 60\\
+Y=0 & 60 & 30 & 10 & 60
+\end{array}
+\]
+Each covariate stratum contains people at both treatment levels, so positivity holds:
+\[
+\Prob(A=a\given W=w)>0
+\qquad\text{for all }a\in\{0,1\},\;w\in\{0,1\}.
+\]
+Suppose conditional randomization and consistency are also valid. Then the observed
+conditional outcome means identify the stratum-specific counterfactual risks.
+
+For the risky treatment,
+\[
+\E(Y\given A=1,W=0)=\frac{10}{10+30}=0.25,
+\]
+and
+\[
+\E(Y\given A=1,W=1)=\frac{60}{60+60}=0.50.
+\]
+Because the population has 160 people with $W=0$ and 160 people with $W=1$,
+\[
+\Prob(W=0)=\Prob(W=1)=0.50.
+\]
+Therefore
+\[
+\E\{\Yone\}
+=0.25(0.50)+0.50(0.50)=0.375.
+\]
+For standard treatment,
+\[
+\E(Y\given A=0,W=0)=\frac{60}{60+60}=0.50,
+\qquad
+\E(Y\given A=0,W=1)=\frac{30}{30+10}=0.75,
+\]
+so
+\[
+\E\{\Yzero\}
+=0.50(0.50)+0.75(0.50)=0.625.
+\]
+The identified ATE on the risk-difference scale is
+\[
+\E\{\Yone\}-\E\{\Yzero\}=0.375-0.625=-0.25.
+\]
+Because $Y=1$ means death, this negative value means the risky treatment lowers
+the death risk by 25 percentage points in this population under the stated
+assumptions.
+
+\subsection{Why Naive Mean Differences Are Unfair}
+
+The naive observed mean difference is
+\[
+\E(Y\given A=1)-\E(Y\given A=0).
+\]
+By the tower rule,
+\[
+\E(Y\given A=1)
+=
+\sum_w \E(Y\given A=1,W=w)\Prob(W=w\given A=1),
+\]
+and
+\[
+\E(Y\given A=0)
+=
+\sum_w \E(Y\given A=0,W=w)\Prob(W=w\given A=0).
+\]
+Thus the treated mean is averaged over the covariate distribution among treated people, while the untreated mean is averaged over the covariate distribution among untreated people. If treatment groups have different covariate distributions, the comparison mixes treatment differences with covariate-composition differences.
+
+In the cancer example above, the risky treatment group has more severe patients:
+\[
+\Prob(W=1\given A=1)=\frac{120}{160}=0.75,
+\qquad
+\Prob(W=1\given A=0)=\frac{40}{160}=0.25.
+\]
+The naive risks are
+\[
+\E(Y\given A=1)=\frac{10+60}{160}=0.4375,
+\qquad
+\E(Y\given A=0)=\frac{60+30}{160}=0.5625,
+\]
+so the naive difference is $-0.125$, only half as large in magnitude as the
+standardized contrast $-0.25$. The naive comparison is unfair to the risky
+treatment because it averages the risky-treatment outcomes over a much sicker
+covariate distribution.
+
+\begin{keyidea}
+G-computation keeps the comparison fair by using the same covariate distribution, $\Prob(W=w)$, for both treatment levels.
+\end{keyidea}

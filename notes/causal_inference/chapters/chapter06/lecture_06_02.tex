@@ -1,0 +1,162 @@
+\lecture{6.2}{Manual Cross-Validation}
+\label{lec:6-2}
+
+\subsection{Full-Data Risk vs Cross-Validated Risk}
+
+Before calling \texttt{SuperLearner()}, it is useful to implement cross-validation by
+hand. This makes clear what the package automates.
+
+Consider two candidate estimators for the outcome regression $\Qbar(A,W)$:
+\[
+\Qbar_{n,1}: \text{ main-terms linear regression},
+\]
+\[
+\Qbar_{n,2}: \text{ a more flexible regression with quadratic and interaction terms}.
+\]
+The mean squared-error risk of a fitted estimator $Q$ is
+\[
+R(Q)=\E\left[\{Y-Q(A,W)\}^2\right].
+\]
+The naive full-data empirical risk is
+\[
+R_n(Q_n)=\frac{1}{n}\sum_{i=1}^n\{Y_i-Q_n(A_i,W_i)\}^2.
+\]
+This quantity can be too optimistic because the same observations are used both to fit
+the regression and to evaluate its error.
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+Q1_fit <- glm(Y ~ W1 + W2 + A, data = full_data)
+Q1n <- as.numeric(predict(Q1_fit))
+risk_Q1_full <- mean((Y - Q1n)^2)
+
+Q2_fit <- glm(Y ~ I(W1^2) + I(W2^2) + W1 * W2 + W1 * A + W2 * A,
+              data = full_data)
+Q2n <- as.numeric(predict(Q2_fit))
+risk_Q2_full <- mean((Y - Q2n)^2)
+\end{lstlisting}
+\end{implementationbox}
+
+\subsection{Two-Fold Splitting}
+
+Two-fold cross-validation splits the data into two validation sets. Each fold is used
+once for validation and once as part of the training data. With two folds, the training
+set for fold 1 is fold 2, and the training set for fold 2 is fold 1.
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+split <- c(rep(1, n / 2), rep(2, n / 2))
+
+split1 <- subset(full_data, split == 1)
+split2 <- subset(full_data, split == 2)
+\end{lstlisting}
+\end{implementationbox}
+
+In real analyses, folds are usually randomized rather than assigning the first half to
+one fold and the second half to another. For teaching, a deterministic split makes the
+logic easier to see.
+
+\subsection{Training Regressions}
+
+For $\Qbar_{n,1}$, fit the main-terms model on split 1 and validate on split 2:
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+Q1_fit_split1 <- glm(Y ~ W1 + W2 + A, data = split1)
+Q1n_split2 <- predict(Q1_fit_split1, newdata = split2)
+risk_Q1_split2 <- mean((split2$Y - Q1n_split2)^2)
+\end{lstlisting}
+\end{implementationbox}
+
+Then reverse the roles:
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+Q1_fit_split2 <- glm(Y ~ W1 + W2 + A, data = split2)
+Q1n_split1 <- predict(Q1_fit_split2, newdata = split1)
+risk_Q1_split1 <- mean((split1$Y - Q1n_split1)^2)
+\end{lstlisting}
+\end{implementationbox}
+
+\subsection{Validation Predictions}
+
+The essential rule is that validation predictions must be made using a model that did
+not train on the validation observations. For observation $i$ in validation fold $v$,
+the prediction has the form
+\[
+\Qbar_{n,v}(A_i,W_i),
+\]
+where $\Qbar_{n,v}$ was fit using the training observations outside fold $v$.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=1.35cm,
+  box/.style={draw, rounded corners=2pt, minimum width=3.0cm, minimum height=.75cm},
+  arr/.style={-{Latex[length=2.5mm]}, thick}
+]
+\node[box] (s1) {Split 1};
+\node[box, right=of s1] (fit1) {Fit model};
+\node[box, right=of fit1] (pred2) {Predict\\ Split 2};
+\draw[arr] (s1) -- (fit1);
+\draw[arr] (fit1) -- (pred2);
+\node[box, below=1cm of s1] (s2) {Split 2};
+\node[box, right=of s2] (fit2) {Fit model};
+\node[box, right=of fit2] (pred1) {Predict\\ Split 1};
+\draw[arr] (s2) -- (fit2);
+\draw[arr] (fit2) -- (pred1);
+\end{tikzpicture}
+\caption{Two-fold cross-validation swaps training and validation roles.}
+\label{fig:ch6-twofold}
+\end{figure}
+
+\subsection{Mean Squared-Error Risk}
+
+The two-fold cross-validated risk estimate is the average of the two fold-specific
+validation risks:
+\[
+R_{CV,n}(\Qbar_{n,1})
+=
+\frac{1}{2}\left\{
+R_{n,1}(\Qbar_{n,1,2})+
+R_{n,2}(\Qbar_{n,1,1})
+\right\}.
+\]
+In code:
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+cv_risk_Q1 <- (risk_Q1_split1 + risk_Q1_split2) / 2
+\end{lstlisting}
+\end{implementationbox}
+
+For the flexible model, repeat the same process:
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+Q2_formula <- Y ~ I(W1^2) + I(W2^2) + W1 * W2 + W1 * A + W2 * A
+
+Q2_fit_split1 <- glm(Q2_formula, data = split1)
+Q2n_split2 <- predict(Q2_fit_split1, newdata = split2)
+risk_Q2_split2 <- mean((split2$Y - Q2n_split2)^2)
+
+Q2_fit_split2 <- glm(Q2_formula, data = split2)
+Q2n_split1 <- predict(Q2_fit_split2, newdata = split1)
+risk_Q2_split1 <- mean((split1$Y - Q2n_split1)^2)
+
+cv_risk_Q2 <- (risk_Q2_split1 + risk_Q2_split2) / 2
+\end{lstlisting}
+\end{implementationbox}
+
+\subsection{Comparing Simple and Flexible Regressions}
+
+The candidate with lower cross-validated risk has better estimated out-of-sample
+prediction performance under the chosen loss. A flexible model can have lower
+training risk but higher cross-validated risk if it overfits. Conversely, a simple model
+can win when the true signal is simple or when the sample size is limited.
+
+\begin{keyidea}
+Cross-validation evaluates how well a regression predicts observations it did not use
+for training. This is why cross-validated risk is a better guide for selecting nuisance
+regressions than full-data training error.
+\end{keyidea}

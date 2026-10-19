@@ -1,0 +1,226 @@
+\lecture{4.6}{G-Computation and IPTW in R}
+\label{lec:4-6}
+
+\subsection{Data Preparation}
+
+The R implementations of g-computation and IPTW are most reliable when the data are
+prepared so that the notation matches the analysis. The dataset should contain one row
+per individual and variables corresponding to $W$, $A$, and $Y$:
+\[
+O_i=(W_i,A_i,Y_i).
+\]
+Treatment should be coded consistently, often as $A=1$ for treated and $A=0$ for
+untreated. Binary outcomes should also be coded as $0/1$ when logistic regression is
+used.
+
+\begin{implementationbox}
+Example setup:
+\begin{lstlisting}[language=R]
+# dat has one row per individual
+# A: binary treatment, coded 0/1
+# Y: outcome
+# W1, W2: pre-treatment covariates
+
+dat <- dat[complete.cases(dat[, c("Y", "A", "W1", "W2")]), ]
+dat$A <- as.numeric(dat$A == 1)
+dat$Y <- as.numeric(dat$Y)
+\end{lstlisting}
+\end{implementationbox}
+
+Dropping observations with missing data is simple but not always appropriate. If
+missingness is related to treatment, outcome, or covariates, complete-case analysis can
+change the target population or introduce bias. Later chapters treat missing data more
+carefully.
+
+\subsection{Fitting Outcome Regressions}
+
+For g-computation, the nuisance function is
+\[
+\Qbar(a,w)=\E(Y\given A=a,W=w).
+\]
+The fitted outcome regression should include treatment and the confounders required
+for identification. It may also include interactions or nonlinear terms if scientifically
+or statistically warranted.
+
+\begin{implementationbox}
+Outcome regression examples:
+\begin{lstlisting}[language=R]
+# Continuous outcome, identity link
+fit_Q_linear <- glm(Y ~ A + W1 + W2, data = dat, family = gaussian())
+
+# Binary outcome, logistic link
+fit_Q_logistic <- glm(Y ~ A + W1 + W2, data = dat, family = binomial())
+
+# Interaction model allowing treatment effect heterogeneity by W1
+fit_Q_interact <- glm(Y ~ A * W1 + W2, data = dat, family = binomial())
+\end{lstlisting}
+\end{implementationbox}
+
+The fitted object is not itself the causal estimate. It is an estimate of a nuisance
+function used to compute predicted counterfactual outcomes.
+
+\subsection{Fitting Propensity Score Models}
+
+For IPTW, the nuisance function is
+\[
+g_1(w)=\Prob(A=1\given W=w).
+\]
+Because $A$ is binary, logistic regression is a common starting point:
+\[
+\logit\{g_1(w)\}=\alpha_0+\alpha^\top w.
+\]
+
+\begin{implementationbox}
+Propensity score model:
+\begin{lstlisting}[language=R]
+fit_g <- glm(A ~ W1 + W2, data = dat, family = binomial())
+
+g1 <- predict(fit_g, type = "response")
+g0 <- 1 - g1
+\end{lstlisting}
+\end{implementationbox}
+
+After fitting the propensity score, inspect whether predicted probabilities are close
+to zero or one. Very small $g_1(W_i)$ among treated individuals or very small
+$g_0(W_i)$ among untreated individuals lead to large IPTW weights.
+
+\subsection{Prediction Workflows}
+
+The g-computation prediction workflow constructs the two estimated counterfactual
+means by changing only the treatment variable:
+
+\[
+\psi_n(1)=\frac{1}{n}\sum_{i=1}^n\Qbar_n(1,W_i),
+\qquad
+\psi_n(0)=\frac{1}{n}\sum_{i=1}^n\Qbar_n(0,W_i).
+\]
+
+\begin{implementationbox}
+G-computation prediction workflow:
+\begin{lstlisting}[language=R]
+dat1 <- dat
+dat1$A <- 1
+
+dat0 <- dat
+dat0$A <- 0
+
+Q1 <- predict(fit_Q_logistic, newdata = dat1, type = "response")
+Q0 <- predict(fit_Q_logistic, newdata = dat0, type = "response")
+
+psi1_gcomp <- mean(Q1)
+psi0_gcomp <- mean(Q0)
+ate_gcomp  <- psi1_gcomp - psi0_gcomp
+\end{lstlisting}
+\end{implementationbox}
+
+For IPTW, no treatment-specific prediction datasets are required. The estimator uses
+the observed treatment and observed outcome:
+\[
+\psi_n^{\IPTW}(a)=
+\frac{1}{n}\sum_{i=1}^n
+\frac{\ind(A_i=a)}{g_{n,a}(W_i)}Y_i.
+\]
+
+\begin{implementationbox}
+IPTW workflow:
+\begin{lstlisting}[language=R]
+A <- dat$A
+Y <- dat$Y
+
+psi1_iptw <- mean((A == 1) / g1 * Y)
+psi0_iptw <- mean((A == 0) / g0 * Y)
+ate_iptw  <- psi1_iptw - psi0_iptw
+\end{lstlisting}
+\end{implementationbox}
+
+\subsection{Treatment-Specific Datasets}
+
+Treatment-specific datasets are useful because they make the estimand visible in the
+code. The dataset \texttt{dat1} represents the empirical covariate distribution with
+everyone assigned $A=1$; \texttt{dat0} represents the same empirical covariate
+distribution with everyone assigned $A=0$.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=1.35cm,
+  box/.style={draw, rounded corners=2pt, minimum width=3.2cm, minimum height=.8cm},
+  arr/.style={-{Latex[length=2.5mm]}, thick}
+]
+\node[box] (dat) {Observed covariates\\ $W_1,\ldots,W_n$};
+\node[box, below left=1cm and .9cm of dat] (dat1) {Set all\\ $A=1$};
+\node[box, below right=1cm and .9cm of dat] (dat0) {Set all\\ $A=0$};
+\node[box, below=1cm of dat1] (q1) {Predict\\ $\Qbar_n(1,W_i)$};
+\node[box, below=1cm of dat0] (q0) {Predict\\ $\Qbar_n(0,W_i)$};
+\node[box, below right=1cm and .15cm of q1] (ate) {Average\\ and subtract};
+\draw[arr] (dat) -- (dat1);
+\draw[arr] (dat) -- (dat0);
+\draw[arr] (dat1) -- (q1);
+\draw[arr] (dat0) -- (q0);
+\draw[arr] (q1) -- (ate);
+\draw[arr] (q0) -- (ate);
+\end{tikzpicture}
+\caption{Treatment-specific datasets implement g-computation predictions.}
+\label{fig:ch4-treatment-specific-data}
+\end{figure}
+
+This workflow should not be confused with changing the observed data. The original
+outcomes remain the data used to fit the outcome model. The modified datasets are
+only prediction grids used to evaluate the fitted conditional mean.
+
+\subsection{Practical Implementation Patterns}
+
+It is often helpful to wrap estimators in functions. This makes bootstrap inference
+straightforward and reduces the chance of accidentally using variables from the wrong
+dataset.
+
+\begin{implementationbox}
+Reusable g-computation function:
+\begin{lstlisting}[language=R]
+get_gcomp <- function(input_data) {
+  fit_Q <- glm(Y ~ A + W1 + W2, data = input_data, family = binomial())
+
+  data1 <- input_data
+  data1$A <- 1
+  data0 <- input_data
+  data0$A <- 0
+
+  Q1 <- predict(fit_Q, newdata = data1, type = "response")
+  Q0 <- predict(fit_Q, newdata = data0, type = "response")
+
+  c(psi0 = mean(Q0), psi1 = mean(Q1), ate = mean(Q1) - mean(Q0))
+}
+\end{lstlisting}
+\end{implementationbox}
+
+\begin{implementationbox}
+Reusable IPTW function:
+\begin{lstlisting}[language=R]
+get_iptw <- function(input_data) {
+  fit_g <- glm(A ~ W1 + W2, data = input_data, family = binomial())
+
+  g1 <- predict(fit_g, type = "response")
+  g0 <- 1 - g1
+
+  A <- input_data$A
+  Y <- input_data$Y
+
+  psi1 <- mean((A == 1) / g1 * Y)
+  psi0 <- mean((A == 0) / g0 * Y)
+
+  c(psi0 = psi0, psi1 = psi1, ate = psi1 - psi0)
+}
+\end{lstlisting}
+\end{implementationbox}
+
+\begin{estimationbox}
+Implementation checks:
+\begin{itemize}
+\item Confirm that $A$, $Y$, and all covariates are coded as intended.
+\item For g-computation, confirm that \texttt{newdata} contains the same covariate
+names and factor levels as the model-fitting dataset.
+\item For IPTW, inspect summaries of $g_1$, $g_0$, and the resulting weights.
+\item Keep the estimation function self-contained so that resampling methods refit
+all nuisance functions inside each resampled dataset.
+\end{itemize}
+\end{estimationbox}

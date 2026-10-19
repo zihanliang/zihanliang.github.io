@@ -1,0 +1,190 @@
+\lecture{8.4}{Longitudinal IPTW Formula}
+\label{lec:8-4}
+
+\subsection{Generalized Propensity Scores}
+
+For a point treatment, the propensity score is the conditional probability of
+receiving the observed or target treatment. In a longitudinal study, there is a
+time-specific treatment mechanism at every decision time.
+
+\begin{definition}[Generalized propensity score]
+For a binary treatment and fixed regime $\abar=(a_0,\ldots,a_K)$, define
+\[
+  g_k(a_k\given \lbar_k,\abar_{k-1})
+  =
+  \Prob(A_k=a_k\given \Lbar_k=\lbar_k,\Abar_{k-1}=\abar_{k-1}).
+\]
+For the always-treated regime, write
+\[
+  g_k(\lbar_k)
+  =
+  \Prob(A_k=1\given \Lbar_k=\lbar_k,\Abar_{k-1}=\mathbf{1}_k).
+\]
+\end{definition}
+
+The time-specific propensity score is local: it concerns the treatment decision
+at time $k$ among individuals whose previous treatment history is compatible
+with the regime.
+
+\subsection{Composite Treatment Probabilities}
+
+The probability of receiving an entire treatment profile is the product of the
+time-specific probabilities. For regime $\abar$ define
+\[
+  \gbar_K(\Lbar_K)
+  =
+  \prod_{k=0}^K
+  g_k(a_k\given \Lbar_k,\Abar_{k-1}=\abar_{k-1}).
+\]
+For the always-treated regime this is
+\[
+  \gbar_K(\Lbar_K)
+  =
+  g_0(L_0)g_1(\Lbar_1)\cdots g_K(\Lbar_K).
+\]
+
+This product is the probability that a person with the realized covariate
+history would follow the regime through all treatment times, under the observed
+treatment mechanism.
+
+\subsection{Treatment-Regime Weights}
+
+The inverse probability weight for a regime $\abar$ is
+\[
+  H_{\abar}
+  =
+  \frac{\ind(\Abar_K=\abar_K)}{\gbar_K(\Lbar_K)}.
+\]
+For the always-treated regime,
+\[
+  H_{\mathbf{1}}
+  =
+  \frac{A_0A_1\cdots A_K}
+       {g_0(L_0)g_1(\Lbar_1)\cdots g_K(\Lbar_K)}.
+\]
+
+The numerator selects individuals whose observed treatment history matches the
+regime. The denominator upweights those individuals by the inverse probability
+of observing that full history.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=.9cm,
+  box/.style={draw, rounded corners=2pt, minimum width=2.35cm, minimum height=.72cm},
+  arr/.style={-{Latex[length=2.2mm]}, thick}
+]
+\node[box] (p0) {$g_0$};
+\node[box, right=of p0] (p1) {$g_1$};
+\node[right=of p1] (dots) {$\cdots$};
+\node[box, right=of dots] (pK) {$g_K$};
+\node[box, below=of dots, minimum width=6.4cm] (prod) {$\gbar_K=\prod_{k=0}^K g_k$};
+\node[box, below=of prod, minimum width=6.4cm] (w) {$H_{\abar}=\ind(\Abar=\abar)/\gbar_K$};
+\draw[arr] (p0) -- (prod);
+\draw[arr] (p1) -- (prod);
+\draw[arr] (pK) -- (prod);
+\draw[arr] (prod) -- (w);
+\end{tikzpicture}
+\caption{Longitudinal IPTW uses the product of time-specific treatment probabilities.}
+\label{fig:ch8-longitudinal-iptw}
+\end{figure}
+
+\subsection{IPTW Identification for Treatment Profiles}
+
+\begin{identificationbox}
+Under consistency, sequential exchangeability, and longitudinal positivity,
+\[
+  \E\{Y(\abar)\}
+  =
+  \E\left[
+    \frac{\ind(\Abar_K=\abar_K)}
+         {\prod_{k=0}^K g_k(a_k\given \Lbar_k,\Abar_{k-1}=\abar_{k-1})}
+    Y
+  \right].
+\]
+For the always-treated regime,
+\[
+  \E\{Y(1,\ldots,1)\}
+  =
+  \E\left[
+    \frac{A_0A_1\cdots A_K}
+         {g_0(L_0)g_1(\Lbar_1)\cdots g_K(\Lbar_K)}
+    Y
+  \right].
+\]
+\end{identificationbox}
+
+The formula creates a pseudo-population in which following the regime is no
+longer associated with measured history. Individuals with rare regime-compatible
+histories receive larger weights because they represent many similar individuals
+who did not follow the regime.
+
+\subsection{Positivity Problems Over Time}
+
+Longitudinal weights can become unstable quickly. If $K=5$ and each
+time-specific probability equals $0.5$, then the composite probability is
+$0.5^6=0.015625$. The corresponding weight is $64$ for an individual who
+follows the whole regime. If some probabilities are smaller, weights can be much
+larger.
+
+There are two kinds of positivity problems:
+\begin{itemize}
+  \item \textbf{Structural violations}: a treatment sequence is impossible for
+  some history, such as a contraindicated drug after severe toxicity.
+  \item \textbf{Practical violations}: the sequence is possible in principle but
+  rarely observed in the sample.
+\end{itemize}
+Both problems are more common as the number of treatment times grows.
+
+\subsection{Equivalence with G-Computation}
+
+The IPTW and g-computation formulas identify the same counterfactual mean. The
+equivalence follows by repeated use of iterated expectation.
+
+For the always-treated regime, let
+\[
+  \Qbar_{K+1}(\Lbar_K)=\E(Y\given \Abar_K=\mathbf{1}_{K+1},\Lbar_K).
+\]
+Then
+\[
+\begin{aligned}
+&\E\left[
+  \frac{A_0\cdots A_K}{g_0(\Lbar_0)\cdots g_K(\Lbar_K)}Y
+\right] \\
+&=
+\E\left[
+  \frac{A_0\cdots A_K}{g_0(\Lbar_0)\cdots g_K(\Lbar_K)}
+  \E(Y\given \Lbar_K,\Abar_K)
+\right] \\
+&=
+\E\left[
+  \frac{A_0\cdots A_K}{g_0(\Lbar_0)\cdots g_K(\Lbar_K)}
+  \Qbar_{K+1}(\Lbar_K)
+\right].
+\end{aligned}
+\]
+Now condition on $\Lbar_K,\Abar_{K-1}$. Since
+\[
+  \E(A_K\given \Lbar_K,\Abar_{K-1}=\mathbf{1}_K)=g_K(\Lbar_K),
+\]
+the factor $A_K/g_K(\Lbar_K)$ averages to one among those compatible with the
+past regime. Therefore the last expression becomes
+\[
+  \E\left[
+  \frac{A_0\cdots A_{K-1}}{g_0(\Lbar_0)\cdots g_{K-1}(\Lbar_{K-1})}
+  \E\{\Qbar_{K+1}(\Lbar_K)\given \Lbar_{K-1},\Abar_{K-1}=\mathbf{1}_K\}
+  \right].
+\]
+The conditional expectation is $\Qbar_K(\Lbar_{K-1})$. Repeating the same
+argument removes $A_{K-1}/g_{K-1}$, then $A_{K-2}/g_{K-2}$, and so on, yielding
+\[
+  \E\{\Qbar_1(L_0)\},
+\]
+which is the g-computation formula.
+
+\begin{keyidea}
+IPTW and g-computation are two representations of the same identifying
+functional. G-computation integrates outcome regressions forward through the
+covariate process; IPTW reweights observed regime followers to represent the
+target population.
+\end{keyidea}

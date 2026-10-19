@@ -1,0 +1,160 @@
+\lecture{8.5}{Failure of Naive Regression}
+\label{lec:8-5}
+
+\subsection{Regression Coefficients in Single-Timepoint Settings}
+
+Even in a point-treatment setting, a regression coefficient is not automatically
+an average treatment effect. Suppose
+\[
+  \E(Y\given A=a,W=w)=\beta_0+\beta_1 a+\beta_2 w.
+\]
+Then
+\[
+  \E(Y\given A=1,W=w)-\E(Y\given A=0,W=w)=\beta_1
+\]
+for every $w$, and the standardized mean difference is also $\beta_1$:
+\[
+  \E\{\E(Y\given A=1,W)-\E(Y\given A=0,W)\}=\beta_1.
+\]
+This special equality depends on the linear model and the absence of treatment
+effect modification by $W$.
+
+\subsection{Linear Models Without Interactions}
+
+When a linear model has no interaction between treatment and covariates, the
+treatment coefficient is a constant conditional mean contrast. Under the usual
+identification assumptions, it can equal the g-computation estimate of the ATE.
+This is a special case, not a general rule.
+
+\subsection{Linear Models With Interactions}
+
+If the conditional mean includes an interaction,
+\[
+  \E(Y\given A=a,W=w)=\beta_0+\beta_1a+\beta_2w+\beta_3aw,
+\]
+then the conditional contrast is
+\[
+  \E(Y\given A=1,W=w)-\E(Y\given A=0,W=w)=\beta_1+\beta_3w.
+\]
+The marginal standardized contrast is
+\[
+  \E(\beta_1+\beta_3W)=\beta_1+\beta_3\E(W).
+\]
+Thus $\beta_1$ is the conditional contrast at $W=0$, not the average treatment
+effect unless $\E(W)=0$ or $\beta_3=0$.
+
+\subsection{Logistic Models}
+
+For binary outcomes, logistic regression is nonlinear:
+\[
+  \E(Y\given A=a,W=w)=\expit(\beta_0+\beta_1a+\beta_2w).
+\]
+The risk difference at covariate value $w$ is
+\[
+  \expit(\beta_0+\beta_1+\beta_2w)-\expit(\beta_0+\beta_2w),
+\]
+and the marginal risk difference is
+\[
+  \E\left[
+    \expit(\beta_0+\beta_1+\beta_2W)-\expit(\beta_0+\beta_2W)
+  \right].
+\]
+The coefficient $\beta_1$ is a conditional log-odds ratio parameter, not a risk
+difference and not a marginal ATE.
+
+\subsection{Time-Varying Confounder Feedback}
+
+Longitudinal settings introduce a deeper problem. Consider
+\[
+  L_0 \rightarrow A_0 \rightarrow L_1 \rightarrow A_1 \rightarrow Y,
+\]
+where $L_1$ also affects $Y$. A regression of $Y$ on $A_0,L_1,A_1$ conditions
+on $L_1$. This may be useful for estimating the effect of $A_1$, because $L_1$
+confounds the $A_1$--$Y$ relation. But it blocks part of the effect of $A_0$ on
+$Y$ that operates through $L_1$.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=1.35cm,
+  box/.style={draw, rounded corners=2pt, minimum width=1.0cm, minimum height=.72cm},
+  arr/.style={-{Latex[length=2.3mm]}, thick},
+  block/.style={draw=red!65!black, line width=1pt, circle, minimum size=.82cm}
+]
+\node[box] (A0) {$A_0$};
+\node[box, right=of A0] (L1) {$L_1$};
+\node[box, right=of L1] (A1) {$A_1$};
+\node[box, right=of A1] (Y) {$Y$};
+\draw[arr] (A0) -- (L1);
+\draw[arr] (L1) -- (A1);
+\draw[arr] (A1) -- (Y);
+\draw[arr, bend left=23] (L1) to (Y);
+\draw[arr, bend left=35] (A0) to (Y);
+\node[block] at (L1) {};
+\end{tikzpicture}
+\caption{Conditioning on $L_1$ can block the mediated path from $A_0$ to $Y$ while controlling confounding for $A_1$.}
+\label{fig:ch8-naive-blocking}
+\end{figure}
+
+\subsection{A Numerical Data-Generating Example}
+
+Suppose
+\[
+  A_0\sim \operatorname{Bernoulli}(0.5),
+\]
+\[
+  L_1\given A_0=a_0 \sim N(1+a_0,1),
+\]
+\[
+  A_1\given L_1=l_1,A_0=a_0
+  \sim \operatorname{Bernoulli}\{\expit(-1+l_1+a_0)\},
+\]
+and
+\[
+  Y\given A_1=a_1,L_1=l_1,A_0=a_0
+  \sim N(1+a_1+2l_1,1).
+\]
+The mean outcome regression does not contain $A_0$ directly. Nevertheless,
+$A_0$ has a causal effect because it shifts $L_1$, and $L_1$ affects $Y$.
+
+Using g-computation,
+\[
+\begin{aligned}
+  \E\{Y(1,1)\}
+  &=\E\{\E(Y\given A_1=1,L_1,A_0=1)\given A_0=1\}\\
+  &=\E(2+2L_1\given A_0=1)=2+2(2)=6,
+\end{aligned}
+\]
+because $\E(L_1\given A_0=1)=2$. Similarly,
+\[
+  \E\{Y(1,0)\}=5,\qquad
+  \E\{Y(0,1)\}=4,\qquad
+  \E\{Y(0,0)\}=3.
+\]
+Therefore the effect of changing $A_0$ from 0 to 1 while holding $A_1=1$ is
+\[
+  \E\{Y(1,1)-Y(0,1)\}=2.
+\]
+
+Now fit the correctly specified conditional mean regression
+\[
+  \E(Y\given A_1,L_1,A_0)=1+A_1+2L_1+0\cdot A_0.
+\]
+The coefficient on $A_0$ is zero because the regression conditions on $L_1$.
+Reading the $A_0$ coefficient as the causal effect of baseline treatment would
+therefore be wrong.
+
+\subsection{Blocking Causal Pathways by Conditioning on Intermediates}
+
+The problem is not that regression is useless. The problem is using one
+conditional regression as if it were the causal estimand. Sequential
+g-computation uses regressions carefully: it conditions on $L_1$ in the final
+outcome regression and then averages over the distribution of $L_1$ that would
+arise under each baseline treatment. A naive regression coefficient conditions
+on $L_1$ and stops there.
+
+\begin{keyidea}
+In longitudinal studies, the same covariate can be a confounder for later
+treatment and a mediator for earlier treatment. Ordinary regression adjustment
+cannot generally handle this feedback by reading off coefficients.
+\end{keyidea}

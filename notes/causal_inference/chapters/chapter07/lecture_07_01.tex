@@ -1,0 +1,152 @@
+\lecture{7.1}{Limitations of Naive G-Computation and IPTW}
+\label{lec:7-1}
+
+\subsection{Dependence on Nuisance Regression Consistency}
+
+The point-treatment ATE is identified, under consistency, conditional exchangeability,
+and positivity, by
+\[
+\ATE=\E\{\Qbar(1,W)-\Qbar(0,W)\},
+\qquad
+\Qbar(a,w)=\E(Y\given A=a,W=w),
+\]
+and also by inverse probability weighting:
+\[
+\E\{\Ya{a}\}
+=
+\E\left\{\frac{\ind(A=a)}{g_a(W)}Y\right\},
+\qquad
+g_a(w)=\Prob(A=a\given W=w).
+\]
+These formulas lead directly to the estimators studied in Chapter 4:
+\[
+\psi_{n,G}(a)=\frac{1}{n}\sum_{i=1}^n\Qbar_n(a,W_i)
+\]
+and
+\[
+\psi_{n,\IPTW}(a)=
+\frac{1}{n}\sum_{i=1}^n
+\frac{\ind(A_i=a)}{g_{n,a}(W_i)}Y_i.
+\]
+
+Each estimator relies on consistent estimation of a nuisance regression. The
+g-computation estimator relies on $\Qbar_n$ being close to $\Qbar$. The IPTW
+estimator relies on $g_{n,a}$ being close to $g_a$. If the required nuisance function is
+estimated poorly, the resulting causal effect estimator can be biased even in large
+samples.
+
+\begin{assumptionbox}
+All estimators in this chapter require the same causal identification assumptions as
+before:
+\[
+Y=Y(A),\qquad \Ya{a}\ci A\given W,\qquad 0<\Prob(A=a\given W=w)<1.
+\]
+Doubly robust estimation improves statistical robustness to nuisance-model
+misspecification; it does not remove the need for these causal assumptions.
+\end{assumptionbox}
+
+\subsection{Outcome Regression Misspecification}
+
+Suppose the analyst fits a main-terms outcome regression
+\[
+\Qbar_n(a,w)\approx \beta_0+\beta_1a+\beta_2w,
+\]
+but the true conditional mean contains an interaction:
+\[
+\Qbar(a,w)=\beta_0+\beta_1a+\beta_2w+\beta_3aw.
+\]
+Then $\Qbar_n(1,w)-\Qbar_n(0,w)$ may be systematically wrong for some values of
+$w$. Since g-computation averages these predicted contrasts over the covariate
+distribution, the resulting ATE estimator can converge to the wrong target.
+
+This is not a small-sample problem. With enough data, the fitted main-terms model may
+converge very precisely to the best linear approximation within the misspecified
+model class. Precision around the wrong function is still bias for the causal
+estimand.
+
+\subsection{Propensity Score Misspecification}
+
+IPTW has a parallel vulnerability. If the propensity score model is misspecified, the
+weights
+\[
+\frac{\ind(A_i=a)}{g_{n,a}(W_i)}
+\]
+do not create the intended pseudo-population. Some covariate strata may remain
+overrepresented and others underrepresented after weighting. In extreme cases, an
+incorrect propensity model can also create highly variable weights without correcting
+confounding.
+
+For example, if the true propensity score is nonlinear,
+\[
+g_1(w)=\expit(\alpha_0+\alpha_1w+\alpha_2w^2),
+\]
+but the analyst fits $\expit(\gamma_0+\gamma_1w)$, the fitted probabilities can be
+wrong exactly in regions where treatment assignment is most imbalanced.
+
+\subsection{Flexible Regression Complications}
+
+Super Learning and other flexible regression methods help reduce the risk of severe
+misspecification. They allow $\Qbar_n$ and $g_n$ to adapt to nonlinearities,
+interactions, and high-dimensional predictor structures.
+
+However, flexible regression creates two new issues. First, flexible learners may
+converge more slowly than parametric estimators. Second, their sampling distributions
+can be difficult to characterize. The final causal estimator is no longer a simple
+average of independent terms with fixed nuisance functions; it contains data-adaptive
+estimated functions.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=1.15cm,
+  box/.style={draw, rounded corners=2pt, minimum width=3.1cm, minimum height=.75cm},
+  arr/.style={-{Latex[length=2.5mm]}, thick}
+]
+\node[box] (data) {Observed data};
+\node[box, below left=1cm and .9cm of data] (q) {Estimate\\ $\Qbar_n$};
+\node[box, below right=1cm and .9cm of data] (g) {Estimate\\ $g_n$};
+\node[box, below=1cm of q] (gc) {G-computation\\ depends on $\Qbar_n$};
+\node[box, below=1cm of g] (ipw) {IPTW\\ depends on $g_n$};
+\node[box, below right=1cm and .1cm of gc] (aipw) {Doubly robust\\ estimators use both};
+\draw[arr] (data) -- (q);
+\draw[arr] (data) -- (g);
+\draw[arr] (q) -- (gc);
+\draw[arr] (g) -- (ipw);
+\draw[arr] (q) -- (aipw);
+\draw[arr] (g) -- (aipw);
+\end{tikzpicture}
+\caption{Naive g-computation and IPTW each depend on one nuisance function; doubly robust estimators combine both.}
+\label{fig:ch7-nuisance-dependence}
+\end{figure}
+
+\subsection{Lack of Standard Inference Basis}
+
+For a simple sample mean, the central limit theorem gives a standard basis for
+confidence intervals. For a parametric regression coefficient, classical regression
+theory gives approximate standard errors under model assumptions. For naive
+g-computation or IPTW with highly adaptive nuisance estimates, neither argument
+directly applies without additional work.
+
+The statistical question is not only whether $\psi_n$ is consistent. We also need an
+approximation of the form
+\[
+\sqrt n(\psi_n-\psi)\overset{d}{\longrightarrow}N(0,\sigma^2),
+\]
+and a consistent estimator of $\sigma^2$. Doubly robust estimators are designed to
+have an asymptotic linear representation under appropriate conditions, which gives a
+direct route to inference.
+
+\subsection{Bootstrap Limitations}
+
+The nonparametric bootstrap is often useful, but it is not a universal remedy. With
+highly adaptive learners, variable selection, non-smooth tuning, or near-positivity
+violations, bootstrap distributions can fail to approximate the true sampling
+distribution. The bootstrap may also be computationally expensive because every
+bootstrap replicate must refit all nuisance functions.
+
+\begin{keyidea}
+The limitation of naive g-computation and IPTW is not that they are wrong as
+identification formulas. The limitation is that, as estimators, they rely heavily on one
+nuisance regression and do not automatically provide stable, valid inference when
+that nuisance regression is learned flexibly.
+\end{keyidea}

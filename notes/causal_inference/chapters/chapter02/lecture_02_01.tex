@@ -1,0 +1,128 @@
+\lecture{2.1}{From Association to Causation}
+\label{lec:2-1}
+
+\subsection{Motivating Example: Early Imaging for Back Pain}
+
+Consider older adults who visit primary care for a new episode of back pain. A clinically natural question is whether early lumbar spinal imaging improves later outcomes. The exposure $A$ might indicate whether a patient received imaging within six weeks of the index visit. Outcomes $Y$ might include pain, disability, depression, anxiety, and later health care utilization, measured over months of follow-up.
+
+This setting is useful because the causal question sounds simple, but the data-generating process is not simple. Physicians do not order early imaging at random. They may be more likely to order imaging for patients with severe pain, neurological symptoms, prior cancer, anxiety about serious disease, unusual examination findings, better insurance access, or preferences for aggressive diagnostic workups. Many of these same factors can also predict later disability and health care use.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2.0cm,>=Latex]
+  \node[draw, circle, fill=blue!5] (W) {$W$\\baseline\\severity};
+  \node[draw, circle, fill=green!5, right=of W] (A) {$A$\\early\\imaging};
+  \node[draw, circle, fill=orange!8, right=of A] (Y) {$Y$\\12-month\\disability};
+  \draw[->, thick] (W) -- (A);
+  \draw[->, thick] (W) to[bend right=25] (Y);
+  \draw[->, thick] (A) -- (Y);
+\end{tikzpicture}
+\caption{A simplified causal story for early imaging. Baseline factors may affect both imaging and later disability.}
+\end{figure}
+
+The diagram is not a conclusion from the data. It is a scientific description of what might be happening. The arrow $W\to A$ says that baseline factors influence the probability of imaging. The arrow $W\to Y$ says that the same or related baseline factors influence disability. The arrow $A\to Y$ is the possible causal effect of imaging that motivates the study.
+
+\subsection{Associative Analysis}
+
+An associative analysis summarizes relationships in the observed population. For example, one might compare
+\[
+\E(Y\given A=1)
+\quad\text{and}\quad
+\E(Y\given A=0),
+\]
+the average disability score among patients who were observed to receive early imaging and the average disability score among patients who were observed not to receive early imaging.
+
+\begin{definition}[Association]
+An \emph{association} is a contrast between features of the observed data distribution, such as
+\[
+\E(Y\given A=1)-\E(Y\given A=0).
+\]
+It describes how outcomes differ between groups as they actually occurred.
+\end{definition}
+
+The observed mean difference
+\[
+\E(Y\given A=1)-\E(Y\given A=0)
+\]
+is meaningful as a descriptive parameter. It answers: among patients in the target population, how do observed outcomes differ between those who did and did not receive early imaging?
+
+It does not by itself answer: what would happen if the imaging decision were changed? If patients receiving early imaging tend to have worse baseline symptoms, then the observed imaging group may have worse later disability even if imaging itself has no harmful effect.
+
+\subsection{Causal Analysis}
+
+Causal analysis asks questions about populations under interventions. Instead of comparing patients as they happened to be treated, we compare hypothetical worlds in which treatment assignment is deliberately changed.
+
+\begin{definition}[Causal analysis]
+A \emph{causal analysis} targets a feature of a population under one or more interventions. For a binary treatment $A$, a causal analysis might compare the mean outcome if everyone received $A=1$ with the mean outcome if everyone received $A=0$.
+\end{definition}
+
+For the back pain example, the causal question might be:
+\begin{quote}
+What would be the average 12-month disability score if all eligible older adults with a new primary care visit for back pain received early imaging, compared with if none received early imaging?
+\end{quote}
+
+This question is not merely about the subgroup who actually received imaging. It is about the same target population under two alternative interventions.
+
+\begin{keyidea}
+Associative analysis compares observed groups. Causal analysis compares intervention-generated worlds.
+\end{keyidea}
+
+\subsection{Population under Intervention}
+
+To formalize the difference, imagine two intervention regimes:
+\[
+\doop(A=1): \text{ assign everyone to early imaging},
+\]
+and
+\[
+\doop(A=0): \text{ assign everyone to no early imaging}.
+\]
+The notation $\doop(A=a)$ emphasizes that the treatment value is set by intervention rather than merely observed.
+
+Let $\E_{\doop(A=1)}(Y)$ denote the mean disability score in the population under the intervention assigning everyone to early imaging. Let $\E_{\doop(A=0)}(Y)$ denote the corresponding mean under no early imaging. A causal contrast is
+\[
+\E_{\doop(A=1)}(Y)-\E_{\doop(A=0)}(Y).
+\]
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.2cm,>=Latex]
+  \node[draw, rounded corners, fill=blue!5, minimum width=3.5cm] (pop) {Target population};
+  \node[draw, rounded corners, fill=green!5, below left=1.3cm and 1.0cm of pop, minimum width=3.2cm] (world1) {Intervene\\$\doop(A=1)$};
+  \node[draw, rounded corners, fill=orange!7, below right=1.3cm and 1.0cm of pop, minimum width=3.2cm] (world0) {Intervene\\$\doop(A=0)$};
+  \node[draw, rounded corners, below=.9cm of world1, minimum width=3.2cm] (y1) {Mean outcome\\$\E_{\doop(A=1)}(Y)$};
+  \node[draw, rounded corners, below=.9cm of world0, minimum width=3.2cm] (y0) {Mean outcome\\$\E_{\doop(A=0)}(Y)$};
+  \draw[->, thick] (pop) -- (world1);
+  \draw[->, thick] (pop) -- (world0);
+  \draw[->, thick] (world1) -- (y1);
+  \draw[->, thick] (world0) -- (y0);
+  \draw[<->, thick] (y1) -- node[below]{causal contrast} (y0);
+\end{tikzpicture}
+\caption{A causal contrast compares the same population under different interventions.}
+\end{figure}
+
+\subsection{Why Data Alone Cannot Answer Causal Questions}
+
+The observed data contain outcomes under the treatment decisions that actually occurred. They do not automatically contain outcomes under alternative treatment policies. If a patient received imaging, we observe that patient's outcome after imaging. We do not also observe that same patient's outcome under no imaging at the same time and in the same circumstances.
+
+This is the central reason causal inference requires assumptions. The data may show that early imaging patients had higher health care utilization. That observed association could reflect a causal effect of imaging, but it could also reflect that patients selected for imaging had more severe or concerning presentations.
+
+Randomized trials help because the treatment assignment mechanism is controlled by design. Even then, the causal question may go beyond the literal trial data. Participants may not adhere to assigned treatment, clinicians may deviate from protocol, and follow-up may be incomplete. A question such as "what would happen if everyone complied and no one dropped out?" still refers to a hypothetical intervention.
+
+\subsection{Untestable Assumptions}
+
+\begin{assumptionbox}
+Causal inference from observational data, and from many randomized trials with nonadherence or missingness, requires assumptions that cannot be verified from the observed data distribution alone. These assumptions connect observed outcomes to outcomes that would have been seen under interventions.
+\end{assumptionbox}
+
+Untestable does not mean arbitrary. Good causal assumptions come from design knowledge, biology, clinical expertise, institutional knowledge, measurement details, and transparent reasoning. The point is that the observed data distribution cannot, by itself, distinguish all causal explanations that generate the same associations.
+
+For the early imaging example, investigators must reason about questions such as:
+\begin{itemize}
+  \item Which baseline factors influence a clinician's decision to order imaging?
+  \item Which baseline factors also influence later disability or health care use?
+  \item Were those factors measured well enough to compare like with like?
+  \item Is "early imaging" a sufficiently precise intervention?
+\end{itemize}
+
+The rest of the course develops a formal language for asking these questions, stating the necessary assumptions, and determining when causal parameters can be learned from observed data.

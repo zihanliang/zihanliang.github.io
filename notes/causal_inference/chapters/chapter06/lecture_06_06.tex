@@ -1,0 +1,156 @@
+\lecture{6.6}{Variable Screening}
+\label{lec:6-6}
+
+\subsection{Why Screen Variables}
+
+Variable screening is the process of selecting a subset of predictors before fitting a
+learner. Screening can reduce variance, improve computation time, and allow the
+library to include procedures representing different scientific or statistical choices.
+
+In Super Learner, screening is itself part of the candidate algorithm. For example,
+\texttt{SL.glm\_All} means a GLM using all variables, while
+\texttt{SL.glm\_screen.corP} means a GLM fit only on variables selected by the
+\texttt{screen.corP} screening rule.
+
+\begin{keyidea}
+Screening should be inside cross-validation. A screener must be fit on the training
+fold only, then applied to determine which variables the learner uses for that fold.
+Screening on the full dataset before cross-validation leaks validation information into
+training.
+\end{keyidea}
+
+\subsection{Built-In Screeners}
+
+Built-in screening functions can be listed with:
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+listWrappers(what = "screen")
+\end{lstlisting}
+\end{implementationbox}
+
+A screening function returns a logical vector indicating which columns of \texttt{X}
+should be included. Its general structure is:
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+screen.myScreen <- function(Y, X, family, obsWeights, id, ...) {
+  # use training Y and X to decide which columns to keep
+  keep <- rep(TRUE, ncol(X))
+  return(keep)
+}
+\end{lstlisting}
+\end{implementationbox}
+
+\subsection{\texttt{screen.corP}}
+
+The screener \texttt{screen.corP} selects variables based on marginal correlation tests
+with the outcome. Conceptually, for each column $X_j$, it tests the association
+between $X_j$ and $Y$ and keeps variables with small p-values. It also includes a
+minimum-screening rule so that at least a small number of variables are retained.
+
+This is a prediction-oriented screening rule. It is not a causal confounder-selection
+procedure by itself. A variable can be a confounder even if its marginal correlation
+with $Y$ is weak, and a variable can predict $Y$ without being needed for confounding
+control.
+
+\subsection{Combining Learners and Screeners}
+
+To combine learners and screeners, pass \texttt{SL.library} as a list. Each element
+contains a learner and a screener:
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+sl_fit4 <- SuperLearner(
+  Y = Y,
+  X = data.frame(W1 = W1, W2 = W2, A = A),
+  SL.library = list(c("SL.glm", "All"),
+                    c("SL.glm", "screen.corP"),
+                    c("SL.mean", "All")),
+  family = gaussian(),
+  method = "method.CC_LS",
+  cvControl = list(V = 2),
+  verbose = FALSE
+)
+\end{lstlisting}
+\end{implementationbox}
+
+The suffix in the printed learner name identifies the screener. A warning about
+duplicate learners can occur when two learner-screener combinations lead to the same
+selected variables and predictions.
+
+\subsection{Custom Confounder Screening}
+
+Sometimes an analyst wants a screener motivated by confounding control rather than
+pure prediction. One simple historical rule is to include a covariate if adjusting for it
+changes the treatment coefficient by more than a specified percentage. The rule below
+always includes the treatment variable and screens other variables by the treatment
+coefficient change criterion.
+
+\begin{implementationbox}
+\begin{lstlisting}[language=R]
+screen_confounders <- function(Y, X, family, trt_name = "A",
+                               change = 0.1, ...) {
+  X <- as.data.frame(X)
+
+  fit_init <- glm(as.formula(paste0("Y ~ ", trt_name)),
+                  data = X, family = family)
+  trt_coef <- coef(fit_init)[2]
+
+  trt_col <- which(colnames(X) == trt_name)
+  include <- rep(FALSE, ncol(X))
+  include[trt_col] <- TRUE
+
+  for (j in seq_len(ncol(X))[-trt_col]) {
+    var_name <- colnames(X)[j]
+    fit <- glm(as.formula(paste0("Y ~ ", trt_name, " + ", var_name)),
+               data = X, family = family)
+    new_trt_coef <- coef(fit)[2]
+    include[j] <- abs((new_trt_coef - trt_coef) / trt_coef) > change
+  }
+
+  return(include)
+}
+\end{lstlisting}
+\end{implementationbox}
+
+\subsection{Treatment-Coefficient Change Criterion}
+
+The change-in-estimate criterion compares
+\[
+\hat\beta_A^{\mathrm{unadjusted}}
+\quad\text{and}\quad
+\hat\beta_A^{\mathrm{adjusted\ for\ }X_j}.
+\]
+Variable $X_j$ is kept if
+\[
+\left|
+\frac{\hat\beta_A^{\mathrm{adjusted\ for\ }X_j}
+-\hat\beta_A^{\mathrm{unadjusted}}}
+{\hat\beta_A^{\mathrm{unadjusted}}}
+\right|>\delta,
+\]
+where $\delta$ might be $0.10$. This rule is heuristic. It depends on the outcome
+model scale, can behave poorly when the unadjusted treatment coefficient is near zero,
+and does not guarantee adjustment for all confounders.
+
+\subsection{Interpreting Screened Learners}
+
+A screened learner is a compound procedure: screening rule plus prediction algorithm.
+For example, \texttt{SL.glm\_screen.corP} is not simply \texttt{SL.glm}; it is the
+algorithm that first screens variables using \texttt{screen.corP} in each training fold
+and then fits \texttt{SL.glm} using the selected variables.
+
+\begin{assumptionbox}
+Variable screening can remove variables needed for causal identification. If a
+covariate is required for exchangeability based on subject-matter knowledge, it should
+not be dropped solely because it has weak predictive association in the observed
+sample. Prediction-oriented screening must be reconciled with the causal adjustment
+set.
+\end{assumptionbox}
+
+\begin{estimationbox}
+A practical compromise is to force known confounders into every nuisance model and
+allow screening only among additional candidate predictors. This preserves the
+scientific adjustment set while still allowing data-adaptive prediction improvements.
+\end{estimationbox}

@@ -1,0 +1,171 @@
+\lecture{7.5}{Influence-Function-Based Inference}
+\label{lec:7-5}
+
+\subsection{Asymptotic Linearity}
+
+An estimator $\psi_n$ is asymptotically linear for a parameter $\psi$ if it can be
+written as
+\[
+\psi_n-\psi
+=
+\frac{1}{n}\sum_{i=1}^n D(O_i)+o_p(n^{-1/2}),
+\]
+where $D(O)$ has mean zero and finite variance. The function $D$ is an influence
+function. This representation implies
+\[
+\sqrt n(\psi_n-\psi)\overset{d}{\longrightarrow}
+N\{0,\Var(D(O))\}.
+\]
+
+For the counterfactual mean $\psi(1)=\E\{\Yone\}$, the efficient influence function
+under the nonparametric point-treatment model is
+\[
+D_1(O)
+=
+\frac{\ind(A=1)}{g_1(W)}
+\{Y-\Qbar(1,W)\}
++
+\Qbar(1,W)-\psi(1).
+\]
+For $\psi(0)$,
+\[
+D_0(O)
+=
+\frac{\ind(A=0)}{g_0(W)}
+\{Y-\Qbar(0,W)\}
++
+\Qbar(0,W)-\psi(0).
+\]
+For the ATE, the influence function is
+\[
+D_{\ATE}(O)=D_1(O)-D_0(O).
+\]
+
+\subsection{Estimated Influence Function}
+
+In practice, replace unknown quantities by estimates. For $\psi(1)$:
+\[
+D_{1,n}(O_i)
+=
+\frac{\ind(A_i=1)}{g_{n,1}(W_i)}
+\{Y_i-\Qbar_n(1,W_i)\}
++
+\Qbar_n(1,W_i)-\psi_{n,\AIPTW}(1).
+\]
+For $\psi(0)$:
+\[
+D_{0,n}(O_i)
+=
+\frac{\ind(A_i=0)}{g_{n,0}(W_i)}
+\{Y_i-\Qbar_n(0,W_i)\}
++
+\Qbar_n(0,W_i)-\psi_{n,\AIPTW}(0).
+\]
+For the ATE:
+\[
+D_{\ATE,n}(O_i)=D_{1,n}(O_i)-D_{0,n}(O_i).
+\]
+
+\subsection{Variance Estimation}
+
+Estimate the asymptotic variance of $\psi_n(1)$ by the empirical variance of the
+estimated influence function:
+\[
+\hat\tau_1^2
+=
+\frac{1}{n}\sum_{i=1}^n D_{1,n}(O_i)^2.
+\]
+The standard error is
+\[
+\widehat{\mathrm{SE}}\{\psi_n(1)\}
+=
+\sqrt{\hat\tau_1^2/n}.
+\]
+For the ATE, use
+\[
+\hat\tau_{\ATE}^2
+=
+\frac{1}{n}\sum_{i=1}^n
+\left\{
+D_{\ATE,n}(O_i)-\bar D_{\ATE,n}
+\right\}^2,
+\]
+where $\bar D_{\ATE,n}=n^{-1}\sum_iD_{\ATE,n}(O_i)$, and
+\[
+\widehat{\mathrm{SE}}(\widehat{\ATE})
+=
+\sqrt{\hat\tau_{\ATE}^2/n}.
+\]
+For AIPTW, $\bar D_{\ATE,n}$ is usually very close to zero by construction, but
+centering is harmless and often used in software.
+
+\subsection{Wald Confidence Intervals}
+
+An approximate 95\% Wald interval for $\psi(1)$ is
+\[
+\psi_{n,\AIPTW}(1)
+\pm
+1.96\sqrt{\hat\tau_1^2/n}.
+\]
+An approximate 95\% interval for the ATE is
+\[
+\widehat{\ATE}_{\AIPTW}
+\pm
+1.96\,\widehat{\mathrm{SE}}(\widehat{\ATE}).
+\]
+
+\begin{implementationbox}
+Influence-function standard error for the ATE:
+\begin{lstlisting}[language=R]
+D1 <- (A == 1) / g_1W * (Y - Qbar_1W) + Qbar_1W - aiptw_ey1
+D0 <- (A == 0) / g_0W * (Y - Qbar_0W) + Qbar_0W - aiptw_ey0
+Date <- D1 - D0
+
+se_ate <- sqrt(var(Date) / length(Y))
+ci_ate <- aiptw_ate + c(-1.96, 1.96) * se_ate
+\end{lstlisting}
+\end{implementationbox}
+
+\subsection{Hypothesis Tests}
+
+For testing
+\[
+H_0:\ATE=0
+\qquad\text{versus}\qquad
+H_1:\ATE\neq 0,
+\]
+use
+\[
+Z=\frac{\widehat{\ATE}_{\AIPTW}}
+{\widehat{\mathrm{SE}}(\widehat{\ATE})}.
+\]
+The two-sided Wald p-value is
+\[
+p=2\{1-\Phi(|Z|)\},
+\]
+where $\Phi$ is the standard normal distribution function.
+
+\subsection{Coverage in Finite Samples}
+
+Influence-function inference is asymptotic. In finite samples, coverage can be below
+or above the nominal level if nuisance regressions are unstable, positivity is weak, or
+the sample size is too small for the normal approximation. Coverage often improves as
+$n$ grows, provided the nuisance estimators and regularity conditions are adequate.
+
+The estimated influence-function values should be inspected. A few extremely large
+values can indicate that confidence intervals are being driven by near-zero propensity
+scores or extreme residuals.
+
+\subsection{Simulation Interpretation}
+
+Simulation studies often compare the empirical coverage probability of nominal 95\%
+confidence intervals. If 1000 simulated datasets are generated and the 95\% interval
+contains the true parameter in 946 of them, the estimated coverage probability is
+94.6\%. Such studies reveal finite-sample behavior of the estimator and interval, not
+whether a single real-data analysis satisfies the causal assumptions.
+
+\begin{keyidea}
+The influence function turns a complicated doubly robust estimator into an approximate
+sample mean of mean-zero terms. This is the basis for standard errors, Wald intervals,
+and p-values.
+\end{keyidea}

@@ -1,0 +1,151 @@
+\lecture{3.8}{IPTW Identification Formula}
+\label{lec:3-8}
+
+\subsection{Inverse Probability Weighting}
+
+G-computation identifies counterfactual means by standardizing conditional outcome means. Inverse probability of treatment weighting, or IPTW, identifies the same counterfactual means by reweighting observed outcomes.
+
+\begin{definition}[IPTW identification formula]
+Under consistency, conditional randomization, and positivity,
+\[
+\E\{\Ya{a}\}
+=
+\E\left\{
+\frac{\ind(A=a)Y}{\Prob(A=a\given W)}
+\right\}.
+\]
+\end{definition}
+
+Only people who actually received $A=a$ contribute to the numerator, because $\ind(A=a)=0$ for everyone else. Those who did receive $A=a$ are weighted by the inverse of their probability of receiving that treatment.
+
+\subsection{Propensity Score}
+
+\begin{definition}[Propensity score]
+For binary treatment, the propensity score is
+\[
+g(W)=\Prob(A=1\given W).
+\]
+More generally, write
+\[
+g_a(W)=\Prob(A=a\given W).
+\]
+\end{definition}
+
+The IPTW formula for treatment level $a$ uses $g_a(W)$:
+\[
+\E\{\Ya{a}\}
+=
+\E\left\{\frac{\ind(A=a)Y}{g_a(W)}\right\}.
+\]
+
+\subsection{IPTW Derivation}
+
+We derive the observed-data equality. Start with
+\[
+\E\left\{\frac{\ind(A=a)Y}{g_a(W)}\right\}.
+\]
+Apply the tower rule conditioning on $A$ and $W$:
+\[
+=
+\E\left[
+\E\left\{
+\frac{\ind(A=a)Y}{g_a(W)}
+\given A,W
+\right\}
+\right].
+\]
+Inside the conditional expectation, $\ind(A=a)$ and $g_a(W)$ are known:
+\[
+=
+\E\left[
+\frac{\ind(A=a)}{g_a(W)}
+\E(Y\given A,W)
+\right].
+\]
+Because the indicator is zero unless $A=a$,
+\[
+=
+\E\left[
+\frac{\ind(A=a)}{g_a(W)}
+\E(Y\given A=a,W)
+\right].
+\]
+Apply the tower rule again, now conditioning on $W$:
+\[
+=
+\E\left[
+\E\left\{
+\frac{\ind(A=a)}{g_a(W)}
+\E(Y\given A=a,W)
+\given W
+\right\}
+\right].
+\]
+Given $W$, the outcome regression term and denominator are fixed:
+\[
+=
+\E\left[
+\frac{\E(Y\given A=a,W)}{g_a(W)}
+\E\{\ind(A=a)\given W\}
+\right].
+\]
+But
+\[
+\E\{\ind(A=a)\given W\}=\Prob(A=a\given W)=g_a(W).
+\]
+Thus
+\[
+=
+\E\left[
+\frac{\E(Y\given A=a,W)}{g_a(W)}g_a(W)
+\right]
+=
+\E\{\E(Y\given A=a,W)\}.
+\]
+By the G-computation identification formula, this equals $\E\{\Ya{a}\}$.
+
+\begin{identificationbox}
+\[
+\E\{\Ya{a}\}
+=
+\E\{\E(Y\given A=a,W)\}
+=
+\E\left\{
+\frac{\ind(A=a)Y}{\Prob(A=a\given W)}
+\right\}.
+\]
+The first equality is G-computation. The second is IPTW. They identify the same counterfactual mean under the same assumptions.
+\end{identificationbox}
+
+\subsection{Pseudo-Population Intuition}
+
+Suppose a treated patient had only a $5\%$ chance of receiving treatment given $W$. Then treated patients with that covariate pattern are rare. One such treated patient represents many similar people who, under the observed treatment mechanism, usually did not receive treatment. The IPTW weight is
+\[
+\frac{1}{0.05}=20.
+\]
+If another treated patient had a $75\%$ chance of receiving treatment, the weight is
+\[
+\frac{1}{0.75}\approx 1.33.
+\]
+IPTW upweights observations who received a treatment that was unlikely for their covariate profile and downweights observations who received a treatment that was common.
+
+\subsection{Stabilizing Representativeness}
+
+The weighted treated group is designed to represent the whole target population with respect to $W$. In expectation,
+\[
+\E\left\{\frac{\ind(A=a)}{g_a(W)}\given W\right\}
+=
+\frac{1}{g_a(W)}\Prob(A=a\given W)
+=1.
+\]
+Thus each covariate stratum contributes according to its population prevalence after weighting.
+
+\subsection{Positivity and Extreme Weights}
+
+The formula requires $g_a(W)>0$. If $g_a(W)=0$, the weight is undefined and no observed unit with that covariate value received treatment $a$.
+
+Even when $g_a(W)$ is positive but very small, weights can be very large. Large weights make estimation unstable because a few observations can dominate the weighted mean. This is a practical manifestation of near-positivity violations.
+
+\begin{keyidea}
+IPTW creates a weighted pseudo-population in which treatment is no longer associated with measured covariates. Positivity is required so every needed type of person can appear under every treatment level.
+\end{keyidea}

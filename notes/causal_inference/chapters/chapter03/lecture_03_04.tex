@@ -1,0 +1,123 @@
+\lecture{3.4}{d-Separation in SWIGs}
+\label{lec:3-4}
+
+\subsection{Paths in SWIGs}
+
+SWIGs contain both random nodes and fixed intervention nodes. d-Separation in a SWIG is read using paths among the random nodes, excluding the fixed intervention labels such as $a$.
+
+\begin{definition}[Path in a SWIG]
+A \emph{path} between two random nodes in a SWIG is a sequence of adjacent random nodes connecting them. Fixed intervention nodes are not included as nodes on the path.
+\end{definition}
+
+For identification of the ATE, the key graphical question is often whether
+\[
+\Ya{a}\ci A\given W
+\]
+is implied by the SWIG. This is a statement about independence between the random treatment node $A$ and the random counterfactual outcome node $\Ya{a}$.
+
+\subsection{Fixed Intervention Nodes}
+
+The fixed node $a$ represents an intervention setting $A=a$. It is not random and therefore is not conditioned on in the same way as a random variable. It inherits arrows that leave the original treatment node.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.8cm,>=Latex]
+  \node[draw, circle, fill=blue!5] (W) {$W$};
+  \node[draw, circle, fill=green!5, right=of W] (A) {$A$};
+  \node[draw, rectangle, fill=gray!12, below=.6cm of A] (a) {$a$};
+  \node[draw, circle, fill=orange!8, right=of A] (Y) {$\Ya{a}$};
+  \draw[->, thick] (W) -- (A);
+  \draw[->, thick] (W) to[bend right=25] (Y);
+  \draw[->, thick] (a) -- (Y);
+\end{tikzpicture}
+\caption{The fixed node $a$ is not part of random-variable paths, but it defines the intervention world.}
+\end{figure}
+
+The path from $A$ to $\Ya{a}$ through $W$ is
+\[
+A\leftarrow W\to \Ya{a}.
+\]
+The arrow from $a$ to $\Ya{a}$ does not create a random path from $A$ to $\Ya{a}$ because $a$ is fixed.
+
+\subsection{Colliders and Non-Colliders in SWIGs}
+
+As in DAGs, whether a node is a collider depends on the particular path. A random node $V$ is a collider on a path if the two adjacent arrows on that path both point into $V$:
+\[
+\cdots \to V \leftarrow \cdots.
+\]
+Otherwise, $V$ is a non-collider on that path.
+
+A node can be a collider on one path and a non-collider on another. Consider paths between $A$ and $\Ya{a}$ in a SWIG with nodes $W,H,Z$. A node $Z$ may be a collider on
+\[
+\Ya{a}\leftarrow H\to Z\leftarrow W\to A,
+\]
+but a non-collider on
+\[
+\Ya{a}\leftarrow Z\leftarrow A.
+\]
+The path determines the role.
+
+\subsection{Unconditional d-Separation}
+
+A path d-connects two random nodes unconditionally if it has no closed collider and no conditioned non-collider. With no conditioning set, forks and chains are open, while colliders are closed.
+
+Common open unconditional paths include:
+\[
+X\to \cdots \to Y,
+\qquad
+X\leftarrow \cdots \leftarrow Y,
+\qquad
+X\leftarrow \cdots \leftarrow T\to \cdots \to Y.
+\]
+The third form is a shared common cause path.
+
+In the SWIG
+\[
+A\leftarrow W\to \Ya{a},
+\]
+$A$ and $\Ya{a}$ are not unconditionally d-separated because the fork through $W$ is open. This represents confounding by $W$.
+
+\subsection{Conditional d-Separation}
+
+\begin{definition}[Conditional d-separation in a SWIG]
+A path between random nodes is open given a conditioning set $S$ if every non-collider on the path is not in $S$, and every collider on the path is either in $S$ or has a descendant in $S$. Two nodes are d-separated by $S$ if every path between them is blocked by $S$.
+\end{definition}
+
+This is the same logic as for DAGs, applied to random nodes in the SWIG. Fixed nodes define interventions but are excluded from conditioning sets.
+
+\subsection{Reading $\Ya{a}\ci A\given W$}
+
+The core use of SWIG d-separation in this chapter is to assess conditional randomization. In the confounding SWIG:
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.8cm,>=Latex]
+  \node[draw, circle, fill=blue!5] (W) {$W$};
+  \node[draw, circle, fill=green!5, right=of W] (A) {$A$};
+  \node[draw, rectangle, fill=gray!12, below=.6cm of A] (a) {$a$};
+  \node[draw, circle, fill=orange!8, right=of A] (Y) {$\Ya{a}$};
+  \draw[->, thick] (W) -- (A);
+  \draw[->, thick] (W) to[bend right=25] (Y);
+  \draw[->, thick] (a) -- (Y);
+\end{tikzpicture}
+\caption{Conditioning on $W$ blocks the backdoor path from $A$ to $\Ya{a}$.}
+\end{figure}
+
+The only random path between $A$ and $\Ya{a}$ is
+\[
+A\leftarrow W\to \Ya{a}.
+\]
+This is a fork. Without conditioning, the path is open. Conditioning on $W$ blocks the path. Therefore the SWIG implies
+\[
+\Ya{a}\ci A\given W.
+\]
+
+\begin{keyidea}
+In a SWIG, conditional randomization is a d-separation statement between the random treatment node $A$ and the counterfactual outcome node $\Ya{a}$.
+\end{keyidea}
+
+If an unmeasured variable $U$ also points to both $A$ and $\Ya{a}$, then the path
+\[
+A\leftarrow U\to \Ya{a}
+\]
+remains open after conditioning on measured $W$. In that case the graph does not support $\Ya{a}\ci A\given W$.

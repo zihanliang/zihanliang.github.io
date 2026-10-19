@@ -1,0 +1,160 @@
+\lecture{7.7}{Targeted Minimum Loss-Based Estimation}
+\label{lec:7-7}
+
+\subsection{Compatible Plug-In Estimators}
+
+A compatible plug-in estimator is an estimator that can be written as a parameter
+mapping applied to an estimated distribution. For example, the g-computation
+estimator
+\[
+\psi_{n,G}(1)=\frac{1}{n}\sum_{i=1}^n\Qbar_n(1,W_i)
+\]
+is a plug-in estimator: it applies the counterfactual mean mapping to an estimated
+outcome regression and empirical covariate distribution.
+
+IPTW and AIPTW are not generally plug-in estimators in this sense. They can produce
+values outside natural parameter bounds. For example, for a binary outcome, a
+counterfactual mean should lie in $[0,1]$, but a weighted residual estimator can in
+finite samples fall outside that interval.
+
+\subsection{Motivation for TMLE}
+
+Targeted minimum loss-based estimation constructs a plug-in estimator with
+influence-function-based bias correction. The idea is to start with an initial outcome
+regression $\Qbar_n$, then update it in a targeted way so that the empirical mean of
+the efficient influence function is approximately zero.
+
+For $\psi(1)$, the relevant residual equation is
+\[
+0=
+\frac{1}{n}\sum_{i=1}^n
+\frac{\ind(A_i=1)}{g_{n,1}(W_i)}
+\{Y_i-\Qbar_n^*(1,W_i)\}.
+\]
+If the updated regression $\Qbar_n^*$ satisfies this equation and remains a valid
+conditional mean, then the plug-in estimator
+\[
+\psi_{n,\TMLE}(1)=\frac{1}{n}\sum_{i=1}^n\Qbar_n^*(1,W_i)
+\]
+inherits the same first-order bias correction as AIPTW while preserving parameter
+constraints.
+
+\subsection{Initial Outcome Regression}
+
+TMLE begins by estimating $\Qbar(A,W)$ and $g_1(W)$. These can be estimated using
+parametric models or flexible learners such as Super Learner. For a bounded or binary
+outcome, the initial outcome regression should produce predictions inside $(0,1)$.
+
+\subsection{Targeting Step}
+
+For simplicity, consider a binary outcome and estimation of $\psi(1)$. Let
+\[
+K_i=\logit\{\Qbar_n(1,W_i)\}
+\]
+be the offset and define the clever covariate
+\[
+H_1(A_i,W_i)=\frac{\ind(A_i=1)}{g_{n,1}(W_i)}.
+\]
+Fit a logistic regression with outcome $Y$, offset $K_i$, and single covariate
+$H_1(A_i,W_i)$, often using only observations with $A_i=1$ for this one-treatment
+update. The fitted coefficient is denoted $\hat\epsilon$. Logistic fluctuation is
+directly natural for binary outcomes or outcomes scaled to $[0,1]$; for
+continuous unbounded outcomes, TMLE should use an appropriate loss and submodel
+or transform the outcome before using a bounded-loss formulation.
+
+\subsection{Clever Covariate}
+
+The clever covariate is called ``clever'' because it is chosen from the efficient
+influence function. For treatment level $1$,
+\[
+H_1(A,W)=\frac{\ind(A=1)}{g_1(W)}.
+\]
+It weights the outcome-regression fluctuation so that the updated regression solves
+the empirical residual equation associated with $\psi(1)$.
+
+\subsection{Updated Regression}
+
+The updated regression for treatment level $1$ is
+\[
+\Qbar_n^*(1,w)
+=
+\expit\left[
+\logit\{\Qbar_n(1,w)\}
++
+\hat\epsilon\frac{1}{g_{n,1}(w)}
+\right].
+\]
+More generally, to target both $\psi(1)$ and $\psi(0)$ simultaneously, define
+\[
+H_1(A,W)=\frac{A}{g_{n,1}(W)},\qquad
+H_0(A,W)=\frac{1-A}{g_{n,0}(W)}.
+\]
+Fit a logistic fluctuation model with offset $\logit\{\Qbar_n(A,W)\}$ and covariates
+$H_1$ and $H_0$. If the fitted coefficients are $\hat\epsilon_1$ and
+$\hat\epsilon_0$, then
+\[
+\Qbar_n^*(a,w)
+=
+\expit\left[
+\logit\{\Qbar_n(a,w)\}
++
+\hat\epsilon_1\frac{a}{g_{n,1}(w)}
++
+\hat\epsilon_0\frac{1-a}{g_{n,0}(w)}
+\right].
+\]
+
+\subsection{TMLE Estimate}
+
+The TMLE counterfactual means are plug-in estimates:
+\[
+\psi_{n,\TMLE}(1)
+=
+\frac{1}{n}\sum_{i=1}^n\Qbar_n^*(1,W_i),
+\]
+\[
+\psi_{n,\TMLE}(0)
+=
+\frac{1}{n}\sum_{i=1}^n\Qbar_n^*(0,W_i),
+\]
+and
+\[
+\widehat{\ATE}_{\TMLE}
+=
+\psi_{n,\TMLE}(1)-\psi_{n,\TMLE}(0).
+\]
+
+\begin{implementationbox}
+Conceptual TMLE code for a binary outcome:
+\begin{lstlisting}[language=R]
+H1 <- A / g_1W
+H0 <- (1 - A) / g_0W
+K  <- qlogis(Qbar_AW)
+
+target_fit <- glm(Y ~ -1 + offset(K) + H1 + H0,
+                  family = binomial(),
+                  start = c(0, 0))
+
+eps1 <- coef(target_fit)["H1"]
+eps0 <- coef(target_fit)["H0"]
+
+Qstar_1W <- plogis(qlogis(Qbar_1W) + eps1 / g_1W)
+Qstar_0W <- plogis(qlogis(Qbar_0W) + eps0 / g_0W)
+
+tmle_ate <- mean(Qstar_1W - Qstar_0W)
+\end{lstlisting}
+\end{implementationbox}
+
+\subsection{TMLE vs AIPTW}
+
+AIPTW and TMLE have the same efficient influence function under standard conditions.
+Both are doubly robust for consistency. The key difference is that TMLE is a targeted
+plug-in estimator. For bounded outcomes, it respects the natural bounds of the
+parameter. It can also have better finite-sample behavior in settings with practical
+positivity concerns.
+
+\begin{keyidea}
+TMLE updates the initial outcome regression just enough to solve the efficient
+influence-function estimating equation, then estimates the causal parameter by
+plugging in the updated regression.
+\end{keyidea}

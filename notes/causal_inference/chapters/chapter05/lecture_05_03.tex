@@ -1,0 +1,223 @@
+\lecture{5.3}{Risk and Loss Functions}
+\label{lec:5-3}
+
+\subsection{Prediction Loss}
+
+To compare regression estimators, we need a numerical score. A loss function measures
+how bad a prediction is for one observation. If $\Qbar_n$ predicts the outcome using
+$A$ and $W$, then a loss function assigns a number
+\[
+L(\Qbar_n)(W,A,Y)
+\]
+to the prediction-observation pair. Smaller loss means better prediction.
+
+The choice of loss should match the regression target. If the target is the conditional
+mean of a continuous outcome, squared-error loss is natural. If the target is the
+conditional probability of a binary outcome, negative log-likelihood loss is natural.
+
+\subsection{Squared-Error Loss}
+
+For a continuous or mean-valued outcome regression, squared-error loss is
+\[
+L(\Qbar_n)(w,a,y)
+=
+\{y-\Qbar_n(a,w)\}^2.
+\]
+This loss heavily penalizes large prediction errors because the error is squared. It is
+the standard loss for estimating conditional means.
+
+\subsection{Negative Log-Likelihood Loss}
+
+For a binary outcome $Y\in\{0,1\}$, an outcome regression estimates
+\[
+\Qbar(a,w)=\Prob(Y=1\given A=a,W=w).
+\]
+If $\Qbar_n(a,w)$ is a predicted probability, the Bernoulli likelihood contribution is
+\[
+\Qbar_n(a,w)^y\{1-\Qbar_n(a,w)\}^{1-y}.
+\]
+The negative log-likelihood loss is
+\[
+L(\Qbar_n)(w,a,y)
+=
+-\log\left[
+\Qbar_n(a,w)^y\{1-\Qbar_n(a,w)\}^{1-y}
+\right].
+\]
+Equivalently,
+\[
+L(\Qbar_n)(w,a,y)
+=
+-y\log\{\Qbar_n(a,w)\}
+-(1-y)\log\{1-\Qbar_n(a,w)\}.
+\]
+This loss rewards assigning high probability to the outcome that actually occurred
+and strongly penalizes confident but wrong predictions.
+
+\subsection{Risk as Average Loss}
+
+\begin{definition}[Risk]
+The risk of a regression estimator $\Qbar_n$ under loss $L$ is the expected loss under
+the true observed-data distribution:
+\[
+R(\Qbar_n)=\E\left\{L(\Qbar_n)(W,A,Y)\right\}.
+\]
+For discrete $(W,A,Y)$,
+\[
+R(\Qbar_n)
+=
+\sum_{w,a,y}
+L(\Qbar_n)(w,a,y)\Prob(W=w,A=a,Y=y).
+\]
+\end{definition}
+
+Risk is the average prediction error we would expect if the fitted regression were
+evaluated on new observations from the same population. The best estimator is the
+one with the smallest risk, provided the loss function is appropriate for the target.
+
+\subsection{Valid Loss Functions}
+
+\begin{definition}[Valid loss function]
+A loss function is valid for a regression target $\Qbar$ if the true regression function
+minimizes the population risk:
+\[
+\Qbar \in \argmin_Q R(Q).
+\]
+\end{definition}
+
+This definition formalizes the idea that the scoring rule should reward estimators for
+getting close to the true target. Squared-error loss is valid for conditional means.
+Bernoulli negative log-likelihood loss is valid for conditional probabilities.
+
+\subsection{Why the True Regression Minimizes Risk}
+
+We now show why squared-error loss targets the conditional mean. Let
+\[
+\Qbar(A,W)=\E(Y\given A,W)
+\]
+be the true outcome regression, and let $Q(A,W)$ be any candidate prediction
+function. The squared-error risk is
+\[
+R(Q)=\E\left[\{Y-Q(A,W)\}^2\right].
+\]
+Add and subtract the true regression:
+\[
+Y-Q(A,W)
+=
+\{Y-\Qbar(A,W)\}+\{\Qbar(A,W)-Q(A,W)\}.
+\]
+Squaring and taking expectations gives
+\[
+\begin{aligned}
+R(Q)
+&=
+\E\left[
+\{Y-\Qbar(A,W)\}^2
+\right]\\
+&\quad+
+2\E\left[
+\{Y-\Qbar(A,W)\}\{\Qbar(A,W)-Q(A,W)\}
+\right]\\
+&\quad+
+\E\left[
+\{\Qbar(A,W)-Q(A,W)\}^2
+\right].
+\end{aligned}
+\]
+The middle term is zero. To see this, use iterated expectation:
+\[
+\begin{aligned}
+&\E\left[
+\{Y-\Qbar(A,W)\}\{\Qbar(A,W)-Q(A,W)\}
+\right]\\
+&=
+\E\left[
+\{\Qbar(A,W)-Q(A,W)\}
+\E\{Y-\Qbar(A,W)\given A,W\}
+\right].
+\end{aligned}
+\]
+But
+\[
+\E\{Y-\Qbar(A,W)\given A,W\}
+=
+\E(Y\given A,W)-\Qbar(A,W)=0.
+\]
+Therefore,
+\[
+R(Q)
+=
+\E\left[
+\{Y-\Qbar(A,W)\}^2
+\right]
++
+\E\left[
+\{\Qbar(A,W)-Q(A,W)\}^2
+\right].
+\]
+The first term does not depend on $Q$. The second term is nonnegative and equals zero
+only when $Q(A,W)=\Qbar(A,W)$ with probability one. Thus the true conditional mean
+minimizes squared-error risk.
+
+\begin{keyidea}
+Risk is useful because an appropriate loss function turns regression estimation into a
+well-defined competition: the estimator with lower risk is closer to the true
+regression target in the sense encoded by the loss.
+\end{keyidea}
+
+\subsection{Risk Decomposition into Noise, Bias, and Variance}
+
+Risk also clarifies the bias-variance tradeoff. Under squared-error loss,
+\[
+R(\Qbar_n)
+=
+\E\left[
+\{Y-\Qbar(A,W)\}^2
+\right]
++
+\E\left[
+\{\Qbar(A,W)-\Qbar_n(A,W)\}^2
+\right].
+\]
+The first term is irreducible noise: even the true conditional mean cannot predict the
+individual outcome perfectly.
+
+Now decompose the second term. Add and subtract the repeated-sampling expectation
+$\E\{\Qbar_n(A,W)\}$:
+\[
+\Qbar(A,W)-\Qbar_n(A,W)
+=
+\left[\Qbar(A,W)-\E\{\Qbar_n(A,W)\}\right]
++
+\left[\E\{\Qbar_n(A,W)\}-\Qbar_n(A,W)\right].
+\]
+After squaring and taking expectations, the cross-term is zero by the definition of the
+expectation of $\Qbar_n$. Thus
+\[
+\begin{aligned}
+\E\left[
+\{\Qbar(A,W)-\Qbar_n(A,W)\}^2
+\right]
+&=
+\E\left[
+\{\Qbar(A,W)-\E\{\Qbar_n(A,W)\}\}^2
+\right] \\
+&\quad+
+\E\left[
+\{\E\{\Qbar_n(A,W)\}-\Qbar_n(A,W)\}^2
+\right].
+\end{aligned}
+\]
+The first term is squared bias and the second is variance. Therefore squared-error
+risk can be viewed as
+\[
+\text{risk}
+=
+\text{noise}+\text{bias}^2+\text{variance}.
+\]
+
+\begin{estimationbox}
+Cross-validation will estimate risk using validation observations that were not used
+to fit the candidate regression. This matters because empirical risk on the training
+sample can reward overfitting and give an overly optimistic score.
+\end{estimationbox}

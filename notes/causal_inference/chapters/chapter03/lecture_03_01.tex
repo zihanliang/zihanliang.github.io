@@ -1,0 +1,93 @@
+\lecture{3.1}{What Is Causal Identification?}
+\label{lec:3-1}
+
+\subsection{Counterfactual Distribution vs Observed Data Distribution}
+
+Chapter 2 introduced causal parameters as summaries of counterfactual variables. For a binary treatment $A$, the average treatment effect is
+\[
+\ATE=\E(\Yone-\Yzero)=\E(\Yone)-\E(\Yzero).
+\]
+This parameter is defined in terms of the joint scientific object containing potential outcomes. The observed data, however, usually have the form
+\[
+O=(W,A,Y),
+\]
+where $W$ denotes measured covariates, $A$ the treatment actually received, and $Y$ the outcome actually observed.
+
+\begin{definition}[Counterfactual distribution]
+The \emph{counterfactual distribution} is the probability distribution of variables such as $\Yzero$, $\Yone$, and possibly other counterfactual quantities under interventions.
+\end{definition}
+
+\begin{definition}[Observed data distribution]
+The \emph{observed data distribution} is the probability distribution of the variables actually measured in the study, such as $P(W,A,Y)$.
+\end{definition}
+
+These are different objects. The causal parameter $\E(\Yone)$ lives in the counterfactual distribution. A statistical parameter such as $\E\{\E(Y\given A=1,W)\}$ lives in the observed data distribution.
+
+\subsection{Identification as a Bridge}
+
+Identification asks whether a causal parameter can be rewritten using only the observed data distribution, under clearly stated assumptions.
+
+\begin{definition}[Causal identification]
+A causal parameter $\psi$ is \emph{identified} under a causal model if $\psi$ is equal to a functional of the observed data distribution $P(O)$ for every data-generating process satisfying the assumptions in that causal model.
+\end{definition}
+
+Informally, identification means we can write an equality of the form
+\[
+\text{counterfactual quantity}
+\quad
+\overset{\text{assumptions}}{=}
+\quad
+\text{observed-data quantity}.
+\]
+For example, later in this chapter we will derive
+\[
+\E\{\Ya{a}\}
+=
+\E\{\E(Y\given A=a,W)\},
+\]
+under consistency, conditional randomization, and positivity. The left side is causal. The right side is a statistical parameter of the observed distribution.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=3cm,>=Latex]
+  \node[draw, rounded corners, fill=orange!8, minimum width=4.1cm] (cf) {Counterfactual world\\$\E\{\Ya{a}\}$};
+  \node[draw, rounded corners, fill=blue!5, right=of cf, minimum width=4.3cm] (obs) {Observed-data world\\$\E\{\E(Y\given A=a,W)\}$};
+  \draw[->, thick] (cf) -- node[above]{identification\\assumptions} (obs);
+\end{tikzpicture}
+\caption{Identification connects a causal estimand to an observed-data parameter.}
+\end{figure}
+
+\subsection{Identifiability in the Causal Roadmap}
+
+Identification is the fourth step in the causal roadmap:
+\begin{enumerate}
+  \item specify a causal model;
+  \item specify a causal question and causal parameter;
+  \item specify observed data and link them to the causal model;
+  \item assess identifiability;
+  \item specify a statistical parameter and model;
+  \item estimate;
+  \item interpret.
+\end{enumerate}
+
+The ordering matters. Before estimating, we must know what observed-data parameter represents the causal parameter. Otherwise we may estimate a precise but irrelevant quantity.
+
+\begin{identificationbox}
+Identification is a large-sample, infinite-data question. It asks: if we knew the entire observed data distribution exactly, could we determine the causal parameter under the stated assumptions?
+\end{identificationbox}
+
+\subsection{Why Identification Precedes Estimation}
+
+Estimation concerns finite-sample uncertainty. Identification concerns whether the target is learnable from the observed data distribution at all. If a causal parameter is not identified, collecting more observations from the same observed data distribution does not solve the problem. Infinite data would reveal the observed distribution perfectly, but the causal parameter could still remain ambiguous.
+
+This distinction is central:
+\begin{itemize}
+  \item \emph{Identification problem}: the observed data do not contain enough information, under current assumptions, to determine the causal parameter.
+  \item \emph{Estimation problem}: the causal parameter has been written as an observed-data parameter, and we need to estimate it from a finite sample.
+\end{itemize}
+
+Machine learning can help estimate complex functions such as $\E(Y\given A,W)$ or $\Prob(A=1\given W)$. It cannot, by itself, create identification. Identification comes from the causal model and assumptions.
+
+\begin{keyidea}
+Identification tells us what to estimate. Estimation tells us how to approximate that identified statistical target using finite data.
+\end{keyidea}

@@ -1,0 +1,116 @@
+\lecture{2.2}{The Roadmap for Causal Analysis}
+\label{lec:2-2}
+
+\subsection{Overview}
+
+Causal analysis is easiest to learn as a sequence of distinct tasks. Mixing these tasks is a common source of confusion. For example, fitting a regression model before defining the causal question often leads to interpreting a convenient coefficient rather than estimating a meaningful causal parameter.
+
+\begin{keyidea}
+The causal roadmap separates scientific definition, causal identification, statistical estimation, and interpretation. Each step answers a different question.
+\end{keyidea}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=.75cm,>=Latex]
+  \tikzset{box/.style={draw, rounded corners, fill=blue!4, text width=10cm, minimum height=.75cm}}
+  \node[box] (s1) {1. Specify a causal model};
+  \node[box, below=of s1] (s2) {2. Specify a causal question and causal parameter};
+  \node[box, below=of s2] (s3) {3. Link observed data to the causal model};
+  \node[box, below=of s3] (s4) {4. Assess identifiability};
+  \node[box, below=of s4] (s5) {5. Specify a statistical parameter and statistical model};
+  \node[box, below=of s5] (s6) {6. Estimate};
+  \node[box, below=of s6] (s7) {7. Interpret};
+  \foreach \a/\b in {s1/s2,s2/s3,s3/s4,s4/s5,s5/s6,s6/s7}
+    \draw[->, thick] (\a) -- (\b);
+\end{tikzpicture}
+\caption{A practical roadmap for causal analysis.}
+\end{figure}
+
+\subsection{Specify a Causal Model}
+
+A causal model represents scientific knowledge about how variables in the system relate to one another. At this stage we ask questions such as:
+\begin{itemize}
+  \item What factors affect whether a patient receives early imaging?
+  \item What factors affect later disability?
+  \item Which variables occur before treatment, during follow-up, or after the outcome?
+  \item Which important causes were not measured?
+\end{itemize}
+
+In this course, causal models will often be represented by directed acyclic graphs (DAGs) and single world intervention graphs (SWIGs). The graph is not just a picture. It encodes assumptions about causes, noncauses, and conditional independencies.
+
+\subsection{Specify a Causal Question and Parameter}
+
+The causal question must state the intervention and the outcome. A vague question such as "Does imaging help?" is not yet a causal parameter. A more precise version is:
+\begin{quote}
+Among older adults with a new primary care visit for back pain, what is the difference in mean 12-month disability if everyone received lumbar imaging within six weeks versus if no one received lumbar imaging within six weeks?
+\end{quote}
+
+Using potential outcome notation, this question could be represented by
+\[
+\psi=\E\{\Yone\}-\E\{\Yzero\},
+\]
+where $\Yone$ is the outcome that would be observed under early imaging and $\Yzero$ is the outcome that would be observed under no early imaging.
+
+\begin{definition}[Causal parameter]
+A \emph{causal parameter} is a summary of the distribution of counterfactual variables in a target population. It is the causal estimand.
+\end{definition}
+
+\subsection{Link Observed Data to the Causal Model}
+
+The causal model describes variables that may include both observed and unobserved quantities. The observed data describe what was actually measured. A common observed data structure for a point-treatment study is
+\[
+O=(W,A,Y),
+\]
+where $W$ denotes baseline covariates, $A$ observed treatment, and $Y$ observed outcome.
+
+The analyst must state how these observed variables correspond to nodes in the causal model. If the graph contains an unmeasured severity variable $U$, the observed data do not include $U$. If the graph contains a broad baseline node $W$, the analyst must clarify which measured variables are included in $W$.
+
+This step also includes assumptions that connect observed outcomes to counterfactual outcomes, especially consistency, introduced later in this chapter.
+
+\subsection{Assess Identifiability}
+
+Identification asks whether the causal parameter can be expressed as a function of the observed data distribution under the stated causal model.
+
+\begin{definition}[Identifiability]
+A causal parameter is \emph{identifiable} from the observed data distribution under a set of assumptions if all causal models satisfying those assumptions and producing the same observed data distribution imply the same value of the causal parameter.
+\end{definition}
+
+Plainly, identifiability asks: if we had infinite observed data from this study design, would the causal question be answerable? This question comes before estimation. No estimator, no matter how flexible, can recover a causal parameter that is not identified without additional assumptions.
+
+\begin{identificationbox}
+Identification is the bridge from counterfactual quantities to observed-data quantities. A typical goal is to replace a causal expression such as $\E\{\Ya{a}\}$ with an observed-data expression such as $\E\{\E(Y\given A=a,W)\}$ under appropriate assumptions.
+\end{identificationbox}
+
+\subsection{Specify Statistical Parameter and Model}
+
+Once a causal parameter has been identified, the target becomes a statistical parameter of the observed data distribution. For example, an identification result might show that
+\[
+\E\{\Ya{a}\}=\E\{\E(Y\given A=a,W)\}.
+\]
+The right-hand side is an observed-data parameter. It depends on the distribution of $(W,A,Y)$, not directly on unobserved counterfactuals.
+
+The statistical model describes what is assumed about the observed data distribution. A nonparametric model makes few restrictions. A parametric model might assume a specific logistic regression or linear regression form. The choice of statistical model affects estimation and inference, but it is conceptually separate from the causal identification assumptions.
+
+\subsection{Estimate}
+
+Estimation uses the finite sample to approximate the statistical parameter. If the identified parameter involves the conditional mean $\E(Y\given A=a,W)$, then an estimator may require fitting an outcome regression. If it involves $\Prob(A=a\given W)$, then an estimator may require fitting a propensity score.
+
+\begin{estimationbox}
+The estimation step answers a statistical question: given the identified observed-data parameter and a sample $O_1,\ldots,O_n$, how should we compute a numerical estimate and quantify uncertainty?
+\end{estimationbox}
+
+Estimation should not change the estimand. A regression coefficient may be easy to estimate, but it is not automatically the causal parameter. The target parameter should be defined before the estimator is chosen.
+
+\subsection{Interpret}
+
+The final step translates the estimate back into the scientific question while respecting the assumptions and limitations. Interpretation should state:
+\begin{itemize}
+  \item the target population;
+  \item the intervention being compared;
+  \item the outcome and time scale;
+  \item the causal assumptions required;
+  \item the statistical uncertainty;
+  \item limitations from measurement, missing data, adherence, and generalizability.
+\end{itemize}
+
+A careful interpretation might say that the result estimates the mean difference in 12-month disability under two specified imaging policies, among patients represented by the study population, assuming the measured covariates were sufficient to control confounding, treatment was well-defined, and follow-up bias was adequately handled.

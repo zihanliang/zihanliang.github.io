@@ -1,0 +1,159 @@
+\lecture{7.2}{Augmented IPTW Estimation}
+\label{lec:7-2}
+
+\subsection{Combining G-Computation and IPTW}
+
+G-computation and IPTW use different nuisance functions. G-computation predicts
+counterfactual outcomes using $\Qbar_n(a,w)$. IPTW reweights observed outcomes
+using $g_{n,a}(w)$. Augmented inverse probability weighting combines both ideas in a
+single estimator.
+
+The target counterfactual mean is
+\[
+\psi(a)=\E\{\Ya{a}\}.
+\]
+Under the usual identification assumptions,
+\[
+\psi(a)=\E\{\Qbar(a,W)\}
+=
+\E\left\{\frac{\ind(A=a)}{g_a(W)}Y\right\}.
+\]
+The AIPTW estimator adds a residual correction to the g-computation estimator, or
+equivalently adds an outcome-regression correction to the IPTW estimator.
+
+\subsection{AIPTW Estimator for $\E\{\Yone\}$}
+
+For treatment level $1$, the AIPTW estimator is
+\[
+\psi_{n,\AIPTW}(1)
+=
+\frac{1}{n}\sum_{i=1}^n
+\left[
+\Qbar_n(1,W_i)
++
+\frac{\ind(A_i=1)}{g_{n,1}(W_i)}
+\{Y_i-\Qbar_n(1,W_i)\}
+\right].
+\]
+The estimated ATE is obtained by forming the analogous estimator for treatment level
+$0$ and subtracting:
+\[
+\widehat{\ATE}_{\AIPTW}
+=
+\psi_{n,\AIPTW}(1)-\psi_{n,\AIPTW}(0).
+\]
+
+\begin{estimationbox}
+For binary treatment,
+\[
+\psi_{n,\AIPTW}(0)
+=
+\frac{1}{n}\sum_{i=1}^n
+\left[
+\Qbar_n(0,W_i)
++
+\frac{\ind(A_i=0)}{g_{n,0}(W_i)}
+\{Y_i-\Qbar_n(0,W_i)\}
+\right],
+\]
+where $g_{n,0}(W_i)=1-g_{n,1}(W_i)$.
+\end{estimationbox}
+
+\subsection{IPTW Term}
+
+The estimator can be rearranged as
+\[
+\psi_{n,\AIPTW}(1)
+=
+\frac{1}{n}\sum_{i=1}^n
+\frac{\ind(A_i=1)}{g_{n,1}(W_i)}Y_i
++
+\frac{1}{n}\sum_{i=1}^n
+\left\{
+1-\frac{\ind(A_i=1)}{g_{n,1}(W_i)}
+\right\}
+\Qbar_n(1,W_i).
+\]
+The first term is the usual IPTW estimator of $\E\{\Yone\}$:
+\[
+\frac{1}{n}\sum_{i=1}^n
+\frac{\ind(A_i=1)}{g_{n,1}(W_i)}Y_i.
+\]
+It uses only observed treated outcomes, weighted by inverse treatment probabilities.
+
+\subsection{Augmentation Term}
+
+The second term,
+\[
+\frac{1}{n}\sum_{i=1}^n
+\left\{
+1-\frac{\ind(A_i=1)}{g_{n,1}(W_i)}
+\right\}
+\Qbar_n(1,W_i),
+\]
+is the augmentation term. It uses the outcome regression to correct the IPTW
+estimator. If the estimated propensity score underweights or overweights certain
+treated individuals, the augmentation term offsets part of the resulting distortion.
+
+For example, suppose $Y$ is nonnegative and $g_{n,1}(W)$ tends to underestimate the
+true probability of treatment. Then treated individuals receive weights that are too
+large, and the IPTW part tends to overshoot. The factor
+$1-\ind(A=1)/g_{n,1}(W)$ tends to be negative for treated observations with inflated
+weights, so the augmentation term can pull the estimate downward.
+
+\subsection{AIPTW as Augmented G-Computation}
+
+The same estimator can be viewed as g-computation plus a weighted residual average:
+\[
+\psi_{n,\AIPTW}(1)
+=
+\underbrace{
+\frac{1}{n}\sum_{i=1}^n \Qbar_n(1,W_i)
+}_{\text{g-computation}}
++
+\underbrace{
+\frac{1}{n}\sum_{i=1}^n
+\frac{\ind(A_i=1)}{g_{n,1}(W_i)}
+\{Y_i-\Qbar_n(1,W_i)\}
+}_{\text{augmentation}}.
+\]
+The augmentation is an average of observed residuals among treated individuals,
+weighted to represent the target population. If the outcome regression
+$\Qbar_n(1,W)$ systematically overpredicts treated outcomes, then the residuals
+$Y-\Qbar_n(1,W)$ tend to be negative, and the augmentation term lowers the
+g-computation estimate.
+
+\subsection{Intuition for Bias Correction}
+
+AIPTW uses $\Qbar_n$ to predict missing counterfactual outcomes and uses $g_n$ to
+check those predictions against observed residuals in the treatment group that
+actually reveals the relevant potential outcome. This creates a bias-correction
+mechanism.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  scale=.86,
+  transform shape,
+  node distance=.85cm,
+  box/.style={draw, rounded corners=2pt, minimum width=2.65cm, minimum height=.76cm},
+  arr/.style={-{Latex[length=2.5mm]}, thick}
+]
+\node[box] (gcomp) {Predict everyone\\ $\Qbar_n(1,W_i)$};
+\node[box, right=of gcomp] (resid) {Compute treated\\ residuals};
+\node[box, right=of resid] (weight) {Weight residuals\\ by $1/g_{n,1}(W_i)$};
+\node[box, right=of weight] (add) {Add correction\\ to mean};
+\draw[arr] (gcomp) -- (resid);
+\draw[arr] (resid) -- (weight);
+\draw[arr] (weight) -- (add);
+\end{tikzpicture}
+\caption{AIPTW augments predicted counterfactual means with weighted residual corrections.}
+\label{fig:ch7-aiptw-correction}
+\end{figure}
+
+\begin{keyidea}
+AIPTW is both augmented IPTW and augmented g-computation. The two algebraic forms
+are identical, but they highlight different sources of protection: the propensity score
+helps correct outcome-regression errors, and the outcome regression helps correct
+propensity-score errors.
+\end{keyidea}

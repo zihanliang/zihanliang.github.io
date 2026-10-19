@@ -1,0 +1,174 @@
+\lecture{8.6}{IPTW Estimation for Time-Varying Interventions}
+\label{lec:8-6}
+
+\subsection{Estimating Time-Specific Propensity Scores}
+
+The longitudinal IPTW identification formula suggests a direct estimator. For a
+fixed regime $\abar$, estimate each treatment mechanism
+\[
+  g_k(a_k\given \Lbar_k,\Abar_{k-1}=\abar_{k-1})
+\]
+and then average the weighted outcomes among individuals whose observed
+treatment history matches the regime.
+
+For two treatment times and binary treatments, estimate
+\[
+  g_0(a_0\given L_0)=\Prob(A_0=a_0\given L_0),
+\]
+and
+\[
+  g_1(a_1\given L_0,A_0=a_0,L_1)
+  =
+  \Prob(A_1=a_1\given L_0,A_0=a_0,L_1).
+\]
+The models for these probabilities may be logistic regressions, Super Learner
+fits, or other binary regression estimators.
+
+\subsection{Constructing Cumulative Weights}
+
+For subject $i$, define the estimated regime probability
+\[
+  \gbar_{n,K,i}(\abar)
+  =
+  \prod_{k=0}^K
+  g_{n,k}(a_k\given \Lbar_{k,i},\Abar_{k-1,i}=\abar_{k-1}).
+\]
+The estimated weight is
+\[
+  H_{n,i}(\abar)
+  =
+  \frac{\ind(\Abar_{K,i}=\abar_K)}{\gbar_{n,K,i}(\abar)}.
+\]
+
+\begin{estimationbox}
+The IPTW estimator of the counterfactual mean under regime $\abar$ is
+\[
+  \psi_{n,\IPTW}(\abar)
+  =
+  \frac{1}{n}\sum_{i=1}^n
+  H_{n,i}(\abar)Y_i.
+\]
+An ATE comparing regimes $\abar$ and $\abar'$ is estimated by
+\[
+  \psi_{n,\IPTW}(\abar)-\psi_{n,\IPTW}(\abar').
+\]
+\end{estimationbox}
+
+Some analysts use stabilized weights to reduce variance. For a static regime,
+a stabilized weight has a numerator that models the probability of the treatment
+history using less covariate information, for example
+\[
+  \prod_{k=0}^K
+  \Prob(A_k=a_k\given \Abar_{k-1}=\abar_{k-1}),
+\]
+divided by the full denominator. Stabilization changes the variance properties,
+but the denominator is still the part that removes measured confounding.
+
+\subsection{Estimating Counterfactual Means}
+
+For $K=1$ and regime $(1,1)$,
+\[
+  \psi_{n,\IPTW}(1,1)
+  =
+  \frac{1}{n}\sum_{i=1}^n
+  \frac{\ind(A_{0i}=1,A_{1i}=1)}
+       {g_{n,0}(1\given L_{0i})
+        g_{n,1}(1\given L_{0i},A_0=1,L_{1i})}
+  Y_i.
+\]
+For regime $(1,0)$,
+\[
+  \psi_{n,\IPTW}(1,0)
+  =
+  \frac{1}{n}\sum_{i=1}^n
+  \frac{\ind(A_{0i}=1,A_{1i}=0)}
+       {g_{n,0}(1\given L_{0i})
+        \{1-g_{n,1}(1\given L_{0i},A_0=1,L_{1i})\}}
+  Y_i.
+\]
+The same pattern applies to $(0,1)$ and $(0,0)$, with the appropriate
+probabilities in the denominator.
+
+\subsection{R Implementation}
+
+The following code implements the two-timepoint estimator in a simulated data
+set with variables `A0`, `L1`, `A1`, and `Y`. The treatment at time 0 is
+randomized in this example, so the first propensity model is intercept-only.
+
+\begin{lstlisting}[language=R]
+# time-0 treatment mechanism
+ps0 <- glm(A0 ~ 1, family = binomial())
+g_0 <- predict(ps0, type = "response")
+
+# time-1 treatment mechanism
+ps1 <- glm(A1 ~ L1 + A0, family = binomial())
+
+# P(A1 = 1 | A0 = 1, L1 = L1_i)
+g_1_A0_1 <- predict(
+  ps1,
+  newdata = data.frame(A0 = 1, L1 = L1),
+  type = "response"
+)
+
+# P(A1 = 1 | A0 = 0, L1 = L1_i)
+g_1_A0_0 <- predict(
+  ps1,
+  newdata = data.frame(A0 = 0, L1 = L1),
+  type = "response"
+)
+
+EY_11 <- mean((A0 == 1 & A1 == 1) / (g_0 * g_1_A0_1) * Y)
+EY_10 <- mean((A0 == 1 & A1 == 0) / (g_0 * (1 - g_1_A0_1)) * Y)
+EY_01 <- mean((A0 == 0 & A1 == 1) / ((1 - g_0) * g_1_A0_0) * Y)
+EY_00 <- mean((A0 == 0 & A1 == 0) / ((1 - g_0) * (1 - g_1_A0_0)) * Y)
+
+ate_11_vs_00 <- EY_11 - EY_00
+\end{lstlisting}
+
+\subsection{Simulated Examples}
+
+In the data-generating example from \cref{lec:8-5}, the true counterfactual means
+are
+\[
+  \E\{Y(1,1)\}=6,\quad
+  \E\{Y(1,0)\}=5,\quad
+  \E\{Y(0,1)\}=4,\quad
+  \E\{Y(0,0)\}=3.
+\]
+If the propensity score models are correctly specified and the sample is large,
+the IPTW estimates should be close to these values. Discrepancies in finite
+samples arise from random error, propensity score estimation error, and weight
+instability.
+
+\subsection{Diagnosing Extreme Weights}
+
+Because longitudinal weights multiply inverse probabilities, diagnostics are
+essential. At a minimum, inspect:
+\begin{itemize}
+  \item summaries of each time-specific propensity score;
+  \item summaries of the cumulative denominator $\gbar_{n,K}$;
+  \item summaries of the final weights $H_{n,i}(\abar)$;
+  \item the number of individuals who follow each regime;
+  \item whether large weights are concentrated in clinically unusual histories.
+\end{itemize}
+
+\begin{lstlisting}[language=R]
+w_11 <- (A0 == 1 & A1 == 1) / (g_0 * g_1_A0_1)
+
+summary(g_0)
+summary(g_1_A0_1)
+summary(w_11)
+quantile(w_11, probs = c(.5, .9, .95, .99, 1))
+mean(A0 == 1 & A1 == 1)
+\end{lstlisting}
+
+Large weights do not automatically imply bias, but they indicate that the
+estimate depends heavily on a small number of observations. Truncating weights
+can reduce variance but changes the estimand or introduces bias, so it should be
+reported as a sensitivity analysis rather than hidden as a default.
+
+\begin{keyidea}
+Longitudinal IPTW is simple to compute once time-specific propensity scores are
+available, but it can be highly variable because a full treatment history may be
+rare even when each individual treatment decision is not rare.
+\end{keyidea}

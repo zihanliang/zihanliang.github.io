@@ -1,0 +1,173 @@
+\lecture{2.4}{DAGs and Conditional Independencies}
+\label{lec:2-4}
+
+\subsection{DAG Factorization}
+
+DAGs are useful because they connect causal structure to probabilistic structure. For any ordered variables $A,B,C,D,E$, the chain rule always gives
+\[
+\Prob(A,B,C,D,E)
+=
+\Prob(A)\Prob(B\given A)\Prob(C\given A,B)\Prob(D\given A,B,C)\Prob(E\given A,B,C,D).
+\]
+This identity is true for any joint distribution and does not require a graph.
+
+Now consider the DAG
+\[
+A\to B,\quad A\to C,\quad B\to D,\quad C\to D,\quad D\to E.
+\]
+The parent sets are
+\[
+\pa(A)=\emptyset,\quad
+\pa(B)=\{A\},\quad
+\pa(C)=\{A\},\quad
+\pa(D)=\{B,C\},\quad
+\pa(E)=\{D\}.
+\]
+The DAG factorization is
+\[
+\Prob(A,B,C,D,E)
+=
+\Prob(A)\Prob(B\given A)\Prob(C\given A)\Prob(D\given B,C)\Prob(E\given D).
+\]
+
+\begin{definition}[DAG factorization]
+A distribution is said to factorize according to a DAG if its joint density or mass function can be written as
+\[
+p(v)=\prod_{j=1}^m p(v_j\given \pa(v_j)),
+\]
+where $\pa(v_j)$ denotes the parents of node $V_j$ in the graph.
+\end{definition}
+
+When we use a DAG to read conditional independencies, we are assuming that the
+relevant distribution is Markov with respect to the DAG, equivalently that it
+satisfies this factorization.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.7cm,>=Latex]
+  \node[draw, circle, fill=blue!5] (A) {$A$};
+  \node[draw, circle, fill=blue!5, right=of A] (B) {$B$};
+  \node[draw, circle, fill=blue!5, below=of A] (C) {$C$};
+  \node[draw, circle, fill=blue!5, right=of C] (D) {$D$};
+  \node[draw, circle, fill=blue!5, right=of D] (E) {$E$};
+  \draw[->, thick] (A) -- (B);
+  \draw[->, thick] (A) -- (C);
+  \draw[->, thick] (B) -- (D);
+  \draw[->, thick] (C) -- (D);
+  \draw[->, thick] (D) -- (E);
+\end{tikzpicture}
+\caption{This DAG implies that each node's distribution depends on its parents, not on all earlier variables.}
+\end{figure}
+
+\subsection{Conditional Independence Implied by Missing Arrows}
+
+The factorization above removes variables from conditioning sets. For example, the chain rule term
+\[
+\Prob(C\given A,B)
+\]
+is replaced by
+\[
+\Prob(C\given A).
+\]
+This replacement encodes
+\[
+C\ci B\given A.
+\]
+Similarly,
+\[
+\Prob(E\given A,B,C,D)=\Prob(E\given D)
+\]
+encodes that $E$ is conditionally independent of $A,B,C$ given $D$:
+\[
+E\ci (A,B,C)\given D.
+\]
+
+Under this Markov/factorization assumption, these conditional independencies
+follow from missing arrows and the parent structure of the graph. Chapter 3 will
+introduce d-separation, the graphical rule for reading such independencies
+systematically.
+
+\begin{keyidea}
+A DAG does two things at once: it describes causal relationships and implies conditional independence restrictions on the joint distribution.
+\end{keyidea}
+
+\subsection{Including Measured and Unmeasured Variables}
+
+A causal graph should not be restricted to variables that happen to appear in the data set. If an unmeasured factor affects both treatment and outcome, omitting it from the graph hides a threat to causal interpretation.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2.0cm,>=Latex]
+  \node[draw, circle, fill=gray!10] (U) {$U$\\unmeasured\\severity};
+  \node[draw, circle, fill=green!5, below left=of U] (A) {$A$\\treatment};
+  \node[draw, circle, fill=orange!7, below right=of U] (Y) {$Y$\\outcome};
+  \node[draw, circle, fill=blue!5, left=of A] (W) {$W$\\measured\\covariates};
+  \draw[->, thick] (U) -- (A);
+  \draw[->, thick] (U) -- (Y);
+  \draw[->, thick] (W) -- (A);
+  \draw[->, thick] (W) to[bend right=20] (Y);
+  \draw[->, thick] (A) -- (Y);
+\end{tikzpicture}
+\caption{Unmeasured variables should appear in causal graphs when they are part of the scientific system.}
+\end{figure}
+
+The node $U$ may never be observed, but it matters. If severe symptoms drive both imaging and later disability, then a graph without $U$ may falsely suggest that measured covariates are sufficient for causal adjustment.
+
+\subsection{Collapsing Variables into Nodes}
+
+Sometimes a node represents a vector. For instance, $W$ may stand for age, sex, baseline pain score, comorbidities, insurance status, and prior utilization:
+\[
+W=(W_1,\ldots,W_p).
+\]
+This is convenient when the internal relationships among the $W_j$ variables are not central to the causal question.
+
+Collapsing is inappropriate when the relationships inside the vector matter. If one component of $W$ is the exposure, mediator, or outcome, it should receive its own node. If temporal ordering among components matters, collapsing them can hide causal feedback.
+
+\subsection{Representing Time to Avoid Cycles}
+
+Many real systems appear cyclic when described coarsely. Infection can cause malnutrition, and malnutrition can increase susceptibility to infection. A DAG cannot contain a cycle, so the solution is to represent the process over time:
+\[
+\text{infection}_1 \to \text{malnutrition}_2 \to \text{infection}_3,
+\]
+and
+\[
+\text{malnutrition}_1 \to \text{infection}_2 \to \text{malnutrition}_3.
+\]
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.4cm,>=Latex]
+  \node[draw, rounded corners, fill=blue!5] (I1) {$I_1$};
+  \node[draw, rounded corners, fill=orange!7, below=of I1] (M1) {$M_1$};
+  \node[draw, rounded corners, fill=blue!5, right=of I1] (I2) {$I_2$};
+  \node[draw, rounded corners, fill=orange!7, right=of M1] (M2) {$M_2$};
+  \node[draw, rounded corners, fill=blue!5, right=of I2] (I3) {$I_3$};
+  \node[draw, rounded corners, fill=orange!7, right=of M2] (M3) {$M_3$};
+  \draw[->, thick] (I1) -- (I2);
+  \draw[->, thick] (I2) -- (I3);
+  \draw[->, thick] (M1) -- (M2);
+  \draw[->, thick] (M2) -- (M3);
+  \draw[->, thick] (I1) -- (M2);
+  \draw[->, thick] (M1) -- (I2);
+  \draw[->, thick] (I2) -- (M3);
+  \draw[->, thick] (M2) -- (I3);
+  \node[above=.2cm of I1] {time 1};
+  \node[above=.2cm of I2] {time 2};
+  \node[above=.2cm of I3] {time 3};
+\end{tikzpicture}
+\caption{Feedback over time can be represented without cycles by indexing variables by time.}
+\end{figure}
+
+\subsection{Building DAGs with Subject-Matter Knowledge}
+
+DAG building should start from the scientific system, not from the available columns in the data set. A useful workflow is:
+\begin{enumerate}
+  \item List the exposure, outcome, and variables known or suspected to affect either.
+  \item Order variables temporally when possible.
+  \item Begin with a rich graph containing plausible arrows.
+  \item Remove an arrow only when there is a substantive reason to believe the direct effect is absent.
+  \item Mark which variables are measured and which are unmeasured.
+  \item Revisit the graph with subject-matter experts.
+\end{enumerate}
+
+If the graph shows that key variables were not measured, that is not a failure of graphing. It is useful information. The conclusion may be that the current study needs stronger assumptions, a different target question, sensitivity analysis, or more cautious interpretation as an association.

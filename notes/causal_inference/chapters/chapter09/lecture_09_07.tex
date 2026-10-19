@@ -1,0 +1,250 @@
+\lecture{9.7}{Front-Door Identification}
+\label{lec:9-7}
+
+\subsection{Front-Door Graph}
+
+The front-door model shows that an effect can be identified even when there is
+unmeasured confounding between treatment and outcome and no valid adjustment
+set. The key is a measured mediator $M$ through which all effects of $A$ on $Y$
+pass.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=1.35cm,
+  box/.style={draw, rounded corners=2pt, minimum width=.9cm, minimum height=.7cm},
+  arr/.style={-{Latex[length=2.3mm]}, thick}
+]
+\node[box] (A) {$A$};
+\node[box, right=of A] (M) {$M$};
+\node[box, right=of M] (Y) {$Y$};
+\node[box, above=of M] (U) {$U$};
+\draw[arr] (A) -- (M);
+\draw[arr] (M) -- (Y);
+\draw[arr] (U) -- (A);
+\draw[arr] (U) -- (Y);
+\end{tikzpicture}
+\caption{Front-door graph: $A$ and $Y$ are confounded by $U$, but the effect of $A$ on $Y$ is fully mediated by observed $M$.}
+\label{fig:ch9-frontdoor}
+\end{figure}
+
+\subsection{Mediator-Based Identification}
+
+The graph says that the causal effect decomposes into two parts:
+\[
+  A\rightarrow M,\qquad M\rightarrow Y.
+\]
+The effect of $A$ on $M$ is unconfounded. The effect of $M$ on $Y$ can be
+identified by adjusting for $A$, because the remaining noncausal path from $M$
+to $Y$ goes through $A$.
+
+\subsection{SWIGs for Front-Door Models}
+
+The front-door argument can be expressed with counterfactual independencies:
+\[
+  M(a)\ci A,
+\]
+\[
+  Y(m)\ci M\given A,
+\]
+\[
+  Y(m)\ci M(a).
+\]
+The exclusion-type condition is
+\[
+  Y(a,m)=Y(m),
+\]
+which states that once the mediator is set to $m$, the value assigned to $A$
+does not further affect $Y$.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  scale=.92,
+  transform shape,
+  box/.style={
+    draw,
+    rounded corners=2pt,
+    align=center,
+    minimum width=.9cm,
+    minimum height=.65cm
+  },
+  fixed/.style={
+    draw,
+    rounded corners=2pt,
+    fill=gray!12,
+    align=center,
+    minimum width=.9cm,
+    minimum height=.65cm
+  },
+  arr/.style={-{Latex[length=2.1mm]}, thick}
+]
+
+% ---------- Row 1 ----------
+\node[box]   (A1) at (0,0) {$A$};
+\node[fixed] (a1) at (1.6,0) {$a$};
+\node[box]   (M1) at (3.2,0) {$M(a)$};
+\node[box]   (Y1) at (5.0,0) {$Y(a)$};
+\node[box]   (U1) at (2.7,1.35) {$U$};
+
+\draw[arr] (a1) -- (M1);
+\draw[arr] (M1) -- (Y1);
+\draw[arr] (U1) -- (A1);
+\draw[arr] (U1) -- (Y1);
+
+\node[right=1.0cm of Y1] {$M(a)\ci A$};
+
+% ---------- Row 2 ----------
+\node[box]   (A2) at (0,-2.6) {$A$};
+\node[box]   (M2) at (1.6,-2.6) {$M$};
+\node[fixed] (m2) at (3.2,-2.6) {$m$};
+\node[box]   (Y2) at (5.0,-2.6) {$Y(m)$};
+\node[box]   (U2) at (2.7,-1.25) {$U$};
+
+\draw[arr] (A2) -- (M2);
+\draw[arr] (m2) -- (Y2);
+\draw[arr] (U2) -- (A2);
+\draw[arr] (U2) -- (Y2);
+
+\node[right=1.0cm of Y2] {$Y(m)\ci M\given A$};
+
+% ---------- Row 3 ----------
+\node[fixed] (a3) at (0,-5.2) {$a$};
+\node[box]   (M3) at (1.6,-5.2) {$M(a)$};
+\node[fixed] (m3) at (3.2,-5.2) {$m$};
+\node[box]   (Y3) at (5.0,-5.2) {$Y(m)$};
+\node[box]   (U3) at (2.7,-3.85) {$U$};
+
+\draw[arr] (a3) -- (M3);
+\draw[arr] (m3) -- (Y3);
+\draw[arr] (U3) -- (Y3);
+
+\node[right=1.0cm of Y3] {$Y(m)\ci M(a)$};
+
+\end{tikzpicture}
+\caption{SWIG-style views of the counterfactual independencies used in front-door identification.}
+\label{fig:ch9-frontdoor-swig}
+\end{figure}
+
+\subsection{Identification Steps}
+
+Start from the distribution of $Y(a)$:
+\[
+  p\{Y(a)\}=\sum_m p\{Y(a),M(a)=m\}.
+\]
+By the mediation condition, when $M(a)=m$,
+\[
+  Y(a)=Y(a,m)=Y(m).
+\]
+Thus
+\[
+  p\{Y(a)\}=\sum_m p\{Y(m),M(a)=m\}.
+\]
+Using the counterfactual independence $Y(m)\ci M(a)$,
+\[
+  p\{Y(a)\}=\sum_m p\{Y(m)\}p\{M(a)=m\}.
+\]
+The mediator distribution is identified because $M(a)\ci A$ and consistency:
+\[
+  p\{M(a)=m\}=p(M=m\given A=a).
+\]
+The remaining term is
+\[
+  p\{Y(m)\}=\sum_{a'}p\{Y(m)\given A=a'\}p(A=a').
+\]
+Using $Y(m)\ci M\given A$ and consistency,
+\[
+  p\{Y(m)\given A=a'\}=p(Y\given M=m,A=a').
+\]
+
+\subsection{Front-Door Adjustment Formula}
+
+\begin{identificationbox}
+For discrete $A$ and $M$, the front-door formula is
+\[
+  \E\{\Ya{a}\}
+  =
+  \sum_m
+  \left[
+    \sum_{a'} \E(Y\given M=m,A=a')\Prob(A=a')
+  \right]
+  \Prob(M=m\given A=a).
+\]
+\end{identificationbox}
+
+The assigned value $a$ appears only in the mediator distribution
+$\Prob(M=m\given A=a)$. The inner sum identifies the effect of setting the
+mediator to $m$ on the outcome by averaging over the treatment distribution.
+
+\subsection{Key Assumptions}
+
+\begin{assumptionbox}
+Front-door identification requires:
+\begin{itemize}
+  \item all directed effects of $A$ on $Y$ pass through $M$;
+  \item no unmeasured confounding of $A$ and $M$;
+  \item no unmeasured confounding of $M$ and $Y$ after conditioning on $A$;
+  \item positivity for the relevant treatment and mediator levels.
+\end{itemize}
+\end{assumptionbox}
+
+If there is a direct arrow $A\rightarrow Y$, then $Y(a,m)=Y(m)$ fails. If there
+is unmeasured confounding between $A$ and $M$, then $p(M(a))$ is not identified
+from $p(M\given A=a)$. If there is unmeasured confounding between $M$ and $Y$
+within levels of $A$, then the mediator effect is not identified.
+
+\subsection{Practical Implications}
+
+The front-door formula is rarely justified automatically. It requires a mediator
+that captures the entire causal effect of treatment and is itself sufficiently
+well measured. Nevertheless, it is important because it proves that adjustment
+is not the only route to nonparametric identification.
+
+\subsection{Extensions and Software}
+
+Modern identification algorithms generalize front-door reasoning to larger
+graphs with hidden variables. Software can take a graph with observed and hidden
+variables and return an identifying functional when one exists. Estimation then
+requires fitting the conditional distributions appearing in that functional,
+often with one-step or TMLE-style estimators.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=1.0cm,
+  box/.style={draw, rounded corners=2pt, minimum width=.9cm, minimum height=.65cm},
+  arr/.style={-{Latex[length=2.1mm]}, thick},
+  bi/.style={<->, >=Latex, thick, dashed}
+]
+\node[box] (X) {$X$};
+\node[box, right=of X] (A) {$A$};
+\node[box, right=of A] (M) {$M$};
+\node[box, right=of M] (L) {$L$};
+\node[box, right=of L] (Y) {$Y$};
+\draw[arr] (X) -- (A);
+\draw[arr] (X) to[bend left=22] (M);
+\draw[arr] (X) to[bend left=30] (Y);
+\draw[arr] (A) -- (M);
+\draw[arr] (M) -- (L);
+\draw[arr] (L) -- (Y);
+\draw[bi] (A) to[bend right=22] (Y);
+\end{tikzpicture}
+\caption{Extended front-door-type graphs can be identifiable even when no ordinary adjustment set exists.}
+\label{fig:ch9-extended-frontdoor}
+\end{figure}
+
+\begin{implementationbox}
+Graph-based software for hidden-variable causal models typically asks the user
+to provide the observed variables, directed edges, hidden-variable or bidirected
+edges, the treatment, and the outcome. The software then checks whether the
+effect is identifiable and, when possible, returns an identifying functional and
+estimators such as one-step or TMLE estimators. The graph specification is part
+of the statistical analysis; changing the graph changes the estimand that can be
+identified.
+\end{implementationbox}
+
+\begin{keyidea}
+Front-door identification works by replacing an unidentifiable direct treatment
+effect with two identifiable pieces: the effect of treatment on mediator and the
+effect of mediator on outcome.
+\end{keyidea}

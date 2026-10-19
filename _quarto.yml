@@ -1,9 +1,16 @@
 project:
   type: website
   output-dir: docs
+  # Top-level pages plus the reader stubs that scripts/build-note-sources.mjs
+  # writes for each web note (the notes' own .md/.tex files are not pages).
+  render:
+    - "*.qmd"
+    - "notes/*/index.qmd"
   pre-render:
     - node scripts/render-static-content.mjs
+    - node scripts/build-note-sources.mjs
   post-render:
+    - node scripts/build-note-sources.mjs --publish
     - node scripts/post-render-seo.mjs
   resources:
     - CNAME
@@ -11,7 +18,7 @@ project:
     - fonts/**
     - figures/**
     - icon/**
-    - notes/**
+    - notes/*.pdf
     - pdf/**
     - zihan_liang_academic_cv/cv.pdf
     - zihan_liang_academic_cv/cv-first-page.png

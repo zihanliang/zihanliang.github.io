@@ -1,0 +1,234 @@
+\lecture{1.6}{The Tower Rule}
+\label{lec:1-6}
+
+\subsection{Plain-Language Statement of the Tower Rule}
+
+The tower rule is one of the most useful identities in probability and statistics. It says that an overall mean can be recovered by averaging subgroup means, using the subgroup sizes as weights.
+
+\begin{keyidea}
+The marginal mean equals the average of conditional means, weighted by subgroup prevalence.
+\end{keyidea}
+
+Suppose $W$ is systolic blood pressure and $A$ is sex at birth, coded as $A=0$ for one group and $A=1$ for another. Every person belongs to exactly one subgroup defined by $A$. If we know the mean blood pressure in each subgroup and the fraction of the population in each subgroup, then we can reconstruct the overall population mean.
+
+In words:
+\[
+\text{overall mean}
+=
+\sum_{\text{subgroups}}
+(\text{mean within subgroup})(\text{fraction in subgroup}).
+\]
+
+\subsection{Weighted Averages of Subgroup Means}
+
+For a discrete grouping variable $A$, the tower rule is
+\[
+\E(W)=\sum_a \E(W\given A=a)\Prob(A=a).
+\]
+The weights $\Prob(A=a)$ must add to one. The quantities $\E(W\given A=a)$ are subgroup-specific means. The formula is therefore a weighted average of subgroup means.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.7cm,>=Latex]
+  \node[draw, rounded corners, fill=blue!5, minimum width=3.0cm] (g0) {Group $A=0$\\mean $\E(W\given A=0)$\\weight $\Prob(A=0)$};
+  \node[draw, rounded corners, fill=green!5, right=of g0, minimum width=3.0cm] (g1) {Group $A=1$\\mean $\E(W\given A=1)$\\weight $\Prob(A=1)$};
+  \node[draw, rounded corners, fill=orange!8, below=1.6cm of $(g0)!0.5!(g1)$, minimum width=5.5cm] (overall) {Overall mean $\E(W)$};
+  \draw[->, thick] (g0) -- (overall);
+  \draw[->, thick] (g1) -- (overall);
+\end{tikzpicture}
+\caption{The tower rule combines subgroup means according to subgroup prevalence.}
+\end{figure}
+
+The rule is not an approximation. It is an identity, provided the expectations exist.
+
+\subsection{Numeric Example}
+
+Suppose the population is split into two groups:
+\[
+\Prob(A=0)=0.6,\qquad \Prob(A=1)=0.4.
+\]
+Suppose the subgroup means of systolic blood pressure are
+\[
+\E(W\given A=0)=120,
+\qquad
+\E(W\given A=1)=130.
+\]
+Then
+\[
+\E(W)
+=\E(W\given A=0)\Prob(A=0)
++\E(W\given A=1)\Prob(A=1).
+\]
+Substituting the numbers,
+\[
+\E(W)
+=120(0.6)+130(0.4)
+=72+52
+=124.
+\]
+The overall mean is 124. The group representing $60\%$ of the population contributes $60\%$ of its mean, and the group representing $40\%$ contributes $40\%$ of its mean.
+
+\subsection{Probability Notation}
+
+The same idea can be written compactly. For discrete $A$,
+\[
+\E(W)=\sum_a \E(W\given A=a)\Prob(A=a).
+\]
+For continuous $A$, the sum is replaced by an integral:
+\[
+\E(W)=\int \E(W\given A=a) f_A(a)\,da,
+\]
+where $f_A$ is the density of $A$.
+
+When $A$ has three values, say $0,1,2$, the formula is
+\[
+\E(W)
+=
+\E(W\given A=0)\Prob(A=0)
++\E(W\given A=1)\Prob(A=1)
++\E(W\given A=2)\Prob(A=2).
+\]
+
+\subsection{Shorthand Form: $\E(W)=\E\{\E(W\given A)\}$}
+
+The tower rule is often written as
+\[
+\E(W)=\E\{\E(W\given A)\}.
+\]
+This notation has two layers:
+\begin{itemize}
+  \item The inner expression $\E(W\given A)$ is a function of $A$. It assigns each subgroup its subgroup mean.
+  \item The outer expectation averages that function over the population distribution of $A$.
+\end{itemize}
+
+For binary $A$,
+\[
+\E(W\given A)
+=
+\begin{cases}
+\E(W\given A=0), & A=0,\\
+\E(W\given A=1), & A=1.
+\end{cases}
+\]
+Therefore
+\[
+\E\{\E(W\given A)\}
+=
+\E(W\given A=0)\Prob(A=0)
++\E(W\given A=1)\Prob(A=1).
+\]
+
+\subsection{Common Mistakes}
+
+A common mistake is to confuse $\E(W\given A)$ with $\E(W)$. The conditional mean $\E(W\given A)$ is generally a random variable because it depends on $A$. The marginal mean $\E(W)$ is a single number.
+
+Another common mistake is to omit the subgroup weights. If the subgroup means are 120 and 130, the overall mean is not necessarily $(120+130)/2$. That unweighted average is correct only if the two subgroups are equally prevalent. The correct weights are the population proportions $\Prob(A=a)$.
+
+\begin{remark}
+Conditioning creates subgroup-specific quantities. To return to a marginal quantity, we must average over the distribution of the conditioning variable.
+\end{remark}
+
+\subsection{Proof of the Tower Rule}
+
+\begin{theorem}[Tower rule for a discrete grouping variable]
+Let $W$ be a discrete random variable with finite expectation and let $A$ be a discrete random variable. Then
+\[
+\E(W)=\sum_a \E(W\given A=a)\Prob(A=a)
+=\E\{\E(W\given A)\}.
+\]
+\end{theorem}
+
+\begin{proof}
+Start from the definition of expectation:
+\[
+\E(W)=\sum_w w\Prob(W=w).
+\]
+Marginalize over $A$:
+\[
+\Prob(W=w)=\sum_a \Prob(W=w,A=a).
+\]
+Substitute this into the expectation:
+\[
+\E(W)
+=\sum_w w\sum_a \Prob(W=w,A=a).
+\]
+Switch the order of summation:
+\[
+\E(W)
+=\sum_a\sum_w w\Prob(W=w,A=a).
+\]
+Use the chain rule $\Prob(W=w,A=a)=\Prob(W=w\given A=a)\Prob(A=a)$:
+\[
+\E(W)
+=\sum_a\sum_w w\Prob(W=w\given A=a)\Prob(A=a).
+\]
+Because $\Prob(A=a)$ does not depend on $w$, move it outside the inner sum:
+\[
+\E(W)
+=\sum_a \Prob(A=a)\sum_w w\Prob(W=w\given A=a).
+\]
+The inner sum is the conditional expectation $\E(W\given A=a)$, so
+\[
+\E(W)=\sum_a \E(W\given A=a)\Prob(A=a).
+\]
+The final expression is exactly $\E\{\E(W\given A)\}$.
+\end{proof}
+
+\subsection{Practice Problems}
+
+\begin{exercise}[Three groups]
+Let $A\in\{0,1,2\}$ with
+\[
+\Prob(A=0)=0.2,\qquad
+\Prob(A=1)=0.5,\qquad
+\Prob(A=2)=0.3.
+\]
+Suppose
+\[
+\E(W\given A=0)=9,\qquad
+\E(W\given A=1)=10,\qquad
+\E(W\given A=2)=14.
+\]
+Compute $\E(W)$.
+\end{exercise}
+
+\begin{proof}[Solution]
+Apply the tower rule:
+\[
+\E(W)
+=9(0.2)+10(0.5)+14(0.3)
+=1.8+5+4.2
+=11.
+\]
+\end{proof}
+
+\begin{exercise}[Conditioning on two variables]
+Let $A$ and $Z$ be discrete. Express $\E(W)$ using subgroup means defined by both $A$ and $Z$.
+\end{exercise}
+
+\begin{proof}[Solution]
+The joint groups are defined by pairs $(a,z)$. The tower rule gives
+\[
+\E(W)
+=
+\sum_a\sum_z \E(W\given A=a,Z=z)\Prob(A=a,Z=z).
+\]
+Equivalently,
+\[
+\E(W)=\E\{\E(W\given A,Z)\}.
+\]
+\end{proof}
+
+\begin{exercise}[A conditional version]
+Let $A$ and $Z$ be discrete. Express $\E(W\given A=1)$ using subgroup means defined by $Z$ among those with $A=1$.
+\end{exercise}
+
+\begin{proof}[Solution]
+Within the subgroup $A=1$, average over the distribution of $Z$ in that subgroup:
+\[
+\E(W\given A=1)
+=
+\sum_z \E(W\given A=1,Z=z)\Prob(Z=z\given A=1).
+\]
+This is the tower rule applied inside the $A=1$ subpopulation.
+\end{proof}

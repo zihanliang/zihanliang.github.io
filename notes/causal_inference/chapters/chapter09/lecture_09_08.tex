@@ -1,0 +1,116 @@
+\lecture{9.8}{Missing Data: Traditional Statistical View}
+\label{lec:9-8}
+
+\subsection{Target Estimands With Incomplete Data}
+
+Missing data problems begin with a target estimand defined for a complete-data
+distribution. Examples include
+\[
+  \psi_1=\E(Y),
+\]
+\[
+  \psi_2=\E(Y\given X=x),
+\]
+and, under causal assumptions,
+\[
+  \psi_3=\E\{\E(Y\given X,T=1)-\E(Y\given X,T=0)\}.
+\]
+These estimands are functions of variables such as $(X,T,Y)$ that may not be
+fully observed for every sampled unit.
+
+\subsection{Missingness Indicators}
+
+Let $V$ be a variable that may be missing. Define
+\[
+  R_V=
+  \begin{cases}
+  1, & V \text{ is observed},\\
+  0, & V \text{ is missing}.
+  \end{cases}
+\]
+The observed version is
+\[
+  V^*=
+  \begin{cases}
+  V, & R_V=1,\\
+  ?, & R_V=0.
+  \end{cases}
+\]
+If $X,T,Y$ can all be missing, then the observed data include
+\[
+  X^*,T^*,Y^*,R_X,R_T,R_Y.
+\]
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  box/.style={draw, rounded corners=2pt, minimum width=1.1cm, minimum height=.7cm},
+  arr/.style={-{Latex[length=2.2mm]}, thick},
+  node distance=1.0cm
+]
+\node[box] (V) {$V$};
+\node[box, below=of V] (R) {$R_V$};
+\node[box, right=of R] (Vstar) {$V^*$};
+\draw[arr] (V) -- (Vstar);
+\draw[arr] (R) -- (Vstar);
+\end{tikzpicture}
+\caption{The observed variable $V^*$ is determined by the full value $V$ and the missingness indicator $R_V$.}
+\label{fig:ch9-missing-indicator}
+\end{figure}
+
+\subsection{Complete-Case Analysis}
+
+Complete-case analysis discards any row with missing values in variables needed
+for the analysis. It is simple, but it changes the target population from all
+sampled units to units with complete records. It is unbiased for some estimands
+only under strong missingness conditions, such as missingness independent of the
+variables relevant to the estimand.
+
+\subsection{Imputation}
+
+Imputation replaces missing values with predicted or sampled values. Single
+imputation fills in one value; multiple imputation creates several completed
+data sets and combines results. Imputation can improve efficiency relative to
+complete-case analysis, but it depends on assumptions about the missingness
+mechanism and the imputation model.
+
+Imputation should not be viewed as a purely technical repair. It encodes
+assumptions about what the missing values would have been.
+
+\subsection{Efficiency Loss}
+
+Ignoring incomplete rows reduces sample size and can discard partially observed
+information. For example, a row with $X$ and $T$ observed but $Y$ missing still
+contains information about the distribution of covariates and treatment. A row
+with $Y$ observed but one covariate missing still contains outcome information.
+Efficient methods use all observed components compatible with the identifying
+assumptions.
+
+\subsection{Bias From Missingness}
+
+Bias occurs when complete cases differ systematically from incomplete cases in
+ways related to the target estimand. For example, if people with severe disease
+are less likely to report an outcome, the observed outcome mean among
+respondents can underestimate the true mean. If missingness depends on the
+unobserved value itself, naive analyses can be badly biased.
+
+\subsection{Sources of Missing Data}
+
+Common sources include:
+\begin{itemize}
+  \item random data-entry failures;
+  \item survey nonresponse to sensitive questions;
+  \item variables introduced partway through a study;
+  \item measurement limits, such as values too fast or too small to record;
+  \item dropout or loss to follow-up;
+  \item clinician decisions about whether to order a test.
+\end{itemize}
+Different sources imply different assumptions. A randomly skipped data-entry
+field is not the same as a refused sensitive survey question or a diagnostic
+test ordered only for high-risk patients.
+
+\begin{keyidea}
+Missing data analysis is an identification problem. Before choosing complete
+cases, imputation, or weighting, specify the target complete-data estimand and
+the assumptions linking observed records to missing values.
+\end{keyidea}

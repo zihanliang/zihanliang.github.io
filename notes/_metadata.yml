@@ -1,0 +1,15 @@
+# Reader pages for study notes with a web version. Each note's folder gets a
+# generated index.qmd stub (scripts/build-note-sources.mjs) pointing at its
+# Markdown or LaTeX source; page data comes from the note's "source" field in
+# data/notes/sections.json.
+title: ""
+title-prefix: ""
+page-layout: full
+title-block: false
+toc: false
+filters:
+  - ../scripts/note-reader.lua
+# MathJax 4 breaks long inline formulas across lines, as TeX does in the PDFs.
+html-math-method:
+  method: mathjax
+  url: "https://cdn.jsdelivr.net/npm/mathjax@4.1.1/tex-chtml.js"

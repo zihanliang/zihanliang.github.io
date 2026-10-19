@@ -1,0 +1,151 @@
+\lecture{1.2}{Frequentist and Bayesian Perspectives}
+\label{lec:1-2}
+
+\subsection{Frequentist Interpretation of Probability}
+
+In the frequentist view, probabilities describe long-run relative frequencies in a repeatable process or proportions in a target population. If $A$ is an indicator that a person received a monoclonal antibody infusion and $Y$ is an indicator of HIV infection, then
+\[
+\Prob(A=1,Y=1)
+\]
+can be read as the proportion of the target population for whom both $A=1$ and $Y=1$.
+
+This interpretation also applies to conditional probabilities. The probability
+\[
+\Prob(Y=1\given A=1)
+\]
+is the proportion infected among the subgroup who received monoclonal antibodies. The conditioning event defines the subgroup; the probability describes the fraction of that subgroup with the outcome.
+
+For continuous variables the exact phrase "proportion with $W=w$" may be inappropriate because $\Prob(W=w)$ can equal zero. In that setting probability is described by densities, distribution functions, and probabilities of intervals such as $\Prob(60\le W\le 70)$. The conceptual role is the same: probability describes how values are distributed in a population or under a random experiment.
+
+\subsection{Bayesian Updating}
+
+The Bayesian view treats unknown quantities as objects about which uncertainty can be expressed probabilistically. A Bayesian analysis begins with a prior distribution, combines it with the likelihood supplied by the data, and obtains a posterior distribution.
+
+\begin{definition}[Bayesian update]
+Let $\theta$ denote an unknown parameter and let $O_1,\ldots,O_n$ denote observed data. A Bayesian analysis specifies a prior density $\pi(\theta)$ and a likelihood $L(\theta;O_1,\ldots,O_n)$. The posterior density is
+\[
+\pi(\theta\given O_1,\ldots,O_n)
+=
+\frac{L(\theta;O_1,\ldots,O_n)\pi(\theta)}
+{\int L(t;O_1,\ldots,O_n)\pi(t)\,dt}.
+\]
+\end{definition}
+
+In words, the posterior distribution is the updated state of uncertainty after seeing the data. The denominator makes the posterior integrate to one. It also shows a central feature of Bayesian inference: prior beliefs and the likelihood both contribute to the final answer.
+
+For example, if $\theta$ is the prevalence of a disease, a Bayesian credible interval might be interpreted as an interval containing $\theta$ with posterior probability $0.95$, conditional on the model and prior. This differs from a frequentist confidence interval, whose $95\%$ statement concerns repeated-sampling coverage of the interval construction procedure.
+
+\subsection{Repeated-Sampling Properties}
+
+Frequentist inference evaluates statistical procedures by imagining repeated samples from the same population. If the study were repeated many times, each repetition would produce a new data set, a new point estimate, a new confidence interval, and perhaps a new hypothesis test decision.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.5cm,>=Latex]
+  \node[draw, rounded corners, fill=blue!4, minimum width=3.4cm] (pop) {Population $P$};
+  \node[draw, rounded corners, fill=green!5, below left=of pop, minimum width=2.7cm] (s1) {Sample 1};
+  \node[draw, rounded corners, fill=green!5, below=of pop, minimum width=2.7cm] (s2) {Sample 2};
+  \node[draw, rounded corners, fill=green!5, below right=of pop, minimum width=2.7cm] (s3) {Sample 3};
+  \node[below=.8cm of s1] (e1) {$\hat\psi_n^{(1)}$};
+  \node[below=.8cm of s2] (e2) {$\hat\psi_n^{(2)}$};
+  \node[below=.8cm of s3] (e3) {$\hat\psi_n^{(3)}$};
+  \draw[->] (pop) -- (s1);
+  \draw[->] (pop) -- (s2);
+  \draw[->] (pop) -- (s3);
+  \draw[->] (s1) -- (e1);
+  \draw[->] (s2) -- (e2);
+  \draw[->] (s3) -- (e3);
+  \node[align=center, below=1.1cm of e2] {Repeated samples produce a distribution of estimates.};
+\end{tikzpicture}
+\caption{Frequentist properties describe how a procedure behaves over repeated samples.}
+\end{figure}
+
+The phrase "good procedure" means that the procedure reliably achieves its stated goal over these repetitions. A good estimator is close to the truth on average or in large samples. A good confidence interval procedure contains the true parameter at its advertised rate. A good test rejects false null hypotheses often while controlling false rejection under the null.
+
+\subsection{Bias}
+
+\begin{definition}[Bias]
+The finite-sample bias of an estimator $\hat\psi_n$ for a parameter $\psi$ is
+\[
+\Bias(\hat\psi_n)=\E(\hat\psi_n)-\psi,
+\]
+where the expectation is taken over repeated samples from the population.
+\end{definition}
+
+Bias is an average error across repeated experiments. It is not the error in one realized data set. An estimator can be biased and still sometimes be close to the truth; it can also be unbiased and still be highly variable.
+
+\begin{example}[Bias of the sample mean]
+If $Y_1,\ldots,Y_n \iid P$ and $\psi=\E(Y)$, then the sample mean is unbiased:
+\[
+\E(\hat\psi_n)
+=\E\left(\frac{1}{n}\sum_{i=1}^nY_i\right)
+=\frac{1}{n}\sum_{i=1}^n\E(Y_i)
+=\frac{1}{n}\sum_{i=1}^n\psi
+=\psi.
+\]
+Therefore $\Bias(\hat\psi_n)=0$.
+\end{example}
+
+Large-sample theory often focuses on whether the bias disappears as $n$ grows. An estimator is consistent if it converges in probability to the truth:
+\[
+\hat\psi_n \overset{P}{\longrightarrow} \psi.
+\]
+Consistency is stronger than saying the estimator is approximately unbiased in large samples, because it also requires the estimator's variability to vanish.
+
+\subsection{Sampling Distribution}
+
+\begin{definition}[Sampling distribution]
+The \emph{sampling distribution} of an estimator is the probability distribution of the estimator over repeated samples from the same population.
+\end{definition}
+
+The sampling distribution answers the question: if we repeatedly collected samples of size $n$ and computed the same estimator each time, what values would the estimator take and how often?
+
+For the sample mean, the central limit theorem gives an approximate answer. If $Y_1,\ldots,Y_n$ are iid with mean $\psi$ and variance $\sigma^2<\infty$, then
+\[
+\frac{\hat\psi_n-\psi}{\sigma/\sqrt n}
+\overset{d}{\longrightarrow}
+\operatorname{Normal}(0,1).
+\]
+Equivalently, for large $n$,
+\[
+\hat\psi_n \approx \operatorname{Normal}\left(\psi,\frac{\sigma^2}{n}\right).
+\]
+This approximation is the basis for many standard errors, confidence intervals, and Wald tests.
+
+\subsection{Coverage Probability}
+
+Suppose an interval procedure maps each data set to an interval $C_n$. For example,
+\[
+C_n=\left[
+\hat\psi_n-1.96\,\widehat{\operatorname{SE}}(\hat\psi_n),
+\hat\psi_n+1.96\,\widehat{\operatorname{SE}}(\hat\psi_n)
+\right].
+\]
+
+\begin{definition}[Coverage probability]
+The coverage probability of an interval procedure $C_n$ is
+\[
+\Prob\{\psi\in C_n\},
+\]
+where the probability is over repeated samples. A nominal $95\%$ confidence interval procedure aims to have coverage probability close to $0.95$.
+\end{definition}
+
+Coverage is a property of the procedure, not a property of the one interval obtained in the observed data. Once a particular interval has been computed, it either contains the fixed parameter or it does not. The frequentist probability statement refers to what would happen if the entire data-generating process were repeated.
+
+\subsection{Power}
+
+Hypothesis testing has its own repeated-sampling properties. Consider a test of
+\[
+H_0:\psi=\psi_0
+\]
+against some alternative. A test is a rule that rejects or fails to reject $H_0$.
+
+\begin{definition}[Type I error and power]
+The \emph{Type I error rate} is the probability of rejecting $H_0$ when $H_0$ is true. The \emph{power} of a test at a particular alternative value $\psi\ne\psi_0$ is the probability of rejecting $H_0$ when that alternative is true.
+\end{definition}
+
+Power depends on the true effect size, the sample size, the variability of the estimator, and the rejection threshold. Larger sample sizes often increase power because they reduce standard errors, making it easier to distinguish a real difference from sampling noise.
+
+\begin{keyidea}
+Frequentist and Bayesian analyses answer uncertainty questions differently. Frequentist statements evaluate procedures under repeated sampling. Bayesian statements update probability distributions for unknown quantities conditional on a prior, likelihood, and observed data.
+\end{keyidea}

@@ -1,0 +1,110 @@
+\lecture{7.6}{Use in Randomized Trials}
+\label{lec:7-6}
+
+\subsection{Why Covariate Adjustment Can Improve Precision}
+
+In a randomized trial, treatment assignment is controlled by design. If treatment is
+randomized with probability $p$, then
+\[
+A\ci W,\qquad \Prob(A=1\given W)=p.
+\]
+Because treatment is randomized, the unadjusted difference in means is consistent for
+the ATE:
+\[
+\hat\psi_{\mathrm{unadj}}
+=
+\frac{\sum_iY_i\ind(A_i=1)}{\sum_i\ind(A_i=1)}
+-
+\frac{\sum_iY_i\ind(A_i=0)}{\sum_i\ind(A_i=0)}.
+\]
+
+Covariate adjustment is not required to remove confounding in a well-conducted
+randomized trial. It can still improve precision. If baseline covariates strongly
+predict the outcome, adjusting for them can remove outcome variation unrelated to
+treatment, leading to smaller standard errors.
+
+\subsection{Known Propensity Score Under Randomization}
+
+In a trial with known randomization probability $p$,
+\[
+g_1(W)=p,\qquad g_0(W)=1-p.
+\]
+For equal randomization, $p=0.5$. In AIPTW, the known propensity score can be used
+instead of estimating $g$:
+\[
+\psi_{n,\AIPTW}(1)
+=
+\frac{1}{n}\sum_{i=1}^n
+\left[
+\Qbar_n(1,W_i)
++
+\frac{A_i}{p}\{Y_i-\Qbar_n(1,W_i)\}
+\right].
+\]
+The corresponding expression for $a=0$ uses $(1-A_i)/(1-p)$.
+
+\begin{assumptionbox}
+In a randomized trial, exchangeability follows from the randomization design only for
+the trial population and intervention actually randomized. Other issues, such as
+nonadherence, loss to follow-up, interference, or changes in the target population,
+require additional causal assumptions.
+\end{assumptionbox}
+
+\subsection{Efficiency Gains}
+
+If $\Qbar_n$ predicts $Y$ well, the residuals $Y-\Qbar_n(A,W)$ are less variable than
+the raw outcomes. AIPTW and TMLE use this predictive information while preserving
+validness through the known randomization probability. The gain is largest when
+baseline covariates are strongly prognostic.
+
+For equal randomization and a well-estimated outcome regression, the precision gain
+depends on how much variation in the outcome is explained by baseline covariates and
+how treatment effects vary with covariates.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=1.35cm,
+  box/.style={draw, rounded corners=2pt, minimum width=3.2cm, minimum height=.78cm},
+  arr/.style={-{Latex[length=2.5mm]}, thick}
+]
+\node[box] (rand) {Randomization\\ known $g$};
+\node[box, below left=1cm and .8cm of rand] (unadj) {Unadjusted\\ difference};
+\node[box, below right=1cm and .8cm of rand] (adj) {AIPTW/TMLE\\ adjusted};
+\node[box, below=1cm of adj] (prec) {Potentially smaller\\ variance};
+\draw[arr] (rand) -- (unadj);
+\draw[arr] (rand) -- (adj);
+\draw[arr] (adj) -- (prec);
+\end{tikzpicture}
+\caption{In randomized trials, adjustment is used for precision rather than confounding control.}
+\label{fig:ch7-trial-adjustment}
+\end{figure}
+
+\subsection{Outcome Regression in Randomized Trials}
+
+The outcome regression in a trial can include baseline covariates and treatment:
+\[
+\Qbar(a,w)=\E(Y\given A=a,W=w).
+\]
+It may include treatment-covariate interactions if effect heterogeneity is plausible.
+Because the propensity score is known, double robustness implies that consistency of
+AIPTW does not require the outcome regression to be correct. However, a poor outcome
+regression can fail to improve precision and may slightly harm finite-sample
+performance.
+
+\subsection{When Doubly Robust Methods Are Useful Even Without Confounding}
+
+Doubly robust methods are useful in randomized trials because they provide:
+\begin{itemize}
+\item design-protected consistency through the known $g$;
+\item valid influence-function inference under mild conditions;
+\item possible efficiency gains from prognostic baseline covariates;
+\item a unified analysis strategy that extends naturally to trials with unequal
+randomization or covariate-adaptive designs.
+\end{itemize}
+
+\begin{keyidea}
+In observational studies, adjustment is needed for identification. In randomized
+trials, adjustment is often used for efficiency. The same AIPTW and TMLE formulas
+apply, but the known randomization probability gives a particularly strong foundation.
+\end{keyidea}

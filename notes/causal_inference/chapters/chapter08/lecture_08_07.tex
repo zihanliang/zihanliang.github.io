@@ -1,0 +1,161 @@
+\lecture{8.7}{Sequential Regression G-Computation}
+\label{lec:8-7}
+
+\subsection{Backward Recursive Regressions}
+
+Sequential regression is an implementation of the longitudinal g-computation
+formula that avoids explicitly estimating the full conditional distribution of
+each time-varying covariate. Instead, it works backward from the final outcome.
+
+For $K=1$ and regime $(a_0,a_1)$:
+\[
+  \Qbar_2(L_0,L_1)=\E(Y\given A_0=a_0,A_1=a_1,L_0,L_1),
+\]
+\[
+  \Qbar_1(L_0)=\E\{\Qbar_2(L_0,L_1)\given A_0=a_0,L_0\},
+\]
+\[
+  \psi(a_0,a_1)=\E\{\Qbar_1(L_0)\}.
+\]
+Sequential regression estimates $\Qbar_2$, predicts it for all individuals, then
+uses those predictions as the outcome in a regression for $\Qbar_1$ among
+individuals with $A_0=a_0$.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=.8cm,
+  box/.style={draw, rounded corners=2pt, minimum width=3.5cm, minimum height=.74cm},
+  arr/.style={-{Latex[length=2.2mm]}, thick}
+]
+\node[box] (s1) {Fit final outcome regression\\ among $\Abar_K=\abar_K$};
+\node[box, below=of s1] (s2) {Predict pseudo-outcome\\ for all histories};
+\node[box, below=of s2] (s3) {Regress pseudo-outcome\\ among $\Abar_{K-1}=\abar_{K-1}$};
+\node[box, below=of s3] (s4) {Repeat backward and\\ average $\Qbar_1(L_0)$};
+\draw[arr] (s1) -- (s2);
+\draw[arr] (s2) -- (s3);
+\draw[arr] (s3) -- (s4);
+\end{tikzpicture}
+\caption{Sequential regression implements g-computation by backward recursion.}
+\label{fig:ch8-sequential-regression}
+\end{figure}
+
+\subsection{Pseudo-Outcomes}
+
+A pseudo-outcome is a fitted value from a later regression that becomes the
+outcome for an earlier regression. In the two-timepoint case:
+\begin{enumerate}
+  \item Fit a regression for $Y$ among those with $A_0=a_0,A_1=a_1$.
+  \item Predict $\Qbar_{2,n}(L_{0i},L_{1i})$ for every individual.
+  \item Among those with $A_0=a_0$, regress $\Qbar_{2,n}(L_{0i},L_{1i})$ on
+  $L_{0i}$.
+  \item Predict $\Qbar_{1,n}(L_{0i})$ for every individual.
+  \item Average these predictions.
+\end{enumerate}
+
+This is a regression-based way to perform the integration over $L_1$ required by
+the g-computation formula.
+
+\subsection{Binary Time-Varying Confounders}
+
+If $L_1$ is binary or low-dimensional discrete, one can also implement
+g-computation by explicitly summing over possible $L_1$ values:
+\[
+  \Qbar_1(L_0)
+  =
+  \sum_{l_1}
+  \Qbar_2(L_0,l_1)
+  \Prob(L_1=l_1\given A_0=a_0,L_0).
+\]
+For binary $L_1$,
+\[
+\begin{aligned}
+  \Qbar_1(L_0)
+  &=
+  \Qbar_2(L_0,1)\Prob(L_1=1\given A_0=a_0,L_0)\\
+  &\quad+
+  \Qbar_2(L_0,0)\Prob(L_1=0\given A_0=a_0,L_0).
+\end{aligned}
+\]
+This approach is transparent, but it becomes difficult when time-varying
+covariates are continuous or high-dimensional.
+
+\subsection{Estimating $\Qbar_{K+1},\Qbar_K,\ldots,\Qbar_1$}
+
+For a general fixed regime $\abar$, sequential regression proceeds as follows:
+\begin{estimationbox}
+\begin{enumerate}
+  \item Estimate
+  \[
+    \Qbar_{K+1}(\Lbar_K)=
+    \E(Y\given \Abar_K=\abar_K,\Lbar_K)
+  \]
+  using observations with $\Abar_K=\abar_K$.
+  \item Predict $\Qbar_{K+1,n}(\Lbar_{K,i})$ for all individuals.
+  \item For $k=K,K-1,\ldots,1$, estimate
+  \[
+    \Qbar_k(\Lbar_{k-1})=
+    \E\{\Qbar_{k+1}(\Lbar_k)\given
+    \Abar_{k-1}=\abar_{k-1},\Lbar_{k-1}\}
+  \]
+  by regressing the current pseudo-outcome on $\Lbar_{k-1}$ among those with
+  $\Abar_{k-1}=\abar_{k-1}$.
+  \item Estimate
+  \[
+    \psi(\abar)=\frac{1}{n}\sum_{i=1}^n \Qbar_{1,n}(L_{0i}).
+  \]
+\end{enumerate}
+\end{estimationbox}
+
+\subsection{R Implementation}
+
+For two treatment times and regime $(1,1)$:
+
+\begin{lstlisting}[language=R]
+full_data <- data.frame(L0 = L0, A0 = A0, L1 = L1, A1 = A1, Y = Y)
+
+# Step 1: final outcome regression among regime followers
+data_11 <- subset(full_data, A0 == 1 & A1 == 1)
+fit_Q2 <- glm(Y ~ L0 + L1, data = data_11)
+
+# Step 2: predict Q2 for everyone at their observed L0, L1
+full_data$Q2n <- predict(fit_Q2, newdata = full_data, type = "response")
+
+# Step 3: regress the pseudo-outcome among those with A0 = 1
+data_1 <- subset(full_data, A0 == 1)
+fit_Q1 <- glm(Q2n ~ L0, data = data_1)
+
+# Step 4: predict Q1 for everyone and average
+full_data$Q1n <- predict(fit_Q1, newdata = full_data, type = "response")
+psi_11 <- mean(full_data$Q1n)
+\end{lstlisting}
+
+If the outcome is binary, logistic regression may be used for both steps:
+
+\begin{lstlisting}[language=R]
+fit_Q2 <- glm(Y ~ L0 + L1, data = data_11, family = binomial())
+full_data$Q2n <- predict(fit_Q2, newdata = full_data, type = "response")
+
+fit_Q1 <- glm(Q2n ~ L0, data = data_1, family = binomial())
+full_data$Q1n <- predict(fit_Q1, newdata = full_data, type = "response")
+psi_11 <- mean(full_data$Q1n)
+\end{lstlisting}
+
+\subsection{Comparing With IPTW}
+
+Sequential regression and IPTW estimate the same counterfactual mean under the
+same identification assumptions, but they rely on different nuisance functions.
+Sequential regression relies on the outcome regression sequence
+$\Qbar_{K+1},\ldots,\Qbar_1$. IPTW relies on the treatment mechanism sequence
+$g_0,\ldots,g_K$.
+
+Sequential regression often has lower variance because it does not use inverse
+probability weights. However, it can be biased if the sequential outcome
+regressions are misspecified. IPTW may be more robust to outcome model
+misspecification but can be unstable under near-positivity violations.
+
+\begin{keyidea}
+Sequential regression turns nested expectations into a sequence of prediction
+problems. At each step, the outcome is the predicted counterfactual mean from
+the next later step.
+\end{keyidea}

@@ -1,0 +1,218 @@
+\lecture{4.4}{IPTW with Discrete Data}
+\label{lec:4-4}
+
+\subsection{Estimating Propensity Scores by Hand}
+
+The inverse probability weighted estimator is motivated by the identification result
+\[
+\E\{\Ya{a}\}
+=
+\E\left\{
+\frac{\ind(A=a)}{g_a(W)}Y
+\right\},
+\qquad
+g_a(W)=\Prob(A=a\given W).
+\]
+With discrete $W$, the propensity score can be estimated within each covariate
+stratum. For binary treatment,
+\[
+g_{n,1}(w)
+=
+\frac{\sum_{i=1}^n \ind(A_i=1,W_i=w)}
+       {\sum_{i=1}^n \ind(W_i=w)},
+\]
+and
+\[
+g_{n,0}(w)=1-g_{n,1}(w).
+\]
+Thus $g_{n,1}(w)$ is the sample proportion treated among individuals with $W=w$.
+
+If $W$ is binary, this gives two treatment probabilities:
+\[
+g_{n,1}(0)=\frac{\#\{i:A_i=1,W_i=0\}}{\#\{i:W_i=0\}},
+\qquad
+g_{n,1}(1)=\frac{\#\{i:A_i=1,W_i=1\}}{\#\{i:W_i=1\}}.
+\]
+
+\subsection{Estimating Propensity Scores Using Regression}
+
+The same quantities can be obtained from a saturated logistic regression for
+treatment. With binary $W$,
+\[
+\Prob(A=1\given W=w)=\expit(\gamma_0+\gamma_1w).
+\]
+There are two parameters and two covariate strata, so the fitted probabilities can
+match the empirical treatment proportions in the two strata.
+
+\begin{implementationbox}
+Saturated propensity score model for binary $W$:
+\begin{lstlisting}[language=R]
+fit_g <- glm(A ~ W, data = dat, family = binomial())
+
+newW <- data.frame(W = c(0, 1))
+g1_by_W <- predict(fit_g, newdata = newW, type = "response")
+g0_by_W <- 1 - g1_by_W
+\end{lstlisting}
+\end{implementationbox}
+
+For more complex discrete $W$, a saturated treatment model requires enough terms to
+represent the treatment probability in every covariate stratum. When $W$ is large or
+continuous, analysts usually use a lower-dimensional regression or machine learning
+method to smooth across similar covariate values.
+
+\subsection{Estimating the Joint Distribution}
+
+The fully discrete IPTW plug-in estimator can be written by estimating the joint
+distribution of $(W,A,Y)$. If $W$, $A$, and $Y$ are discrete, the empirical joint
+probability is
+\[
+P_n(W=w,A=a,Y=y)
+=
+\frac{1}{n}\sum_{i=1}^n \ind(W_i=w,A_i=a,Y_i=y).
+\]
+Plugging this empirical distribution and the estimated propensity score into the IPTW
+identification formula gives
+\[
+\psi_n(a)
+=
+\sum_{w,a',y}
+\frac{\ind(a'=a)}{g_{n,a}(w)}
+y\,P_n(W=w,A=a',Y=y).
+\]
+The summation uses $a'$ as a dummy treatment value to avoid confusion with the target
+intervention level $a$.
+
+\subsection{Computing Inverse Probability Weights}
+
+For target treatment level $a$, the inverse probability weight for observation $i$ is
+\[
+\omega_i(a)=\frac{\ind(A_i=a)}{g_{n,a}(W_i)}.
+\]
+If an individual actually received treatment level $a$, their weight is the inverse of
+the estimated probability of receiving that treatment. If they did not receive
+treatment level $a$, their weight is zero for estimating $\E\{\Ya{a}\}$.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=1.35cm,
+  box/.style={draw, rounded corners=2pt, minimum width=3.2cm, minimum height=.8cm},
+  arr/.style={-{Latex[length=2.5mm]}, thick}
+]
+\node[box] (obs) {Observed treated\\ subgroup};
+\node[box, right=of obs] (weight) {Weight by\\ $1/g_{n,1}(W)$};
+\node[box, right=of weight] (pseudo) {Represents full\\ covariate mix};
+\draw[arr] (obs) -- (weight);
+\draw[arr] (weight) -- (pseudo);
+\node[box, below=1.1cm of obs] (obs0) {Observed untreated\\ subgroup};
+\node[box, right=of obs0] (weight0) {Weight by\\ $1/g_{n,0}(W)$};
+\node[box, right=of weight0] (pseudo0) {Represents full\\ covariate mix};
+\draw[arr] (obs0) -- (weight0);
+\draw[arr] (weight0) -- (pseudo0);
+\end{tikzpicture}
+\caption{IPTW reweights each observed treatment group to represent the target population.}
+\label{fig:ch4-iptw-reweighting}
+\end{figure}
+
+Extreme weights arise when $g_{n,a}(W_i)$ is close to zero. Such observations can
+dominate the estimate, which is why positivity is not merely a technical detail.
+
+\subsection{Estimating $\E\{\Yone\}$, $\E\{\Yzero\}$, and the ATE}
+
+Using the empirical joint distribution, the estimator simplifies to the individual-level
+sample average
+\[
+\psi_n(a)
+=
+\frac{1}{n}\sum_{i=1}^n
+\frac{\ind(A_i=a)}{g_{n,a}(W_i)}Y_i.
+\]
+The derivation follows by substituting the empirical distribution:
+\[
+\begin{aligned}
+\sum_{w,a',y}
+&\frac{\ind(a'=a)}{g_{n,a}(w)}
+y\,P_n(W=w,A=a',Y=y)\\
+&=
+\sum_{w,a',y}
+\frac{\ind(a'=a)}{g_{n,a}(w)}
+y\left\{
+\frac{1}{n}\sum_{i=1}^n
+\ind(W_i=w,A_i=a',Y_i=y)
+\right\}\\
+&=
+\frac{1}{n}\sum_{i=1}^n
+\sum_{w,a',y}
+\frac{\ind(a'=a)}{g_{n,a}(w)}
+y\ind(W_i=w,A_i=a',Y_i=y)\\
+&=
+\frac{1}{n}\sum_{i=1}^n
+\frac{\ind(A_i=a)}{g_{n,a}(W_i)}Y_i.
+\end{aligned}
+\]
+Therefore,
+\[
+\psi_n(1)
+=
+\frac{1}{n}\sum_{i=1}^n
+\frac{\ind(A_i=1)}{g_{n,1}(W_i)}Y_i,
+\]
+\[
+\psi_n(0)
+=
+\frac{1}{n}\sum_{i=1}^n
+\frac{\ind(A_i=0)}{g_{n,0}(W_i)}Y_i,
+\]
+and
+\[
+\widehat{\ATE}_{\IPTW}=\psi_n(1)-\psi_n(0).
+\]
+
+Using the same binary-$W$ summaries from empirical g-computation, suppose
+\[
+g_{n,1}(0)=0.476,\qquad g_{n,0}(0)=0.524,
+\]
+and
+\[
+g_{n,1}(1)=0.486,\qquad g_{n,0}(1)=0.514.
+\]
+The IPTW calculation weights each observed outcome by the inverse probability of
+the treatment actually received. When the propensity scores are empirical stratum
+proportions, the weighted treated mean reproduces the same standardized quantity
+as empirical g-computation:
+\[
+\psi_n(1)=2.530,\qquad \psi_n(0)=2.392,
+\]
+and therefore
+\[
+\widehat{\ATE}_{\IPTW}=2.530-2.392=0.138.
+\]
+This numerical equality is a special property of the fully empirical discrete
+estimator. It should not be expected once lower-dimensional regression smoothing is
+used for $\Qbar_n$ or $g_n$.
+
+\begin{implementationbox}
+Regression-based IPTW in R:
+\begin{lstlisting}[language=R]
+fit_g <- glm(A ~ W, data = dat, family = binomial())
+
+g1 <- predict(fit_g, type = "response")
+g0 <- 1 - g1
+
+psi1 <- mean((dat$A == 1) / g1 * dat$Y)
+psi0 <- mean((dat$A == 0) / g0 * dat$Y)
+ate  <- psi1 - psi0
+\end{lstlisting}
+\end{implementationbox}
+
+\begin{estimationbox}
+By-hand IPTW with discrete data:
+\begin{enumerate}
+\item Estimate $g_{n,1}(w)$ and $g_{n,0}(w)$ in every covariate stratum.
+\item For each observation, compute $\omega_i(1)=\ind(A_i=1)/g_{n,1}(W_i)$ and
+$\omega_i(0)=\ind(A_i=0)/g_{n,0}(W_i)$.
+\item Compute $\psi_n(1)=n^{-1}\sum_i \omega_i(1)Y_i$.
+\item Compute $\psi_n(0)=n^{-1}\sum_i \omega_i(0)Y_i$.
+\item Subtract to estimate the ATE.
+\end{enumerate}
+\end{estimationbox}

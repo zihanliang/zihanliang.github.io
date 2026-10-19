@@ -1,0 +1,155 @@
+\lecture{8.9}{Longitudinal TMLE}
+\label{lec:8-9}
+
+\subsection{Sequential TMLE Algorithm}
+
+Targeted minimum loss-based estimation (TMLE) modifies sequential
+g-computation so that the final estimator remains a plug-in estimator while also
+solving bias-correction equations related to the efficient influence function.
+In longitudinal settings, TMLE proceeds backward through time, just like
+sequential regression, but inserts a targeting step after each outcome
+regression.
+
+For the always-treated regime, the algorithm has the following structure:
+\begin{enumerate}
+  \item Estimate the final outcome regression
+  $\Qbar_{K+1,n}(\Lbar_K)=\E_n(Y\given \Abar_K=\mathbf{1},\Lbar_K)$.
+  \item Target this regression using a clever covariate based on
+  $1/\gbar_{K,n}$, producing $\Qbar_{K+1,n}^*$.
+  \item Regress $\Qbar_{K+1,n}^*$ on earlier history among individuals who
+  followed the regime through time $K-1$, producing $\Qbar_{K,n}$.
+  \item Target $\Qbar_{K,n}$ using the clever covariate based on
+  $1/\gbar_{K-1,n}$, producing $\Qbar_{K,n}^*$.
+  \item Continue backward until $\Qbar_{1,n}^*$ is obtained.
+  \item Estimate the target mean by
+  \[
+    \psi_{n,\TMLE}=\frac{1}{n}\sum_{i=1}^n \Qbar_{1,n}^*(L_{0i}).
+  \]
+\end{enumerate}
+
+\subsection{Targeted Refinement at Each Time}
+
+Assume the outcome or pseudo-outcome is bounded in $[0,1]$, so logistic
+fluctuation is natural. At a generic step $j$, suppose we have an initial
+regression $\Qbar_{j,n}$ and a pseudo-outcome $Z_j$. The targeting step fits a
+low-dimensional regression with:
+\begin{itemize}
+  \item outcome $Z_j$,
+  \item offset $\logit\{\Qbar_{j,n}\}$,
+  \item clever covariate based on the inverse probability of following the
+  regime through the relevant time.
+\end{itemize}
+The fitted fluctuation coefficient updates $\Qbar_{j,n}$ to
+$\Qbar_{j,n}^*$.
+
+\subsection{Clever Covariates}
+
+For two treatment times and regime $(1,1)$, the final outcome regression is
+\[
+  \Qbar_{2,n}(L_0,L_1)\approx \E(Y\given A_0=1,A_1=1,L_0,L_1).
+\]
+The clever covariate for targeting this regression is
+\[
+  H_{2,n}=\frac{\ind(A_0=1,A_1=1)}
+  {g_{0,n}(L_0)g_{1,n}(\Lbar_1)}.
+\]
+A logistic fluctuation fits
+\[
+  \logit\{\Qbar_{2,n}^*(L_0,L_1)\}
+  =
+  \logit\{\Qbar_{2,n}(L_0,L_1)\}
+  +\hat\epsilon_2 H_{2,n}.
+\]
+The next regression estimates
+\[
+  \Qbar_{1,n}(L_0)\approx
+  \E\{\Qbar_{2,n}^*(L_0,L_1)\given A_0=1,L_0\},
+\]
+and its clever covariate is
+\[
+  H_{1,n}=\frac{\ind(A_0=1)}{g_{0,n}(L_0)}.
+\]
+The update is
+\[
+  \logit\{\Qbar_{1,n}^*(L_0)\}
+  =
+  \logit\{\Qbar_{1,n}(L_0)\}+\hat\epsilon_1H_{1,n}.
+\]
+
+\subsection{Final Plug-In Estimate}
+
+The final estimate is
+\[
+  \psi_{n,\TMLE}(1,1)=\frac{1}{n}\sum_{i=1}^n\Qbar_{1,n}^*(L_{0i}).
+\]
+It is a plug-in estimator because it is the empirical mean of an updated
+counterfactual outcome regression. For binary outcomes, this guarantees that the
+estimate lies in $[0,1]$, unlike some weighted estimators that can behave poorly
+in small samples.
+
+\subsection{TMLE Implementation in R}
+
+The following sketch shows the two-timepoint binary-outcome implementation.
+
+\begin{lstlisting}[language=R]
+# propensity scores
+ps0_fit <- glm(A0 ~ L0, family = binomial())
+ps1_fit <- glm(A1 ~ L0 + A0 + L1, family = binomial())
+
+g_0 <- predict(ps0_fit, type = "response")
+g_1 <- predict(
+  ps1_fit,
+  newdata = data.frame(L0 = L0, A0 = 1, L1 = L1),
+  type = "response"
+)
+
+# initial Q2
+or2_fit <- glm(Y ~ A0 + A1 + L0 + L1, family = binomial())
+Q2_obs <- predict(or2_fit, type = "response")
+Q2_11 <- predict(
+  or2_fit,
+  newdata = data.frame(A0 = 1, A1 = 1, L0 = L0, L1 = L1),
+  type = "response"
+)
+
+# target Q2
+H2 <- (A0 == 1 & A1 == 1) / (g_0 * g_1)
+eps2_fit <- glm(
+  Y ~ -1 + offset(qlogis(Q2_obs)) + H2,
+  family = binomial()
+)
+Q2_11_star <- plogis(qlogis(Q2_11) + coef(eps2_fit)["H2"] / (g_0 * g_1))
+
+# initial Q1
+or1_fit <- glm(Q2_11_star ~ A0 * L0, family = binomial())
+Q1_obs <- predict(or1_fit, type = "response")
+Q1_1 <- predict(
+  or1_fit,
+  newdata = data.frame(A0 = 1, L0 = L0),
+  type = "response"
+)
+
+# target Q1
+H1 <- (A0 == 1) / g_0
+eps1_fit <- glm(
+  Q2_11_star ~ -1 + offset(qlogis(Q1_obs)) + H1,
+  family = binomial()
+)
+Q1_1_star <- plogis(qlogis(Q1_1) + coef(eps1_fit)["H1"] / g_0)
+
+psi_tmle <- mean(Q1_1_star)
+\end{lstlisting}
+
+\subsection{Relationship to Sequential Regression}
+
+Sequential regression estimates the nested g-computation formula and stops.
+Longitudinal TMLE follows the same backward structure, but after each regression
+it performs a targeted update using the propensity score sequence. This update
+is designed so that the empirical mean of the efficient influence-function
+component is close to zero.
+
+\begin{keyidea}
+Longitudinal TMLE is targeted sequential regression. It keeps the plug-in
+interpretation of g-computation while incorporating inverse-probability
+information through clever covariates.
+\end{keyidea}

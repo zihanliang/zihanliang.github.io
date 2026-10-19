@@ -1,0 +1,138 @@
+\lecture{3.7}{Other Causal Estimands}
+\label{lec:3-7}
+
+\subsection{Conditional Average Treatment Effect}
+
+Suppose $W=(X,Z)$, where $X$ defines a subgroup of scientific interest and $Z$ contains additional covariates needed for confounding control. The conditional average treatment effect as a function of $X$ is
+\[
+\CATE(x)=\E(\Yone-\Yzero\given X=x).
+\]
+Under the same consistency, conditional randomization, and positivity assumptions, with randomization conditional on $(X,Z)$, the G-computation formula becomes
+\[
+\begin{aligned}
+\CATE(x)
+&=
+\sum_z
+\Big[
+\E(Y\given A=1,X=x,Z=z)
+-
+\E(Y\given A=0,X=x,Z=z)
+\Big] \\
+&\qquad {}\times \Prob(Z=z\given X=x).
+\end{aligned}
+\]
+
+The logic is the same as for the ATE. Within each $(X=x,Z=z)$ stratum, the treatment comparison is fair. Then we average over the distribution of $Z$ among people with $X=x$.
+
+\subsection{Effect Heterogeneity}
+
+\begin{definition}[Effect heterogeneity]
+There is effect heterogeneity by $X$ on the additive scale if
+\[
+\CATE(x)=\E(\Yone-\Yzero\given X=x)
+\]
+varies with $x$.
+\end{definition}
+
+On a ratio scale, one might define
+\[
+\frac{\E(\Yone\given X=x)}{\E(\Yzero\given X=x)}
+\]
+and say there is heterogeneity if this ratio varies with $x$. Effect heterogeneity is therefore scale-specific.
+
+\subsection{Average Treatment Effect among the Treated}
+
+Sometimes the causal effect in the whole population is not the most relevant target. If an intervention can only be applied to people who would naturally seek it, the effect among those actually treated may be more meaningful.
+
+\begin{definition}[Average treatment effect among the treated]
+For binary treatment,
+\[
+\ATT=\E(\Yone-\Yzero\given A=1).
+\]
+\end{definition}
+
+Under standard assumptions,
+\[
+\ATT
+=
+\sum_w
+\left\{
+\E(Y\given A=1,W=w)-\E(Y\given A=0,W=w)
+\right\}
+\Prob(W=w\given A=1).
+\]
+The weighting distribution is now the covariate distribution among treated people, not the full population distribution.
+
+\subsection{Average Treatment Effect among Controls}
+
+\begin{definition}[Average treatment effect among controls]
+For binary treatment,
+\[
+\ATC=\E(\Yone-\Yzero\given A=0).
+\]
+\end{definition}
+
+The identified G-computation expression is
+\[
+\ATC
+=
+\sum_w
+\left\{
+\E(Y\given A=1,W=w)-\E(Y\given A=0,W=w)
+\right\}
+\Prob(W=w\given A=0).
+\]
+This estimand answers what the average effect would be among people who were not treated in the observed world.
+
+\subsection{Relationship among ATE, ATT, and ATC}
+
+The ATE is a weighted combination of ATT and ATC. Apply the tower rule to $\Yone-\Yzero$ conditioning on $A$:
+\[
+\ATE
+=
+\E(\Yone-\Yzero)
+=
+\E\{\E(\Yone-\Yzero\given A)\}.
+\]
+Since $A$ is binary,
+\[
+\ATE
+=
+\E(\Yone-\Yzero\given A=1)\Prob(A=1)
++
+\E(\Yone-\Yzero\given A=0)\Prob(A=0).
+\]
+Therefore
+\[
+\ATE=\ATT\Prob(A=1)+\ATC\Prob(A=0).
+\]
+
+\begin{keyidea}
+ATE, ATT, and ATC differ in the population over which subgroup-specific effects are averaged.
+\end{keyidea}
+
+\subsection{Causal Effect Interaction}
+
+With two binary treatments $A_1$ and $A_2$, potential outcomes are written
+\[
+Y(a_1,a_2).
+\]
+There is additive interaction if the joint effect differs from the sum of the separate effects:
+\[
+\E\{Y(1,1)-Y(0,0)\}
+\ne
+\E\{Y(1,0)-Y(0,0)\}
++
+\E\{Y(0,1)-Y(0,0)\}.
+\]
+For example, chemotherapy and radiation may have a joint effect that is larger or smaller than the sum of their individual effects.
+
+On a ratio scale, interaction is defined differently:
+\[
+\frac{\E\{Y(1,1)\}}{\E\{Y(0,0)\}}
+\ne
+\frac{\E\{Y(1,0)\}}{\E\{Y(0,0)\}}
+\times
+\frac{\E\{Y(0,1)\}}{\E\{Y(0,0)\}}.
+\]
+The choice of additive or multiplicative scale should be driven by the scientific question.

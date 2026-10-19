@@ -1,0 +1,236 @@
+\lecture{4.7}{Bootstrap Inference}
+\label{lec:4-7}
+
+\subsection{Why Variance Formulas Are Complex}
+
+Point estimates alone are not enough. A causal analysis should also report uncertainty:
+standard errors, confidence intervals, and sometimes hypothesis tests. For
+g-computation and IPTW, uncertainty comes from several sources at once.
+
+For g-computation, the estimator
+\[
+\psi_n^{\mathrm{gcomp}}(a)
+=
+\frac{1}{n}\sum_{i=1}^n \Qbar_n(a,W_i)
+\]
+depends on the empirical distribution of $W$ and on the fitted outcome regression
+$\Qbar_n$. For IPTW, the estimator
+\[
+\psi_n^{\IPTW}(a)
+=
+\frac{1}{n}\sum_{i=1}^n
+\frac{\ind(A_i=a)}{g_{n,a}(W_i)}Y_i
+\]
+depends on the empirical distribution of $(W,A,Y)$ and on the fitted propensity score
+$g_{n,a}$. Treating $\Qbar_n$ or $g_n$ as fixed after fitting usually understates
+uncertainty because it ignores the fact that the nuisance functions were estimated
+from the same data.
+
+\begin{keyidea}
+The standard error must reflect the entire estimation procedure, not only the final
+sample average. When nuisance functions are fit from data, their variability is part
+of the variability of the causal effect estimator.
+\end{keyidea}
+
+\subsection{Nonparametric Bootstrap}
+
+The nonparametric bootstrap approximates repeated sampling by resampling the observed
+data. Let $\psi_n$ denote an estimator of a counterfactual mean or ATE. A bootstrap
+replicate is constructed as follows:
+
+\begin{enumerate}
+\item Sample $n$ rows from the original dataset with replacement.
+\item Refit all nuisance models in this bootstrap dataset.
+\item Recompute the complete estimator in the bootstrap dataset.
+\end{enumerate}
+
+Repeating these steps $M$ times gives bootstrap estimates
+\[
+\psi_n^{\#,1},\psi_n^{\#,2},\ldots,\psi_n^{\#,M}.
+\]
+The symbol $\#$ is used here to distinguish bootstrap estimates from the original
+estimate $\psi_n$.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  scale=.88,
+  transform shape,
+  node distance=.95cm,
+  box/.style={draw, rounded corners=2pt, minimum width=3.0cm, minimum height=.78cm},
+  arr/.style={-{Latex[length=2.5mm]}, thick}
+]
+\node[box] (data) {Original data};
+\node[box, right=of data] (resample) {Resample rows\\ with replacement};
+\node[box, right=of resample] (refit) {Refit nuisance\\ models};
+\node[box, right=of refit] (estimate) {Recompute\\ estimator};
+\draw[arr] (data) -- (resample);
+\draw[arr] (resample) -- (refit);
+\draw[arr] (refit) -- (estimate);
+\draw[arr, rounded corners, dashed] (estimate.south) |- ++(0,-.8) -| node[below,pos=.25] {repeat $M$ times} (resample.south);
+\end{tikzpicture}
+\caption{Each bootstrap replicate repeats the full estimation procedure.}
+\label{fig:ch4-bootstrap-flow}
+\end{figure}
+
+\subsection{Bootstrap Confidence Intervals}
+
+A percentile bootstrap confidence interval uses quantiles of the bootstrap estimates.
+For a nominal 95\% interval, let $\psi_n^\#(0.025)$ and $\psi_n^\#(0.975)$ be the
+empirical 2.5th and 97.5th percentiles of
+$\psi_n^{\#,1},\ldots,\psi_n^{\#,M}$. The interval is
+\[
+\left[
+\psi_n^\#(0.025),\ \psi_n^\#(0.975)
+\right].
+\]
+This interval is easy to compute and often adequate for introductory analyses, but it
+can perform poorly in small samples, with highly skewed estimators, or when the
+estimator is irregular.
+
+\subsection{Bootstrap Standard Errors}
+
+The bootstrap standard error is the sample standard deviation of the bootstrap
+estimates:
+\[
+\hat\sigma^\#
+=
+\left[
+\frac{1}{M-1}\sum_{m=1}^M
+\left(\psi_n^{\#,m}-\bar\psi_n^\#\right)^2
+\right]^{1/2},
+\]
+where
+\[
+\bar\psi_n^\#=\frac{1}{M}\sum_{m=1}^M \psi_n^{\#,m}.
+\]
+This standard error can be reported directly or used in Wald-style confidence
+intervals of the form
+\[
+\psi_n\pm 1.96\,\hat\sigma^\#.
+\]
+
+\subsection{Wald-Style p-Values}
+
+For testing
+\[
+H_0:\psi=0
+\qquad\text{versus}\qquad
+H_1:\psi\neq 0,
+\]
+a Wald-style test statistic is
+\[
+Z=\frac{\psi_n}{\hat\sigma^\#}.
+\]
+Using the standard normal approximation, the two-sided p-value is
+\[
+p=2\left\{1-\Phi(|Z|)\right\},
+\]
+where $\Phi$ is the cumulative distribution function of the standard normal
+distribution.
+
+This p-value inherits the assumptions of the large-sample approximation and the
+bootstrap standard error. It should be interpreted as a statistical summary, not as a
+measure of whether the causal assumptions are true.
+
+\subsection{Bootstrap for G-Computation}
+
+The key rule is that the outcome regression must be refit in every bootstrap sample.
+If the fitted model from the original data is reused, the bootstrap will miss an
+important component of uncertainty.
+
+\begin{implementationbox}
+Bootstrap for g-computation:
+\begin{lstlisting}[language=R]
+get_gcomp <- function(input_data) {
+  fit_Q <- glm(Y ~ A + W1 + W2, data = input_data, family = binomial())
+
+  data1 <- input_data
+  data1$A <- 1
+  data0 <- input_data
+  data0$A <- 0
+
+  Q1 <- predict(fit_Q, newdata = data1, type = "response")
+  Q0 <- predict(fit_Q, newdata = data0, type = "response")
+
+  psi1 <- mean(Q1)
+  psi0 <- mean(Q0)
+  c(psi0 = psi0, psi1 = psi1, ate = psi1 - psi0)
+}
+
+set.seed(1234)
+M <- 1000
+n <- nrow(dat)
+
+boot_ate <- numeric(M)
+
+for (m in seq_len(M)) {
+  boot_ids <- sample(seq_len(n), size = n, replace = TRUE)
+  boot_dat <- dat[boot_ids, ]
+  boot_ate[m] <- get_gcomp(boot_dat)["ate"]
+}
+
+est <- get_gcomp(dat)["ate"]
+se_boot <- sd(boot_ate)
+ci_boot <- quantile(boot_ate, probs = c(0.025, 0.975))
+p_value <- 2 * pnorm(-abs(est / se_boot))
+\end{lstlisting}
+\end{implementationbox}
+
+The same bootstrap draws can be used to compute confidence intervals for
+$\psi(0)$, $\psi(1)$, and the ATE if the function returns all three quantities.
+
+\subsection{Bootstrap for IPTW}
+
+For IPTW, the propensity score model must be refit in every bootstrap sample. The
+weights in each bootstrap replicate should be computed from the bootstrap-fitted
+propensity scores, not from the original fitted propensity scores.
+
+\begin{implementationbox}
+Bootstrap for IPTW:
+\begin{lstlisting}[language=R]
+get_iptw <- function(input_data) {
+  fit_g <- glm(A ~ W1 + W2, data = input_data, family = binomial())
+
+  g1 <- predict(fit_g, type = "response")
+  g0 <- 1 - g1
+
+  A <- input_data$A
+  Y <- input_data$Y
+
+  psi1 <- mean((A == 1) / g1 * Y)
+  psi0 <- mean((A == 0) / g0 * Y)
+  c(psi0 = psi0, psi1 = psi1, ate = psi1 - psi0)
+}
+
+set.seed(1234)
+M <- 1000
+n <- nrow(dat)
+
+boot_ate <- numeric(M)
+
+for (m in seq_len(M)) {
+  boot_ids <- sample(seq_len(n), size = n, replace = TRUE)
+  boot_dat <- dat[boot_ids, ]
+  boot_ate[m] <- get_iptw(boot_dat)["ate"]
+}
+
+est <- get_iptw(dat)["ate"]
+se_boot <- sd(boot_ate)
+ci_boot <- quantile(boot_ate, probs = c(0.025, 0.975))
+p_value <- 2 * pnorm(-abs(est / se_boot))
+\end{lstlisting}
+\end{implementationbox}
+
+\begin{estimationbox}
+Bootstrap checklist:
+\begin{itemize}
+\item Resample rows, not individual variables independently.
+\item Refit every nuisance model inside each bootstrap sample.
+\item Recompute the entire estimator from the resampled data.
+\item Use enough bootstrap replicates for stable quantiles; $M=1000$ is a common
+minimum for routine work.
+\item Inspect failed model fits, separation warnings, and extreme weights, because
+these are informative signs of instability.
+\end{itemize}
+\end{estimationbox}

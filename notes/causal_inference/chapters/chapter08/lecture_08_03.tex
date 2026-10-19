@@ -1,0 +1,192 @@
+\lecture{8.3}{Longitudinal G-Computation Formula}
+\label{lec:8-3}
+
+\subsection{Two-Timepoint Derivation}
+
+Consider the observed data
+\[
+  O=(L_0,A_0,L_1,A_1,Y)
+\]
+and the target parameter
+\[
+  \psi(1,1)=\E\{Y(1,1)\}.
+\]
+Assume the three identifying conditions hold: consistency, sequential
+exchangeability, and positivity. The formula repeatedly replaces counterfactual
+conditional means with observed conditional means, then averages over the
+relevant covariate distributions.
+
+Start with the innermost observed outcome regression:
+\[
+  \E(Y\given A_1=1,L_1,A_0=1,L_0).
+\]
+By consistency, among individuals with $A_0=1$ and $A_1=1$, the observed outcome
+equals $Y(1,1)$. Therefore
+\[
+  \E(Y\given A_1=1,L_1,A_0=1,L_0)
+  =
+  \E\{Y(1,1)\given A_1=1,L_1,A_0=1,L_0\}.
+\]
+By sequential exchangeability at time 1,
+\[
+  Y(1,1)\ci A_1\given L_0,A_0=1,L_1,
+\]
+so
+\[
+  \E\{Y(1,1)\given A_1=1,L_1,A_0=1,L_0\}
+  =
+  \E\{Y(1,1)\given L_1,A_0=1,L_0\}.
+\]
+Define
+\[
+  \Qbar_2(L_0,L_1)
+  =
+  \E(Y\given A_1=1,L_1,A_0=1,L_0).
+\]
+Then
+\[
+  \Qbar_2(L_0,L_1)
+  =
+  \E\{Y(1,1)\given L_1,A_0=1,L_0\}.
+\]
+
+Now average over the distribution of $L_1$ among those with $A_0=1$ and $L_0$:
+\[
+  \E\{\Qbar_2(L_0,L_1)\given A_0=1,L_0\}
+  =
+  \E\{Y(1,1)\given A_0=1,L_0\}.
+\]
+By sequential exchangeability at time 0,
+\[
+  Y(1,1)\ci A_0\given L_0,
+\]
+so
+\[
+  \E\{Y(1,1)\given A_0=1,L_0\}
+  =
+  \E\{Y(1,1)\given L_0\}.
+\]
+Define
+\[
+  \Qbar_1(L_0)=\E\{\Qbar_2(L_0,L_1)\given A_0=1,L_0\}.
+\]
+Finally, average over the baseline covariate distribution:
+\[
+  \E\{\Qbar_1(L_0)\}
+  =
+  \E\{Y(1,1)\}.
+\]
+
+\begin{identificationbox}
+For two treatment times,
+\[
+  \E\{Y(1,1)\}
+  =
+  \E\left[
+    \E\left\{
+      \E(Y\given A_1=1,L_1,A_0=1,L_0)
+      \given A_0=1,L_0
+    \right\}
+  \right].
+\]
+The outer expectation is over the marginal distribution of $L_0$.
+\end{identificationbox}
+
+\subsection{Iterated Conditional Expectations}
+
+The formula is a direct application of the tower rule, but the conditioning sets
+are chosen according to the intervention. The innermost regression describes the
+outcome among individuals who followed the regime through the final treatment.
+The next expectation averages over the covariate that would be observed after
+following the regime through the previous time. Repeating this process moves
+backward through time.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=.8cm,
+  box/.style={draw, rounded corners=2pt, minimum width=3.2cm, minimum height=.72cm},
+  arr/.style={-{Latex[length=2.2mm]}, thick}
+]
+\node[box] (q2) {$\Qbar_2(L_0,L_1)=\E(Y\given A_0=1,A_1=1,L_0,L_1)$};
+\node[box, below=of q2] (q1) {$\Qbar_1(L_0)=\E\{\Qbar_2(L_0,L_1)\given A_0=1,L_0\}$};
+\node[box, below=of q1] (q0) {$\psi(1,1)=\E\{\Qbar_1(L_0)\}$};
+\draw[arr] (q2) -- node[right] {average over $L_1$} (q1);
+\draw[arr] (q1) -- node[right] {average over $L_0$} (q0);
+\end{tikzpicture}
+\caption{Longitudinal g-computation as backward nested averaging.}
+\label{fig:ch8-gcomp-nesting}
+\end{figure}
+
+\subsection{General $K$-Timepoint Formula}
+
+For a fixed regime $\abar=(a_0,\ldots,a_K)$, define
+\[
+  \Qbar_{K+1}(\Lbar_K)
+  =
+  \E(Y\given \Abar_K=\abar_K,\Lbar_K).
+\]
+Then recursively define, for $k=K,K-1,\ldots,1$,
+\[
+  \Qbar_k(\Lbar_{k-1})
+  =
+  \E\{\Qbar_{k+1}(\Lbar_k)
+    \given \Abar_{k-1}=\abar_{k-1},\Lbar_{k-1}\}.
+\]
+The target mean is
+\[
+  \psi(\abar)=\E\{\Qbar_1(L_0)\}.
+\]
+
+Equivalently, the formula can be displayed as nested expectations:
+\[
+  \E\{Y(\abar)\}
+  =
+  \E\left[
+  \E\left[
+  \cdots
+  \E\left[
+  \E(Y\given \Abar_K=\abar_K,\Lbar_K)
+  \given \Abar_{K-1}=\abar_{K-1},\Lbar_{K-1}
+  \right]
+  \cdots
+  \given A_0=a_0,L_0
+  \right]\right].
+\]
+
+\subsection{Sequential Outcome Regressions}
+
+The functions $\Qbar_{K+1},\Qbar_K,\ldots,\Qbar_1$ are called sequential outcome
+regressions. They are not all regressions of $Y$. Only $\Qbar_{K+1}$ is the
+conditional mean of the observed outcome. The earlier regressions use later
+predicted values as pseudo-outcomes.
+
+For $K=1$, the sequence is:
+\[
+  \Qbar_2(L_0,L_1)=\E(Y\given A_0=a_0,A_1=a_1,L_0,L_1),
+\]
+\[
+  \Qbar_1(L_0)=\E\{\Qbar_2(L_0,L_1)\given A_0=a_0,L_0\},
+\]
+\[
+  \psi(a_0,a_1)=\E\{\Qbar_1(L_0)\}.
+\]
+
+\subsection{Interpretation of Nested Expectations}
+
+Each expectation performs one of two tasks. First, it replaces the observed
+treatment assignment with the regime value. Second, it averages over covariates
+that would naturally arise after earlier parts of the regime.
+
+For the regime $(1,1)$, the inner regression asks: among people who received
+treatment at both times and had a given covariate history, what was the mean
+outcome? The next regression asks: among people who received treatment at time
+0 and had a given $L_0$, what covariate histories $L_1$ occurred, and what
+outcomes would those histories imply if treatment also occurred at time 1? The
+final average transports these predicted means to the baseline target population.
+
+\begin{keyidea}
+Longitudinal g-computation is standardization over time. It standardizes the
+final outcome regression over the sequence of covariate distributions generated
+under the intervention history.
+\end{keyidea}

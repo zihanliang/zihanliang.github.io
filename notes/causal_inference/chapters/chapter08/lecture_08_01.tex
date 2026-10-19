@@ -1,0 +1,198 @@
+\lecture{8.1}{Longitudinal Causal Questions}
+\label{lec:8-1}
+
+\subsection{Multi-Timepoint Treatments}
+
+Many important interventions are not single decisions. A patient may take a
+medication every day, receive chemotherapy at several cycles, return for repeated
+injections, or decide whether to continue a behavioral program at each visit. In
+such settings the causal question concerns a \emph{sequence} of treatment
+decisions, not only one baseline exposure.
+
+Let time be indexed by $k=0,1,\ldots,K$. At time $k$, an individual has a
+recorded history, receives or does not receive treatment, and then continues to
+the next time point. The final outcome $Y$ is observed after the last treatment
+decision.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=1.05cm,
+  box/.style={draw, rounded corners=2pt, minimum width=1.05cm, minimum height=.72cm},
+  arr/.style={-{Latex[length=2.2mm]}, thick}
+]
+\node[box] (L0) {$L_0$};
+\node[box, right=of L0] (A0) {$A_0$};
+\node[box, right=of A0] (L1) {$L_1$};
+\node[box, right=of L1] (A1) {$A_1$};
+\node[right=of A1] (dots) {$\cdots$};
+\node[box, right=of dots] (LK) {$L_K$};
+\node[box, right=of LK] (AK) {$A_K$};
+\node[box, right=of AK] (Y) {$Y$};
+\draw[arr] (L0) -- (A0);
+\draw[arr] (A0) -- (L1);
+\draw[arr] (L1) -- (A1);
+\draw[arr] (A1) -- (dots);
+\draw[arr] (dots) -- (LK);
+\draw[arr] (LK) -- (AK);
+\draw[arr] (AK) -- (Y);
+\draw[arr, bend left=25] (A0) to (Y);
+\draw[arr, bend left=22] (A1) to (Y);
+\draw[arr, bend left=18] (LK) to (Y);
+\end{tikzpicture}
+\caption{A generic longitudinal treatment process. Covariates and treatments alternate over time before the final outcome.}
+\label{fig:ch8-longitudinal-timeline}
+\end{figure}
+
+\begin{keyidea}
+A longitudinal causal question asks what would happen if the entire treatment
+history were set by an intervention. The unit of intervention is the treatment
+regime $\abar=(a_0,\ldots,a_K)$, not a single treatment indicator.
+\end{keyidea}
+
+\subsection{Longitudinal Data Structure}
+
+For one individual, write the observed data as
+\[
+  O=(L_0,A_0,L_1,A_1,\ldots,L_K,A_K,Y).
+\]
+For $n$ independent individuals, the sample is
+\[
+  O_1,\ldots,O_n \iid P_0,
+\]
+where $P_0$ denotes the true observed-data distribution. The variables have the
+following roles:
+\[
+  L_k = \text{covariates recorded at time } k,\qquad
+  A_k = \text{treatment at time } k,\qquad
+  Y = \text{final outcome}.
+\]
+The covariate $L_k$ may include new measurements, updated disease severity,
+adverse events, adherence information, symptoms, laboratory values, and summaries
+of earlier history. It is often vector-valued.
+
+\begin{notation}
+We use overbars for histories:
+\[
+  \Lbar_k=(L_0,\ldots,L_k),\qquad
+  \Abar_k=(A_0,\ldots,A_k).
+\]
+For fixed treatment values,
+\[
+  \lbar_k=(l_0,\ldots,l_k),\qquad
+  \abar_k=(a_0,\ldots,a_k).
+\]
+When the full treatment history is meant, $\Abar=\Abar_K$ and
+$\abar=\abar_K$.
+\end{notation}
+
+The timing convention matters. In these notes, $L_k$ is measured before $A_k$.
+Thus $A_k$ may depend on $\Lbar_k$ and $\Abar_{k-1}$, but not on future
+covariates or future outcomes. This convention is not merely bookkeeping: it
+determines what information can be used by a treatment rule at time $k$.
+
+\subsection{$L_k$, $A_k$, and $Y$}
+
+The variable $L_k$ can be both a confounder and an intermediate. For example,
+baseline treatment $A_0$ may affect a later biomarker $L_1$, and that biomarker
+may affect both later treatment $A_1$ and the outcome $Y$. This feedback is a
+central reason why longitudinal causal inference requires special methods.
+
+For two treatment times, the observed data are
+\[
+  O=(L_0,A_0,L_1,A_1,Y).
+\]
+A typical causal ordering is
+\[
+  L_0 \rightarrow A_0 \rightarrow L_1 \rightarrow A_1 \rightarrow Y,
+\]
+with additional arrows from earlier variables to later variables. The later
+covariate $L_1$ is post-treatment with respect to $A_0$, but pre-treatment with
+respect to $A_1$.
+
+\subsection{Treatment Regimes}
+
+\begin{definition}[Static treatment regime]
+A static treatment regime is a fixed vector
+\[
+  \abar=(a_0,\ldots,a_K)
+\]
+that assigns the same treatment value at each time point to every individual,
+regardless of the individual's evolving covariate history.
+\end{definition}
+
+Examples include ``always treat,'' represented by $(1,1,\ldots,1)$, and
+``never treat,'' represented by $(0,0,\ldots,0)$ for a binary treatment.
+Other static regimes are possible, such as treating only during the first two
+visits and then stopping.
+
+\begin{definition}[Dynamic treatment regime]
+A dynamic treatment regime is a sequence of decision rules
+\[
+  d=(d_0,\ldots,d_K),
+\]
+where $d_k$ maps the information available at time $k$ to a treatment value:
+\[
+  A_k=d_k(\Lbar_k,\Abar_{k-1}).
+\]
+\end{definition}
+
+Dynamic regimes are discussed in detail in \cref{lec:8-11}. For now, the key
+point is that longitudinal notation can handle both fixed treatment profiles and
+rules that respond to patient history.
+
+\subsection{Counterfactual Outcomes $Y(a_0,\ldots,a_K)$}
+
+\begin{definition}[Longitudinal counterfactual outcome]
+For a fixed treatment regime $\abar=(a_0,\ldots,a_K)$, the counterfactual
+outcome $Y(\abar)$ is the outcome that would be observed for an individual if,
+possibly contrary to fact, treatment were set to $a_k$ at every time
+$k=0,\ldots,K$.
+\end{definition}
+
+For example, $Y(1,1)$ is the outcome that would be observed under treatment at
+both time 0 and time 1. If the observed data contain $A_0=1$ and $A_1=0$, then
+$Y(1,1)$ is not directly observed for that individual, even though $Y(1,0)$ may
+be linked to the observed outcome by consistency.
+
+Common population-level causal parameters include
+\[
+  \psi(\abar)=\E\{Y(\abar)\},
+\]
+and contrasts such as
+\[
+  \E\{Y(1,\ldots,1)\}-\E\{Y(0,\ldots,0)\}.
+\]
+For a binary outcome, this contrast is a risk difference comparing two entire
+treatment strategies.
+
+\subsection{Clinical Examples}
+
+\begin{example}[Weekly osteoporosis therapy]
+Suppose $A_k$ indicates whether a patient took alendronate during week $k$,
+where $k=0,\ldots,52$. Let $L_k$ include age, prior fracture status, recent bone
+density measurements, thyroid hormone use, side effects, and other clinical
+information available at week $k$. Let $Y$ indicate whether hip fracture occurs
+within one year. A static contrast of interest is
+\[
+  \E\{Y(1,1,\ldots,1)\}-\E\{Y(0,0,\ldots,0)\},
+\]
+the difference in one-year fracture risk under weekly therapy for the whole year
+versus no therapy during the year.
+\end{example}
+
+\begin{example}[Cancer treatment continuation]
+At each chemotherapy cycle, $A_k$ may indicate whether treatment is continued.
+The covariate $L_k$ may include tumor response, toxicity, blood counts, and
+functional status. Treatment discontinuation may be caused by lack of response,
+and lack of response also predicts mortality. Thus later treatment decisions are
+confounded by earlier treatment-induced covariates.
+\end{example}
+
+\begin{example}[Smoking cessation]
+Let $A_k$ indicate whether an individual smokes during month $k$. Respiratory
+symptoms recorded in $L_k$ may lead a person to quit smoking and may also be
+early signs of disease. A comparison of sustained smoking versus sustained
+cessation must handle the fact that symptoms are both affected by prior smoking
+and predictive of later smoking and future outcomes.
+\end{example}

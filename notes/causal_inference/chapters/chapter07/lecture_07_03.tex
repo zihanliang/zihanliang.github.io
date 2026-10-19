@@ -1,0 +1,228 @@
+\lecture{7.3}{Double Robustness}
+\label{lec:7-3}
+
+\subsection{Large-Sample Limits of AIPTW}
+
+Double robustness is a large-sample property. Suppose
+\[
+\Qbar_n(a,w)\overset{p}{\longrightarrow}\Qbar^*(a,w),
+\qquad
+g_{n,a}(w)\overset{p}{\longrightarrow}g_a^*(w),
+\]
+where $\Qbar^*$ and $g_a^*$ may or may not equal the true nuisance functions
+$\Qbar$ and $g_a$. For treatment level $1$, the AIPTW estimator is expected to
+converge to
+\[
+H(\Qbar^*,g_1^*)
+=
+\E\left[
+\Qbar^*(1,W)
++
+\frac{\ind(A=1)}{g_1^*(W)}
+\{Y-\Qbar^*(1,W)\}
+\right].
+\]
+The question is when this limit equals the target $\E\{\Yone\}$.
+
+\subsection{Correct Outcome Regression}
+
+First suppose the outcome regression is consistently estimated, so that
+\[
+\Qbar^*(1,W)=\Qbar(1,W)=\E(Y\given A=1,W).
+\]
+Then
+\[
+\begin{aligned}
+H(\Qbar,g_1^*)
+&=
+\E\left[
+\Qbar(1,W)
++
+\frac{\ind(A=1)}{g_1^*(W)}
+\{Y-\Qbar(1,W)\}
+\right]\\
+&=
+\E\left[
+\Qbar(1,W)
++
+\E\left\{
+\frac{\ind(A=1)}{g_1^*(W)}
+\{Y-\Qbar(1,W)\}
+\given W
+\right\}
+\right].
+\end{aligned}
+\]
+The inner expectation is zero because
+\[
+\begin{aligned}
+\E\left[
+\ind(A=1)\{Y-\Qbar(1,W)\}
+\given W
+\right]
+&=
+\Prob(A=1\given W)
+\E\{Y-\Qbar(1,W)\given A=1,W\}\\
+&=
+g_1(W)\{ \Qbar(1,W)-\Qbar(1,W)\}\\
+&=0.
+\end{aligned}
+\]
+Therefore,
+\[
+H(\Qbar,g_1^*)=\E\{\Qbar(1,W)\}=\E\{\Yone\}.
+\]
+The propensity score limit may be wrong, but the estimator is still consistent if the
+outcome regression is correct.
+
+\subsection{Correct Propensity Score}
+
+Now suppose the propensity score is consistently estimated, so
+$g_1^*(W)=g_1(W)$, but $\Qbar^*$ may be wrong. Then
+\[
+\begin{aligned}
+H(\Qbar^*,g_1)
+&=
+\E\left[
+\Qbar^*(1,W)
++
+\frac{\ind(A=1)}{g_1(W)}
+\{Y-\Qbar^*(1,W)\}
+\right]\\
+&=
+\E\left[
+\Qbar^*(1,W)
++
+\E\left\{
+\frac{\ind(A=1)}{g_1(W)}
+\{Y-\Qbar^*(1,W)\}
+\given W
+\right\}
+\right].
+\end{aligned}
+\]
+Compute the inner expectation:
+\[
+\begin{aligned}
+\E\left[
+\frac{\ind(A=1)}{g_1(W)}
+\{Y-\Qbar^*(1,W)\}
+\given W
+\right]
+&=
+\frac{1}{g_1(W)}
+\E\left[
+\ind(A=1)\{Y-\Qbar^*(1,W)\}
+\given W
+\right]\\
+&=
+\frac{g_1(W)}{g_1(W)}
+\{\Qbar(1,W)-\Qbar^*(1,W)\}\\
+&=
+\Qbar(1,W)-\Qbar^*(1,W).
+\end{aligned}
+\]
+Substituting back,
+\[
+H(\Qbar^*,g_1)
+=
+\E\left[
+\Qbar^*(1,W)+\Qbar(1,W)-\Qbar^*(1,W)
+\right]
+=
+\E\{\Qbar(1,W)\}
+=
+\E\{\Yone\}.
+\]
+
+\subsection{Two Chances to Be Consistent}
+
+\begin{definition}[Double robustness]
+An estimator is doubly robust for a parameter if it is consistent when either of two
+nuisance components is consistently estimated, even if the other nuisance component
+is inconsistently estimated.
+\end{definition}
+
+For AIPTW, the two nuisance components are $\Qbar$ and $g$. The estimator of
+$\E\{\Yone\}$ is consistent if either $\Qbar_n(1,w)$ is consistent for $\Qbar(1,w)$ or
+$g_{n,1}(w)$ is consistent for $g_1(w)$. The same reasoning applies to
+$\E\{\Yzero\}$ and therefore to the ATE.
+
+\begin{identificationbox}
+Under the causal identification assumptions, the AIPTW estimator targets
+$\E\{\Ya{a}\}$. Its large-sample limit equals this target if either
+$\Qbar_n(a,w)$ consistently estimates $\Qbar(a,w)$ or $g_{n,a}(w)$ consistently
+estimates $g_a(w)$.
+\end{identificationbox}
+
+\subsection{Concrete Misspecification Example}
+
+A simple data-generating system makes the double-robustness statement
+operational. Suppose
+\[
+  W\sim \operatorname{Uniform}(-2,2),
+  \qquad
+  A\given W=w\sim \operatorname{Bernoulli}\{g_0(w)\},
+\]
+where
+\[
+  g_0(w)=\operatorname{expit}\left\{\frac{3}{2}(w+1)^2-3\right\},
+\]
+and suppose the conditional mean outcome is
+\[
+  \Qbar_0(a,w)=\E(Y\given A=a,W=w)=1+a-w-aw.
+\]
+The true outcome regression contains an interaction between treatment and the
+covariate because of the term $-aw$. A main-terms-only outcome regression, such
+as $\E(Y\given A,W)=\beta_0+\beta_1A+\beta_2W$, is therefore misspecified. The
+true propensity score is nonlinear in $W$ because it contains $(w+1)^2$. A
+logistic propensity score model with only a linear term in $W$ is therefore
+misspecified.
+
+This example creates four useful cases:
+\[
+\begin{array}{c|c|c|c}
+\text{Outcome model} & \text{Propensity model} & \text{G-computation}
+& \text{IPTW}\\
+\hline
+\text{correct} & \text{correct} & \text{consistent} & \text{consistent}\\
+\text{correct} & \text{wrong} & \text{consistent} & \text{biased in general}\\
+\text{wrong} & \text{correct} & \text{biased in general} & \text{consistent}\\
+\text{wrong} & \text{wrong} & \text{biased in general} & \text{biased in general}
+\end{array}
+\]
+The AIPTW estimator is consistent in the first three rows, but not generally in
+the fourth row, where both nuisance models are wrong. In the second row, the augmentation term uses
+the correct outcome regression and the residual correction has mean zero. In the
+third row, the residual correction is weighted by the correct propensity score
+and removes the bias left by the wrong outcome regression. The fourth row is the
+warning case: double robustness gives two chances to remove bias, not a
+guarantee when both chances fail.
+
+\subsection{Why Double Robustness Is Not a License for Bad Models}
+
+Double robustness is sometimes summarized as ``two chances to get it right.'' That
+phrase is useful, but it can be misleading. If both nuisance estimators are poor, the
+AIPTW estimator can be badly biased. If both are estimated by simplistic parametric
+models that miss important nonlinearities or interactions, there may be no real second
+chance.
+
+Double robustness also does not protect against violations of causal assumptions.
+Unmeasured confounding, interference, ill-defined interventions, or severe
+positivity violations can invalidate the causal interpretation regardless of the
+statistical estimator.
+
+\subsection{Connection to Efficiency}
+
+The AIPTW estimator is closely related to the efficient influence function for the
+counterfactual mean. When both nuisance functions are consistently estimated at
+sufficient rates, AIPTW can achieve the nonparametric efficiency bound for the target
+parameter. This means that, in large samples and under regularity conditions, no
+regular asymptotically linear estimator can have smaller asymptotic variance in the
+nonparametric model.
+
+\begin{keyidea}
+Double robustness concerns consistency under one correct nuisance function.
+Efficiency concerns variance when both nuisance functions are sufficiently well
+estimated. The same augmentation structure is responsible for both properties.
+\end{keyidea}

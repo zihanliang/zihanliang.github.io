@@ -1,0 +1,189 @@
+\lecture{9.10}{Causal and Counterfactual Views of Missing Data}
+\label{lec:9-10}
+
+\subsection{Why Missingness Is Causal}
+
+Missingness can be viewed as a causal process. Let $R_k$ indicate whether
+variable $L_k$ is observed. Intervening to set $R_k=1$ corresponds to forcing the
+variable to be measured. The full value can be written as a counterfactual
+quantity:
+\[
+  L_k(1)=\text{the value of }L_k\text{ that would be recorded if }R_k=1.
+\]
+The factual observed value is
+\[
+  L_k=
+  \begin{cases}
+  L_k(1), & R_k=1,\\
+  ?, & R_k=0.
+  \end{cases}
+\]
+Thus missing data involve counterfactuals: values that would have been observed
+under a measurement intervention.
+
+\subsection{Missing Data DAGs}
+
+A missing data DAG contains full-data variables, missingness indicators, and
+observed coarsened variables. For one partially observed variable:
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  box/.style={draw, rounded corners=2pt, minimum width=1.1cm, minimum height=.7cm},
+  arr/.style={-{Latex[length=2.2mm]}, thick},
+  det/.style={-{Latex[length=2.2mm]}, thick, gray},
+  node distance=1.0cm
+]
+\node[box] (Lfull) {$L(1)$};
+\node[box, below=of Lfull] (R) {$R$};
+\node[box, right=of R] (Lobs) {$L$};
+\draw[det] (Lfull) -- (Lobs);
+\draw[det] (R) -- (Lobs);
+\end{tikzpicture}
+\caption{Basic missing-data structure: the observed value is determined by the full value and its missingness indicator.}
+\label{fig:ch9-basic-missing-dag}
+\end{figure}
+
+With several variables, missingness indicators may depend on full values,
+observed values, other indicators, or completely observed covariates $Z$.
+Graphical restrictions encode assumptions about these dependencies.
+
+\subsection{Full-Law Factorization}
+
+Let $Z$ denote completely observed variables, $L(1)$ the full-data variables
+that would be observed under measurement, $R$ the missingness indicators, and
+$L$ the coarsened observed variables. The full law can be factored as
+\[
+  p\{Z,L(1),R,L\}
+  =
+  p\{Z,L(1)\}\,
+  p\{R\given L(1),Z\}\,
+  p\{L\given L(1),R,Z\}.
+\]
+The first factor is the target full-data law. The second factor is the
+missingness mechanism. The third factor is deterministic once the consistency
+rule is specified:
+\[
+  L_k=
+  \begin{cases}
+  L_k(1), & R_k=1,\\
+  ?, & R_k=0.
+  \end{cases}
+\]
+The observed-data law is obtained after marginalizing over the unobserved
+components of $L(1)$.
+
+\subsection{Recoverability}
+
+\begin{definition}[Recoverability]
+A target full-data parameter is recoverable if it can be written as a function
+of the observed-data distribution.
+\end{definition}
+
+Recoverability is the missing-data analogue of causal identification. For
+example, the full-data mean $\E\{L(1)\}$ is recoverable under suitable
+missingness assumptions, but may not be recoverable if missingness depends on
+the unobserved value in an unrestricted way.
+
+\subsection{Missingness Mechanisms as Graphs}
+
+Consider two partially observed variables, smoking status $L_1(1)$ and bronchitis
+status $L_2(1)$, with indicators $R_1$ and $R_2$. Different arrows tell different
+stories:
+\begin{itemize}
+  \item $L_2(1)\rightarrow R_1$: inquiry about smoking depends on true
+  bronchitis status.
+  \item $R_1\rightarrow R_2$: whether a diagnostic test is ordered depends on
+  whether smoking was assessed.
+  \item $L_1\rightarrow R_2$: observed smoking status affects diagnostic
+  testing.
+  \item $L_1(1)\rightarrow R_2$: true smoking status affects diagnostic testing,
+  even when smoking status is not observed.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  box/.style={
+    draw,
+    rounded corners=2pt,
+    align=center,
+    minimum width=1.05cm,
+    minimum height=.7cm
+  },
+  arr/.style={-{Latex[length=2.2mm]}, thick},
+  det/.style={-{Latex[length=2.2mm]}, thick, gray}
+]
+
+% Nodes: symmetric layered layout
+\node[box] (L11) at (0, 2.6) {$L_1(1)$};
+\node[box] (L21) at (3.2, 2.6) {$L_2(1)$};
+
+\node[box] (R1)  at (0, 1.25) {$R_1$};
+\node[box] (R2)  at (3.2, 1.25) {$R_2$};
+
+\node[box] (L1)  at (0, -0.15) {$L_1$};
+\node[box] (L2)  at (3.2, -0.15) {$L_2$};
+
+% Black structural arrows
+\draw[arr] (L21.south west) to[out=210,in=35] (R1.north east);
+\draw[arr] (R1.east) -- (R2.west);
+\draw[arr] (L1.north east) to[out=35,in=220] (R2.south west);
+
+% Gray deterministic arrows, routed outside
+\draw[det] (L11.south west) to[out=-100,in=100] (L1.north west);
+\draw[det] (R1.south west)  to[out=-120,in=60]  (L1.north east);
+
+\draw[det] (L21.south east) to[out=-80,in=80]   (L2.north east);
+\draw[det] (R2.south east)  to[out=-60,in=120]  (L2.north west);
+
+\end{tikzpicture}
+\caption{A missing-data DAG can encode how true values, observed values, and measurement decisions interact.}
+\label{fig:ch9-missing-dag-example}
+\end{figure}
+
+\subsection{Graphical MCAR, MAR, and MNAR}
+
+Graphically:
+\begin{itemize}
+  \item MCAR means there are no arrows into missingness indicators from data
+  variables or other missingness-relevant variables.
+  \item MAR means missingness indicators may depend on completely observed
+  variables and observed values, but not on full values that are hidden when
+  missing.
+  \item MNAR means at least one missingness indicator has a parent among the
+  full-data variables whose values may be unobserved.
+\end{itemize}
+The graph is more informative than a label because it records which variables
+drive which missingness decisions.
+
+\subsection{Workflow for Missing Data Analysis}
+
+\begin{estimationbox}
+A graphical missing-data workflow is:
+\begin{enumerate}
+  \item Define the full-data estimand, such as $\E\{L(1)\}$ or a causal effect.
+  \item Draw a graph over full-data variables, missingness indicators, observed
+  coarsened variables, and completely observed variables.
+  \item Assess recoverability: can the estimand be written using the observed
+  data law?
+  \item If recoverable, estimate the identifying functional with regression,
+  weighting, imputation, TMLE, or another appropriate method.
+  \item If not recoverable, report bounds, perform sensitivity analysis, or
+  collect additional data.
+\end{enumerate}
+\end{estimationbox}
+
+\subsection{Connections to Censoring Bias}
+
+Censoring is a special case of missingness over time. In survival analysis, a
+future outcome is missing after dropout. Treating censoring indicators as
+time-varying treatment variables leads to the same identification logic used for
+longitudinal interventions: consistency, exchangeability for the censoring
+process, and positivity of remaining uncensored.
+
+\begin{keyidea}
+The causal view treats missingness indicators as intervention variables and
+missing values as counterfactual full-data quantities. This turns missing-data
+analysis into a recoverability problem, parallel to causal identification.
+\end{keyidea}

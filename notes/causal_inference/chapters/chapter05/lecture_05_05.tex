@@ -1,0 +1,139 @@
+\lecture{5.5}{Candidate Estimator Selection}
+\label{lec:5-5}
+
+\subsection{Pre-Specifying the Candidate Library}
+
+A candidate library is a set of regression algorithms chosen before looking at which
+one gives the desired causal result. For outcome regression, the library might contain
+linear regression, logistic regression, generalized additive models, random forests,
+lasso, regression trees, splines, and neural networks. For propensity score estimation,
+the same broad idea applies, but the outcome being predicted is treatment $A$ rather
+than outcome $Y$.
+
+\begin{definition}[Candidate library]
+A candidate library is a pre-specified collection
+\[
+\mathcal L=\{\mathcal A_1,\ldots,\mathcal A_K\}
+\]
+of regression algorithms. When algorithm $\mathcal A_k$ is trained on the observed
+data, it produces a fitted regression estimator $\Qbar_{n,k}$ or $g_{n,k}$.
+\end{definition}
+
+The library should be broad enough to include methods with different bias-variance
+profiles. A useful library often contains both simple stable methods and flexible
+adaptive methods. The simple methods protect against overfitting in small samples;
+the flexible methods protect against bias when the true regression is complex.
+
+\subsection{Comparing Regressions Using Cross-Validated Risk}
+
+For each candidate algorithm $k$, compute its cross-validated risk:
+\[
+R_{CV,n}(\Qbar_{n,k})
+=
+\frac{1}{V}\sum_{v=1}^V
+\frac{1}{|\mathcal V_v|}
+\sum_{i\in\mathcal V_v}
+L(\Qbar_{n,k,v})(W_i,A_i,Y_i),
+\]
+where $\Qbar_{n,k,v}$ is algorithm $k$ fit on the training data excluding validation
+fold $\mathcal V_v$.
+
+The candidate with the smallest cross-validated risk is selected:
+\[
+k_{CV}
+=
+\argmin_{k\in\{1,\ldots,K\}}
+R_{CV,n}(\Qbar_{n,k}).
+\]
+The selected algorithm is then refit on the full dataset to produce the final nuisance
+function estimate.
+
+\subsection{Discrete Super Learner}
+
+\begin{definition}[Discrete Super Learner]
+The discrete Super Learner is the cross-validation selector that chooses the single
+candidate algorithm with the lowest cross-validated risk and then refits that algorithm
+on the full sample.
+\end{definition}
+
+The word ``discrete'' means that the final estimator is one member of the candidate
+library, not a weighted combination. If the library contains $K$ algorithms, the
+discrete Super Learner chooses one of those $K$ algorithms.
+
+\begin{estimationbox}
+Discrete Super Learner for an outcome regression:
+\begin{enumerate}
+\item Pre-specify candidate algorithms $\mathcal A_1,\ldots,\mathcal A_K$.
+\item Choose a valid loss function for $\Qbar$, such as squared-error loss or
+negative log-likelihood loss.
+\item Compute cross-validated risk for each candidate.
+\item Select the candidate with the smallest cross-validated risk.
+\item Refit the selected candidate on the full sample.
+\item Use the resulting $\Qbar_n$ inside the causal estimator.
+\end{enumerate}
+\end{estimationbox}
+
+\subsection{Avoiding Post-Hoc Model Checking}
+
+Traditional regression workflows often involve fitting a model, checking residual
+plots or diagnostic tables, adding or removing terms, and refitting. This can be useful
+for scientific exploration, but it creates problems for confirmatory estimation and
+inference if the final model is chosen after seeing the data.
+
+The issue is not that diagnostics are bad. The issue is that ordinary standard errors
+and confidence intervals usually treat the final model as if it had been chosen in
+advance. They do not account for the uncertainty introduced by trying many models
+and selecting one.
+
+Super Learning addresses this by moving model choice into a pre-specified algorithm.
+If one would consider a main-terms model, an interaction model, a spline model, and a
+random forest after inspecting diagnostics, those options can be placed in the library
+in advance. Cross-validated risk then supplies the selection rule.
+
+\begin{keyidea}
+The analysis plan should specify the library, loss function, cross-validation scheme,
+and selection rule before examining which candidate gives the most favorable causal
+estimate.
+\end{keyidea}
+
+\subsection{Using Cross-Validation for Outcome Regression and Propensity Score Estimation}
+
+The same framework applies to the two central nuisance functions:
+\[
+\Qbar(a,w)=\E(Y\given A=a,W=w),
+\qquad
+g_1(w)=\Prob(A=1\given W=w).
+\]
+For outcome regression, the validation loss compares predicted outcomes with
+observed outcomes. For propensity score estimation, the validation loss compares
+predicted treatment probabilities with observed treatment values.
+
+For a binary treatment, a common propensity-score loss is the Bernoulli negative
+log-likelihood:
+\[
+L(g_n)(w,a)
+=
+-a\log\{g_n(w)\}-(1-a)\log\{1-g_n(w)\}.
+\]
+This loss is minimized by the true conditional treatment probability
+$\Prob(A=1\given W=w)$.
+
+It is common for different algorithms to perform best for different nuisance
+functions. A highly flexible method might predict the outcome well but estimate the
+propensity score poorly, or vice versa. Therefore, the outcome regression library and
+propensity score library should be evaluated separately, with losses appropriate to
+each target.
+
+\begin{implementationbox}
+Conceptual R workflow:
+\begin{lstlisting}[language=R]
+# Outcome regression library:
+# compare algorithms by cross-validated loss for predicting Y from A and W.
+
+# Propensity score library:
+# compare algorithms by cross-validated loss for predicting A from W.
+
+# The selected outcome algorithm and selected propensity algorithm
+# need not be the same.
+\end{lstlisting}
+\end{implementationbox}

@@ -30,6 +30,12 @@ Source repository for a personal academic website (Quarto + vanilla frontend).
 - `data/experiences/sections.json`: Education, teaching, industry, leadership experiences
 - `data/notes/sections.json`: Notes catalog and download links
 - `notes/*.pdf`: Downloadable study notes
+- `notes/<name>/`: Optional web version of a note, one folder per note, holding either a
+  Markdown file (images alongside, e.g. `notes/intro-ai/intro-ai-assets/`) or a LaTeX project
+  (`main.tex` plus any `\input` files and images). Point the note's entry in
+  `data/notes/sections.json` at it with `"source": "notes/<name>/<file>"`; its card then opens the
+  reader page `notes/<name>/`, which has a table of contents and PDF buttons. See
+  [Study note reader pages](#study-note-reader-pages).
 - `figures/home/`: Home page images
 - `fonts/`: Custom font resources
 - `icon/web-icon.png`: Site favicon and navbar logo
@@ -41,6 +47,9 @@ Source repository for a personal academic website (Quarto + vanilla frontend).
 - `assets/js/deadlines.js`: Conference data loading, filtering, timezone conversion, and countdowns
 - `assets/js/experiences.js`: Experiences page rendering
 - `assets/js/notes.js`: Notes language filter (the catalog and PDF page counts are pre-rendered at build time)
+- `assets/js/note-reader.js`: Note reader table of contents (current-section highlight, collapsible on phones)
+- `scripts/build-note-sources.mjs`: Prepares web notes (reader stubs, LaTeX compiles, figure SVGs)
+- `scripts/note-reader.lua`: Quarto filter that lays out reader pages from Markdown or LaTeX sources
 - `assets/includes/nav-scroll.html`: Extra script include injected into pages
 - `assets/includes/statcounter.html`: Invisible Statcounter tracking for project `13358447`, included once on every HTML page
 - `assets/css/style.css`: Global site styles
@@ -52,7 +61,8 @@ search crawlers can read the complete content without executing JavaScript.
 
 ## Local Development
 
-1. Install Quarto, XeLaTeX, `latexmk`, and Poppler.
+1. Install Quarto, XeLaTeX, `latexmk`, and Poppler (and the TeX packages the LaTeX notes use,
+   for their web versions).
 2. Build the CV assets from the repository root:
 
 ```bash
@@ -66,13 +76,37 @@ cd ..
 
 ```bash
 node scripts/render-static-content.mjs
+node scripts/build-note-sources.mjs
 quarto preview
 ```
 
 The explicit generation commands are needed after a clean clone because the CV
-assets and generated HTML fragments are intentionally not committed. Subsequent
+assets, generated HTML fragments, and reader-page stubs are intentionally not
+committed (Quarto must find the stubs before it renders; run
+`build-note-sources.mjs` again after adding a new web note). Subsequent
 Quarto builds refresh the HTML fragments automatically from the JSON sources;
 the GitHub Pages workflow always rebuilds the CV assets before rendering.
+
+## Study Note Reader Pages
+
+Any note with a `"source"` in `data/notes/sections.json` gets a reader page at
+`notes/<name>/`. `scripts/build-note-sources.mjs` (a Quarto pre-render step)
+writes a generated `notes/<name>/index.qmd` stub for it (ignored by git), and
+`scripts/note-reader.lua` turns the source into the page:
+
+- Markdown is read as is. An italic line right under an image becomes its caption,
+  and a hand-written "目录"/"Contents" list is replaced by the generated contents.
+- LaTeX is expanded (`\input`), converted with pandoc, and compiled twice in
+  `_generated/latex-notes/<name>/`: once in full, so the page shows the PDF's own
+  section, theorem, equation, and `\cref` numbers (read from the `.aux` file), and
+  once in preview mode, so TikZ pictures, `tikzcd` diagrams, algorithm2e blocks,
+  and `\dirtree` trees become SVG figures. Boxes defined with tcolorbox keep their
+  titles. Compiles rerun only when the source changes.
+
+Compiling needs a TeX Live with every package the note uses (the deploy workflow
+uses a full TeX Live). If a compile fails, the page still renders, with links to the
+PDF in place of the figures and pandoc's own theorem numbering; the build log names
+the missing package or error.
 
 ## Build and Deployment
 
@@ -91,7 +125,7 @@ Core config file: `_quarto.yml`
 
 - `project.type: website`
 - `project.output-dir: docs`
-- `project.resources`: Files copied to output (`CNAME`, `data/`, `fonts/`, `figures/`, `icon/`, `notes/`, the generated CV PDF, and its first-page preview)
+- `project.resources`: Files copied to output (`CNAME`, `data/`, `fonts/`, `figures/`, `icon/`, `notes/*.pdf`, the generated CV PDF, and its first-page preview)
 - `website.navbar`: Top navigation (Home/CV/Research/Experiences/Study Notes)
 - `data/navigation.json`: Runtime visibility for navbar entries (`visible: true` or `false`)
 - `format.html.css`: `assets/css/style.css`

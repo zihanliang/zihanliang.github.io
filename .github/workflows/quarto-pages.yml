@@ -34,6 +34,22 @@ jobs:
           working_directory: zihan_liang_academic_cv
           latexmk_use_xelatex: true
 
+      # Web versions of LaTeX study notes: the full document is compiled for its
+      # section/theorem/equation numbers, and a preview document for the figures.
+      - name: Prepare LaTeX study notes
+        run: node scripts/build-note-sources.mjs --prepare
+
+      - name: Compile LaTeX study notes for the web
+        uses: xu-cheng/latex-action@v4
+        continue-on-error: true
+        with:
+          root_file: |
+            _generated/latex-notes/*/numbers/main.tex
+            _generated/latex-notes/*/figures/figures.tex
+          work_in_root_file_dir: true
+          continue_on_error: true
+          args: -pdf -f -file-line-error -interaction=nonstopmode
+
       - name: Generate CV first-page preview
         run: |
           sudo apt-get update
@@ -48,6 +64,9 @@ jobs:
             zihan_liang_academic_cv/cv-first-page
           test "$(pdfinfo zihan_liang_academic_cv/cv.pdf | awk '/^Pages:/ { print $2 }')" -eq 2
           test -s zihan_liang_academic_cv/cv-first-page.png
+
+      - name: Finish LaTeX study notes
+        run: node scripts/build-note-sources.mjs --finish
 
       # Quarto resolves include directives before project pre-render hooks.
       # Generate the ignored fragments explicitly for a clean CI checkout.

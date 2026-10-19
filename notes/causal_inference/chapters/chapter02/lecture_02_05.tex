@@ -1,0 +1,145 @@
+\lecture{2.5}{Counterfactual Variables}
+\label{lec:2-5}
+
+\subsection{Ideal Experiments}
+
+A causal question is easiest to understand by first imagining an ideal experiment. Suppose we want to know whether early imaging affects 12-month back pain-related disability. In an ideal experiment with unlimited control, we could take the target population and create two worlds:
+\begin{itemize}
+  \item in one world, every eligible patient receives early imaging;
+  \item in another world, no eligible patient receives early imaging.
+\end{itemize}
+We would then compare the outcomes in these two worlds.
+
+This thought experiment is not meant to be physically possible. Its purpose is to clarify the intervention and the outcome. A causal question is a question about what would happen under actions, not merely about what happened under observed decisions.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.1cm,>=Latex]
+  \node[draw, rounded corners, fill=blue!5, minimum width=3.4cm] (unit) {Same patient};
+  \node[draw, rounded corners, fill=green!5, below left=1.2cm and .9cm of unit, minimum width=3.1cm] (a1) {Set $A=1$};
+  \node[draw, rounded corners, fill=orange!7, below right=1.2cm and .9cm of unit, minimum width=3.1cm] (a0) {Set $A=0$};
+  \node[draw, rounded corners, below=.8cm of a1, minimum width=3.1cm] (y1) {Observe $\Yone$};
+  \node[draw, rounded corners, below=.8cm of a0, minimum width=3.1cm] (y0) {Observe $\Yzero$};
+  \draw[->, thick] (unit) -- (a1);
+  \draw[->, thick] (unit) -- (a0);
+  \draw[->, thick] (a1) -- (y1);
+  \draw[->, thick] (a0) -- (y0);
+\end{tikzpicture}
+\caption{Counterfactual thinking compares outcomes for the same unit under alternative interventions.}
+\end{figure}
+
+\subsection{Interventions}
+
+\begin{definition}[Intervention]
+An \emph{intervention} is an action or policy that sets, modifies, or otherwise changes a variable in the causal system. In notation, $\doop(A=a)$ denotes an intervention setting $A$ to value $a$.
+\end{definition}
+
+An intervention is not the same as conditioning. The expression $\E(Y\given A=a)$ describes the mean outcome among people who were observed with $A=a$. The expression $\E\{\Ya{a}\}$ describes the mean outcome that would be observed if the intervention set $A=a$ for the relevant population.
+
+Conditioning selects a subgroup. Intervening changes the data-generating process.
+
+\subsection{Potential Outcomes $\Ya{a}$}
+
+\begin{definition}[Potential outcome]
+For a treatment or exposure $A$ and outcome $Y$, the potential outcome $\Ya{a}$ is the outcome that would be observed for a unit under an intervention setting $A=a$.
+\end{definition}
+
+The notation $\Ya{a}$ is also called counterfactual notation. It is "counterfactual" when $a$ differs from the treatment value actually received, but it is useful to define potential outcomes for all intervention levels regardless of what was observed.
+
+If $A$ is early imaging and $Y$ is 12-month disability, then:
+\[
+\Yone = \text{disability that would be observed if the patient received early imaging},
+\]
+\[
+\Yzero = \text{disability that would be observed if the patient did not receive early imaging}.
+\]
+
+\subsection{Binary Treatment Potential Outcomes}
+
+For a binary treatment $A\in\{0,1\}$, each unit has two potential outcomes:
+\[
+\Yzero,\qquad \Yone.
+\]
+The observed data contain only one observed outcome $Y$. If the patient actually received $A=1$, then under consistency we observe $\Yone$. If the patient actually received $A=0$, then we observe $\Yzero$. The other potential outcome remains unobserved.
+
+\[
+\begin{array}{c|ccc}
+\text{patient} & A & \Yone & \Yzero\\
+\hline
+1 & 1 & 1 & 1\\
+2 & 0 & 0 & 0\\
+3 & 0 & 0 & 1\\
+4 & 1 & 1 & 0\\
+5 & 1 & 1 & 0
+\end{array}
+\]
+
+The table is conceptual. In real observed data, both potential outcome columns are not jointly observed for every patient.
+
+\subsection{No Interference}
+
+The notation $\Ya{a}$ assumes that one unit's potential outcome depends only on that unit's assigned treatment level, not on treatments assigned to other units.
+
+\begin{assumptionbox}
+\textbf{No interference.} For unit $i$, the potential outcome under treatment $a$ is $Y_i(a)$ and does not depend on the treatment values assigned to other units:
+\[
+Y_i(a_1,\ldots,a_n)=Y_i(a_i)
+\]
+for all treatment vectors $(a_1,\ldots,a_n)$, whenever the simplified notation is used.
+\end{assumptionbox}
+
+Plainly, no interference says that my outcome under treatment does not change depending on your treatment.
+
+\subsection{Interference Examples}
+
+No interference can fail in infectious disease studies. Suppose households contain two people and $A_i$ indicates flu vaccination for person $i$. Person 1's flu infection outcome may depend on whether person 2 is vaccinated. Then the relevant potential outcome is
+\[
+Y_1(a_1,a_2),
+\]
+not merely $Y_1(a_1)$.
+
+For a two-person household, the potential outcomes for person 1 might include
+\[
+Y_1(1,1),\quad Y_1(1,0),\quad Y_1(0,1),\quad Y_1(0,0).
+\]
+The second argument matters because vaccinating the housemate could reduce exposure to infection.
+
+Interference can also arise through social networks, classrooms, neighborhoods, clinics, or markets. Vaccines, infectious disease transmission, peer education, and price interventions are common examples.
+
+\subsection{Individual Causal Effects}
+
+\begin{definition}[Individual causal effect]
+For a binary treatment, an \emph{individual causal effect} is a contrast between the two potential outcomes for the same unit, such as
+\[
+Y_i(1)-Y_i(0)
+\]
+or, when meaningful,
+\[
+\frac{Y_i(1)}{Y_i(0)}.
+\]
+\end{definition}
+
+For a binary adverse outcome, four qualitative types are possible:
+\[
+\begin{array}{c|ccc}
+\text{type} & Y_i(1) & Y_i(0) & Y_i(1)-Y_i(0)\\
+\hline
+\text{doomed} & 1 & 1 & 0\\
+\text{invincible} & 0 & 0 & 0\\
+\text{helped} & 0 & 1 & -1\\
+\text{harmed} & 1 & 0 & 1
+\end{array}
+\]
+This table is conceptually useful, but it also reveals the central difficulty.
+
+\subsection{Fundamental Problem of Causal Inference}
+
+\begin{definition}[Fundamental problem of causal inference]
+For a given unit at a given time, we can observe the outcome under the treatment actually received, but not under all alternative treatment levels. Therefore individual causal effects are generally not directly observable.
+\end{definition}
+
+If a patient receives early imaging, we observe the patient's outcome under imaging. We do not observe the same patient's outcome at the same time under no imaging. This is why causal inference usually targets population-level summaries rather than individual causal effects.
+
+\begin{keyidea}
+The causal problem is missing data at the level of potential outcomes. Each unit has multiple potential outcomes, but the observed data reveal at most one of them.
+\end{keyidea}

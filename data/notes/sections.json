@@ -14,31 +14,36 @@
           "icon": "∇",
           "subject": "Introduction to Artificial Intelligence",
           "language": "Bilingual",
-          "file": "pdf/notes/intro-ai.pdf"
+          "file": "notes/intro-ai.pdf",
+          "source": "notes/intro-ai/intro-ai.md"
         },
         {
           "icon": "θ",
           "subject": "Machine Learning",
           "language": "English",
-          "file": "pdf/notes/ml.pdf"
+          "file": "notes/ml.pdf",
+          "source": "notes/ml/main.tex"
         },
         {
           "icon": "→",
           "subject": "Causal Inference",
           "language": "English",
-          "file": "pdf/notes/causal_inference.pdf"
+          "file": "notes/causal_inference.pdf",
+          "source": "notes/causal_inference/main.tex"
         },
         {
           "icon": "{ }",
           "subject": "Java Programming",
           "language": "English",
-          "file": "pdf/notes/java_programming.pdf"
+          "file": "notes/java_programming.pdf",
+          "source": "notes/java_programming/main.tex"
         },
         {
           "icon": "O(n)",
           "subject": "Data Structures and Algorithms",
           "language": "Bilingual",
-          "file": "pdf/notes/data_stru.pdf"
+          "file": "notes/data_stru.pdf",
+          "source": "notes/data_stru/data_stru.md"
         },
         {
           "icon": "Aa",
@@ -55,37 +60,43 @@
           "icon": "λ",
           "subject": "Linear Algebra",
           "language": "English",
-          "file": "pdf/notes/lin_alg.pdf"
+          "file": "notes/lin_alg.pdf",
+          "source": "notes/lin_alg/lin_alg.tex"
         },
         {
           "icon": "∫",
           "subject": "Multivariable Calculus and Vector Analysis",
           "language": "English",
-          "file": "pdf/notes/cal3.pdf"
+          "file": "notes/cal3.pdf",
+          "source": "notes/cal3/cal3.tex"
         },
         {
           "icon": "∂",
           "subject": "Differential Equations",
           "language": "Bilingual",
-          "file": "pdf/notes/diff_equ.pdf"
+          "file": "notes/diff_equ.pdf",
+          "source": "notes/diff_equ/diff_equ.md"
         },
         {
           "icon": "≈",
           "subject": "Numerical Analysis",
           "language": "Bilingual",
-          "file": "pdf/notes/num_anal.pdf"
+          "file": "notes/num_anal.pdf",
+          "source": "notes/num_anal/num_anal.md"
         },
         {
           "icon": "≤",
           "subject": "Linear Optimization",
           "language": "Bilingual",
-          "file": "pdf/notes/lin_opt.pdf"
+          "file": "notes/lin_opt.pdf",
+          "source": "notes/lin_opt/lin_opt.md"
         },
         {
           "icon": "ε",
           "subject": "Real Analysis",
           "language": "English",
-          "file": "pdf/notes/real_analysis.pdf"
+          "file": "notes/real_analysis.pdf",
+          "source": "notes/real_analysis/main.tex"
         }
       ]
     },
@@ -96,31 +107,31 @@
           "icon": "Σ",
           "subject": "AP Calculus BC",
           "language": "Bilingual",
-          "file": "pdf/notes/ap_cal_bc.pdf"
+          "file": "notes/ap_cal_bc.pdf"
         },
         {
           "icon": "σ",
           "subject": "AP Statistics",
           "language": "Bilingual",
-          "file": "pdf/notes/ap_stats.pdf"
+          "file": "notes/ap_stats.pdf"
         },
         {
           "icon": "Φ",
           "subject": "AP Physics C",
           "language": "Bilingual",
-          "file": "pdf/notes/ap_phy_c.pdf"
+          "file": "notes/ap_phy_c.pdf"
         },
         {
           "icon": "⇌",
           "subject": "AP Chemistry",
           "language": "Bilingual",
-          "file": "pdf/notes/ap_chem.pdf"
+          "file": "notes/ap_chem.pdf"
         },
         {
           "icon": "$",
           "subject": "College Prep Economics",
           "language": "Bilingual",
-          "file": "pdf/notes/college_prep_econ.pdf"
+          "file": "notes/college_prep_econ.pdf"
         }
       ]
     }

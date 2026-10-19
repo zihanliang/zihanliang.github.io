@@ -1,0 +1,196 @@
+\lecture{4.1}{From Identification to Estimation}
+\label{lec:4-1}
+
+\subsection{Observed Data Structure: $O=(W,A,Y)$}
+
+In the previous chapter, the average treatment effect was identified under consistency,
+conditional randomization, and positivity. Identification gave formulas involving only
+the observed-data distribution. Estimation begins after that step: we now have a
+sample and must turn the identified statistical parameter into a numerical estimate.
+
+Throughout this chapter the observed data are
+\[
+O_i=(W_i,A_i,Y_i), \qquad i=1,\ldots,n,
+\]
+where the observations are assumed to be independent and identically distributed:
+\[
+O_1,\ldots,O_n \iid P.
+\]
+Here $W$ is a vector of pre-treatment covariates, $A\in\{0,1\}$ is treatment, and
+$Y$ is the outcome. The phrase ``pre-treatment'' is important. Variables affected by
+treatment are not ordinary confounders for the effect of $A$ on $Y$ in a point-treatment
+analysis, because adjusting for them can block part of the causal effect or create
+collider bias.
+
+\begin{assumptionbox}
+The estimators in this chapter are estimators of causal effects only when the
+identification assumptions from Chapter 3 are scientifically credible:
+\[
+Y(a)=Y \text{ if } A=a,\qquad
+\Ya{a}\ci A\given W,\qquad
+\Prob(A=a\given W=w)>0
+\]
+for all treatment levels $a$ and all covariate values $w$ in the target population.
+Without these assumptions, the same formulas estimate well-defined statistical
+parameters, but those parameters need not equal counterfactual means.
+\end{assumptionbox}
+
+\subsection{Outcome Regression $\Qbar(a,w)$}
+
+\begin{definition}[Outcome regression]
+The outcome regression is the conditional mean of the observed outcome given
+treatment and covariates:
+\[
+\Qbar(a,w)=\E(Y\given A=a,W=w).
+\]
+\end{definition}
+
+This function answers an observed-data question: among individuals who actually
+received treatment level $a$ and had covariates $W=w$, what was the mean outcome?
+Under the identification assumptions, this observed subgroup mean can be used as a
+building block for the mean counterfactual outcome under treatment level $a$.
+
+For a binary outcome, $\Qbar(a,w)$ is a conditional risk:
+\[
+\Qbar(a,w)=\Prob(Y=1\given A=a,W=w).
+\]
+For a continuous outcome, it is a conditional average. For an ordinal or count outcome,
+it is still a conditional mean, although the mean may not fully summarize the whole
+conditional distribution.
+
+\subsection{Propensity Score $g_a(w)$}
+
+\begin{definition}[Propensity score]
+For a binary treatment, the treatment-specific propensity score is
+\[
+g_a(w)=\Prob(A=a\given W=w).
+\]
+The usual propensity score is $g_1(w)=\Prob(A=1\given W=w)$, and
+$g_0(w)=1-g_1(w)$.
+\end{definition}
+
+The propensity score describes how treatment is assigned in the observed population.
+It is not a causal effect. Instead, it measures the treatment probability among people
+with covariate value $w$. In inverse probability weighting, individuals who received a
+treatment level that was unlikely for their covariates receive larger weights. These
+weights compensate for the unequal representation of covariate strata across treatment
+groups.
+
+\subsection{Plug-In Estimation}
+
+The g-computation identification formula for the counterfactual mean is
+\[
+\psi(a)=\E\{\Ya{a}\}=\E\{\Qbar(a,W)\}.
+\]
+This formula contains two features of the observed-data distribution:
+the conditional mean function $\Qbar(a,w)$ and the marginal distribution of $W$.
+A plug-in estimator replaces each unknown population quantity by an estimate from
+the data.
+
+\begin{definition}[Plug-in estimator]
+A plug-in estimator is obtained by writing the target parameter as a function of the
+observed-data distribution and then substituting empirical or model-based estimates
+for the unknown components of that distribution.
+\end{definition}
+
+If $\Qbar_n(a,w)$ estimates $\Qbar(a,w)$, the natural g-computation plug-in estimator is
+\[
+\psi_n^{\mathrm{gcomp}}(a)
+=
+\frac{1}{n}\sum_{i=1}^n \Qbar_n(a,W_i).
+\]
+This expression averages predicted outcomes under treatment level $a$ over the
+observed covariate distribution. The observed covariates $W_1,\ldots,W_n$ are used
+as an empirical approximation to the target population distribution of $W$.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  scale=.88,
+  transform shape,
+  node distance=1.25cm,
+  box/.style={draw, rounded corners=2pt, minimum width=2.8cm, minimum height=.85cm},
+  arr/.style={-{Latex[length=2.5mm]}, thick}
+]
+\node[box] (data) {Observed data\\ $O_i=(W_i,A_i,Y_i)$};
+\node[box, right=of data] (fit) {Fit nuisance\\ functions};
+\node[box, right=of fit] (plugin) {Plug into\\ identified formula};
+\node[box, right=of plugin] (ate) {Estimate\\ $\psi(1)-\psi(0)$};
+\draw[arr] (data) -- (fit);
+\draw[arr] (fit) -- node[above] {$\Qbar_n,\ g_n$} (plugin);
+\draw[arr] (plugin) -- (ate);
+\end{tikzpicture}
+\caption{Estimation turns the identified observed-data parameter into a sample quantity.}
+\label{fig:ch4-estimation-flow}
+\end{figure}
+
+\subsection{Estimating Counterfactual Means}
+
+There are two basic plug-in strategies emphasized in this chapter.
+
+The first uses the outcome regression:
+\[
+\psi_n^{\mathrm{gcomp}}(a)=\frac{1}{n}\sum_{i=1}^n \Qbar_n(a,W_i).
+\]
+For each observed individual, we keep $W_i$ fixed and replace the observed treatment
+by the hypothetical treatment value $a$ inside the fitted outcome regression. The
+resulting predicted values are then averaged.
+
+The second uses inverse probability weighting. If $g_{n,a}(w)$ estimates
+$g_a(w)=\Prob(A=a\given W=w)$, then
+\[
+\psi_n^{\IPTW}(a)
+=
+\frac{1}{n}\sum_{i=1}^n
+\frac{\ind(A_i=a)}{g_{n,a}(W_i)}Y_i.
+\]
+Only people who actually received treatment level $a$ contribute to the estimate of
+$\E\{\Ya{a}\}$, but their outcomes are weighted by the inverse of their estimated
+probability of receiving that treatment.
+
+\begin{keyidea}
+G-computation estimates counterfactual means by predicting everyone's outcome under
+each treatment level. IPTW estimates counterfactual means by reweighting the people
+who actually received each treatment level so that, after weighting, they represent the
+full target population.
+\end{keyidea}
+
+\subsection{Estimating the ATE}
+
+The average treatment effect is
+\[
+\ATE=\E\{\Yone\}-\E\{\Yzero\}=\psi(1)-\psi(0).
+\]
+The corresponding g-computation estimator is
+\[
+\widehat{\ATE}_{\mathrm{gcomp}}
+=
+\frac{1}{n}\sum_{i=1}^n
+\left\{
+\Qbar_n(1,W_i)-\Qbar_n(0,W_i)
+\right\}.
+\]
+The corresponding IPTW estimator is
+\[
+\widehat{\ATE}_{\IPTW}
+=
+\frac{1}{n}\sum_{i=1}^n
+\left\{
+\frac{\ind(A_i=1)}{g_{n,1}(W_i)}Y_i
+-
+\frac{\ind(A_i=0)}{g_{n,0}(W_i)}Y_i
+\right\}.
+\]
+
+\begin{estimationbox}
+Basic estimation workflow for the ATE:
+\begin{enumerate}
+\item Choose whether to estimate the counterfactual means using the outcome
+regression, the propensity score, or both in a later doubly robust method.
+\item Estimate the nuisance function required by the chosen method.
+\item Construct $\psi_n(1)$ and $\psi_n(0)$ using the identified formula.
+\item Report $\widehat{\ATE}=\psi_n(1)-\psi_n(0)$.
+\item Quantify uncertainty using an appropriate variance estimator or resampling
+method such as the bootstrap.
+\end{enumerate}
+\end{estimationbox}

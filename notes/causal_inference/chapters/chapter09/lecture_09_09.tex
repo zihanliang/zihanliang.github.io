@@ -1,0 +1,103 @@
+\lecture{9.9}{Rubin's Missingness Hierarchy}
+\label{lec:9-9}
+
+\subsection{Missing Completely at Random}
+
+\begin{definition}[Missing completely at random]
+Missingness is missing completely at random (MCAR) if the probability of
+missingness does not depend on any data values, observed or unobserved.
+\[
+  R\ci (X_{\obs},X_{\mis},Z),
+  \qquad
+  p(R\given X,Z)=p(R).
+\]
+\end{definition}
+
+MCAR is like randomly removing entries from a data set. Complete cases are a
+random subsample with respect to the variables in the full data. This is a strong
+condition and often implausible in medical and social data.
+
+\subsection{Missing at Random}
+
+\begin{definition}[Missing at random]
+Missingness is missing at random (MAR) if the probability of missingness may
+depend on observed information but not on missing values after conditioning on
+the observed information:
+\[
+  R\ci X_{\mis}\given Z,X_{\obs},
+  \qquad
+  p(R\given X,Z)=p(R\given Z,X_{\obs}).
+\]
+\end{definition}
+
+For example, outcome missingness may depend on age and sex if those variables
+are observed for everyone. Under MAR, methods such as inverse probability
+weighting and multiple imputation can be justified if the models are correctly
+specified.
+
+\subsection{Missing Not at Random}
+
+\begin{definition}[Missing not at random]
+Missingness is missing not at random (MNAR) if the probability of missingness
+depends on missing values themselves, even after conditioning on observed
+information.
+\end{definition}
+
+For example, income may be missing because high-income respondents choose not
+to report it, or substance-use history may be missing because people with
+substance-use history refuse to answer. MNAR is not one model; it is a broad
+category containing many different mechanisms.
+
+\subsection{Statistical Definitions Using $R$, $X_{\text{obs}}$, $X_{\text{miss}}$, and $Z$}
+
+Let $Z$ denote variables observed for all units. Let $X$ denote variables subject
+to missingness, decomposed into observed and missing parts:
+\[
+  X=(X_{\obs},X_{\mis}).
+\]
+Let $R$ denote the missingness pattern. The hierarchy can be summarized as:
+\[
+  \text{MCAR:}\qquad p(R\given X,Z)=p(R),
+\]
+\[
+  \text{MAR:}\qquad p(R\given X,Z)=p(R\given X_{\obs},Z),
+\]
+\[
+  \text{MNAR:}\qquad p(R\given X,Z)
+  \text{ depends on }X_{\mis}\text{ for at least one pattern}.
+\]
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  box/.style={draw, rounded corners=2pt, minimum width=2.5cm, minimum height=.75cm},
+  arr/.style={-{Latex[length=2.2mm]}, thick},
+  node distance=.9cm
+]
+\node[box] (mcar) {MCAR\\ $R$ independent of data};
+\node[box, below=of mcar] (mar) {MAR\\ $R$ depends on observed data};
+\node[box, below=of mar] (mnar) {MNAR\\ $R$ depends on missing data};
+\draw[arr] (mcar) -- (mar);
+\draw[arr] (mar) -- (mnar);
+\end{tikzpicture}
+\caption{Rubin's hierarchy classifies missingness by what information predicts missingness.}
+\label{fig:ch9-rubin-hierarchy}
+\end{figure}
+
+\subsection{Limitations of MCAR/MAR/MNAR}
+
+The hierarchy is useful but incomplete. Its limitations include:
+\begin{itemize}
+  \item MCAR and MAR are statistical restrictions, not causal explanations.
+  \item MNAR is too broad: many distinct mechanisms are all labeled MNAR.
+  \item The hierarchy can be hard to apply when several variables are missing.
+  \item It does not automatically tell us whether a target estimand is
+  recoverable.
+  \item It does not by itself specify an estimation strategy.
+\end{itemize}
+
+\begin{keyidea}
+MCAR, MAR, and MNAR describe how missingness probabilities relate to observed
+and unobserved values. They are useful labels, but causal graphs provide a more
+explicit language for why values are missing and what can be recovered.
+\end{keyidea}
