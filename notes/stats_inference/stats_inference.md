@@ -72,9 +72,8 @@
 
 Regression = estimating the relationship between dependent variable y and independent variables x.
 
-**因变量dependent variable y：** 我们想要解释和预测的变量。
-
-**自变量independent variables x：** 用来解释y的变量。
+- **因变量dependent variable y：** 我们想要解释和预测的变量。
+- **自变量independent variables x：** 用来解释y的变量。
 
 **其中一种方法：** 线性回归Linear Regression
 
@@ -186,9 +185,8 @@ $$
 
 **Skewness：** 描述分布的不对称性
 
-**Right-skewed：** 右尾较长；常见右偏分布中均值大于中位数，但这不是适用于所有分布的定理。
-
-**Left-skewed：** 左尾较长；常见左偏分布中均值小于中位数，但仅凭均值和中位数的大小关系不能完整判断分布形状。
+- **Right-skewed：** 右尾较长；常见右偏分布中均值大于中位数，但这不是适用于所有分布的定理。
+- **Left-skewed：** 左尾较长；常见左偏分布中均值小于中位数，但仅凭均值和中位数的大小关系不能完整判断分布形状。
 
 <a id="section-2"></a>
 
@@ -202,25 +200,27 @@ $$
 
 随机变量是从样本空间到数值空间的函数：每个随机实验结果都按预先指定的映射规则得到一个数。本课程主要讨论实值随机变量；严格定义还要求该函数可测。
 
-**Example 1：** 掷一个 6 面骰子.
+##### Example 1：
 
-**Sample space：** $\Omega = \{ 1,2,3,4,5,6\}$.
+掷一个 6 面骰子.
 
-**Defining a random variable X：** $X(\omega) = \omega$.
+- **Sample space：** $\Omega = \{ 1,2,3,4,5,6\}$.
+- **Defining a random variable X：** $X(\omega) = \omega$.
+- **可能取值（range）：** $\{ 1,2,3,4,5,6\}$.
 
-**可能取值（range）：** $\{ 1,2,3,4,5,6\}$.
+##### Example 2：
 
-**Example 2：** 是否是偶数.
+是否是偶数.
 
-**Sample space：** $\Omega = \{ 1,2,3,4,5,6\}$.
+- **Sample space：** $\Omega = \{ 1,2,3,4,5,6\}$.
 
-Defining a random variable $Y$：
+**Defining a random variable $Y$：**
 
 $$
 Y(\omega)=\begin{cases}1,&\omega\in\{2,4,6\},\\0,&\omega\in\{1,3,5\}.\end{cases}
 $$
 
-**可能取值（range）：** $\{ 0,1\}$.
+- **可能取值（range）：** $\{ 0,1\}$.
 
 同一个随机实验，可以定义无数个随机变量，因为可根据问题设计不同的可测函数。
 
@@ -232,9 +232,11 @@ $$
 
 **核心问题：** 如果随机变量给每个结果一个数，那么某个数出现的概率是多少？也就是$P(X = 1)$。
 
-**Probability and Probability Distribution**
+##### Probability and Probability Distribution
 
-**Example：** 比如对于掷骰子，随机变量是$X(\omega) = \omega$，问$P(X = 5)$。如果骰子公平，那么$P(X = 5) = \frac{1}{6}$. 而distribution就是把所有值的概率列出来
+##### Example：
+
+比如对于掷骰子，随机变量是$X(\omega) = \omega$，问$P(X = 5)$。如果骰子公平，那么$P(X = 5) = \frac{1}{6}$. 而distribution就是把所有值的概率列出来
 
 $$
 \begin{aligned}
@@ -249,9 +251,11 @@ $$
 
 这些概率给出了离散分布；$p_X(x)$ 表示把每个可能取值 $x$ 映射到 $P(X=x)$ 的概率质量函数。
 
-**Discrete Random Variable and Probability Mass Function**
+##### Discrete Random Variable and Probability Mass Function
 
-**Example：** 对于掷骰子，随机变量是$X(\omega) = \omega$，问$P(X = 5)$。如果骰子公平，那么$P(X = 5) = \frac{1}{6}$。
+##### Example：
+
+对于掷骰子，随机变量是$X(\omega) = \omega$，问$P(X = 5)$。如果骰子公平，那么$P(X = 5) = \frac{1}{6}$。
 
 **Probability Mass Function：** $p_{X}(x) = P(X = x)$. 也就是给我一个 x，我告诉你 X 等于 x 的概率是多少. 比如
 
@@ -262,17 +266,18 @@ p_{X}(2) & = \frac{1}{6}
 \end{aligned}
 $$
 
-**Continuous Random Variable and Probability Density Function**
+##### Continuous Random Variable and Probability Density Function
 
-**Example：** 对于身高，假设 $X$ 是取值于 $(1.5,2.0)$ 的绝对连续随机变量。区间中有无数个数，本身并不足以推出分布连续；这里明确假设它具有概率密度。 如果问你$P(X = 1.73) = ?$，答案是$P(X = 1.73) = 0$. 因为在连续区间里，单个点太"细"了，概率必须分布在整个区间上。
+##### Example：
+
+对于身高，假设 $X$ 是取值于 $(1.5,2.0)$ 的绝对连续随机变量。区间中有无数个数，本身并不足以推出分布连续；这里明确假设它具有概率密度。 如果问你$P(X = 1.73) = ?$，答案是$P(X = 1.73) = 0$. 因为在连续区间里，单个点太"细"了，概率必须分布在整个区间上。
 
 **Probability Density Function：** 对于具有概率密度的连续变量，$P(X=x)$ 可以写，但每个单点的概率都是 0；要描述分布并计算区间概率，使用概率密度函数 $f_X(x)$。密度值本身不是单点概率，也可能大于 1。
 
 对于不同分布我们有不同的Density Function，比如
 
-**Uniform：** $f(x)=1/(b-a)$（$a<x<b$），区间外为 0，且 $a<b$。
-
-**Normal：** $f(x)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp\!\left[-\frac{(x-\mu)^2}{2\sigma^2}\right]$，其中 $\sigma>0$。
+- **Uniform：** $f(x)=1/(b-a)$（$a<x<b$），区间外为 0，且 $a<b$。
+- **Normal：** $f(x)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp\!\left[-\frac{(x-\mu)^2}{2\sigma^2}\right]$，其中 $\sigma>0$。
 
 我们通过Density Function积分计算区间概率
 
@@ -282,7 +287,7 @@ $$
 
 #### 2.2.2 Expectation/Expected Value
 
-**Discrete Random Variable**
+##### Discrete Random Variable
 
 **定义：**
 
@@ -292,7 +297,9 @@ $$
 
 期望是所有可能取值与其概率乘积的总和。离散取值可以是有限或可数无限个；讨论有限期望时要求 $E|X|<\infty$。
 
-**Example：** 对于掷骰子，随机变量是$X(\omega) = \omega$，$P(X = x) = \frac{1}{6}$。
+##### Example：
+
+对于掷骰子，随机变量是$X(\omega) = \omega$，$P(X = x) = \frac{1}{6}$。
 
 $$
 \begin{array}{r}
@@ -303,7 +310,7 @@ E(X) = 1 \cdot \frac{1}{6} + 2 \cdot \frac{1}{6} + 3 \cdot \frac{1}{6} + 4 \cdot
 \end{array}
 $$
 
-**Continuous Random Variable**
+##### Continuous Random Variable
 
 **定义：**
 
@@ -313,7 +320,9 @@ $$
 
 期望 = 每个 x × 它的"密度"，然后在整个区间上积分。
 
-**Example：** 设 $X \sim Uniform(1.5,2.0)$, $f_{X}(x) = \frac{1}{b - a} = 2$。
+##### Example：
+
+设 $X \sim Uniform(1.5,2.0)$, $f_{X}(x) = \frac{1}{b - a} = 2$。
 
 $$
 \begin{array}{r}
@@ -336,11 +345,15 @@ $$
 
 **Independence的定义：** 如果知道 X 的值，对 Y 的概率没有任何影响， 那么 X 和 Y 独立。
 
-**Example 1：** X = 掷骰子，Y = 抛硬币. 你掷到 3，硬币正反的概率仍然 1/2. 所以独立。
+##### Example 1：
 
-**Example 2：** X = 抽到的颜色，Y = 抽到的花色. 如果只抽一张牌，知道颜色是红色，那一定是红心或方块，这会改变花色的概率. 所以它们不独立。
+X = 掷骰子，Y = 抛硬币. 你掷到 3，硬币正反的概率仍然 1/2. 所以独立。
 
-离散随机变量的独立性
+##### Example 2：
+
+X = 抽到的颜色，Y = 抽到的花色. 如果只抽一张牌，知道颜色是红色，那一定是红心或方块，这会改变花色的概率. 所以它们不独立。
+
+##### 离散随机变量的独立性
 
 $$
 P(X = x,Y = y) = P(X = x)P(Y = y)
@@ -348,7 +361,7 @@ $$
 
 独立性要求上述等式对所有可能的 $x,y$ 成立。一般定义为：对任意可测集合 $A,B$，$P(X\in A,Y\in B)=P(X\in A)P(Y\in B)$。连续变量不能仅用单点概率检验独立性。
 
-Conditional Probability的定义
+##### Conditional Probability的定义
 
 Conditional Probability is a measure of the probability of an event occurring, given that another event is already known to have occurred.
 
@@ -364,7 +377,7 @@ $$
 P(Diamond \mid Red) = \frac{13}{26} = \frac{1}{2}
 $$
 
-**Independence and Conditional Probability**
+##### Independence and Conditional Probability
 
 如果 X 和 Y 独立
 
@@ -374,7 +387,7 @@ $$
 
 意思是条件没有改变概率。
 
-**三者关系**
+##### 三者关系
 
 条件概率定义
 
@@ -398,7 +411,7 @@ $$
 
 **Conditional Expectation定义：** $E\left( Y \middle| X \right)$，也就是在已知X 的情况下，Y 的平均值。
 
-离散条件下的计算
+##### 离散条件下的计算
 
 **公式：** 如果我们设置一个固定值$X = x$，则
 
@@ -408,7 +421,9 @@ $$
 
 把所有可能的Y值，乘以在X = x条件下的概率，再加起来。
 
-**Example 1：** 参加补习班的比例:
+##### Example 1：
+
+参加补习班的比例:
 
 $$
 \begin{aligned}
@@ -417,7 +432,7 @@ P(X = 1) & = 0.6
 \end{aligned}
 $$
 
-考试成绩分布:
+**考试成绩分布:**
 
 | 补习班状态 | 成绩 $Y$ | 条件概率 |
 | --- | --- | --- |
@@ -438,7 +453,9 @@ $$
 2. 保留随机的 $X$，$E(Y\mid X)=g(X)$ 是一个随机变量。
 3. 把 $x$ 当作自变量时，$g(x)=E(Y\mid X=x)$ 是一个函数。
 
-**Example 2：** 设定和Example 1一样，我们计算$E(Y|X)$
+##### Example 2：
+
+设定和Example 1一样，我们计算$E(Y|X)$
 
 由于$E\left( Y \middle| X = 0 \right) = 70$和$E\left( Y \middle| X = 1 \right) = 90$，可得
 
@@ -458,7 +475,7 @@ $$
 
 这是一个随机变量。
 
-离散状态下的Total Expectation $E(Y)$
+##### 离散状态下的Total Expectation $E(Y)$
 
 **定义：**
 
@@ -468,13 +485,15 @@ $$
 
 总期望 = 各组条件期望 × 该组概率，再加起来。
 
-迭代期望定律Law of Iterated Expectations
+##### 迭代期望定律Law of Iterated Expectations
 
 $$
 E(Y) = E(E(Y|X))
 $$
 
-**Example 3：** 设定和Example 1一样，我们计算$E(Y)$
+##### Example 3：
+
+设定和Example 1一样，我们计算$E(Y)$
 
 $$
 E(Y) = E\left( Y \middle| X = 0 \right) \times P(X = 0) + E\left( Y \middle| X = 1 \right) \times P(X = 1) = 70 \times 0.4 + 90 \times 0.6 = 82
@@ -526,7 +545,7 @@ $$
 E\lbrack 总成绩\rbrack = 0.4E\lbrack X\rbrack + 0.6E\lbrack Y\rbrack = 76
 $$
 
-Proof of $E\lbrack aY + bZ\rbrack = aE\lbrack Y\rbrack + bE\lbrack Z\rbrack$
+##### Proof of $E\lbrack aY + bZ\rbrack = aE\lbrack Y\rbrack + bE\lbrack Z\rbrack$
 
 $$
 \begin{aligned}
@@ -584,13 +603,15 @@ $$
 
 **Variance是一个expectation：** 我们本质上是
 
-**先算每个值和均值的差：** $Y - E(Y)$；
+- **先算每个值和均值的差：** $Y - E(Y)$；
 
 - 再平方（避免正负抵消）；
 
 - 最后取期望（加权平均）。
 
-**Example：** 随机变量 $X$表示一次4面公平骰子的结果. 骰子可能的取值是$\left\{ 1,2,3,4 \right\}$，因为是公平的 $P(X = x) = \frac{1}{4}$。
+##### Example：
+
+随机变量 $X$表示一次4面公平骰子的结果. 骰子可能的取值是$\left\{ 1,2,3,4 \right\}$，因为是公平的 $P(X = x) = \frac{1}{4}$。
 
 **Writing the probability mass function：** 这是一个离散数据，因此我们可以写出PMF
 
@@ -654,13 +675,15 @@ $$
 Var(Y) = \mathbb{E}\lbrack(Y - \mathbb{E}(Y))^{2}\rbrack
 $$
 
-超额形式Excess Formulation
+##### 超额形式Excess Formulation
 
 $$
 Var(X) = E\lbrack X^{2}\rbrack - (E\lbrack X\rbrack)^{2}
 $$
 
-**Example for Application of Excess Formulation：** 随机变量 $X$表示一次4面公平骰子的结果. 骰子可能的取值是$\left\{ 1,2,3,4 \right\}$，因为是公平的 $P(X = x) = \frac{1}{4}$。
+##### Example for Application of Excess Formulation：
+
+随机变量 $X$表示一次4面公平骰子的结果. 骰子可能的取值是$\left\{ 1,2,3,4 \right\}$，因为是公平的 $P(X = x) = \frac{1}{4}$。
 
 **第 1 步：** 计算$E\lbrack X^{2}\rbrack$
 
@@ -692,7 +715,7 @@ Var(X) & = E\lbrack X^{2}\rbrack - (E\lbrack X\rbrack)^{2} \\
 \end{aligned}
 $$
 
-Proof of Excess Formulation
+##### Proof of Excess Formulation
 
 $$
 \begin{aligned}
@@ -706,7 +729,7 @@ $$
 
 先展开平方，再用期望的线性性并将常数 $EY$ 提出。
 
-两种写法的解释
+##### 两种写法的解释
 
 **扩散形式Spread Formulation：** 可以分为3步理解，分别是先找中心，看每个点距离中心多远，把距离平方并平均. 基本上就是在回答"一个典型的样本点，距离均值有多远"，这就是spread。
 
@@ -714,25 +737,23 @@ $$
 
 #### 2.4.3 Variance Properties
 
-**Basic Properties**
+##### Basic Properties
 
-**Non-negative：** $Var(Y) \geq 0$.
+- **Non-negative：** $Var(Y) \geq 0$.
+- **Variance of a constant：** $Var(a) = 0$.
 
-**Variance of a constant：** $Var(a) = 0$.
-
-- Linear Combination of Independent Random Variables
+##### Linear Combination of Independent Random Variables
 
 - If X and Y are two independent random variables, then
 
-$$
-Var(X + Y) = Var(X) + Var(Y)
-$$
+    $$
+    Var(X + Y) = Var(X) + Var(Y)
+    $$
 
 **理解：** 如果两个变量互不影响（独立），它们的"波动"可以直接相加. 比如X是今天的气温波动，Y是测量误差. 如果两者互不相关，总波动 = 各自波动之和。
 
-**Addition by a Constant：** $Var(X + a) = Var(X)$.
-
-**Multiplication by a Constant：** $\operatorname{Var}(aX)=a^2\operatorname{Var}(X)$. （因为方差本质是平方偏差）
+- **Addition by a Constant：** $Var(X + a) = Var(X)$.
+- **Multiplication by a Constant：** $\operatorname{Var}(aX)=a^2\operatorname{Var}(X)$. （因为方差本质是平方偏差）
 
 #### 2.4.4 随机变量线性组合的方差
 
@@ -748,7 +769,7 @@ $$
 
 我们发现如果不独立，方差多出来一项$2abCov(X,Y)$，这项就是"相互关系"的影响。
 
-Covariance的定义
+##### Covariance的定义
 
 $$
 Cov(X,Y) = E\lbrack(X - E(X))(Y - E(Y))\rbrack
@@ -768,17 +789,17 @@ $$
 
 **Cov(X,Y) < 0：** 负相关
 
-X 偏高时，Y 偏低
+- X 偏高时，Y 偏低
 
 **Cov(X,Y) = 0：** 不相关
 
-X 和 Y 没有线性相关；仍可能存在非线性依赖
+- X 和 Y 没有线性相关；仍可能存在非线性依赖
 
 **注意：** 独立 ⇒ 协方差为 0；但协方差为 0 ≠ 独立
 
 #### 2.4.5 Conditional Variance
 
-条件方差函数及其在某一点的值
+##### 条件方差函数及其在某一点的值
 
 $$
 Var(Y \mid X = x)
@@ -786,7 +807,7 @@ $$
 
 函数 $v(x)=\operatorname{Var}(Y\mid X=x)$ 描述各组的离散程度；固定 $x$ 后，$v(x)$ 是一个数。
 
-Conditional Variance（是一个随机变量）
+##### Conditional Variance（是一个随机变量）
 
 $$
 Var(Y \mid X) = E\left\lbrack \begin{array}{r}
@@ -796,7 +817,9 @@ $$
 
 这里 $\operatorname{Var}(Y\mid X)=v(X)$ 是随机变量；它可能随 $X$ 改变，也可能为常数。
 
-**Example：** 参加补习班的比例:
+##### Example：
+
+参加补习班的比例:
 
 $$
 \begin{array}{r}
@@ -805,7 +828,7 @@ P(X = 1) = 0.6
 \end{array}
 $$
 
-考试成绩分布:
+**考试成绩分布:**
 
 | 补习班状态 | 成绩 $Y$ | 条件概率 |
 | --- | --- | --- |
@@ -814,7 +837,7 @@ $$
 | $X=1$ | 80 | 0.5 |
 | $X=1$ | 100 | 0.5 |
 
-如何计算Conditional Variance $Var\left( Y \middle| X = 0 \right)$
+##### 如何计算Conditional Variance $Var\left( Y \middle| X = 0 \right)$
 
 **第 1 步：** 先算$E\left( Y \middle| X = 0 \right) = 0.5 \times 60 + 0.5 \times 80 = 70$
 
@@ -828,7 +851,7 @@ Var\left( Y\mid X = 0 \right) = E\left\lbrack \begin{array}{r}
 \end{array} \right\rbrack
 $$
 
-平方偏差:
+**平方偏差:**
 
 $$
 (60 - 70)^{2} = 100
@@ -838,13 +861,13 @@ $$
 (80 - 70)^{2} = 100
 $$
 
-期望:
+**期望:**
 
 $$
 = 0.5(100) + 0.5(100) = 100
 $$
 
-如何计算Conditional Variance $Var\left( Y \middle| X = 1 \right)$
+##### 如何计算Conditional Variance $Var\left( Y \middle| X = 1 \right)$
 
 **第 1 步：** 先算$E\left( Y \middle| X = 1 \right) = 0.5 \times 80 + 0.5 \times 100 = 90$
 
@@ -858,7 +881,7 @@ Var\left( Y\mid X = 1 \right) = E\left\lbrack \begin{array}{r}
 \end{array} \right\rbrack
 $$
 
-平方偏差:
+**平方偏差:**
 
 $$
 (80 - 90)^{2} = 100
@@ -868,13 +891,13 @@ $$
 (100 - 90)^{2} = 100
 $$
 
-期望:
+**期望:**
 
 $$
 = 0.5(100) + 0.5(100) = 100
 $$
 
-**Law of Total Variance**
+##### Law of Total Variance
 
 $$
 Var\lbrack Y\rbrack = E\lbrack Var(Y \mid X)\rbrack + Var\lbrack E(Y \mid X)\rbrack
@@ -894,7 +917,9 @@ $$
 
 计算 $\operatorname{Var}[E(Y\mid X)]$ 时，先求各组条件均值 $E(Y\mid X=x)$，再以 $X$ 的分布加权求总体均值，最后计算这些条件均值的方差。
 
-**Example for Law of Total Variance：** 同上例
+##### Example for Law of Total Variance：
+
+同上例
 
 **第 1 步：** 我们已知
 
@@ -926,7 +951,7 @@ $$
 E(Y) = 0.4(70) + 0.6(90) = 28 + 54 = 82
 $$
 
-计算$Var\lbrack E(Y \mid X)\rbrack$
+**计算$Var\lbrack E(Y \mid X)\rbrack$**
 
 $$
 \begin{array}{r}
@@ -936,28 +961,28 @@ Var(E\lbrack Y \mid X\rbrack) = 0.4(70 - 82)^{2} + 0.6(90 - 82)^{2} \\
 \end{array}
 $$
 
-Law of total variance -- Proof
+##### Law of total variance -- Proof
 
 1. 将条件方差与条件均值的方差都写成二阶矩形式。
 
-$$
-\begin{aligned}
-&E\{\operatorname{Var}(Y\mid X)\}+\operatorname{Var}\{E(Y\mid X)\}\\
-&=E[E(Y^2\mid X)-\{E(Y\mid X)\}^2]+E[\{E(Y\mid X)\}^2]-\{E[E(Y\mid X)]\}^2.
-\end{aligned}
-$$
+    $$
+    \begin{aligned}
+    &E\{\operatorname{Var}(Y\mid X)\}+\operatorname{Var}\{E(Y\mid X)\}\\
+    &=E[E(Y^2\mid X)-\{E(Y\mid X)\}^2]+E[\{E(Y\mid X)\}^2]-\{E[E(Y\mid X)]\}^2.
+    \end{aligned}
+    $$
 
 2. 分配外层期望。
 
-$$
-=E[E(Y^2\mid X)]-E[\{E(Y\mid X)\}^2]+E[\{E(Y\mid X)\}^2]-\{E[E(Y\mid X)]\}^2.
-$$
+    $$
+    =E[E(Y^2\mid X)]-E[\{E(Y\mid X)\}^2]+E[\{E(Y\mid X)\}^2]-\{E[E(Y\mid X)]\}^2.
+    $$
 
 3. 中间两项抵消；对剩余项使用迭代期望。
 
-$$
-=E(Y^2)-\{E(Y)\}^2=\operatorname{Var}(Y).
-$$
+    $$
+    =E(Y^2)-\{E(Y)\}^2=\operatorname{Var}(Y).
+    $$
 
 本例总体方差还可由全方差公式得到 $100+96=196$。
 
@@ -1007,7 +1032,7 @@ $$
 
 **Random Sampling with Replacement（我们本节课使用的）：** 从Population随机抽一个单位，抽完后放回总体，再抽下一个。
 
-为什么我们要with Replacement
+##### 为什么我们要with Replacement
 
 **如果是without Replacement：**
 
@@ -1023,11 +1048,10 @@ $$
 
 - 本章采用独立同分布（i.i.d.）抽样作为基础模型；统计理论也可以处理无放回抽样、时间序列、聚类样本等依赖数据。
 
-- 数学上真正发生了什么？
+**数学上真正发生了什么？**
 
-**with replacement：** $P\left( X_{2} = x\mid X_{1} = y \right) = P\left( X_{2} = x \right)$
-
-**without replacement：** $P(X_{2} = x \mid X_{1} = y) \neq P(X_{2} = x)$
+- **with replacement：** $P\left( X_{2} = x\mid X_{1} = y \right) = P\left( X_{2} = x \right)$
+- **without replacement：** $P(X_{2} = x \mid X_{1} = y) \neq P(X_{2} = x)$
 
 **最重要的是：** 等概率有放回抽样保证各次抽取独立且具有相同总体分布。等概率无放回抽样中，每次抽取的边际分布也仍是总体分布，但不同次抽取相互依赖。
 
@@ -1035,7 +1059,7 @@ $$
 X_{i}\ \sim\ F
 $$
 
-- 现实中我们真的放回吗？
+**现实中我们真的放回吗？**
 
 - 通常我们不真的放回，但如果总体远大于样本，without replacement 和 with replacement 几乎一样。
 
@@ -1055,7 +1079,7 @@ $$
 \widehat{\mu} = \frac{1}{n}\sum_{i = 1}^{n}Y_{i}
 $$
 
-Example: 我们想要估计吉娃娃的总体平均体重 $\mu$，于是我们用
+**Example: 我们想要估计吉娃娃的总体平均体重 $\mu$，于是我们用**
 
 $$
 \frac{1}{n}\sum_{i=1}^{n}Y_{i}
@@ -1127,7 +1151,7 @@ $$
 
 如果分布很宽，那么estimate很不稳定；如果很窄，estimate很稳定。
 
-Standard Error $SE\left( \overline{Y} \right)$: Sampling distribution 的标准差叫做 standard error。
+**Standard Error $SE\left( \overline{Y} \right)$:** Sampling distribution 的标准差叫做 standard error。
 
 $$
 SE\left( \overline{Y} \right) = \frac{\sigma}{\sqrt{n}}
@@ -1135,19 +1159,16 @@ $$
 
 #### 3.3.3 选民调查与覆盖概率
 
-问题背景
+##### 问题背景
 
 ![625 人二元调查数据与样本比例示例](stats_inference-assets/media/image7.png)
 
 *图 4：625 人二元调查数据与样本比例示例。*
 
-**Population大小：** $m \approx 7.23M$（Georgia 注册选民）；
-
-**Sample大小：** $n = 625$；
-
-每次电话随机选一个人；
-
-**记录是否投票：** $Y_{i} = 1$（会投），0（不会）；
+- **Population大小：** $m \approx 7.23M$（Georgia 注册选民）；
+- **Sample大小：** $n = 625$；
+- 每次电话随机选一个人；
+- **记录是否投票：** $Y_{i} = 1$（会投），0（不会）；
 
 - 假设所有人都接电话，都诚实回答，不改变想法；
 
@@ -1159,19 +1180,14 @@ $$
 
 *图 5：选民样本比例的重复抽样分布。*
 
-**横轴：** 不同民调员算出来的sample mean，比如0.68、0.71、0.70、0.69等等；
+- **横轴：** 不同民调员算出来的sample mean，比如0.68、0.71、0.70、0.69等等；
+- 纵轴表示频数、比例或密度，取决于作图设置；若是密度直方图，区间内概率对应柱子的面积，而非高度本身。
+- **中间的粗蓝线：** sampling distribution 的均值。
+- **绿色线：** population mean = 0.70。
+- **虚线：** ±1 Standard Error。
+- **点线：** ±2 Standard Error。
 
-纵轴表示频数、比例或密度，取决于作图设置；若是密度直方图，区间内概率对应柱子的面积，而非高度本身。
-
-**中间的粗蓝线：** sampling distribution 的均值。
-
-**绿色线：** population mean = 0.70。
-
-**虚线：** ±1 Standard Error。
-
-**点线：** ±2 Standard Error。
-
-**Coverage Probability**
+##### Coverage Probability
 
 **Coverage Probability：** 如果我给每个sample mean画一个区间，比如±0.01， 那么有多少比例的区间会"包含"population mean呢？
 
@@ -1229,7 +1245,7 @@ $$
 
 - 结果几乎一样
 
-**Estimating Sampling Distributions**
+##### Estimating Sampling Distributions
 
 **真实抽样分布：**反复从总体抽样并计算估计量，可得到估计量的标准误，以及目标覆盖率（如 95%）所需的区间宽度。
 
@@ -1253,13 +1269,15 @@ $$
 
 - 我们重复10,000次
 
-$$
-{\overline{Y}}_{1}^{*},\ {\overline{Y}}_{2}^{*},\ldots,\ {\overline{Y}}_{10000}^{*}
-$$
+    $$
+    {\overline{Y}}_{1}^{*},\ {\overline{Y}}_{2}^{*},\ldots,\ {\overline{Y}}_{10000}^{*}
+    $$
 
 **第 3 步：** 这10,000个数的分布就是bootstrap estimated sampling distribution。
 
-**Example：** 假设我们抽到3个人
+##### Example：
+
+假设我们抽到3个人
 
 $$
 Y = \{ 2,4,6\}
@@ -1305,7 +1323,7 @@ $$
 
 这六个值只是 Bootstrap 分布的少量模拟值；实际计算通常需要更多重复。用未四舍五入的均值 $(8/3,16/3,4,4,14/3,2)$ 计算，Bootstrap 均值为 $34/9\approx3.778$。
 
-估计Standard Error
+##### 估计Standard Error
 
 $$
 {\overline{Y}}_{boot} = \frac{2.67 + 5.33 + 4 + 4 + 4.67 + 2}{6} \approx 3.78
@@ -1315,7 +1333,7 @@ $$
 \widehat{SE}_{\mathrm{boot}}=\sqrt{\frac{1}{B-1}\sum_{b=1}^{B}(\overline Y_b^*-\overline Y_{\mathrm{boot}})^2}\approx1.2413\quad(B=6)
 $$
 
-计算正态近似区间（演示运算）
+##### 计算正态近似区间（演示运算）
 
 $$
 4\pm1.96\times1.2413\approx(1.567,\ 6.433)
@@ -1359,7 +1377,9 @@ $$
 I_{0.95}=\left[\overline Y-1.96\frac{s}{\sqrt n},\ \overline Y+1.96\frac{s}{\sqrt n}\right]
 $$
 
-**Example：** 假设我们抽到3个人
+##### Example：
+
+假设我们抽到3个人
 
 $$
 Y = \{ 2,4,6\}
@@ -1371,19 +1391,19 @@ $$
 \overline{Y} = \frac{2 + 4 + 6}{3} = 4
 $$
 
-算sample standard deviation
+**算sample standard deviation**
 
 $$
 s^{2} = \frac{(2 - 4)^{2} + (4 - 4)^{2} + (6 - 4)^{2}}{3 - 1} = 4,\ s = 2
 $$
 
-Plug-in 标准误
+**Plug-in 标准误**
 
 $$
 \widehat{SE} = \frac{s}{\sqrt{n}} = \frac{2}{\sqrt{3}} \approx 1.155
 $$
 
-Plug-in 正态近似区间（小样本演示）
+**Plug-in 正态近似区间（小样本演示）**
 
 $$
 \overline{Y} \pm 1.96\frac{s}{\sqrt{n}} = (1.737,\ 6.263)
@@ -1467,9 +1487,9 @@ $$
 
 - 因此
 
-$$
-P\left( Y_{01} = 1 \right) = \frac{N_{1}}{m};\ P\left( Y_{01} = 0 \right) = \frac{N_{0}}{m}
-$$
+    $$
+    P\left( Y_{01} = 1 \right) = \frac{N_{1}}{m};\ P\left( Y_{01} = 0 \right) = \frac{N_{0}}{m}
+    $$
 
 **期望：**
 
@@ -1499,9 +1519,9 @@ $$
 
 - $E\lbrack Y_{i} \mid X_{i} = 1\rbrack$：在"female"的人里，体重平均是多少？
 
-$$
-E\left\lbrack Y_{i}\mid X_{i} = 1 \right\rbrack = \mu(1)
-$$
+    $$
+    E\left\lbrack Y_{i}\mid X_{i} = 1 \right\rbrack = \mu(1)
+    $$
 
 $E\left\lbrack Y_{i}\mid X_{i} = 0 \right\rbrack$：在"male"的人里，体重平均是多少？
 
@@ -1527,7 +1547,7 @@ $$
 
 **如果你总去篮球队抽：** $\widehat{\theta}$ 几乎每次都偏高，抽样分布整体右移。
 
-Bias
+##### Bias
 
 **定义：** $bias\left( \widehat{\theta} \right)=E\left\lbrack \widehat{\theta} \right\rbrack - \theta$
 
@@ -1543,15 +1563,14 @@ Bias
 
 - 这就是 unbiased estimator。
 
-- Unbiased为什么重要
+##### Unbiased为什么重要
 
 - 你做置信区间时，通常是围绕 $\widehat{\theta}$来做的；如果 $\widehat{\theta}$的中心都偏了，那区间就算"校准得很好"，也可能覆盖不了真值。
 
 - 比如假设真值 $\theta = 0$。
 
-**无偏情况：** $\widehat{\theta}$ 分布中心在 0。你做一个"95%区间"大概率能盖住 0。
-
-**有偏情况：** $\widehat{\theta}$ 分布中心在 3，你做的"95%区间"会围绕 3。绝大多数区间都在 \[2,4\] 一带。0 根本不在里面。
+- **无偏情况：** $\widehat{\theta}$ 分布中心在 0。你做一个"95%区间"大概率能盖住 0。
+- **有偏情况：** $\widehat{\theta}$ 分布中心在 3，你做的"95%区间"会围绕 3。绝大多数区间都在 \[2,4\] 一带。0 根本不在里面。
 
 #### 5.2.2 The Sample Mean（样本均值是无偏的）
 
@@ -1613,9 +1632,9 @@ $$
 
 - 为什么可以把期望作用到每一项？因为条件期望也有线性性
 
-$$
-\mathbb{E}\left\lbrack \sum_i\, Z_{i} \mid W \right\rbrack = \sum_i\,\mathbb{E}\lbrack Z_{i} \mid W\rbrack.
-$$
+    $$
+    \mathbb{E}\left\lbrack \sum_i\, Z_{i} \mid W \right\rbrack = \sum_i\,\mathbb{E}\lbrack Z_{i} \mid W\rbrack.
+    $$
 
 **第 3 步：** 把 $X_{i}$当常数提出去（因为$\mathbb{E}\lbrack X_{i}Y_{i} \mid X_{1},\ldots,X_{n}\rbrack = X_{i}\mathbb{E}\lbrack Y_{i} \mid X_{1},\ldots,X_{n}\rbrack$）
 
@@ -1709,7 +1728,7 @@ $$
 
 等概率抽取的是总体单位 $j$。若多个单位具有相同 $y$ 值，该数值的概率为对应单位数除以 $m$，不能把每个不同数值的概率都写成 $1/m$。
 
-- Binary特例
+##### Binary特例
 
 - If $Y \in \{ 0,1\}$ and $p=P(Y = 1),\ P(Y = 0) = 1 - p$
 
@@ -1738,7 +1757,7 @@ $$
 
 #### 5.3.4 Variance of the sub-sample mean
 
-重要结论：在 $N_1>0$ 的条件下，
+**重要结论：在 $N_1>0$ 的条件下，**
 
 $$
 \operatorname{Var}\{\widehat\mu(1)\mid N_1>0\}=\sigma^2(1)E\!\left(\frac1{N_1}\,\middle|\,N_1>0\right).
@@ -1746,30 +1765,30 @@ $$
 
 这是“子总体方差乘以组内样本量倒数的期望”。一般来说，$E(1/N_1\mid N_1>0)$ 不等于 $1/E(N_1\mid N_1>0)$。
 
-**例题：白棋子上的数值**
+##### 例题：白棋子上的数值
 
 1. 抽样 $n=100$ 次，每次抽到白棋子的概率为 $p=0.3$；定义
 
-$$
-X_i=\begin{cases}1,&\text{white},\\0,&\text{black},\end{cases}
-\qquad N_1=\sum_{i=1}^{100}X_i.
-$$
+    $$
+    X_i=\begin{cases}1,&\text{white},\\0,&\text{black},\end{cases}
+    \qquad N_1=\sum_{i=1}^{100}X_i.
+    $$
 
 2. 白棋子上数值 $Y$ 的子总体均值为 $\mu(1)=50$，方差为 $\sigma^2(1)=100$。
 3. 在独立抽样下 $N_1\sim\operatorname{Binomial}(100,0.3)$，且 $E(N_1)=np=30$。
 4. 精确条件方差为
 
-$$
-100\sum_{k=1}^{100}\frac1k\frac{\binom{100}{k}0.3^k0.7^{100-k}}{1-0.7^{100}}\approx3.4159.
-$$
+    $$
+    100\sum_{k=1}^{100}\frac1k\frac{\binom{100}{k}0.3^k0.7^{100-k}}{1-0.7^{100}}\approx3.4159.
+    $$
 
 5. 当 $N_1$ 集中于 $np$ 附近且空组概率可忽略时，可用大样本近似
 
-$$
-\operatorname{Var}\{\widehat\mu(1)\}\approx\frac{\sigma^2(1)}{np}=\frac{100}{100\times0.3}=\frac{100}{30}\approx3.3333.
-$$
+    $$
+    \operatorname{Var}\{\widehat\mu(1)\}\approx\frac{\sigma^2(1)}{np}=\frac{100}{100\times0.3}=\frac{100}{30}\approx3.3333.
+    $$
 
-**证明：从全方差公式到倒数的期望**
+##### 证明：从全方差公式到倒数的期望
 
 以下所有运算都在 $N_1>0$ 上进行。记 $\mathbf X=(X_1,\ldots,X_n)$。
 
@@ -1913,9 +1932,9 @@ $$
 \widehat\mu(X\leq12) = \frac{N_{8}\widehat{\mu}(8) + N_{9}\widehat{\mu}(9) + \cdots + N_{12}\widehat{\mu}(12)}{N_{8} + N_{9} + \cdots + N_{12}}
 $$
 
-**Example 2：**
+##### Example 2：
 
-**Setting：** 现在3个education level
+- **Setting：** 现在3个education level
 
 - X = 10（3个人，收入是20，30，40）
 
@@ -1923,7 +1942,7 @@ $$
 
 - X = 16（3个人，收入是60，80，100）
 
-- 我们先算Fine Group Means
+**我们先算Fine Group Means**
 
 $$
 \widehat{\mu}(10) = \frac{20 + 30 + 40}{3} = 30
@@ -1973,13 +1992,12 @@ $$
 
 **如何weight：** 这是我们的选择
 
-Weight = 该 transition 的人数÷所有 relevant 人数
+**Weight = 该 transition 的人数÷所有 relevant 人数**
 
-**Weight by those who stayed（继续上学的人）：** 用较高教育年限组的人数给相邻组均值差加权。
+- **Weight by those who stayed（继续上学的人）：** 用较高教育年限组的人数给相邻组均值差加权。
+- **Weight by those who dropped（辍学的人）：** 用较低教育年限组的人数给相邻组均值差加权。
 
-**Weight by those who dropped（辍学的人）：** 用较低教育年限组的人数给相邻组均值差加权。
-
-Average over people（stayers）
+##### Average over people（stayers）
 
 **Weights**
 
@@ -2001,7 +2019,7 @@ $$
 
 含义: 以较高教育组的人数加权的平均收入差为多少？横截面数据中的这些人数不是同一队列的实际升学记录，描述性差异也不自动等于教育的因果收益。
 
-Average over people（leavers）
+##### Average over people（leavers）
 
 **Weights**
 
@@ -2033,27 +2051,27 @@ $$
 
 #### 6.2.3 Linear Combinations
 
-- 还是刚才的例子
+**还是刚才的例子**
 
-- Average over years
+**Average over years**
 
 $$
 \frac{1}{2}\sum_{x = 9}^{10}\,\left\{ \widehat{\mu}(x) - \widehat{\mu}(x - 1) \right\} = \frac{1}{2}\left\lbrack \left( \widehat{\mu}(9) - \widehat{\mu}(8) \right) + \left( \widehat{\mu}(10) - \widehat{\mu}(9) \right) \right\rbrack = \frac{1}{2}\left\lbrack \widehat{\mu}(10) - \widehat{\mu}(8) \right\rbrack = \sum_x\,\alpha(x)\widehat{\mu}(x)
 $$
 
-其中
+**其中**
 
 $$
 \alpha(x) = \begin{cases}\frac{1}{2}\, & x = 10 \\ - \frac{1}{2}\, & x = 8 \\ 0\, & otherwise\end{cases}
 $$
 
-Average over people（stayers）
+##### Average over people（stayers）
 
 $$
 \sum_{x = 9}^{10}\, P_{x}\left\{ \widehat{\mu}(x) - \widehat{\mu}(x - 1) \right\} = P_{9}\left( \widehat{\mu}(9) - \widehat{\mu}(8) \right) + P_{10}\left( \widehat{\mu}(10) - \widehat{\mu}(9) \right) = - P_{9}\widehat{\mu}(8) + \left( P_{9} - P_{10} \right)\widehat{\mu}(9) + P_{10}\widehat{\mu}(10) = \sum_x\,\widehat{\alpha}(x)\widehat{\mu}(x)
 $$
 
-其中
+**其中**
 
 $$
 \widehat{\alpha}(x) = \begin{cases}P_{10}\, & x = 10 \\ P_{9} - P_{10}\, & x = 9 \\ - P_{9}\, & x = 8 \\ 0\, & otherwise\end{cases}
@@ -2085,7 +2103,7 @@ $$
 E\left\lbrack \sum_x\widehat{\alpha}(x)\widehat{\mu}(x) \right\rbrack = \sum_xE\left\lbrack \widehat{\alpha}(x) \right\rbrack \cdot \mu(x)\quad\left( \text{random coefficients} \right)
 $$
 
-- Fixed coefficients
+##### Fixed coefficients
 
 - 我们有固定的权重，比如over years → $\frac{1}{2}, - \frac{1}{2}$，或者slope。这都是我们定好的。
 
@@ -2103,9 +2121,9 @@ $$
 E\lbrack\widehat{\mu}(x)\rbrack = \mu(x)
 $$
 
-- Random coefficients
+##### Random coefficients
 
-- 权重本身是从 sample 里算出来的，比如
+**权重本身是从 sample 里算出来的，比如**
 
 $$
 P_{9} = \frac{50}{60},P_{10} = \frac{10}{60}
@@ -2133,9 +2151,8 @@ $$
 
 其中 $\sigma^{2}(x) = V\lbrack Y_{i} \mid X_{i} = x\rbrack$，即每个 sub-group 内部的 variance。
 
-**第一项：** 因为 sub-sample means $\widehat{\mu}(x)$本身是随机的（每次抽样不同），这一项捕捉的是这个随机性带来的误差。
-
-**第二项：** 因为 coefficients $\widehat{\alpha}(x)$也可能是随机的（依赖数据），这一项捕捉的是 coefficients 自身的随机性。
+- **第一项：** 因为 sub-sample means $\widehat{\mu}(x)$本身是随机的（每次抽样不同），这一项捕捉的是这个随机性带来的误差。
+- **第二项：** 因为 coefficients $\widehat{\alpha}(x)$也可能是随机的（依赖数据），这一项捕捉的是 coefficients 自身的随机性。
 
 #### 6.4.2 Example 1: Fixed coefficients（可以忽略第二项）
 
@@ -2480,21 +2497,21 @@ $$
 
 1. 处理组均值：
 
-$$
-\widehat\mu(1)=\frac{700+800}{2}=750.
-$$
+    $$
+    \widehat\mu(1)=\frac{700+800}{2}=750.
+    $$
 
 2. 对照组均值：
 
-$$
-\widehat\mu(0)=\frac{0+200+0+400}{4}=150.
-$$
+    $$
+    \widehat\mu(0)=\frac{0+200+0+400}{4}=150.
+    $$
 
 3. 均值差估计：
 
-$$
-\widehat\tau=750-150=600.
-$$
+    $$
+    \widehat\tau=750-150=600.
+    $$
 
 这一次估计 600 与六人真实平均效应约 166.67 相差较大，反映了随机分配导致的抽样波动；若六人还来自总体抽样，则还存在抽样变动。无偏是对所有可能分配或抽样取平均后的性质，不要求某一次估计恰好等于真值。样本增大通常能提高精度，但不能保证每一次估计都更接近真值。
 
@@ -2613,9 +2630,9 @@ $$
 2. 对照组为第 3、5、6 人，结果分别为 0、0、400。
 3. 条件效应估计为
 
-$$
-\widehat\tau(0)=\frac{700}{1}-\frac{0+0+400}{3}=700-\frac{400}{3}=\frac{1700}{3}\approx566.67.
-$$
+    $$
+    \widehat\tau(0)=\frac{700}{1}-\frac{0+0+400}{3}=700-\frac{400}{3}=\frac{1700}{3}\approx566.67.
+    $$
 
 老年组 $X=1$ 包含第 2、4 人：
 
@@ -2623,9 +2640,9 @@ $$
 2. 对照组为第 4 人，结果为 200。
 3. 条件效应估计为
 
-$$
-\widehat\tau(1)=\frac{800}{1}-\frac{200}{1}=600.
-$$
+    $$
+    \widehat\tau(1)=\frac{800}{1}-\frac{200}{1}=600.
+    $$
 
 完整潜在结果表中的真实组平均效应分别为年轻组 $200/4=50$、老年组 $800/2=400$。因此 566.67 和 600 都只是本次分配得到的估计，不能当作已知的真实条件效应。
 
@@ -2669,19 +2686,19 @@ $$
 1. 老年组 $N_1=2$，年轻组 $N_0=4$，总人数 $n=6$。
 2. 标准化权重：
 
-$$
-\widehat P_1=\frac26=\frac13,\qquad\widehat P_0=\frac46=\frac23.
-$$
+    $$
+    \widehat P_1=\frac26=\frac13,\qquad\widehat P_0=\frac46=\frac23.
+    $$
 
 3. 代入各组估计：
 
-$$
-\begin{aligned}
-\widehat\tau_{\mathrm{std}}
-&=\frac13\times600+\frac23\times\frac{1700}{3}\\
-&=200+\frac{3400}{9}=\frac{5200}{9}\approx577.78.
-\end{aligned}
-$$
+    $$
+    \begin{aligned}
+    \widehat\tau_{\mathrm{std}}
+    &=\frac13\times600+\frac23\times\frac{1700}{3}\\
+    &=200+\frac{3400}{9}=\frac{5200}{9}\approx577.78.
+    \end{aligned}
+    $$
 
 这是按六人的年龄分布汇总得到的整体效应估计；在相应推广条件下，可估计同样年龄分布目标人群中“全部接受处理”和“全部不接受处理”的平均结果之差。577.78 仍然是有随机波动的估计，并非真实 ATE；这个构造样本的真实平均效应仍是 166.67。
 
@@ -2731,9 +2748,12 @@ $$
 
 #### 7.10.2 继续使用的统计工具
 
-****组均值差**：** 随机分配下估计 ATE，条件随机化下先在层内估计 CATE。
-****Bootstrap**：** 近似估计量的抽样分布，但重抽单位和分层方式须匹配抽样及实验设计。固定各层或各处理组样本量时，不能不加区分地用普通逐行 Bootstrap 代替设计分析。
-****95% 置信区间**：** 在合适假设或大样本近似下构造，并保持重复抽样覆盖率解释。
+- **组均值差：** 随机分配下估计 ATE，条件随机化下先在层内估计 CATE。
+
+- **Bootstrap：** 近似估计量的抽样分布，但重抽单位和分层方式须匹配抽样及实验设计。固定各层或各处理组样本量时，不能不加区分地用普通逐行 Bootstrap 代替设计分析。
+
+- **95% 置信区间：** 在合适假设或大样本近似下构造，并保持重复抽样覆盖率解释。
+
 
 完全随机分配、固定实验样本时，令 $S_w^2$ 为样本中潜在结果 $Y_i(w)$ 的有限样本方差（分母 $n-1$），$S_\tau^2$ 为个体效应的有限样本方差，则
 
@@ -2813,25 +2833,25 @@ $$
 
 **我们选择the sum of squared residuals的原因：**
 
-**Good reason：** squaring penalizes large residuals more than absolute value
+- **Good reason：** squaring penalizes large residuals more than absolute value
 
-$$
-error = 1 \rightarrow 1^{2} = 1;error = 10 \rightarrow 10^{2} = 100
-$$
+    $$
+    error = 1 \rightarrow 1^{2} = 1;error = 10 \rightarrow 10^{2} = 100
+    $$
 
 大误差被放大了。
 
-**Bad reason：** function is easier to do calculus with
+- **Bad reason：** function is easier to do calculus with
 
 #### 8.1.3 预测与关系描述的两种视角
 
-"Modern" = Prediction perspective（预测视角）
+##### "Modern" = Prediction perspective（预测视角）
 
 **我们关心：** 我能不能预测得准？
 
 - 我们关注在accuracy（误差小不小）
 
-- "Traditional" = Relationship perspective（关系/解释视角）
+##### "Traditional" = Relationship perspective（关系/解释视角）
 
 **我们关心：** X 和 Y 到底是什么关系？
 
@@ -2909,9 +2929,8 @@ $$
 
 - Coarsening只是partial solution
 
-**问题 1：** 还是会有 empty groups。我们没有本质解决该问题。
-
-**问题2：** 你改变了 estimand。你本来想问12年教育的人收入是多少，结果变成了没有本科的人平均收入是多少。
+- **问题 1：** 还是会有 empty groups。我们没有本质解决该问题。
+- **问题2：** 你改变了 estimand。你本来想问12年教育的人收入是多少，结果变成了没有本科的人平均收入是多少。
 
 **Curse of dimensionality：** 维度一增加，数据会变得极度稀疏。如果每个变量有 $k$个取值，维度是 $d$，我们有 $k^{d}$ 个组，但样本量 $n$ 通常是固定的。
 
@@ -2923,7 +2942,7 @@ $$
 
 #### 8.2.3 Subsample averages本质上是一个特殊的regression
 
-**实例一：** A Least Squares Interpretation of Means
+##### 实例一： A Least Squares Interpretation of Means
 
 ![以众数、中位数与均值概括收入的比较](stats_inference-assets/media/image23.png)
 
@@ -2985,7 +3004,7 @@ $$
 
 这就是mean。我们算出来了mean = least squares solution。
 
-**实例二：** Two Locations: Adding a Covariate
+##### 实例二： Two Locations: Adding a Covariate
 
 - 之前我只有 Y（income），我们找一个summary来总结Y。现在我多了一个变量 X（education），我希望预测：找一个函数 $m(x)$，输入 x（教育年限），输出一个预测收入。
 
@@ -3021,7 +3040,7 @@ $$
 
 - x = 12 → 一条线（mean of group 12）
 
-**实例二的推广：** 如果我们推广到many locations。
+##### 实例二的推广： 如果我们推广到many locations。
 
 ![多个教育年限组各自的均值拟合](stats_inference-assets/media/image25.png)
 
@@ -3041,19 +3060,19 @@ subsample mean = least squares 的解（在"每个 x 一个值"的函数空间�
 
 - 他们的目标函数完全一致，如果我们都用the sum of squared residuals
 
-$$
-\widehat m = \underset{m\in\mathcal M_{\mathrm{group}}}{\operatorname{argmin}}{\sum_{i = 1}^{n}\left( Y_{i} - m\left( X_{i} \right) \right)^{2}}
-$$
+    $$
+    \widehat m = \underset{m\in\mathcal M_{\mathrm{group}}}{\operatorname{argmin}}{\sum_{i = 1}^{n}\left( Y_{i} - m\left( X_{i} \right) \right)^{2}}
+    $$
 
-$$
-\widehat{m} = \underset{m\in\mathcal{M}}{\operatorname{argmin}}{\sum_{i = 1}^{n}\left( Y_{i} - m\left( X_{i} \right) \right)^{2}}
-$$
+    $$
+    \widehat{m} = \underset{m\in\mathcal{M}}{\operatorname{argmin}}{\sum_{i = 1}^{n}\left( Y_{i} - m\left( X_{i} \right) \right)^{2}}
+    $$
 
 - 对样本中出现过的离散 $x$，若函数在各个 $x$ 上可自由取值，最小二乘解就是按组取平均；对未出现的 $x$，损失函数没有提供约束，预测值并未被唯一确定。这也就是我们之前提到的问题：Sensitivity和空组。
 
 - least squares + 完全自由函数 = 分组平均（subsample mean）
 
-**总结一下：**
+##### 总结一下：
 
 **情况一：** 我们只有一组数据 $Y_{1},Y_{2},...,Y_{n}$。我们要找一个数 $m$，来代表这些数据。
 
@@ -3087,9 +3106,8 @@ $$
 
 问题也和之前一样。
 
-**问题 1：** 还是会有 empty groups。我们没有本质解决该问题。
-
-**问题2：** 你改变了 estimand。你本来想问12年教育的人收入是多少，结果变成了没有本科的人平均收入是多少。
+- **问题 1：** 还是会有 empty groups。我们没有本质解决该问题。
+- **问题2：** 你改变了 estimand。你本来想问12年教育的人收入是多少，结果变成了没有本科的人平均收入是多少。
 
 <a id="section-8-3"></a>
 
@@ -3097,7 +3115,7 @@ $$
 
 #### 8.3.1 跨组共享信息
 
-Why does this solve the sensitivity and empty group problems?
+**Why does this solve the sensitivity and empty group problems?**
 
 Depending on the set of functions we consider, $\mathcal{M}$, we can use data from other groups to make our predictions.
 
@@ -3107,7 +3125,7 @@ Depending on the set of functions we consider, $\mathcal{M}$, we can use data fr
 
 **定义：** Regression, generally, is choosing a function of covariates $X_{i}$ to predict outcomes $Y_{i}$. We choose from a set of functions $\mathcal{M}$ that we call a regression model.
 
-Least Squares Linear Model
+##### Least Squares Linear Model
 
 $$
 \widehat{m} = \underset{m\in\mathcal{M}}{\operatorname{argmin}}{\sum_{i = 1}^{n}\left( Y_{i} - m\left( X_{i} \right) \right)^{2}}
@@ -3129,21 +3147,21 @@ $$
 \widehat m=\operatorname*{argmin}_{m\in\mathcal M}\sum_{i=1}^{n}\{Y_i-m(X_i,W_i)\}^2
 $$
 
-我们有3个常见模型
+**我们有3个常见模型**
 
-Parallel lines
+##### Parallel lines
 
 $$
 m(x,w) = a(w) + bx
 $$
 
-Not necessarily parallel lines
+##### Not necessarily parallel lines
 
 $$
 m(x,w) = a(w) + b(w)x
 $$
 
-Additive model
+##### Additive model
 
 $$
 m(x,w) = m_{0}(w) + m_{1}(x)
@@ -3195,7 +3213,7 @@ $$
 
 #### 9.1.4 简单线性回归
 
-Simple Linear Regression（Linear Regression的单变量版本/最简单版本）
+**Simple Linear Regression（Linear Regression的单变量版本/最简单版本）**
 
 **定义：** $Y_i=a+bX_i+\varepsilon_i$。这里 $Y_i$ 是第 $i$ 个观测的结果，$X_i$ 是其唯一的预测变量值。简单线性回归用一条直线描述两个变量之间的关系，例如：
 
@@ -3291,7 +3309,7 @@ $$
 
 **有两种常见的方法：** Gradient Descent（梯度下降）、Newton-Raphson（牛顿法），这些都是optimization algorithms。
 
-通用逻辑
+##### 通用逻辑
 
 **第 1 步：** 选择一个starting point（在这儿就是a和b）。
 
@@ -3313,7 +3331,7 @@ $$
 \min_{a,b}\,\sum(Y_{i} - (a + bX_{i}))^{2}
 $$
 
-例题：
+**例题：**
 
 ```r
 weight <- c(2, 4, 6, 8, 10, 12, 14, 16)
@@ -3349,13 +3367,10 @@ confint(model)
 
 **Coefficients：** 我们有2个coefficients，分别是intercept和slope。在这里，summary()会给出intercept和slope的
 
-**Estimate：** the estimated values of the coefficients。
-
-**Std. Error：** Standard error of each estimate。
-
-**t value：** the t-statistic for each predictor。
-
-**`Pr(>|t|)`：** the p-value, which tests whether each coefficient is significantly different from zero。
+- **Estimate：** the estimated values of the coefficients。
+- **Std. Error：** Standard error of each estimate。
+- **t value：** the t-statistic for each predictor。
+- **`Pr(>|t|)`：** the p-value, which tests whether each coefficient is significantly different from zero。
 
 **Example**
 
@@ -3365,9 +3380,8 @@ confint(model)
 
 **Estimate：** 系数估计描述模型中的条件关联：保持其他预测变量不变时，某个预测变量的变化对应多大拟合均值差异。没有因果识别条件时，不能直接称为因果效应。
 
-**Intercept Estimate：** $a = 19$。当 $X = 0$的时候，模型预测 $Y = 19$，在这里就是当weight为0，height为19。这个值有时候现实里不一定特别有意义，因为狗不可能体重 0，但它在数学上定义了这条线从哪里开始。
-
-**Slope Estimate：** $b = 0.08333$。体重每增加 1 个单位，拟合的身高增加约 0.0833 个单位；这描述线性关联。
+- **Intercept Estimate：** $a = 19$。当 $X = 0$的时候，模型预测 $Y = 19$，在这里就是当weight为0，height为19。这个值有时候现实里不一定特别有意义，因为狗不可能体重 0，但它在数学上定义了这条线从哪里开始。
+- **Slope Estimate：** $b = 0.08333$。体重每增加 1 个单位，拟合的身高增加约 0.0833 个单位；这描述线性关联。
 
 这些都是估计值，真正的population里，也许有一个"真实斜率"，我们不知道，我们用sample估计它。
 
@@ -3375,9 +3389,8 @@ confint(model)
 
 **Std. Error：** The standard error shows the "uncertainty" of the estimate.
 
-**Std. Error 小：** 说明这个 estimate 比较稳定
-
-**Std. Error 大：** 说明这个 estimate 很不稳定
+- **Std. Error 小：** 说明这个 estimate 比较稳定
+- **Std. Error 大：** 说明这个 estimate 很不稳定
 
 **Confidence Interval：** 由抽样程序构造的参数区间，覆盖率描述重复抽样性质。不能把观测到的区间解释为固定系数的概率分布。
 
@@ -3387,7 +3400,7 @@ confint(model)
 
 斜率的 95% 置信区间约为 $[-0.164,0.331]$，包含 0；按对应的双侧检验，在 5% 水平上不能拒绝零斜率假设。
 
-为什么 confidence interval 和 Std. Error 有关？
+**为什么 confidence interval 和 Std. Error 有关？**
 
 $$
 CI = \widehat{\beta} \pm t^{*} \cdot SE(\widehat{\beta})
@@ -3407,7 +3420,7 @@ $$
 
 - 备择假设 $H_1$：被检验的系数不为 0
 
-- t value
+**t value**
 
 $$
 t = \frac{\widehat{b} - 0}{SE\left( \widehat{b} \right)}
@@ -3431,35 +3444,32 @@ $$
 
 本质上就是，在 t 分布下，随机变量 $T$取到比你现在这个 t 更"极端"的概率。也就是说，假设你算出来$t = 2$，那p-value就是$T\geq2$ 或 $T\leq-2$ 的概率。
 
-p-value的决策规则
+##### p-value的决策规则
 
-**小于预先选定的显著性水平（如 0.05）：** 拒绝 $H_0$，有证据支持该系数非零
+- **小于预先选定的显著性水平（如 0.05）：** 拒绝 $H_0$，有证据支持该系数非零
 
 - 大: 不拒绝 → 没证据
 
-- p-value和 confidence interval 的关系
+##### p-value和 confidence interval 的关系
 
-**采用同一模型、标准误和双侧检验时：** 95% CI 不包含 0 ⇔ $p<0.05$（边界按检验约定处理）
-
-相应的 95% CI 包含 0 时，在 5% 水平上不显著；这不证明系数恰好等于 0
+- **采用同一模型、标准误和双侧检验时：** 95% CI 不包含 0 ⇔ $p<0.05$（边界按检验约定处理）
+- 相应的 95% CI 包含 0 时，在 5% 水平上不显著；这不证明系数恰好等于 0
 
 ##### 9.2.6.5 标准误的模型假设
 
 **Assumptions：** summary() 里给出来的 standard error，不是"无条件永远正确"的。
 
-**Independence：** 经典模型通常要求不同观测的真实误差条件不相关；条件独立是更强的充分条件。拟合后的残差通常彼此相关，不能把它们当成独立误差。 这意味着第一个点偏高一点，不应该自动导致第二个点也偏高一点。
+- **Independence：** 经典模型通常要求不同观测的真实误差条件不相关；条件独立是更强的充分条件。拟合后的残差通常彼此相关，不能把它们当成独立误差。 这意味着第一个点偏高一点，不应该自动导致第二个点也偏高一点。
+- **Homoscedasticity：** 给定设计矩阵后，真实误差的条件方差恒为 $\sigma^2$；残差图用于间接检查这一结构。
 
-**Homoscedasticity：** 给定设计矩阵后，真实误差的条件方差恒为 $\sigma^2$；残差图用于间接检查这一结构。
-
-如果 assumptions 不满足，会怎样？
+**如果 assumptions 不满足，会怎样？**
 
 如果 independence 和 homoscedasticity 不成立，那么 summary() 默认给你的 standard errors 可能不能直接信。这是 standard error 出问题，不一定是 coefficient estimate 本身立刻没了。也就是你算出来的slope还是0.0833，但是uncertainty 计算可能不对。
 
-新工具
+##### 新工具
 
-**`sandwich` 包可以计算稳健协方差：** 异方差采用 HC 标准误，聚类或序列相关分别需要相应的聚类稳健或 HAC 方法。方法须匹配依赖结构；它们通常不改变系数估计。
-
-**使用与数据结构匹配的 Bootstrap：** 独立观测可成对重抽，聚类数据按簇重抽，时间序列可使用分块方法。普通逐行重抽不能自动修复相关性。
+- **`sandwich` 包可以计算稳健协方差：** 异方差采用 HC 标准误，聚类或序列相关分别需要相应的聚类稳健或 HAC 方法。方法须匹配依赖结构；它们通常不改变系数估计。
+- **使用与数据结构匹配的 Bootstrap：** 独立观测可成对重抽，聚类数据按簇重抽，时间序列可使用分块方法。普通逐行重抽不能自动修复相关性。
 
 ##### 9.2.6.6 拟合指标
 
@@ -3471,9 +3481,9 @@ p-value的决策规则
 
 - $R^{2}$: 模型解释了多少比例的 variation
 
-$$
-R^{2} = 1 - \frac{SS_{res}}{SS_{tot}} = 1 - \frac{\sum_{i = 1}^{n}\,(Y_{i} - m(X_{i}))^{2}}{\sum_{i = 1}^{n}\,(Y_{i} - \overline{Y})^{2}}
-$$
+    $$
+    R^{2} = 1 - \frac{SS_{res}}{SS_{tot}} = 1 - \frac{\sum_{i = 1}^{n}\,(Y_{i} - m(X_{i}))^{2}}{\sum_{i = 1}^{n}\,(Y_{i} - \overline{Y})^{2}}
+    $$
 
 本质上就是
 
@@ -3641,7 +3651,7 @@ $$
 
 其中:
 
-$\mathbf{Y}$ is the n-long vector of responses 结果向量
+**$\mathbf{Y}$ is the n-long vector of responses 结果向量**
 
 $$
 Y = \left\lbrack \begin{array}{r}
@@ -3652,7 +3662,7 @@ Y_{n}
 \end{array} \right\rbrack
 $$
 
-$\mathbf{b}$ is the p+1-long vector of coefficients 参数向量
+**$\mathbf{b}$ is the p+1-long vector of coefficients 参数向量**
 
 $$
 b = \left\lbrack \begin{array}{r}
@@ -3664,7 +3674,7 @@ b_{p}
 \end{array} \right\rbrack
 $$
 
-$\mathbf{X}$ is the $n \times (p + 1)$ matrix of predictors values 设计矩阵
+**$\mathbf{X}$ is the $n \times (p + 1)$ matrix of predictors values 设计矩阵**
 
 $$
 X = \begin{bmatrix}
@@ -3677,7 +3687,9 @@ $$
 
 每一行是一个样本，每一列是一个变量，第一列全是1。
 
-**Example：** 还是之前的Predictor with More Than Two Levels的例子，总体模型为 $Y=a+b_Bx_B+b_Cx_C+\varepsilon$，其中baseline是A。假设数据如下
+##### Example：
+
+还是之前的Predictor with More Than Two Levels的例子，总体模型为 $Y=a+b_Bx_B+b_Cx_C+\varepsilon$，其中baseline是A。假设数据如下
 
 | i   | dept | avg_score |
 | --- | --- | --- |
@@ -3813,7 +3825,7 @@ $$
 
 **备择假设：** $H_{1}:\text{至少有一个 }\beta_{j} \neq 0$
 
-- 和t-test对比
+##### 和t-test对比
 
 - 单个系数的 t 检验考察该系数是否为 0；多水平分类变量的整体检验可能涉及多个系数。
 
@@ -3829,13 +3841,10 @@ F-statistic 越大，表明相对于残差波动，加入预测变量带来的�
 
 **设定：** 有一份数据有如下变量
 
-**avg_score：** 员工表现评分，这是输出变量/response/outcome/Y
-
-**yrs_service：** 工作年限，这是一个数值型 predictor
-
-**gender：** 性别，这是一个categorical predictor
-
-**dept：** 部门，这里这个 example 暂时先不重点用它
+- **avg_score：** 员工表现评分，这是输出变量/response/outcome/Y
+- **yrs_service：** 工作年限，这是一个数值型 predictor
+- **gender：** 性别，这是一个categorical predictor
+- **dept：** 部门，这里这个 example 暂时先不重点用它
 
 问题是我们能不能用 yrs_service 和 gender 来预测 avg_score，也就是
 
@@ -3843,7 +3852,7 @@ $$
 avg\_ score \approx f(yrs\_ service,\ gender)
 $$
 
-看图建立直觉
+##### 看图建立直觉
 
 ![工作年限、评分与性别的散点](stats_inference-assets/media/image35.png)
 
@@ -3851,9 +3860,8 @@ $$
 
 这幅图里横轴是yrs_service，纵轴是avg_score，不同颜色代表不同gender。我们发现
 
-**工作年限和评分之间好像有正关系：** 大体上看，yrs_service 越大，avg_score 往往越高。
-
-**男女两组整体位置不同：** 图上 Female 的点整体比 Male 的点更高一点。
+- **工作年限和评分之间好像有正关系：** 大体上看，yrs_service 越大，avg_score 往往越高。
+- **男女两组整体位置不同：** 图上 Female 的点整体比 Male 的点更高一点。
 
 **建立普通的multiple linear regression：** 根据我们的公式
 
@@ -3903,7 +3911,7 @@ $$
 
 **我们的发现：** 这两条线本质上是平行的，因为slope都是$b_{yrs}$，只是intercept不一样，一个是 $a$ ，一个是 $a + b_{gender}$ 。
 
-**R的结果**
+##### R的结果
 
 - Intercept ≈ 7.035 = a
 
@@ -3913,13 +3921,13 @@ $$
 
 所以我们得到
 
-Female
+**Female**
 
 $$
 \widehat{avg\ score} = 7.035 + 0.09695 \cdot yrs\ service
 $$
 
-Male
+**Male**
 
 $$
 \widehat{avg\ score} = (7.035 - 2.59099) + 0.09695 \cdot yrs\ service = 4.444 + 0.09695 \cdot yrs\ service
@@ -3931,7 +3939,7 @@ $$
 
 可以很清晰的看出，这是平行的2条线。
 
-**统计结论**
+##### 统计结论
 
 **Coefficients**
 
@@ -3959,7 +3967,7 @@ $$
 
 #### 9.4.5 加入交互项
 
-**建立有interaction的multiple linear regression：**
+##### 建立有interaction的multiple linear regression：
 
 $$
 avg\ score = a + b_{yrs} \bullet yrs\ service + b_{gender} \bullet x_{gender} + b_{gender:yrs} \bullet x_{gender} \bullet yrs\ service + \varepsilon
@@ -3987,7 +3995,7 @@ $$
 
 这个时候不再是平行线，两条线既可以截距不同，也可以斜率不同。
 
-**R的结果**
+##### R的结果
 
 - Intercept ≈ 7.32289 = a
 
@@ -3995,17 +4003,17 @@ $$
 
 - genderMale ≈ -3.20289 = $b_{gender}$
 
-**yrs_service：** genderMale ≈ 0.06534 = $b_{gender:yrs}$
+- **yrs_service：** genderMale ≈ 0.06534 = $b_{gender:yrs}$
 
 所以我们得到
 
-Female
+**Female**
 
 $$
 \widehat{avg\ score} = 7.32289 + 0.07216 \cdot yrs\ service
 $$
 
-Male
+**Male**
 
 $$
 \widehat{avg\ score} = (7.32289 - 3.20289) + (0.07216 + 0.06534) \cdot yrs\ service = 4.12 + 0.1375 \cdot yrs\ service
@@ -4046,11 +4054,10 @@ $$
 
 Bias depends on the estimand，也就是说你有没有 bias，取决于你"想估计什么"。
 
-**Example**
+##### Example
 
-**问题1：** sample mean → population mean 是unbiased。
-
-**问题2：** 样本均值用于估计总体中位数时，一般不无偏；若总体均值与中位数相等，也可能无偏。
+- **问题1：** sample mean → population mean 是unbiased。
+- **问题2：** 样本均值用于估计总体中位数时，一般不无偏；若总体均值与中位数相等，也可能无偏。
 
 <a id="section-10-2"></a>
 
@@ -4060,17 +4067,14 @@ Bias depends on the estimand，也就是说你有没有 bias，取决于你"想�
 
 Least Squares Regression的两个作用: prediction vs relationship
 
-**Relationship时的estimand：** population linear regression slope（换句话说，就是总体里的 least squares line）。
-
-**Prediction时的estimand：** $\mu(x) = E\lbrack Y|X = x\rbrack$，也就是在 $X = x$的人群中，$Y$ 的真实平均值。比如教育年限 = 8 的人，平均收入是多少。
+- **Relationship时的estimand：** population linear regression slope（换句话说，就是总体里的 least squares line）。
+- **Prediction时的estimand：** $\mu(x) = E\lbrack Y|X = x\rbrack$，也就是在 $X = x$的人群中，$Y$ 的真实平均值。比如教育年限 = 8 的人，平均收入是多少。
 
 #### 10.2.2 真实均值、总体投影与样本拟合
 
-**真实世界：** $\mu(x) = E\lbrack Y|X = x\rbrack$，这是真实关系
-
-**模型世界：** 最好的线population least squares line，这是我们要估计的
-
-**数据世界：** sample least squares line，这是我们算出来的
+- **真实世界：** $\mu(x) = E\lbrack Y|X = x\rbrack$，这是真实关系
+- **模型世界：** 最好的线population least squares line，这是我们要估计的
+- **数据世界：** sample least squares line，这是我们算出来的
 
 #### 10.2.3 偏差分解
 
@@ -4122,7 +4126,7 @@ $$
 
 - $\beta$: population slope
 
-- Bias for the Relationship Version
+##### Bias for the Relationship Version
 
 **我们要证明：** $E(b) = \beta$
 
@@ -4140,7 +4144,7 @@ $$
 
 **含义：** 在给定 $X$的条件下，误差项 $\epsilon_{i}$的条件期望是 0。也就是说，当你把 $X$固定住以后，误差的平均值不能系统性偏正，也不能系统性偏负。
 
-$\epsilon_{i}$到底是什么
+**$\epsilon_{i}$到底是什么**
 
 $$
 \epsilon_{i} = Y_{i} - (\alpha + \beta X_{i})
@@ -4154,13 +4158,13 @@ $$
 
 - 当 $X$ 小的时候，误差不能总是偏小
 
-**证明全过程：** 我们想要证明
+##### 证明全过程： 我们想要证明
 
 $$
 E\left\lbrack \widehat{\mu}(8) \right\rbrack = \widetilde{\mu}(8)
 $$
 
-Step 1: 证明$E\lbrack b\rbrack = \beta$
+**Step 1: 证明$E\lbrack b\rbrack = \beta$**
 
 $$
 \begin{aligned}
@@ -4218,7 +4222,7 @@ $$
 
 该推导要求样本自变量有变异，并且相关期望存在。
 
-Step 2: 证明$E\lbrack a\rbrack = \alpha$
+**Step 2: 证明$E\lbrack a\rbrack = \alpha$**
 
 $$
 \begin{aligned}
@@ -4243,7 +4247,7 @@ $$
 E(a)=E\{E(a\mid\mathbf X)\}=E(\alpha)=\alpha.
 $$
 
-Step 3: 证明$E\lbrack b*8 + a\rbrack = \beta*8 + \alpha$
+**Step 3: 证明$E\lbrack b*8 + a\rbrack = \beta*8 + \alpha$**
 
 $$
 \begin{aligned}
@@ -4256,7 +4260,7 @@ $$
 
 #### 10.2.5 预测偏差与一致性
 
-可视化看到Biased Least Squares Estimator
+##### 可视化看到Biased Least Squares Estimator
 
 ![收入条件均值与线性拟合的差异](stats_inference-assets/media/image48.png)
 
@@ -4268,20 +4272,22 @@ $$
 
 **错误来源：** 若真实条件均值非线性，总体投影 $\widetilde\mu(8)$ 可能与 $\mu(8)$ 不同，这是模型近似误差；此时此前用于有限样本无偏性证明的零条件均值假设一般不成立，不能直接沿用该无偏性结论。最小二乘目标对每个观测赋予相同权重，因此数据密集区域对总损失的贡献较大，稀疏边缘可能拟合较差；这是一种可能出现的情形，并非所有数据都如此。
 
-**Consistency**
+##### Consistency
 
 - 无偏性描述期望是否等于目标；一致性描述估计量是否随着样本增大而集中到目标。二者不是优劣排序，也不相互蕴含。
 - 一致性的定义是对任意 $\epsilon>0$，
 
-$$
-P(|\widehat\theta_n-\theta|>\epsilon)\longrightarrow0,
-\qquad\widehat\theta_n\xrightarrow{p}\theta.
-$$
+    $$
+    P(|\widehat\theta_n-\theta|>\epsilon)\longrightarrow0,
+    \qquad\widehat\theta_n\xrightarrow{p}\theta.
+    $$
 
 - 偏差趋于 0 本身不足以保证一致性；还要控制随机波动。例如，偏差与方差都趋于 0 是均方一致、从而依概率一致的充分条件。
 - 若估计量收敛到与目标不同的固定数，则它对该目标不一致。
 
-**Example：** 比如对于$\widetilde{Y} = \frac{1}{n - 2}\sum_{i = 1}^{n}\, Y_{i}$
+##### Example：
+
+比如对于$\widetilde{Y} = \frac{1}{n - 2}\sum_{i = 1}^{n}\, Y_{i}$
 
 **它为什么有 bias：** 因为
 
@@ -4309,17 +4315,15 @@ $$
 
 当 $n>2$ 且 $\mu\ne0$ 时，该估计量有偏，且偏差趋于 0。进一步由大数定律，$\widetilde Y=\frac{n}{n-2}\overline Y\xrightarrow{p}\mu$；若方差有限，也可见 $\operatorname{Var}(\widetilde Y)=n\sigma^2/(n-2)^2\to0$。因此它是一致的。
 
-图示解释
+##### 图示解释
 
 ![三种估计量随样本量增加的偏差与离散程度](stats_inference-assets/media/image49.png)
 
 *图 30：三种估计量随样本量增加的偏差与离散程度。*
 
-**estimator a：** 无偏，而且 consistent
-
-**estimator b：** 偏差趋于 0，图中随机波动也随样本量收缩，因此图示估计量 consistent
-
-**estimator c：** 有 bias，而且 bias 不变，所以 inconsistent
+- **estimator a：** 无偏，而且 consistent
+- **estimator b：** 偏差趋于 0，图中随机波动也随样本量收缩，因此图示估计量 consistent
+- **estimator c：** 有 bias，而且 bias 不变，所以 inconsistent
 
 **但是：** 当你的 estimand 是 $\mu(x)$（真实条件均值），但你用的是linear regression时，若真实条件均值不属于线性模型，且在所讨论点有 $\widetilde\mu(x)\ne\mu(x)$，OLS 预测一般对 $\mu(x)$ 有模型偏差并不一致。若真实均值线性，或在特定点两者相同，则不能作此断言。
 
@@ -4363,9 +4367,8 @@ $$
 
 #### 11.1.3 误差相关性与同方差性
 
-**Independence：** 经典模型通常要求不同观测的真实误差条件不相关；条件独立是更强的充分条件。拟合后的残差通常彼此相关，不能把它们当成独立误差。 这意味着第一个点偏高一点，不应该自动导致第二个点也偏高一点。
-
-**Homoscedasticity：** 真实误差在不同 $X$ 位置的条件方差相同；残差的条件方差还受杠杆值影响。
+- **Independence：** 经典模型通常要求不同观测的真实误差条件不相关；条件独立是更强的充分条件。拟合后的残差通常彼此相关，不能把它们当成独立误差。 这意味着第一个点偏高一点，不应该自动导致第二个点也偏高一点。
+- **Homoscedasticity：** 真实误差在不同 $X$ 位置的条件方差相同；残差的条件方差还受杠杆值影响。
 
 #### 11.1.4 基本假设与正态性附加假设
 
@@ -4511,7 +4514,7 @@ $$
 
 #### 11.3.2 最小二乘估计量的期望
 
-Expected Value: $E\left\lbrack \widehat{b} \right\rbrack = b$
+**Expected Value: $E\left\lbrack \widehat{b} \right\rbrack = b$**
 
 **核心结论：** OLS estimator $\widehat{b}$ is unbiased, which means that $\widehat{b}$ is an unbiased estimator of b.
 
@@ -4554,7 +4557,7 @@ $$
 
 #### 11.3.3 最小二乘估计量的条件方差
 
-Variance: $\operatorname{Var}(\widehat{\mathbf b}\mid X)=\sigma^2(X^TX)^{-1}$
+**Variance:** $\operatorname{Var}(\widehat{\mathbf b}\mid X)=\sigma^2(X^TX)^{-1}$
 
 **核心结论：** $\operatorname{Var}(\widehat{\mathbf b}\mid X)=\sigma^2(X^TX)^{-1}$，这一步就是 Gauss--Markov 里 B = Best（方差最小）的基础。
 
@@ -4624,9 +4627,8 @@ Q-Q 图按相同分位水平比较两个分布。这里先将残差排序，再�
 
 *图 33：残差密度直方图与正态参考曲线。*
 
-**残差直方图：**把残差分入数值区间，显示各区间中的观测数量或密度，以观察分布的整体形状。
-
-**正态参考密度曲线：**使用当前残差的样本均值和样本标准差，画出相应正态分布的理论密度。
+- **残差直方图：**把残差分入数值区间，显示各区间中的观测数量或密度，以观察分布的整体形状。
+- **正态参考密度曲线：**使用当前残差的样本均值和样本标准差，画出相应正态分布的理论密度。
 
 曲线的绘制分为三步：
 
@@ -4695,17 +4697,16 @@ $$
 
 #### 11.4.4 异常值、杠杆值与影响点
 
-**Outlier：** 相对于误差尺度具有较大绝对残差的点；通常查看标准化或学生化残差。
+- **Outlier：** 相对于误差尺度具有较大绝对残差的点；通常查看标准化或学生化残差。
 
-$$
-|e_i|=|Y_i-\widehat Y_i|\text{ is large relative to the residual scale}
-$$
+    $$
+    |e_i|=|Y_i-\widehat Y_i|\text{ is large relative to the residual scale}
+    $$
 
 本质上就是模型预测和真实值差很多。
 
-**Leverage point：** $x_{i}$ 距离均值 $\overline{x}$ 很远。也就是在横轴上很极端。不一定影响回归线。
-
-**Influential point：** 删掉这个点，回归线会明显改变，对模型有影响。
+- **Leverage point：** $x_{i}$ 距离均值 $\overline{x}$ 很远。也就是在横轴上很极端。不一定影响回归线。
+- **Influential point：** 删掉这个点，回归线会明显改变，对模型有影响。
 
 简单线性回归含截距时，杠杆值为
 

@@ -91,17 +91,15 @@ $$
 
 #### Systems of Linear Equations
 
-核心形式
+**核心形式**
 
 $$
 Ax = b
 $$
 
-$A$ 是 $m \times n$ 矩阵；
-
-$x$ 是 $n \times 1$ 矩阵；
-
-$b$ 是 $m \times 1$ 矩阵。
+- $A$ 是 $m \times n$ 矩阵；
+- $x$ 是 $n \times 1$ 矩阵；
+- $b$ 是 $m \times 1$ 矩阵。
 
 这说明维度dimension必须匹配
 
@@ -123,25 +121,25 @@ $$
 
 #### Row Operations
 
-三种EROs
+**三种EROs**
 
-缩放一行
+- 缩放一行
 
-$$
-R_{i} \leftarrow cR_{i},\ c \neq 0
-$$
+    $$
+    R_{i} \leftarrow cR_{i},\ c \neq 0
+    $$
 
-行加法
+- 行加法
 
-$$
-R_i\leftarrow R_i+cR_j,\qquad i\neq j
-$$
+    $$
+    R_i\leftarrow R_i+cR_j,\qquad i\neq j
+    $$
 
-交换两行
+- 交换两行
 
-$$
-R_{i} \leftrightarrow R_{j}
-$$
+    $$
+    R_{i} \leftrightarrow R_{j}
+    $$
 
 Pivoting：通过EROs把若干列变成单位向量。比如，我们考虑矩阵
 
@@ -152,7 +150,7 @@ A = \begin{bmatrix}
 \end{bmatrix}
 $$
 
-#### Step 1：对第一列进行pivoting
+##### Step 1：对第一列进行pivoting
 
 选一个非0元素，$a_{11} = 2$，这是pivot element。
 
@@ -174,7 +172,7 @@ $$
 \end{bmatrix}
 $$
 
-#### Step 2：继续 pivot 第二列，我们得到
+##### Step 2：继续 pivot 第二列，我们得到
 
 $$
 \begin{bmatrix}
@@ -189,21 +187,22 @@ $$
 
 ### 0.3 $\mathbb R^m$ 与标准基向量
 
-$\mathbf{R}^{\mathbf{m}}$ **与 Unit Vector**
+#### $\mathbf{R}^{\mathbf{m}}$ 与 Unit Vector
 
-$\mathbb{R}^{m}$的定义
+##### $\mathbb{R}^{m}$的定义
 
 $$
 \mathbb{R}^{m} = \{(c_{1},\ldots,c_{m}):c_{i} \in \mathbb{R}\}
 $$
 
-$m$ 维实向量空间。
-
-每个元素是长度为 $m$ 的列向量。
+- $m$ 维实向量空间。
+- 每个元素是长度为 $m$ 的列向量。
 
 比如：$(1,2,3) \in \mathbb{R}^{3}$。
 
-Unit Vector：在 $\mathbb{R}^{m}$ 中，
+##### Unit Vector：
+
+在 $\mathbb{R}^{m}$ 中，
 
 $$
 e_{1},\ e_{2},\ldots,e_{m}
@@ -229,7 +228,9 @@ e_{1} = \left\lbrack \begin{array}{r}
 \end{array} \right\rbrack
 $$
 
-为什么Unit Vector很重要：因为它们构成standard basis，并且任何向量都可以写成linear combination的形式。
+##### 为什么Unit Vector很重要：
+
+因为它们构成standard basis，并且任何向量都可以写成linear combination的形式。
 
 $$
 x = x_{1}e_{1} + x_{2}e_{2} + \cdots + x_{m}e_{m}
@@ -243,15 +244,12 @@ $$
 
 #### Reduced Echelon Form (RREF)
 
-RREF的要求
+**RREF的要求**
 
-每个非零行的 leading entry（第一个非零元素）是 1。
-
-每个主元所在列其他元素为 0。
-
-主元从上到下向右移动（像楼梯）。
-
-允许全零行；所有全零行必须排列在非零行下方。
+- 每个非零行的 leading entry（第一个非零元素）是 1。
+- 每个主元所在列其他元素为 0。
+- 主元从上到下向右移动（像楼梯）。
+- 允许全零行；所有全零行必须排列在非零行下方。
 
 <a id="lecture-1"></a>
 
@@ -265,17 +263,14 @@ RREF的要求
 
 故事情节：农场主每天要喂牛群，必须满足最低营养需求
 
-营养 A：至少 60 units
-
-营养 B：至少 84 units
-
-营养 C：至少 72 units
+- 营养 A：至少 60 units
+- 营养 B：至少 84 units
+- 营养 C：至少 72 units
 
 可以买两种饲料：
 
-$F_{1}$：每磅含 $A = 3,B = 7,C = 3$，价格 10 cents/磅
-
-$F_{2}$：每磅含 $A = 2,B = 2,C = 6$，价格 4 cents/磅
+- $F_{1}$：每磅含 $A = 3,B = 7,C = 3$，价格 10 cents/磅
+- $F_{2}$：每磅含 $A = 2,B = 2,C = 6$，价格 4 cents/磅
 
 决策：每天买多少磅各饲料，使得营养达标且总成本最小。
 
@@ -316,13 +311,10 @@ Constraints的定义：Constraints是对Decision Variables施加的限制条件�
 
 在本题中，我们本质上就是需要考虑营养需求
 
-A的需求：$3x_{1} + 2x_{2} \geq 60$；
-
-B的需求：$7x_{1} + 2x_{2} \geq 84$；
-
-C的需求：$3x_{1} + 6x_{2} \geq 72$；
-
-Non-negativity constraints：$x_{1} \geq 0,\ x_{2} \geq 0$。
+- A的需求：$3x_{1} + 2x_{2} \geq 60$；
+- B的需求：$7x_{1} + 2x_{2} \geq 84$；
+- C的需求：$3x_{1} + 6x_{2} \geq 72$；
+- Non-negativity constraints：$x_{1} \geq 0,\ x_{2} \geq 0$。
 
 完整的LPP：在本题设定下，完整的LPP就是
 
@@ -345,13 +337,13 @@ $$
 
 #### Feasible Region and Solving the LPP
 
-Feasible Region
+##### Feasible Region
 
 定义：所有满足约束的点 $(x_{1},\ x_{2})$ 构成集合，叫 feasible region。而由于 $x_{1},\ x_{2} \geq 0$，因此 feasible region 位于第一象限及其坐标轴上。
 
-如何在图里画出和找到Feasible Region
+#### 如何在图里画出和找到Feasible Region
 
-#### Step 1: 把每个“≥”约束画成一条边界线
+##### Step 1: 把每个“≥”约束画成一条边界线
 
 先把Constraints写成等式
 
@@ -373,7 +365,7 @@ L_{3}: & x_{2} = - \frac{1}{2}x_{1} + 12
 \end{aligned}
 $$
 
-#### Step 2: “≥”到底是线的哪一侧？
+##### Step 2: “≥”到底是线的哪一侧？
 
 逐条代入测试点 $(0,0)$：三个左侧均为 $0$，小于对应右端，因此本题每个可行半平面都位于原点的另一侧。由于三条约束中的 $x_2$ 系数均为正，解出 $x_2$ 后，满足“≥”的一侧就是对应直线的上方及直线本身。一般约束也应通过测试点或解不等式判断可行侧。
 
@@ -381,13 +373,13 @@ $$
 
 ![饲料问题的可行域与顶点](lin_opt-assets/media/image1.png)
 
-Feasible Region的Vertices
+#### Feasible Region的Vertices
 
 线性规划的几何核心：本题这样的可行多面体含有顶点，若目标有有限最优值，则至少有一个最优顶点。多重最优时，整条边或更高维的面都可能最优；一般情形也可能有最优射线。
 
 因此我们先计算几条线的交点
 
-交点1：
+##### 交点1：
 
 $$
 \left\{ \begin{aligned}
@@ -404,7 +396,7 @@ $$
 P_{1,2} = (6,21)
 $$
 
-交点2：
+##### 交点2：
 
 $$
 \left\{ \begin{aligned}
@@ -421,7 +413,7 @@ $$
 P_{1,3} = (18,3)
 $$
 
-交点3：
+##### 交点3：
 
 $$
 \left\{ \begin{array}{rlr}
@@ -438,13 +430,12 @@ $$
 
 所以 $(10,7)$ 是infeasible的。
 
-坐标轴上的顶点
+##### 坐标轴上的顶点
 
-在 $x_{1} = 0$上：三个约束给出 $x_{2} \geq 30,42,12$，所以最小可行点是 $(0,\ 42)$。
+- 在 $x_{1} = 0$上：三个约束给出 $x_{2} \geq 30,42,12$，所以最小可行点是 $(0,\ 42)$。
+- 在 $x_{2} = 0$ 上：三个约束给出 $x_{1} \geq 20,12,24$，所以最小可行点是 $(24,\ 0)$。
 
-在 $x_{2} = 0$ 上：三个约束给出 $x_{1} \geq 20,12,24$，所以最小可行点是 $(24,\ 0)$。
-
-我们的结论
+##### 我们的结论
 
 $$
 (0,42),(6,21),(18,3),(24,0)
@@ -454,7 +445,7 @@ $$
 
 ### 1.3 Iso-cost lines（等成本线）与最优解
 
-Iso-Cost lines：我们如何才能找到最优？
+#### Iso-Cost lines：我们如何才能找到最优？
 
 Iso-Cost lines：就是把Objective Function的目标值设置为常数 C，求出Iso-Cost lines和对应的斜率。
 
@@ -468,38 +459,35 @@ $$
 m = - \frac{5}{2}
 $$
 
-如何找到最优？
+#### 如何找到最优？
 
 Iso-Cost lines往左下推就是在减少成本。
 
 最优会出现在边界/顶点：如果 $\left( x_{1},x_{2} \right)$在可行域内部，你总能沿着“让成本下降的方向”（大致向左下）走一小步，还保持可行，同时让 $10x_{1} + 4x_{2}$变小，所以内部点不可能最优。
 
-#### 方法1 — 等成本线画图法：我们可以画出等成本线的图。最后接触Feasible Region的那条Iso-Cost lines就是最优的Iso-Cost line
+#### 方法1 — 等成本线画图法：
+
+我们可以画出等成本线的图。最后接触Feasible Region的那条Iso-Cost lines就是最优的Iso-Cost line
 
 ![饲料问题的等成本线与最优点](lin_opt-assets/media/image2.png)
+
 你看图里几条等成本线：
 
-C=240 还能穿过可行域；
-
-C=192 还能穿过；
-
-C=168 还能穿过；
-
-C=144 仍然还能碰到可行域（恰好在 (6,21) 接触）；
-
-但 C=140 已经完全在可行域外面了（碰不到蓝色区域）。
+- C=240 还能穿过可行域；
+- C=192 还能穿过；
+- C=168 还能穿过；
+- C=144 仍然还能碰到可行域（恰好在 (6,21) 接触）；
+- 但 C=140 已经完全在可行域外面了（碰不到蓝色区域）。
 
 #### 方法2 — 等成本线法
 
 在本题的几何设定中，可行域是三条直线上方半平面的交，目标沿右上方向增大。对于下边界上的可行顶点，若目标等成本线斜率夹在两条实际相邻边的斜率之间，并且成本增加方向朝向可行域，则该点最优。斜率比较必须结合可行侧、相邻边和优化方向。
 
-如何计算
+##### 如何计算
 
-计算Iso-Cost lines斜率：$m = - \frac{5}{2}$。
-
-计算所有约束线斜率：$m_{1} = - \frac{3}{2},\ m_{2} = - \frac{7}{2},\ m_{3} = - \frac{1}{2}$。
-
-$x_{1}=0$ 是竖直边界，其斜率未定义；$x_{2}=0$ 是水平边界，斜率为 $0$。竖直方向应单独处理。
+- 计算Iso-Cost lines斜率：$m = - \frac{5}{2}$。
+- 计算所有约束线斜率：$m_{1} = - \frac{3}{2},\ m_{2} = - \frac{7}{2},\ m_{3} = - \frac{1}{2}$。
+- $x_{1}=0$ 是竖直边界，其斜率未定义；$x_{2}=0$ 是水平边界，斜率为 $0$。竖直方向应单独处理。
 
 按大小排序
 
@@ -509,7 +497,9 @@ $$
 
 在本题的可行下边界上找到夹住等成本线斜率的相邻两条边，再确认其交点满足全部约束，即可得到最优点。这里就是 $m_{1} = - \frac{3}{2}$ 和 $m_{2} = - \frac{7}{2}$ 的交点。
 
-#### 方法3 — 顶点枚举法（最终用这个验证）：把所有Vertices代入目标函数，最符合objective的那个点就是
+#### 方法3 — 顶点枚举法（最终用这个验证）：
+
+把所有Vertices代入目标函数，最符合objective的那个点就是
 
 在本题中，我们可得
 
@@ -574,13 +564,12 @@ $$
 
 你生产出来的“最终混合物”必须满足：
 
-至少 30% 是 G1；
+- 至少 30% 是 G1；
+- 至少 26% 是 G2。
 
-至少 26% 是 G2。
+#### 转化为数学语言/求解
 
-转化为数学语言/求解
-
-Decision Variables：设
+##### Decision Variables：设
 
 $$
 \left\{ \begin{array}{r}
@@ -589,15 +578,15 @@ x_2=\text{使用 }B_2\text{ 的磅数}
 \end{array} \right.
 $$
 
-Constraints：为了确定最低单位成本的配方，固定一个 $100$ 磅批次，即 $x_1+x_2=100$。这一归一化使总成本直接对应配方的单位成本；百分比约束本身也可写成线性不等式。若不规定正的总产量而直接最小化总成本，就无法表达生产固定数量产品的要求。
+##### Constraints：
 
-$60\%\left( x_{1} \right) + 20\%\left( x_{2} \right) \geq 30\%\left( x_{1} + x_{2} \right) = 30\  \rightarrow 3x_{1} + x_{2} \geq 150\ (L_{1})$
+为了确定最低单位成本的配方，固定一个 $100$ 磅批次，即 $x_1+x_2=100$。这一归一化使总成本直接对应配方的单位成本；百分比约束本身也可写成线性不等式。若不规定正的总产量而直接最小化总成本，就无法表达生产固定数量产品的要求。
 
-$10\%\left( x_{1} \right) + 50\%\left( x_{2} \right) \geq 26\%\left( x_{1} + x_{2} \right) = 26\  \rightarrow x_{1} + 5x_{2} \geq 260\ (L_{2})$
+- $60\%\left( x_{1} \right) + 20\%\left( x_{2} \right) \geq 30\%\left( x_{1} + x_{2} \right) = 30\  \rightarrow 3x_{1} + x_{2} \geq 150\ (L_{1})$
+- $10\%\left( x_{1} \right) + 50\%\left( x_{2} \right) \geq 26\%\left( x_{1} + x_{2} \right) = 26\  \rightarrow x_{1} + 5x_{2} \geq 260\ (L_{2})$
+- $x_{1} + x_{2} = 100\ (L_{3})$
 
-$x_{1} + x_{2} = 100\ (L_{3})$
-
-Objective与等成本线斜率
+#### Objective与等成本线斜率
 
 $$
 \min{C'(x_{1},x_{2})} = 0.8x_{1} + 0.6x_{2}
@@ -607,45 +596,40 @@ $$
 0.8x_{1} + 0.6x_{2} = C \Rightarrow x_{2} = - \frac{0.8}{0.6}x_{1} + \frac{C}{0.6} \Rightarrow m = - \frac{4}{3}
 $$
 
-计算Constraints斜率（把 $x_{1}$ 当 $x$）
+#### 计算Constraints斜率（把 $x_{1}$ 当 $x$）
 
-$L_{1}:\ 3x_{1} + x_{2} = 150 \rightarrow x_{2} = - 3x_{1} + 150 \rightarrow m_{1} = - 3$
-
-$L_{2}:\ x_{1} + 5x_{2} = 260 \rightarrow 5x_{2} = - x_{1} + 260 \rightarrow x_{2} = - \frac{1}{5}x_{1} + 52 \rightarrow m_{2} = - \frac{1}{5}$
-
-$L_{3}:x_{1} + x_{2} = 100 \rightarrow x_{2} = - x_{1} + 100 \rightarrow m_{3} = - 1$
+- $L_{1}:\ 3x_{1} + x_{2} = 150 \rightarrow x_{2} = - 3x_{1} + 150 \rightarrow m_{1} = - 3$
+- $L_{2}:\ x_{1} + 5x_{2} = 260 \rightarrow 5x_{2} = - x_{1} + 260 \rightarrow x_{2} = - \frac{1}{5}x_{1} + 52 \rightarrow m_{2} = - \frac{1}{5}$
+- $L_{3}:x_{1} + x_{2} = 100 \rightarrow x_{2} = - x_{1} + 100 \rightarrow m_{3} = - 1$
 
 Feasible Region本质上是在 $x_{1} + x_{2} = 100$ 线上。
 
 ![混合物问题的可行线段](lin_opt-assets/media/image4.png)
 
-寻找Vertices
+#### 寻找Vertices
 
-$L_{1}$和$L_{2}$
+##### $L_{1}$和$L_{2}$
 
-计算得出结果：$(35,\ 45)$
+- 计算得出结果：$(35,\ 45)$
+- 检查是否在feasible region，不在$x_{1} + x_{2} = 100$线上。
 
-检查是否在feasible region，不在$x_{1} + x_{2} = 100$线上。
+##### $L_{1}$和$L_{3}$
 
-$L_{1}$和$L_{3}$
+- 计算得出结果：$(25,\ 75)$
+- 检查是否在feasible region，成功。
 
-计算得出结果：$(25,\ 75)$
+##### $L_{2}$和$L_{3}$
 
-检查是否在feasible region，成功。
-
-$L_{2}$和$L_{3}$
-
-计算得出结果：$(60,\ 40)$
-
-检查是否在feasible region，成功。
+- 计算得出结果：$(60,\ 40)$
+- 检查是否在feasible region，成功。
 
 我们没有坐标轴端点了，因为其不在feasible region中。
 
-等成本线法找optimal
+#### 等成本线法找optimal
 
 我们有的斜率：$m_{1} = - 3,\ m_{2} = - \frac{1}{5},\ m_{3} = - 1,\ m = - \frac{4}{3}$
 
-排序结果
+##### 排序结果
 
 $$
 - \frac{1}{5} > - 1 > - \frac{4}{3} > - 3
@@ -653,7 +637,7 @@ $$
 
 说明目标斜率夹在 $L_{1}$与 $L_{3}$之间，最优点位于$(25,\ 75)$。
 
-通过顶点枚举法验证
+#### 通过顶点枚举法验证
 
 $$
 \begin{array}{r}
@@ -674,17 +658,14 @@ $$
 
 背景信息：一家家具店在一个生产周期内要生产两种产品：
 
-Chair（椅子）：每把利润 \$70
-
-Sofa（沙发）：每个利润 \$60
+- Chair（椅子）：每把利润 \$70
+- Sofa（沙发）：每个利润 \$60
 
 但生产受到三类资源限制：
 
-Fabric（布料）：总共 96 yards
-
-Wood（木材）：总共 90 units
-
-Labor（人工）：总共 120 hours
+- Fabric（布料）：总共 96 yards
+- Wood（木材）：总共 90 units
+- Labor（人工）：总共 120 hours
 
 | 产品  | 布料Yards | 木材Units | 人工Hours |
 |-------|-----------|-----------|-----------|
@@ -693,9 +674,9 @@ Labor（人工）：总共 120 hours
 
 目标：在不超过资源的前提下，使总利润最大。
 
-转化为数学语言/求解（正常做法/连续LP解法）
+#### 转化为数学语言/求解（正常做法/连续LP解法）
 
-Decision Variables：设
+##### Decision Variables：设
 
 $$
 \left\{ \begin{array}{r}
@@ -704,17 +685,14 @@ x_2=\text{生产 sofas 的数量}
 \end{array} \right.
 $$
 
-Constraints：我们看到是资源上限，因此是$\leq$
+##### Constraints：我们看到是资源上限，因此是$\leq$
 
-布料：$3x_{1} + 8x_{2} \leq 96\ (L_{1})$
+- 布料：$3x_{1} + 8x_{2} \leq 96\ (L_{1})$
+- 木材：$6x_{1} + 5x_{2} \leq 90\ (L_{2})$
+- 人工：$9x_{1} + 4x_{2} \leq 120\ (L_{3})$
+- Non-negativity constraints：$x_{1} \geq 0,\ x_{2} \geq 0$
 
-木材：$6x_{1} + 5x_{2} \leq 90\ (L_{2})$
-
-人工：$9x_{1} + 4x_{2} \leq 120\ (L_{3})$
-
-Non-negativity constraints：$x_{1} \geq 0,\ x_{2} \geq 0$
-
-Objective与等成本线斜率
+#### Objective与等成本线斜率
 
 $$
 \max{P(x_{1},\ x_{2})} = 70x_{1} + 60x_{2}
@@ -724,55 +702,49 @@ $$
 P = 70x_{1} + 60x_{2} \Rightarrow 60x_{2} = P - 70x_{1} \Rightarrow x_{2} = \frac{P}{60} - \frac{7}{6}x_{1} \Rightarrow m = - \frac{7}{6}
 $$
 
-计算Constraints斜率（把 $x_{1}$ 当 $x$）
+#### 计算Constraints斜率（把 $x_{1}$ 当 $x$）
 
-$L_{1}:\ 3x_{1} + 8x_{2} = 96 \rightarrow 8x_{2} = 96 - 3x_{1} \rightarrow x_{2} = 12 - \frac{3}{8}x_{1} \rightarrow m_{1} = - \frac{3}{8}$
+- $L_{1}:\ 3x_{1} + 8x_{2} = 96 \rightarrow 8x_{2} = 96 - 3x_{1} \rightarrow x_{2} = 12 - \frac{3}{8}x_{1} \rightarrow m_{1} = - \frac{3}{8}$
+- $L_{2}:\ 6x_{1} + 5x_{2} = 90 \rightarrow 5x_{2} = 90 - 6x_{1} \rightarrow x_{2} = 18 - \frac{6}{5}x_{1} \rightarrow m_{2} = - \frac{6}{5}$
+- $L_{3}:\ 9x_{1} + 4x_{2} = 120 \rightarrow 4x_{2} = 120 - 9x_{1} \rightarrow x_{2} = 30 - \frac{9}{4}x_{1} \rightarrow m_{3} = - \frac{9}{4}$
 
-$L_{2}:\ 6x_{1} + 5x_{2} = 90 \rightarrow 5x_{2} = 90 - 6x_{1} \rightarrow x_{2} = 18 - \frac{6}{5}x_{1} \rightarrow m_{2} = - \frac{6}{5}$
+#### 坐标轴边界
 
-$L_{3}:\ 9x_{1} + 4x_{2} = 120 \rightarrow 4x_{2} = 120 - 9x_{1} \rightarrow x_{2} = 30 - \frac{9}{4}x_{1} \rightarrow m_{3} = - \frac{9}{4}$
+- $L_{v}:\ x_{1} = 0$（y轴）
+- $L_{h}:\ x_{2} = 0$（x轴）
 
-坐标轴边界
+#### 寻找Vertices
 
-$L_{v}:\ x_{1} = 0$（y轴）
+##### $L_{1}$和$L_{2}$
 
-$L_{h}:\ x_{2} = 0$（x轴）
+- 计算得出结果：$\left( \frac{80}{11},\frac{102}{11} \right)$
+- 检查是否在feasible region，我们检查$L_{3}$，成功
 
-寻找Vertices
+    $$
+    9\left( \frac{80}{11} \right) + 4\left( \frac{102}{11} \right) = \frac{1128}{11} \leq 120
+    $$
 
-$L_{1}$和$L_{2}$
+##### $L_{2}$和$L_{3}$
 
-计算得出结果：$\left( \frac{80}{11},\frac{102}{11} \right)$
+- 计算得出结果：$\left( \frac{80}{7},\frac{30}{7} \right)$
+- 检查是否在feasible region，我们检查$L_{1}$，成功
 
-检查是否在feasible region，我们检查$L_{3}$，成功
+##### $L_{1}$和$L_{3}$
 
-$$
-9\left( \frac{80}{11} \right) + 4\left( \frac{102}{11} \right) = \frac{1128}{11} \leq 120
-$$
+- 计算得出结果：$\left( \frac{48}{5},\frac{42}{5} \right)$
+- 检查是否在feasible region，我们检查$L_{2}$，失败
 
-$L_{2}$和$L_{3}$
+##### $L_{v}$和$L_{H}$
 
-计算得出结果：$\left( \frac{80}{7},\frac{30}{7} \right)$
+- 计算得出结果：$(0,0)$，成功
 
-检查是否在feasible region，我们检查$L_{1}$，成功
+##### $L_{v}$和$L_{1}$
 
-$L_{1}$和$L_{3}$
+- 计算得出结果：$(0,12)$，成功
 
-计算得出结果：$\left( \frac{48}{5},\frac{42}{5} \right)$
+##### $L_{H}$和$L_{3}$
 
-检查是否在feasible region，我们检查$L_{2}$，失败
-
-$L_{v}$和$L_{H}$
-
-计算得出结果：$(0,0)$，成功
-
-$L_{v}$和$L_{1}$
-
-计算得出结果：$(0,12)$，成功
-
-$L_{H}$和$L_{3}$
-
-计算得出结果：$\left( \frac{40}{3},0 \right)$，成功
+- 计算得出结果：$\left( \frac{40}{3},0 \right)$，成功
 
 以此类推，剩下的坐标轴交点都失败了。因此我们有
 
@@ -786,7 +758,7 @@ $$
 
 ### 1.7 家具问题的整数枚举法
 
-整数解法
+**整数解法**
 
 #### Step 0：先写清楚整数版问题
 
@@ -804,7 +776,9 @@ $$
 \end{aligned} \right.
 $$
 
-#### Step 1：枚举一个variable，比如我们枚举 $x_{1}$。因为如果你让 $x_{1}$取一个整数值，剩下的所有约束都会变成 **对** $x_{2}$**的限制**，你就能直接算出 $x_{2}$的最大可行整数
+#### Step 1：枚举一个variable，比如我们枚举 $x_{1}$。
+
+因为如果你让 $x_{1}$取一个整数值，剩下的所有约束都会变成 **对** $x_{2}$**的限制**，你就能直接算出 $x_{2}$的最大可行整数
 
 #### Step 2：给 $x_{1}$ 找到一个区间
 
@@ -824,25 +798,27 @@ $$
 
 #### Step 3：固定一个 $x_{1}$，把每条约束变成 $x_{2}$的上界
 
-约束1：$3x_{1} + 8x_{2} \leq 96$
+- 约束1：$3x_{1} + 8x_{2} \leq 96$
 
-$$
-x_{2} \leq \frac{96 - 3x_{1}}{8} = u_{1}(x_{1})
-$$
+    $$
+    x_{2} \leq \frac{96 - 3x_{1}}{8} = u_{1}(x_{1})
+    $$
 
-约束2：$6x_{1} + 5x_{2} \leq 90$
+- 约束2：$6x_{1} + 5x_{2} \leq 90$
 
-$$
-x_{2} \leq \frac{90 - 6x_{1}}{5} = u_{2}(x_{1})
-$$
+    $$
+    x_{2} \leq \frac{90 - 6x_{1}}{5} = u_{2}(x_{1})
+    $$
 
-约束3：$9x_{1} + 4x_{2} \leq 120$
+- 约束3：$9x_{1} + 4x_{2} \leq 120$
 
-$$
-x_{2} \leq \frac{120 - 9x_{1}}{4} = u_{3}(x_{1})
-$$
+    $$
+    x_{2} \leq \frac{120 - 9x_{1}}{4} = u_{3}(x_{1})
+    $$
 
-#### Step 4：把三个上界取最小，得到连续意义下的最大可行 $x_{2}$。因为 $x_{2}$要同时满足三条上界，所以最终上界是最紧的那个
+#### Step 4：把三个上界取最小，得到连续意义下的最大可行 $x_{2}$。
+
+因为 $x_{2}$要同时满足三条上界，所以最终上界是最紧的那个
 
 $$
 b(x_{1}) = \min{\{ u_{1}(x_{1}),u_{2}(x_{1}),u_{3}(x_{1})\}}
@@ -891,21 +867,18 @@ $$
 
 故事情节：农场主每天要喂牛群，必须满足最低营养需求
 
-营养 A：至少 60 units
-
-营养 B：至少 84 units
-
-营养 C：至少 72 units
+- 营养 A：至少 60 units
+- 营养 B：至少 84 units
+- 营养 C：至少 72 units
 
 可以买两种饲料：
 
-$F_{1}$：每磅含 $A = 3,B = 7,C = 3$，价格 10 cents/磅
-
-$F_{2}$：每磅含 $A = 2,B = 2,C = 6$，价格 4 cents/磅
+- $F_{1}$：每磅含 $A = 3,B = 7,C = 3$，价格 10 cents/磅
+- $F_{2}$：每磅含 $A = 2,B = 2,C = 6$，价格 4 cents/磅
 
 决策：每天买多少磅各饲料，使得营养达标且总成本最小。
 
-General Form of a LPP
+#### General Form of a LPP
 
 标准定义：Optimize $c_{1}x_{1} + c_{2}x_{2} + \ldots + c_{n}x_{n}$, where $c_{1},\ c_{2},\ldots,c_{n}\in \mathbb{R}$, subject to
 
@@ -933,44 +906,38 @@ $$
 a_{m,1}x_{1} + a_{m,2}x_{2} + \ldots + a_{m,n}x_{n}\ \sim_{m}\ b_{m}
 $$
 
-where
+**where**
 
-“optimize” is either “minimize” or “maximize”.
+- “optimize” is either “minimize” or “maximize”.
+- All $a_{i,j}\in \mathbb{R}$ and $b_{1},\ldots b_{m}\in \mathbb{R}$.
+- For each $i$, $1 \leq i \leq m$ and $\sim_{i}$ is either $\geq ,\  \leq$ or $=$.
+- For each $j$, $1 \leq j \leq n$ either $x_{j} \geq 0$ or $x_{j}\in \mathbb{R}$.
 
-All $a_{i,j}\in \mathbb{R}$ and $b_{1},\ldots b_{m}\in \mathbb{R}$.
+#### 一些定义：
 
-For each $i$, $1 \leq i \leq m$ and $\sim_{i}$ is either $\geq ,\  \leq$ or $=$.
+- Decision Variables are the unknowns that we choose or control in the model.
+- The linear function $c_{1}x_{1} + c_{2}x_{2} + \cdots + c_{n}x_{n}$is called the objective function and “Optimize” is either “Minimize” or “Maximize”.
+- **The relation**
 
-For each $j$, $1 \leq j \leq n$ either $x_{j} \geq 0$ or $x_{j}\in \mathbb{R}$.
+    $$
+    a_{i1}x_{1} + a_{i2}x_{2} + \cdots + a_{in}x_{n} \sim_{i}b_{i}
+    $$
 
-一些定义：
+    is called the i-th constraint.
 
-Decision Variables are the unknowns that we choose or control in the model.
+    The number of variables is $n$.
 
-The linear function $c_{1}x_{1} + c_{2}x_{2} + \cdots + c_{n}x_{n}$is called the objective function and “Optimize” is either “Minimize” or “Maximize”.
+- The number of constraints is $m$.
+- Example（参考上述故事情节）：Optimize (Minimize) $10x_{1} + 4x_{2}$, subject to
 
-The relation
-
-$$
-a_{i1}x_{1} + a_{i2}x_{2} + \cdots + a_{in}x_{n} \sim_{i}b_{i}
-$$
-
-is called the i-th constraint.
-
-The number of variables is $n$.
-
-The number of constraints is $m$.
-
-Example（参考上述故事情节）：Optimize (Minimize) $10x_{1} + 4x_{2}$, subject to
-
-$$
-\left\{ \begin{aligned}
-& 3x_{1} + 2x_{2} \geq 60 \\
-& 7x_{1} + 2x_{2} \geq 84 \\
-& 3x_{1} + 6x_{2} \geq 72 \\
-& x_{1} \geq 0,x_{2} \geq 0
-\end{aligned} \right.
-$$
+    $$
+    \left\{ \begin{aligned}
+    & 3x_{1} + 2x_{2} \geq 60 \\
+    & 7x_{1} + 2x_{2} \geq 84 \\
+    & 3x_{1} + 6x_{2} \geq 72 \\
+    & x_{1} \geq 0,x_{2} \geq 0
+    \end{aligned} \right.
+    $$
 
 <a id="section-2-2"></a>
 
@@ -978,15 +945,13 @@ $$
 
 #### Standard Form of LPP
 
-定义
+**定义**
 
-标准定义：A LPP is in Standard Form if
+**标准定义：A LPP is in Standard Form if**
 
-“Optimize” is “Minimize”.
-
-Each $\sim_{i}$ is $=$ (all constraints are equalities).
-
-For each $j$, $x_{j} \geq 0$ (all variables are non-negative).
+- “Optimize” is “Minimize”.
+- Each $\sim_{i}$ is $=$ (all constraints are equalities).
+- For each $j$, $x_{j} \geq 0$ (all variables are non-negative).
 
 完整数学表示：Minimize $c_{1}x_{1} + c_{2}x_{2} + \cdots + c_{n}x_{n}$
 subject to $x_{j} \geq 0$, $1 \leq j \leq n$ and
@@ -1015,17 +980,15 @@ $$
 
 ### 2.3 从一般形式到标准形式
 
-如何把General Form转化为Standard Form — 三个 transformation 技术：
+#### 如何把General Form转化为Standard Form — 三个 transformation 技术：
 
-≤ —— 加 slack variable
+- ≤ —— 加 slack variable
+- ≥ —— 减 surplus variable
+- Unrestricted —— 拆成两个非负变量
 
-≥ —— 减 surplus variable
-
-Unrestricted —— 拆成两个非负变量
-
-$$
-x = x^{+} - x^{-},x^{+},x^{-} \geq 0
-$$
+    $$
+    x = x^{+} - x^{-},x^{+},x^{-} \geq 0
+    $$
 
 #### Example 1
 
@@ -1039,7 +1002,7 @@ x_{j} & \geq 0
 \end{aligned}
 $$
 
-转化为Standard Form
+##### 转化为Standard Form
 
 对于$30x_{1} + 100x_{2} + 85x_{3} \leq 2500$，我们发现是 $\leq$，因此加 slack variable $x_{4}$。
 
@@ -1067,27 +1030,27 @@ $$
 \end{aligned}
 $$
 
-转化为Standard Form
+##### 转化为Standard Form
 
-#### Step 1：我们把 $x_{2}$ 用两个非负变量表示
+##### Step 1：我们把 $x_{2}$ 用两个非负变量表示
 
 $$
 x_{2} = x_{2}^{+} - x_{2}^{-},x_{2}^{+} \geq 0,x_{2}^{-} \geq 0
 $$
 
-#### Step 2：代入目标函数
+##### Step 2：代入目标函数
 
 $$
 Z = 2x_{1} - (x_{2}^{+} - x_{2}^{-}) = 2x_{1} - x_{2}^{+} + x_{2}^{-}
 $$
 
-#### Step 3：代入约束
+##### Step 3：代入约束
 
 约束1：$x_{1} + x_{2} \geq 3 \Rightarrow x_{1} + (x_{2}^{+} - x_{2}^{-}) \geq 3$
 
 约束2：$2x_{1} - x_{2} \leq 4 \Rightarrow 2x_{1} - (x_{2}^{+} - x_{2}^{-}) \leq 4 \Rightarrow 2x_{1} - x_{2}^{+} + x_{2}^{-} \leq 4$
 
-#### Step 4：把不等式转成等式（slack / surplus）
+##### Step 4：把不等式转成等式（slack / surplus）
 
 $$
 \text{Minimize }Z(x_{1},x_{2}^{+},x_{2}^{-},s_{1},s_{2}) = 2x_{1} - x_{2}^{+} + x_{2}^{-}
@@ -1101,21 +1064,21 @@ $$
 \end{aligned}
 $$
 
-等价转换：任何线性规划都可转成标准形式，并通过换元关系还原原变量与目标值。
+#### 等价转换：
+
+任何线性规划都可转成标准形式，并通过换元关系还原原变量与目标值。
 
 转换前后：
 
-只添加 slack/surplus 变量时，新增变量由原变量唯一决定，可行解一一对应；自由变量拆分时，同一个原变量可能有多个非负拆分表示。
-
-只添加零成本变量或按等式代入时，目标函数值相同；若把最大化改为最小化，需要将目标取负，并在报告最优值时还原符号。
-
-原问题和标准形式的最优解通过变量转换及投影对应。
+- 只添加 slack/surplus 变量时，新增变量由原变量唯一决定，可行解一一对应；自由变量拆分时，同一个原变量可能有多个非负拆分表示。
+- 只添加零成本变量或按等式代入时，目标函数值相同；若把最大化改为最小化，需要将目标取负，并在报告最优值时还原符号。
+- 原问题和标准形式的最优解通过变量转换及投影对应。
 
 只添加 slack/surplus 变量的可行解对应是 bijection（双射）。自由变量拆分则通常是多对一映射：$(x_j^++t,x_j^-+t)$ 对所有 $t\geq0$ 都表示同一个差值。下图区分单射、满射与双射；双射对应每个元素恰有一个原像。
 
 ![双射、单射与满射的映射示意](lin_opt-assets/media/image5.png)
 
-Example（$\text{Minimize }Z\left( x_{1},x_{2},x_{3} \right) = 3x_{1} + 2x_{2} + 4x_{3}$）
+#### Example（$\text{Minimize }Z\left( x_{1},x_{2},x_{3} \right) = 3x_{1} + 2x_{2} + 4x_{3}$）
 
 原问题：$(12,10,4)$
 
@@ -1123,7 +1086,7 @@ Example（$\text{Minimize }Z\left( x_{1},x_{2},x_{3} \right) = 3x_{1} + 2x_{2} +
 
 $Z = 36 + 20 + 16 = 72$
 
-对应到新变量
+##### 对应到新变量
 
 $$
 x_{4} = 2500 - 1700 = 800
@@ -1135,11 +1098,10 @@ $$
 
 我们得到 $(12,10,4,800,14)$
 
-标准形式 → 原问题
+##### 标准形式 → 原问题
 
-反过来$(12,10,4,800,14)$，可以满足约束。
-
-投影回$(12,10,4)$，同样成立。
+- 反过来$(12,10,4,800,14)$，可以满足约束。
+- 投影回$(12,10,4)$，同样成立。
 
 <a id="section-2-4"></a>
 
@@ -1147,7 +1109,7 @@ $$
 
 下文将等式系统 $Ax=b$ 记为 $(*)$，将附有目标函数与非负约束的标准形式 LP 记为 $(\ell)$。
 
-#### Feasible / Feasible Region
+**Feasible / Feasible Region**
 
 #### Recall
 
@@ -1165,9 +1127,9 @@ $$
 A\overline{x} = \overline{b}
 $$
 
-例子（饲料问题 → Standard Form）
+#### 例子（饲料问题 → Standard Form）
 
-原问题
+##### 原问题
 
 $$
 \min 10x_{1} + 4x_{2}
@@ -1182,7 +1144,7 @@ $$
 \end{aligned} \right.
 $$
 
-Standard Form of LPP
+##### Standard Form of LPP
 
 $$
 \left\{ \begin{aligned}
@@ -1223,7 +1185,7 @@ A = \begin{pmatrix}
 \end{array} \right).
 $$
 
-定义 $S$：先只看等式系统 $Ax = b$
+#### 定义 $S$：先只看等式系统 $Ax = b$
 
 定义：We let $S$ be the solution set of (\*). Technically speaking,
 
@@ -1237,7 +1199,7 @@ $$
 S = \{\overline{s} \in \mathbb{R}^{n}:A\overline{s} = \overline{b}\}.
 $$
 
-#### Example：饲料问题的 $S$
+##### Example：饲料问题的 $S$
 
 $$
 S = \left\{ (x_{1},x_{2},s_{1},s_{2},s_{3}) \in \mathbb{R}^{5}:\begin{array}{r}
@@ -1247,7 +1209,7 @@ S = \left\{ (x_{1},x_{2},s_{1},s_{2},s_{3}) \in \mathbb{R}^{5}:\begin{array}{r}
 \end{array} \right\}.
 $$
 
-定义 $S^{\geq}$：把非负限制加进去
+#### 定义 $S^{\geq}$：把非负限制加进去
 
 $$
 S^{\geq}\overset{def}{=}\{\overline{s} \in S:s_{j} \geq 0,\forall j\}.
@@ -1255,13 +1217,12 @@ $$
 
 $S^{\geq}$ = 同时满足
 
-等式系统 $Ax = b$
-
-非负限制 $x \geq 0$
+- 等式系统 $Ax = b$
+- 非负限制 $x \geq 0$
 
 这就是标准形式 LP 的“合法解空间”。
 
-#### Example：饲料问题的 $S^{\geq}$
+##### Example：饲料问题的 $S^{\geq}$
 
 $$
 S^{\geq} = \left\{ (x_{1},x_{2},s_{1},s_{2},s_{3}) \in \mathbb{R}^{5}:\begin{array}{r}
@@ -1274,30 +1235,27 @@ $$
 
 这就是这道题的 feasible region。
 
-Feasible Solutions / Feasible Region / Feasible LPP
+#### Feasible Solutions / Feasible Region / Feasible LPP
 
 定义
 
-Elements of $S^{\geq}$are called “feasible solutions of (\*)”.（Feasible Solution就是 $S^{\geq}$ 里的一个点。）
+- Elements of $S^{\geq}$are called “feasible solutions of (\*)”.（Feasible Solution就是 $S^{\geq}$ 里的一个点。）
+- $S^{\geq}$ is called the “feasible region of (ℓ)”.（Feasible Region就是集合 $S^{\geq}$ 本身。）
+- and (ℓ) is said to be a feasible LPP if $S^{\geq} \neq \varnothing$.（如果$S^{\geq} \neq \varnothing$，则为Feasible LPP。）
 
-$S^{\geq}$ is called the “feasible region of (ℓ)”.（Feasible Region就是集合 $S^{\geq}$ 本身。）
-
-and (ℓ) is said to be a feasible LPP if $S^{\geq} \neq \varnothing$.（如果$S^{\geq} \neq \varnothing$，则为Feasible LPP。）
-
-#### Example：我们随便挑一个满足原不等式的 $(x_{1},\ x_{2})$，例如
+##### Example：我们随便挑一个满足原不等式的 $(x_{1},\ x_{2})$，例如
 
 $$
 x_{1} = 12,\ x_{2} = 12
 $$
 
-检查原不等式
+**检查原不等式**
 
-$3(12) + 2(12) = 36 + 24 = 60 \geq 60$
+- $3(12) + 2(12) = 36 + 24 = 60 \geq 60$
+- $7(12) + 2(12) = 84 + 24 = 108 \geq 84$
+- $3(12) + 6(12) = 36 + 72 = 108 \geq 72$
 
-$7(12) + 2(12) = 84 + 24 = 108 \geq 84$
-
-$3(12) + 6(12) = 36 + 72 = 108 \geq 72$
-对应到标准形式的 surplus：
+**对应到标准形式的 surplus：**
 
 $$
 s_{1} = 3x_{1} + 2x_{2} - 60 = 0
@@ -1325,17 +1283,16 @@ $$
 
 #### 如何解Standard Form LPP
 
-Solving (ℓ)
+**Solving (ℓ)**
 
 我们之前已经了解了Standard Form LPP的标准定义，了解了有关Solution的定义。现在我们要了解如何solve Standard Form LPP。
 
-#### Step 1：先判断 $S^{\geq}$是否为空
+##### Step 1：先判断 $S^{\geq}$是否为空
 
-如果可行域空：infeasible，问题无解（在约束下没有任何合法点）。
+- 如果可行域空：infeasible，问题无解（在约束下没有任何合法点）。
+- 如果可行域不为空，我们继续，也就是其是一个Feasible LPP。
 
-如果可行域不为空，我们继续，也就是其是一个Feasible LPP。
-
-#### Step 2
+##### Step 2
 
 情况一：存在最优解，也就是我们要find ${\overline{s}}_{\min} \in S^{\geq}$satisfying for $\overline{c}^{T}{\overline{s}}_{\min} \leq \overline{c}^{T}\overline{s}$ every $\overline{s} \in S^{\geq}$，数学形式化写法就是
 
@@ -1347,15 +1304,13 @@ $$
 
 情况二：no such ${\overline{s}}_{\min}$exists，也就是虽然可行，但目标函数没有最小值。该情况叫做Not Bounded Below。
 
-Not Bounded Below
+#### Not Bounded Below
 
 定义：A feasible Standard Form lpp for which ${\overline{s}}_{\min}$does not exist is said to be “Not Bounded Below”.
 
-$S^{\geq} \neq \varnothing$
-
-但不存在最小点
-
-目标函数可以趋向 $- \infty$
+- $S^{\geq} \neq \varnothing$
+- 但不存在最小点
+- 目标函数可以趋向 $- \infty$
 
 #### Example：现在有一个Standard Form LPP
 
@@ -1367,7 +1322,7 @@ $$
 \end{aligned}
 $$
 
-#### Step 1：求 $S$
+##### Step 1：求 $S$
 
 $$
 S = \{(x_{1},x_{2}) \in \mathbb{R}^{2}:\  - x_{1} + x_{2} = 2\}
@@ -1379,7 +1334,7 @@ $$
 S = \{(t - 2,t):t \in \mathbb{R}\}
 $$
 
-#### Step 2：求 $S^{\geq}$
+##### Step 2：求 $S^{\geq}$
 
 我们要求 $x_{1} \geq 0,\ x_{2} \geq 0$，代入可得 $t - 2 \geq 0 \rightarrow t \geq 2$。
 
@@ -1387,9 +1342,11 @@ $$
 S^{\geq} = \{(t - 2,t):t \geq 2\}
 $$
 
-#### Step 3：说明feasible。因为 $t = 2 \Rightarrow (0,2) \in S^{\geq}$，所以 $S^{\geq} \neq \varnothing$。这是一个Feasible LPP
+##### Step 3：说明feasible。
 
-#### Step 4：看目标函数
+因为 $t = 2 \Rightarrow (0,2) \in S^{\geq}$，所以 $S^{\geq} \neq \varnothing$。这是一个Feasible LPP
+
+##### Step 4：看目标函数
 
 $$
 Z\left( x_{1},x_{2} \right) = x_{1} - 2x_{2}
@@ -1401,17 +1358,18 @@ $$
 Z(t) = (t - 2) - 2t = - 2 - t
 $$
 
-#### Step 5：关键分析。我们发现当$t \rightarrow \infty$的时候，$Z(t) \rightarrow - \infty$。这feasible，但是不存在 $s_{\min}$
+##### Step 5：关键分析。
 
-Minimum Value and Minimum Point
+我们发现当$t \rightarrow \infty$的时候，$Z(t) \rightarrow - \infty$。这feasible，但是不存在 $s_{\min}$
+
+#### Minimum Value and Minimum Point
 
 定义：A minimum point is any point that results in the minimum value.
 
 在可行且具有有限最优值的情况下
 
-minimum value 是唯一的
-
-minimum point 可能多个（例如一条边）
+- minimum value 是唯一的
+- minimum point 可能多个（例如一条边）
 
 但是比如
 
@@ -1425,7 +1383,7 @@ $$
 
 这个时候所有点都有 $Z = 4$，所以minimum value = 4（唯一），minimum point = 无穷多个。
 
-如何解LPP？
+#### 如何解LPP？
 
 我们之前已经有很多examples告诉我们如何手动解LPP，但是这只用于低维，也就是能画图，顶点少的情况。但是一旦100个变量，200个约束。我们就做不了了。
 
@@ -1443,7 +1401,7 @@ $$
 
 #### Pivoting
 
-如何 Solve a Standard Form LPP
+#### 如何 Solve a Standard Form LPP
 
 表达方法切换：使用matrix formulation来表达Standard Form LPP。
 
@@ -1453,27 +1411,24 @@ $$
 
 解Standard Form LPP的方法叫做Simplex Algorithm，其是made up of a sequence of steps called ‘pivoting’ operations。
 
-Pivoting
+#### Pivoting
 
-Notation and Concepts
+#### Notation and Concepts
 
-Pivot Position：首先我们需要寻找/确定一个Pivot Position，我们用 $(r,c)$ 表示，这是第 $r$ 行第 $c$ 列的位置。
+- Pivot Position：首先我们需要寻找/确定一个Pivot Position，我们用 $(r,c)$ 表示，这是第 $r$ 行第 $c$ 列的位置。
+- Pivot：该位置的数 $a_{rc}$，要求非0。
+- Pivot Row：第 $r$ 行。
+- Pivot Column：第 $c$ 列。
 
-Pivot：该位置的数 $a_{rc}$，要求非0。
+#### Pivoting的过程
 
-Pivot Row：第 $r$ 行。
-
-Pivot Column：第 $c$ 列。
-
-Pivoting的过程
-
-#### Step 1：让 pivot 变成 1（归一化 pivot row）
+##### Step 1：让 pivot 变成 1（归一化 pivot row）
 
 $$
 R_{r} \leftarrow \frac{1}{a_{rc}}R_{r}
 $$
 
-#### Step 2：用这个 1 把 pivot column 的其它元素都消成 0
+##### Step 2：用这个 1 把 pivot column 的其它元素都消成 0
 
 $$
 R_{i} \leftarrow R_{i} - a_{ic}R_{r}
@@ -1496,7 +1451,7 @@ $$
 \end{aligned} \right.
 $$
 
-#### Step 0：写成增广矩阵
+##### Step 0：写成增广矩阵
 
 $$
 \lbrack A:b\rbrack = \begin{bmatrix}
@@ -1505,11 +1460,11 @@ $$
 \end{bmatrix}
 $$
 
-#### Step 1：选 pivot position $\left( r,c) = (1,1 \right)$（第一行第一列的 1）
+##### Step 1：选 pivot position $\left( r,c) = (1,1 \right)$（第一行第一列的 1）
 
-Step (i)：让 pivot 变 1。目前本身就是1，所以不变。
+###### Step (i)：让 pivot 变 1。目前本身就是1，所以不变。
 
-Step (ii)：消掉 pivot column 的其它元素（把第2行第1列的 2 消成 0）。
+###### Step (ii)：消掉 pivot column 的其它元素（把第2行第1列的 2 消成 0）。
 
 $$
 R_{2} = \lbrack 2,1,3|7\rbrack - \lbrack 2,4,2|8\rbrack = \lbrack 0, - 3,1 \mid - 1\rbrack
@@ -1522,9 +1477,9 @@ $$
 \end{bmatrix}
 $$
 
-#### Step 2：选 pivot position $\left( 2,2 \right)$（第二行第二列的 -3）
+##### Step 2：选 pivot position $\left( 2,2 \right)$（第二行第二列的 -3）
 
-Step (i)：归一化 pivot row（让 pivot 变 1）
+###### Step (i)：归一化 pivot row（让 pivot 变 1）
 
 $$
 R_{2} \leftarrow \frac{1}{- 3}R_{2}
@@ -1537,7 +1492,7 @@ $$
 \end{bmatrix}
 $$
 
-Step (ii)：用这个 1 消掉 pivot column 的其它元素（把第一行第二列的 2 消成 0）
+###### Step (ii)：用这个 1 消掉 pivot column 的其它元素（把第一行第二列的 2 消成 0）
 
 $$
 \begin{bmatrix}
@@ -1552,9 +1507,9 @@ $$
 
 假设约束矩阵具有满行秩 $m$；若存在冗余等式，应先检查一致性并删除冗余行，或在 Phase 1 结束时清理。一个基由 $m$ 个线性无关列组成。
 
-#### Simplex到底在干什么
+**Simplex到底在干什么**
 
-Canonical Form of an LPP
+#### Canonical Form of an LPP
 
 定义：$A\overline{x} = \overline{b}$ is in Canonical Form with basis $B = \{ x_{j_{1}},...,x_{j_{m}}\},$ if the columns of A indexed by $x_{j1},x_{j2},\ldots,x_{jm}$ are the m unit vectors $\overline{e_{1}},\ \overline{e_{2}},\ \overline{e_{3}},\ldots,\overline{e_{m}}$ of $\mathbb{R}^{m}$ in some order.
 
@@ -1566,29 +1521,31 @@ $$
 
 换句话说，canonical form = 在 $A$ 的列中能找到 m 列组成单位矩阵（一个 $m \times m$的结构）。
 
-#### Example：识别 canonical form
+##### Example：识别 canonical form
 
-$A = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}$，我们可以选$B = \{ x_{1},x_{2}\}$，这两列对应基变量 $x_1,x_2$，因为这两列可以组成单位矩阵 $\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}$。
+- $A = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}$，我们可以选$B = \{ x_{1},x_{2}\}$，这两列对应基变量 $x_1,x_2$，因为这两列可以组成单位矩阵 $\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}$。
 
-$A = \begin{bmatrix} 1 & 1 \\ 0 & 1 \end{bmatrix}$，这不是canonical form，因为没有任何一组列可以组成$\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}$。
+- $A = \begin{bmatrix} 1 & 1 \\ 0 & 1 \end{bmatrix}$，这不是canonical form，因为没有任何一组列可以组成$\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}$。
 
-$A = \begin{bmatrix} 1 & 0 & 0 & 2 & - 1 \\ 0 & 1 & 0 & 3 & 4 \\ 0 & 0 & 1 & - 2 & 5 \end{bmatrix}$，我们可以选$B = \{ x_{1},x_{2},x_{3}\}$。这三列就是$I_{3}$，因此是canonical form。
+- $A = \begin{bmatrix} 1 & 0 & 0 & 2 & - 1 \\ 0 & 1 & 0 & 3 & 4 \\ 0 & 0 & 1 & - 2 & 5 \end{bmatrix}$，我们可以选$B = \{ x_{1},x_{2},x_{3}\}$。这三列就是$I_{3}$，因此是canonical form。
 
-$A = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}$，这也是canonical form。
+- $A = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}$，这也是canonical form。
 
-Pivoting用法一 — Pivoting 可以改变矩阵，使其变成Canonical Form
+#### Pivoting用法一 — Pivoting 可以改变矩阵，使其变成Canonical Form
 
 目标：线性代数操作，造单位矩阵。
 
-#### Example：$\begin{bmatrix} 1 & 1 & 2 & 1 & | & 6 \\ 0 & 3 & 1 & 8 & | & 3 \end{bmatrix}$
+##### Example：
 
-#### Step 1：判断canonical form，这不是canonical form
+$\begin{bmatrix} 1 & 1 & 2 & 1 & | & 6 \\ 0 & 3 & 1 & 8 & | & 3 \end{bmatrix}$
 
-#### Step 2：进行pivoting
+###### Step 1：判断canonical form，这不是canonical form
 
-#### Step 2.1：选择pivot position，为$(\text{row }2,\text{ column }x_2)$
+###### Step 2：进行pivoting
 
-#### Step 2.2：进行pivoting
+**Step 2.1：选择pivot position，为$(\text{row }2,\text{ column }x_2)$**
+
+**Step 2.2：进行pivoting**
 
 $$
 \begin{bmatrix}
@@ -1597,7 +1554,7 @@ $$
 \end{bmatrix}
 $$
 
-Basic Solution
+#### Basic Solution
 
 定义：
 
@@ -1605,31 +1562,32 @@ The m variables $x_{j1},x_{j2},\ldots,x_{jm}$ are called basic variables.
 
 When the system $A\overline{x} = \overline{b}$ is in canonical form with basis $B = \{ x_{j1},x_{j2},\ldots,x_{jm}\}$. The associated basic solution is the element of S ${\overline{s}}_{B} = (s_{1},s_{2},\ldots,s_{n})$ satisfying
 
-$s_{j} = 0$ for $j \notin \{ j_{1},j_{2},\ldots,j_{m}\}$. (all non-basic variables are set equal to 0).
-
-For $j \in \{ j_{1},j_{2},\ldots,j_{m}\}$, $s_{j_{i}} =$ the right hand number in the row indexed by $x_{j_{i}}$.
+- $s_{j} = 0$ for $j \notin \{ j_{1},j_{2},\ldots,j_{m}\}$. (all non-basic variables are set equal to 0).
+- For $j \in \{ j_{1},j_{2},\ldots,j_{m}\}$, $s_{j_{i}} =$ the right hand number in the row indexed by $x_{j_{i}}$.
 
 解读： Basic Solution就是这样一个向量 $x$，保证
 
-所有非基变量设为 0
+**所有非基变量设为 0**
 
 $$
 x_j=0\quad\text{for non-basic indices }j
 $$
 
-基变量直接由方程解出
+**基变量直接由方程解出**
 
 $$
 x_{j_{i}} = b_{i}
 $$
 
-#### Example：$A = \begin{bmatrix} 1 & 0 & 2 \\ 0 & 1 & 3 \end{bmatrix},b = \left\lbrack \begin{array}{r} 4 \\ 5 \end{array} \right\rbrack$
+##### Example：
 
-#### Step 1：判断canonical form，选 $B = \{ x_{1},x_{2}\}$
+$A = \begin{bmatrix} 1 & 0 & 2 \\ 0 & 1 & 3 \end{bmatrix},b = \left\lbrack \begin{array}{r} 4 \\ 5 \end{array} \right\rbrack$
 
-#### Step 2：构造 Basic Solution
+###### Step 1：判断canonical form，选 $B = \{ x_{1},x_{2}\}$
 
-Non-basic variables：$x_{3} = 0$
+###### Step 2：构造 Basic Solution
+
+**Non-basic variables：$x_{3} = 0$**
 
 代入方程可以得到
 
@@ -1646,17 +1604,16 @@ $$
 x = (4,5,0)
 $$
 
-Basic Feasible Solution
+#### Basic Feasible Solution
 
 定义：If ${\overline{s}}_{B} \in S^{\geq}$, then ${\overline{s}}_{B}$is called a Basic Feasible Solution.
 
 解读：如果这个 basic solution **刚好也满足** $x \geq 0$，那其就是Basic Feasible Solution。
 
-#### Example：判断基本解的可行性
+##### Example：判断基本解的可行性
 
-$x = (3,0,0, - 7)$，不是Basic Feasible Solution。
-
-$x=(0,3,7,0,2)$ 的各分量非负；若已知它是当前约束系统某个基对应的基本解，则它是 BFS。仅凭分量非负还需进一步检查等式和基本解条件。
+- $x = (3,0,0, - 7)$，不是Basic Feasible Solution。
+- $x=(0,3,7,0,2)$ 的各分量非负；若已知它是当前约束系统某个基对应的基本解，则它是 BFS。仅凭分量非负还需进一步检查等式和基本解条件。
 
 令 $A_B$ 为基列组成的可逆矩阵，则 $x_B=A_B^{-1}b$、$x_N=0$。可行域非空时存在 BFS；存在冗余等式时，基的规模应取独立约束数。
 
@@ -1664,7 +1621,7 @@ $x=(0,3,7,0,2)$ 的各分量非负；若已知它是当前约束系统某个基�
 
 ### 3.3 从不可行基本解到可行基本解：手工例子
 
-Pivoting用法二 — Pivoting 可以改变 basis，尝试得到 Basic Feasible Solution
+**Pivoting用法二 — Pivoting 可以改变 basis，尝试得到 Basic Feasible Solution**
 
 #### Example
 
@@ -1672,13 +1629,13 @@ $$
 \left[\begin{array}{rrrr|r}1&0&2&7&29\\0&1&-1&-5&-11\end{array}\right]
 $$
 
-#### Step 1：判断canonical form。选
+##### Step 1：判断canonical form。选
 
 $$
 B = \{ x_{1},x_{2}\}
 $$
 
-#### Step 2：读 basic solution
+##### Step 2：读 basic solution
 
 $x_{3} = x_{4} = 0$
 
@@ -1688,11 +1645,13 @@ $$
 {\overline{s}}_{B} = (x_{1},x_{2},x_{3},x_{4}) = (29, - 11,0,0)
 $$
 
-#### Step 3：判断是否feasible。这里$x_{2} = - 11 < 0$，因此不feasible
+##### Step 3：判断是否feasible。
 
-#### Step 4：通过pivoting将其变feasible
+这里$x_{2} = - 11 < 0$，因此不feasible
 
-#### Step 4.1：找到pivot position
+##### Step 4：通过pivoting将其变feasible
+
+##### Step 4.1：找到pivot position
 
 在这个手工例子中，负基本变量 $x_2=-11$ 对应第二行；该行 $x_3,x_4$ 的系数分别为 $-1,-5$。可以尝试这两个非零主元，并在换基后检查全部基本变量是否非负。这种手工尝试不构成保证成功的一般 Phase 1 规则。
 
@@ -1702,7 +1661,7 @@ $$
 (\text{row }x_{2},\ \text{col }x_{3})
 $$
 
-#### Step 4.2：开始pivoting
+##### Step 4.2：开始pivoting
 
 把 pivot 元素变成 1（原来是 $-1$）：$R_2\leftarrow-R_2$。整行的所有系数和 RHS 同时变号。
 
@@ -1716,13 +1675,13 @@ $$
 \left[\begin{array}{rrrr|r}1&2&0&-3&7\\0&-1&1&5&11\end{array}\right]
 $$
 
-#### Step 5：判断canonical form。选
+##### Step 5：判断canonical form。选
 
 $$
 B = \{ x_{1},x_{3}\}
 $$
 
-#### Step 6：从 pivot 后的矩阵读出新的 basic solution
+##### Step 6：从 pivot 后的矩阵读出新的 basic solution
 
 $$
 {\overline{s}}_{B'} = (x_{1},x_{2},x_{3},x_{4}) = (7,0,11,0)
@@ -1734,17 +1693,19 @@ $$
 
 ### 3.4 更新目标函数与 canonical LPP
 
-Pivoting的过程中，Z（目标函数）表达式必须更新
+#### Pivoting的过程中，Z（目标函数）表达式必须更新
 
-目标：Pivoting的过程中，我们希望把Z写成只用 non-basic variables 表达的current expression。
+**目标：Pivoting的过程中，我们希望把Z写成只用 non-basic variables 表达的current expression。**
 
-为什么非要把 $Z$ 写成 “只含 non-basic variables”
+##### 为什么非要把 $Z$ 写成 “只含 non-basic variables”
 
 因为在 canonical form 下，我们把 non-basic variables 设为 0 得到 BFS。你想从这个 BFS “走出去”去寻找更小的 $Z$，你唯一能主动调的自由度就是让某个 non-basic variable 从 0 开始增大（entering）。
 
 所以我们必须知道：每个 non-basic variable 增大一点点，会让 $Z$怎么变化。而这恰好由 canonical form 的 $Z$表达式提供。
 
-方法：把Z当作一行加入增广矩阵（Tableau形式，或者叫hyper augmented matrix）。比如
+#### 方法：把Z当作一行加入增广矩阵（Tableau形式，或者叫hyper augmented matrix）。
+
+比如
 
 $$
 \min Z = x_{1} - x_{2} + 2x_{3} - 5x_{4}
@@ -1776,7 +1737,7 @@ $$
 | $R_2$ | 0 | 3 | 1 | 8 | 3 |
 | $Z$ | 1 | -1 | 2 | -5 | $Z$ |
 
-#### Step 1：选 pivot/把pivot变成1（在 $x_{2}$列、第2行的 3）
+##### Step 1：选 pivot/把pivot变成1（在 $x_{2}$列、第2行的 3）
 
 | 行 | $x_1$ | $x_2$ | $x_3$ | $x_4$ | RHS |
 | --- | ---: | ---: | ---: | ---: | --- |
@@ -1784,7 +1745,7 @@ $$
 | $R_2$ | 0 | 1 | 1/3 | 8/3 | 1 |
 | $Z$ | 1 | -1 | 2 | -5 | $Z$ |
 
-#### Step 2：把 pivot 列其它行消成 0（包括 Z-row）
+##### Step 2：把 pivot 列其它行消成 0（包括 Z-row）
 
 消掉第一行的 $x_{2}$系数 1：$R_{1} \leftarrow R_{1} - 1(R_{2})$
 新$R_{1}$：
@@ -1805,7 +1766,9 @@ $$
 | $R_2$ | 0 | 1 | 1/3 | 8/3 | 1 |
 | $Z$ | 1 | 0 | $7/3$ | $-7/3$ | $Z+1$ |
 
-#### Step 3：调整Z-row，保证basis对应的列只有一个1。这里我们需要消除Z-row 里的 $x_{1}$系数：$R_{Z} \leftarrow R_{Z} - 1(R_{1})$
+##### Step 3：调整Z-row，保证basis对应的列只有一个1。
+
+这里我们需要消除Z-row 里的 $x_{1}$系数：$R_{Z} \leftarrow R_{Z} - 1(R_{1})$
 
 | 行 | $x_1$ | $x_2$ | $x_3$ | $x_4$ | RHS |
 | --- | ---: | ---: | ---: | ---: | --- |
@@ -1813,7 +1776,7 @@ $$
 | $R_2$ | 0 | 1 | 1/3 | 8/3 | 1 |
 | $Z$ | 0 | 0 | $2/3$ | $-2/3$ | $Z-4$ |
 
-Final Step：从 tableau 读出“新的 Z 表达式”。
+##### Final Step：从 tableau 读出“新的 Z 表达式”。
 
 $$
 \frac{2}{3}x_{3} - \frac{2}{3}x_{4} = Z - 4
@@ -1825,29 +1788,26 @@ $$
 
 这就是pivot后的current expression。
 
-我们可以发现
+**我们可以发现**
 
-$x_{3}$ 增大会让 $Z$ 变大（对minimization不利）。
-
-$x_{4}$ 增大会让 $Z$ 变小（对 minimization 有利）；可行步长由基变量非负性决定。
+- $x_{3}$ 增大会让 $Z$ 变大（对minimization不利）。
+- $x_{4}$ 增大会让 $Z$ 变小（对 minimization 有利）；可行步长由基变量非负性决定。
 
 这就是为啥我们要在 $Z$ “只含 non-basic variables”。
 
-Canonical System
+#### Canonical System
 
 定义：A standard form LPP has a feasible canonical representation if
 
-Constraints are in canonical form.
+- Constraints are in canonical form.
+- The associated basic solution is feasible.
+- The expression for the objective function is in terms of the non-basic variables only.
 
-The associated basic solution is feasible.
-
-The expression for the objective function is in terms of the non-basic variables only.
-
-#### Example：比如刚才那个例子，经过pivoting后
+##### Example：比如刚才那个例子，经过pivoting后
 
 Constraints are in canonical form: Basis $B = \{ x_{1},x_{2}\}$ and $x_{1},x_{2}$ form the $\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}$.
 
-The associated basic solution is feasible
+**The associated basic solution is feasible**
 
 $$
 \left( x_{1},x_{2},x_{3},x_{4} \right) = (5,1,0,0)
@@ -1859,7 +1819,7 @@ The expression for the objective function is in terms of the non-basic variables
 
 ### 3.5 从 BFS 出发改进目标：进入变量与离开变量
 
-Pivoting用法三 — 得到Basic Feasible Solution之后，“推动”我们走向最优解
+#### Pivoting用法三 — 得到Basic Feasible Solution之后，“推动”我们走向最优解
 
 Pivoting的核心结论：pivot 改变当前 basis；非退化 pivot 移动到相邻顶点，退化 pivot 保持同一个 BFS 点不变
 
@@ -1869,13 +1829,13 @@ Pivoting的核心结论：pivot 改变当前 basis；非退化 pivot 移动到�
 
 我们要判断entering variable和leaving variable
 
-Entering variable看目标函数：$Z = \frac{2}{3}x_{3} - \frac{2}{3}x_{4} + 4$，你会发现$x_{4}$增大会有利于我们达成Z最小的目标。因此$x_{4}$ enters。
+**Entering variable看目标函数：**$Z = \frac{2}{3}x_{3} - \frac{2}{3}x_{4} + 4$，你会发现$x_{4}$增大会有利于我们达成Z最小的目标。因此$x_{4}$ enters。
 
-Leaving variable看约束（Ratio Test）：$\left\{ \begin{array}{r} x_{1} = 5 - \frac{5}{3}x_{3} + \frac{5}{3}x_{4} \\ x_{2} = 1 - \frac{1}{3}x_{3} - \frac{8}{3}x_{4} \end{array} \right.$，现在只考虑 $x_{4}$，把$x_{3}$设为0。
+**Leaving variable看约束（Ratio Test）：**$\left\{ \begin{array}{r} x_{1} = 5 - \frac{5}{3}x_{3} + \frac{5}{3}x_{4} \\ x_{2} = 1 - \frac{1}{3}x_{3} - \frac{8}{3}x_{4} \end{array} \right.$，现在只考虑 $x_{4}$，把$x_{3}$设为0。
 
-$x_{1} = 5 + \frac{5}{3}x_{4} \geq 0 \rightarrow x_{4} \geq - 3$
+- $x_{1} = 5 + \frac{5}{3}x_{4} \geq 0 \rightarrow x_{4} \geq - 3$
+- $x_{2} = 1 - \frac{8}{3}x_{4} \geq 0 \rightarrow x_{4} \leq \frac{3}{8}$
 
-$x_{2} = 1 - \frac{8}{3}x_{4} \geq 0 \rightarrow x_{4} \leq \frac{3}{8}$
 你会发现增大$x_{4}$不会让$x_{1}$变负，但是会让$x_{2}$变负数。因此$x_{2}$ leaves。在等式左侧的进入列中，只对正系数行计算 RHS/系数，取最小非负比值，离开变量为相应行的基变量。
 
 我们换basis：$\left\{ x_{1},x_{2} \right\} \rightarrow \{ x_{1},x_{4}\}$
@@ -1890,7 +1850,7 @@ $x_{2} = 1 - \frac{8}{3}x_{4} \geq 0 \rightarrow x_{4} \leq \frac{3}{8}$
 
 因为我们本质上是想要把8/3变成1。
 
-最终tableau：
+**最终tableau：**
 
 | 行 | $x_1$ | $x_2$ | $x_3$ | $x_4$ | RHS |
 | --- | ---: | ---: | ---: | ---: | --- |
@@ -1908,15 +1868,13 @@ $$
 
 ### 3.6 饲料问题：完整的手工换基过程
 
-#### 整理与案例 —— Simplex全过程
+**整理与案例 —— Simplex全过程**
 
 #### Recall：Pivoting的作用
 
-Pivoting用法一：Pivoting 可以改变矩阵，使其变成Canonical Form。
-
-Pivoting用法二 ：Pivoting 可以改变 basis，尝试得到 Basic Feasible Solution。
-
-Pivoting用法三：得到Basic Feasible Solution之后，“推动”我们走向最优解。
+- Pivoting用法一：Pivoting 可以改变矩阵，使其变成Canonical Form。
+- Pivoting用法二 ：Pivoting 可以改变 basis，尝试得到 Basic Feasible Solution。
+- Pivoting用法三：得到Basic Feasible Solution之后，“推动”我们走向最优解。
 
 下面我们通过一个完整的案例串起来之前的所有概念。案例如下
 
@@ -1957,11 +1915,13 @@ $$
 | $R_3$ | 3 | 6 | 0 | 0 | -1 | 72 |
 | $Z$ | 10 | 4 | 0 | 0 | 0 | $Z$ |
 
-#### Step 2：计算bases数量，确定Canonical Form，选择起点basis，开始pivoting（这是为了得到Canonical Form以及得到basic feasible solution而pivoting，也就是pivoting用法一和用法二）
+#### Step 2：计算bases数量，确定Canonical Form，选择起点basis，开始pivoting（
+
+这是为了得到Canonical Form以及得到basic feasible solution而pivoting，也就是pivoting用法一和用法二）
 
 候选列组合数量：$\begin{pmatrix} 5 \\ 3 \end{pmatrix} = 10$ 个；选出的列线性无关时才构成基。本例这 10 个组合均非奇异，但不一定都给出可行基本解。
 
-选择起点basis
+##### 选择起点basis
 
 观察hyper augmented matrix，我们发现 $\{ x_{3},\ x_{4},\ x_{5}\}$似乎可以构成单位矩阵。
 
@@ -1980,13 +1940,13 @@ $$
 B_{1} = \{ x_{3},\ x_{4},\ x_{5}\}
 $$
 
-判断是否要pivoting：
+**判断是否要pivoting：**
 
-用法一：Pivoting 可以改变矩阵，使其变成Canonical Form（已经完成，不再需要）
+- 用法一：Pivoting 可以改变矩阵，使其变成Canonical Form（已经完成，不再需要）
 
-用法二：Pivoting 可以改变 basis，尝试得到 Basic Feasible Solution（Basic Feasible Solution要求Basic Solution $\geq 0$，此时${\overline{s}}_{B_{1}} = (x_{1},x_{2},x_{3},x_{4},x_{5}) = (0,0, - 60, - 84, - 72)$，很明显不是Basic Feasible Solution，因此需要Pivoting）。
+- 用法二：Pivoting 可以改变 basis，尝试得到 Basic Feasible Solution（Basic Feasible Solution要求Basic Solution $\geq 0$，此时${\overline{s}}_{B_{1}} = (x_{1},x_{2},x_{3},x_{4},x_{5}) = (0,0, - 60, - 84, - 72)$，很明显不是Basic Feasible Solution，因此需要Pivoting）。
 
-#### Pivoting 1
+##### Pivoting 1
 
 Pivot Position：本例手工选择 RHS 为 $-84$ 的第二行，并取 $x_1$ 列的 $-7$ 作主元。换基后继续检查可行性；一般 Phase 1 使用辅助问题的规则。
 
@@ -2022,25 +1982,25 @@ $$
 | $R_3$ | 0 | -36/7 | 0 | -3/7 | 1 | -36 |
 | $Z$ | 0 | $8/7$ | 0 | $10/7$ | 0 | $Z-120$ |
 
-新basis是
+**新basis是**
 
 $$
 B = \{ x_{3},x_{1},x_{5}\}
 $$
 
-新basic solution
+**新basic solution**
 
 $$
 \left( x_{1},x_{2},x_{3},x_{4},x_{5} \right) = (12,\ 0, - 24,\ 0, - 36)
 $$
 
-判断是否要pivoting：
+**判断是否要pivoting：**
 
-用法一：Pivoting 可以改变矩阵，使其变成Canonical Form（已经完成，不再需要）
+- 用法一：Pivoting 可以改变矩阵，使其变成Canonical Form（已经完成，不再需要）
 
-用法二：Pivoting 可以改变 basis，尝试得到 Basic Feasible Solution（Basic Feasible Solution要求Basic Solution $\geq 0$，此时${\overline{s}}_{B_{2}} = (x_{1},x_{2},x_{3},x_{4},x_{5}) = (12,\ 0, - 24,\ 0, - 36)$，很明显不是Basic Feasible Solution，因此需要Pivoting）。
+- 用法二：Pivoting 可以改变 basis，尝试得到 Basic Feasible Solution（Basic Feasible Solution要求Basic Solution $\geq 0$，此时${\overline{s}}_{B_{2}} = (x_{1},x_{2},x_{3},x_{4},x_{5}) = (12,\ 0, - 24,\ 0, - 36)$，很明显不是Basic Feasible Solution，因此需要Pivoting）。
 
-#### Pivoting 2
+##### Pivoting 2
 
 Pivot Position：当前第三行 RHS 为 $-36$。本例继续手工选择该行 $x_4$ 列的 $-3/7$ 作主元，并检查新基本解的非负性。
 
@@ -2076,19 +2036,19 @@ $$
 | $R_3$ | 0 | 12 | 0 | 1 | -7/3 | 84 |
 | $Z$ | 0 | -16 | 0 | 0 | $10/3$ | $Z-240$ |
 
-新basis是
+**新basis是**
 
 $$
 B = \{ x_{3},x_{1},x_{4}\}
 $$
 
-新basic solution
+**新basic solution**
 
 $$
 \left( x_{1},x_{2},x_{3},x_{4},x_{5} \right) = (24,\ 0,12,\ 84,0)
 $$
 
-新目标函数
+**新目标函数**
 
 $$
 16x_{2} - \frac{10}{3}x_{5} = - Z + 240
@@ -2106,13 +2066,13 @@ $$
 
 #### Step 3：继续pivoting（为了最优而pivoting，这是pivoting用法三）
 
-#### Pivoting 3
+##### Pivoting 3
 
 Pivot Position：这是一个minimization问题
 
-Entering variable看目标函数：增大 $x_{2}$ 可以让Z最小。最终结论就是entering variable是$x_{2}$。
+**Entering variable看目标函数：增大 $x_{2}$ 可以让Z最小。最终结论就是entering variable是$x_{2}$。**
 
-Leaving variable看约束：
+**Leaving variable看约束：**
 
 $$
 \left\{ \begin{array}{r}
@@ -2148,7 +2108,7 @@ $$
 
 这三行在进入列上的系数都为正，因此比较全部三个非负比值，取最小者。$\min{\{ 3,12,7\}} = 3$。最终结论就是leaving variable是$x_{3}$。
 
-Pivot Position就是
+**Pivot Position就是**
 
 $$
 (\text{row }x_{3},\ \text{col }x_{2})
@@ -2182,19 +2142,19 @@ $$
 | $R_3$ | 0 | 0 | -3 | 1 | 2/3 | 48 |
 | $Z$ | 0 | 0 | 4 | 0 | $-2/3$ | $Z-192$ |
 
-新basis是
+**新basis是**
 
 $$
 B = \{ x_{2},x_{1},x_{4}\}
 $$
 
-新basic solution
+**新basic solution**
 
 $$
 \left( x_{1},x_{2},x_{3},x_{4},x_{5} \right) = (18,\ 3,0,\ 48,0)
 $$
 
-新目标函数
+**新目标函数**
 
 $$
 - 4x_{3} + \frac{2}{3}x_{5} = - Z + 192
@@ -2204,19 +2164,19 @@ $$
 Z = 192 + 4x_{3} - \frac{2}{3}x_{5}
 $$
 
-要不要继续pivoting？
+**要不要继续pivoting？**
 
 对于minimization：如果Z-row所有系数都 $\geq 0$，则最优。
 
 现在目标表达式中 $x_5$ 的 reduced cost 为 $-2/3$，因此选择它作下一轮候选进入变量。
 
-#### Pivoting 4
+##### Pivoting 4
 
 Pivot Position：这是一个minimization问题
 
-Entering variable看目标函数：增大 $x_{5}$ 可以让Z最小。最终结论就是entering variable是$x_{5}$。
+**Entering variable看目标函数：增大 $x_{5}$ 可以让Z最小。最终结论就是entering variable是$x_{5}$。**
 
-Leaving variable看约束：
+**Leaving variable看约束：**
 
 $$
 \left\{ \begin{array}{r}
@@ -2258,7 +2218,7 @@ $$
 
 因此leaving variable是 $x_{4}$。
 
-Pivot Position就是
+**Pivot Position就是**
 
 $$
 (\text{row }x_{4},\ \text{col }x_{5})
@@ -2292,19 +2252,19 @@ $$
 | $R_3$ | 0 | 0 | -9/2 | 3/2 | 1 | 72 |
 | $Z$ | 0 | 0 | 1 | 1 | 0 | $Z-144$ |
 
-新basis是
+**新basis是**
 
 $$
 B = \{ x_{2},x_{1},x_{5}\}
 $$
 
-新basic solution
+**新basic solution**
 
 $$
 \left( x_{1},x_{2},x_{3},x_{4},x_{5} \right) = (6,\ 21,0,\ 0,72)
 $$
 
-新目标函数
+**新目标函数**
 
 $$
 - x_{3} - x_{4} = - Z + 144
@@ -2314,7 +2274,7 @@ $$
 Z=144+x_3+x_4
 $$
 
-要不要继续pivoting？
+**要不要继续pivoting？**
 
 对于minimization：如果Z-row所有系数都 $\geq 0$，则最优。
 
@@ -2336,15 +2296,15 @@ $$
 
 ### 3.7 Simplex 的两个阶段与流程
 
-总结：解一个standard form LPP到底要完成哪些任务
+#### 总结：解一个standard form LPP到底要完成哪些任务
 
-第一部分：判断Feasibility（先判断 $S^{\geq}$是否为空）
+##### 第一部分：判断Feasibility（先判断 $S^{\geq}$是否为空）
 
 如果可行域空：infeasible，问题无解（在约束下没有任何合法点）。
 
 如果可行域不为空，我们继续，也就是其是一个Feasible LPP。
 
-第二部分：看目标函数是否 NBB
+##### 第二部分：看目标函数是否 NBB
 
 情况一：存在最优解，也就是我们要find ${\overline{s}}_{\min} \in S^{\geq}$satisfying for $\overline{c}^{T}{\overline{s}}_{\min} \leq \overline{c}^{T}\overline{s}$ every $\overline{s} \in S^{\geq}$，数学形式化写法就是
 
@@ -2356,37 +2316,34 @@ $$
 
 情况二：no such ${\overline{s}}_{\min}$exists，也就是虽然可行，但目标函数没有最小值。该情况叫做Not Bounded Below。
 
-Simplex 的“两阶段”对应上面两件事
+#### Simplex 的“两阶段”对应上面两件事
 
-Phase 1：解决 (1) —— 找到一个basic feasible solution（这通常更难，我们目前还没有真正定义如何在Phase 1确定pivot position）。
+- Phase 1：解决 (1) —— 找到一个basic feasible solution（这通常更难，我们目前还没有真正定义如何在Phase 1确定pivot position）。
+- Phase 2：解决 (2) —— 从一个“好”的起点出发，不断 pivot 改善目标值，直到最优或判定 NBB。
 
-Phase 2：解决 (2) —— 从一个“好”的起点出发，不断 pivot 改善目标值，直到最优或判定 NBB。
+#### 目前的逻辑
 
-目前的逻辑
+##### Phase 1：找到确定Canonical Form，选择起点basis，开始pivoting得到basic feasible solution。
 
-Phase 1：找到确定Canonical Form，选择起点basis，开始pivoting得到basic feasible solution。
+**停止条件：得到basic feasible solution**
 
-停止条件：得到basic feasible solution
+**确定 pivot position：**手工例子曾尝试在负 RHS 行选择负系数；标准 Phase 1 则引入人工变量，通过辅助问题的 reduced costs 和最小比值检验选择主元。
 
-确定 pivot position：手工例子曾尝试在负 RHS 行选择负系数；标准 Phase 1 则引入人工变量，通过辅助问题的 reduced costs 和最小比值检验选择主元。
+##### Phase 2：就是得到最优或判定 NBB。
 
-Phase 2：就是得到最优或判定 NBB。
+**停止条件**
 
-停止条件
+- 对于minimization：如果目标函数所有系数都 ≥0，则最优。
+- 对于maximization：如果目标函数所有系数都 ≤0，则最优。
 
-对于minimization：如果目标函数所有系数都 ≥0，则最优。
+**Entering variable**
 
-对于maximization：如果目标函数所有系数都 ≤0，则最优。
+- 对 min：挑一个 $c_j<0$ 的非基变量进入；步长为正时 $Z$ 下降，零步长时保持不变。
+- 对 max：挑一个 $c_j>0$ 的非基变量进入；步长为正时 $Z$ 上升，零步长时保持不变。
 
-Entering variable
+**Ratio test and leaving variable：**把其余非基变量设为零，让进入变量从零增大。只比较进入列中正约束系数对应的 RHS/系数，最小比值行的基变量离开，以保持全部基变量非负。
 
-对 min：挑一个 $c_j<0$ 的非基变量进入；步长为正时 $Z$ 下降，零步长时保持不变。
-
-对 max：挑一个 $c_j>0$ 的非基变量进入；步长为正时 $Z$ 上升，零步长时保持不变。
-
-Ratio test and leaving variable：把其余非基变量设为零，让进入变量从零增大。只比较进入列中正约束系数对应的 RHS/系数，最小比值行的基变量离开，以保持全部基变量非负。
-
-在Simplex中如何判定NBB？
+#### 在Simplex中如何判定NBB？
 
 在 simplex / tableau 视角里，NBB 通常长这样：
 
@@ -2398,19 +2355,16 @@ Ratio test and leaving variable：把其余非基变量设为零，让进入变�
 
 那就意味着：你可以让这个变量无限增大，同时不破坏可行性，而目标一直下降 ⇒ NBB。
 
-#### Example
+##### Example
 
 ![具有无界可行方向的单纯形表](lin_opt-assets/media/image6.png)
 
-基本信息：
+**基本信息：**
 
-Basis：$\{ x_{3},x_{4}\}$。
-
-非基：$\{ x_{1},x_{2}\}$。
-
-当前 BFS：$(x_1,x_2,x_3,x_4)=(0,0,1,2)$。
-
-目标函数：$Z = 5 + x_{2}$。
+- Basis：$\{ x_{3},x_{4}\}$。
+- 非基：$\{ x_{1},x_{2}\}$。
+- 当前 BFS：$(x_1,x_2,x_3,x_4)=(0,0,1,2)$。
+- 目标函数：$Z = 5 + x_{2}$。
 
 选 entering variable：这里就可以看出端倪，因为 $x_{2}$ 没办法最小化Z。
 
@@ -2484,13 +2438,13 @@ $$
 
 ### 4.2 Theorem 1：Optimality criterion（最优性判据）
 
-#### 本节的3个Theorem都只适用于Phase 2
+**本节的3个Theorem都只适用于Phase 2**
 
-#### Theorem 1: Optimality Criterion
+**Theorem 1: Optimality Criterion**
 
 #### Example：我们给一个有 $n = 5$个变量、$m = 2$ 条约束的 canonical form（basis 取 $B = \{ x_{1},x_{2}\}$，非基是 $x_{3},x_{4},x_{5}$）
 
-约束
+**约束**
 
 $$
 \left\{ \begin{aligned}
@@ -2502,7 +2456,7 @@ $$
 
 注意 RHS：$b_{1} = 4,\ b_{2} = 5 \geq 0$。所以当前 BFS 是可行的。
 
-目标函数的 canonical 表达式（只含非基变量）
+**目标函数的 canonical 表达式（只含非基变量）**
 
 $$
 Z = 7x_{3} + 1x_{4} + 4x_{5} - 10
@@ -2516,7 +2470,7 @@ $$
 {\overline{s}}_{B} = (x_{1},x_{2},x_{3},x_{4},x_{5}) = (4,5,0,0,0)
 $$
 
-算这个 BFS 的目标值
+**算这个 BFS 的目标值**
 
 $$
 Z({\overline{s}}_{B}) = 7 \cdot 0 + 1 \cdot 0 + 4 \cdot 0 - 10 = - 10
@@ -2554,7 +2508,9 @@ $$
 
 并且 ${\overline{s}}_{B} = (4,5,0,0,0)$就是最优解。
 
-形式化表述：Consider a *canonical form* linear programming problem in $n$ variables and $m$ constraints $\left( m\leq n \right)$, presented in the form $\min Z$ subject to
+#### 形式化表述：
+
+Consider a *canonical form* linear programming problem in $n$ variables and $m$ constraints $\left( m\leq n \right)$, presented in the form $\min Z$ subject to
 
 $$
 x_{j} \geq 0(1 \leq j \leq n),
@@ -2598,7 +2554,7 @@ $$
 
 且对所有非基变量 $x_{m + 1},\ldots,x_{n}$都有 $c_{j} \geq 0$，那么最小值就是 $- z_{0}$，并且在当前 BFS ${\overline{s}}_{B} = (b_{1},\ldots,b_{m},0,\ldots,0)$ 取得。
 
-#### Step 0：先明确 canonical form 给了我们什么
+##### Step 0：先明确 canonical form 给了我们什么
 
 我们知道约束是
 
@@ -2618,7 +2574,7 @@ $$
 Z = \sum_{j = m + 1}^{n} c_{j}x_{j} - z_{0}
 $$
 
-#### Step 1：用当前 BFS 给出一个“可达到的值” ⇒ 得到上界
+##### Step 1：用当前 BFS 给出一个“可达到的值” ⇒ 得到上界
 
 因为 ${\overline{s}}_{B}$是可行点，所以它的目标值是一个合法的可行目标值。我们把 ${\overline{s}}_{B}$代入目标函数。此时非基变量 $x_{m + 1} = \cdots = x_{n} = 0$，所以
 
@@ -2628,7 +2584,7 @@ $$
 
 既然我们在做 minimization，那么“最小值”一定不可能大于任何一个可行点的目标值。因此：$Z_{\min} \leq Z({\overline{s}}_{B}) = - z_{0}.$
 
-#### Step 2：证明任何可行点都满足 $Z \geq - z_{0}$⇒ 得到下界
+##### Step 2：证明任何可行点都满足 $Z \geq - z_{0}$⇒ 得到下界
 
 $Z = \sum_{j = m + 1}^{n} c_{j}x_{j} - z_{0}$可以得到$Z + z_{0} = \sum_{j = m + 1}^{n} c_{j}x_{j}\ (1)$。
 
@@ -2648,7 +2604,7 @@ $$
 Z_{\min} \geq - z_{0}
 $$
 
-#### Step 3：上下界夹逼 ⇒ 最小值等于 $- z_{0}$
+##### Step 3：上下界夹逼 ⇒ 最小值等于 $- z_{0}$
 
 我们从Step 1可知$Z_{\min} \leq - z_{0}$。
 
@@ -2660,7 +2616,7 @@ $$
 Z_{\min} = - z_{0}
 $$
 
-#### Step 4：最小值在 ${\overline{s}}_{B}$处取得 ⇒ ${\overline{s}}_{B}$最优
+##### Step 4：最小值在 ${\overline{s}}_{B}$处取得 ⇒ ${\overline{s}}_{B}$最优
 
 我们在 Step 1 已经算出
 
@@ -2670,7 +2626,9 @@ $$
 
 而 Step 3 告诉我们最小值就是 $- z_{0}$。所以 ${\overline{s}}_{B}$达到了最小值，必然是最优点。
 
-总结：在 canonical dictionary 里，如果你能把目标写成
+#### 总结：
+
+在 canonical dictionary 里，如果你能把目标写成
 
 $$
 Z = - z_{0} + \sum_{j \in N}^{} c_{j}x_{j}
@@ -2684,11 +2642,12 @@ $$
 
 而当前 BFS 取到 $- z_{0}$，所以最优。
 
-应用：和之前的例子一样，在 simplex 的 canonical form 中，目标函数可以写成只包含 non-basic variables 的形式（Z-row）。因此，在进入phase 2后，每一步 pivot 后，我们只需要检查 Z-row：
+#### 应用：
 
-如果存在某个 non-basic variable 的系数 $c_j<0$，可把它作为候选进入变量；若可行步长为正，就能降低目标值，若步长为零则发生退化 pivot。
+和之前的例子一样，在 simplex 的 canonical form 中，目标函数可以写成只包含 non-basic variables 的形式（Z-row）。因此，在进入phase 2后，每一步 pivot 后，我们只需要检查 Z-row：
 
-如果所有 $c_{j} \geq 0$，说明当前 BFS 已经达到最优值，算法终止。
+- 如果存在某个 non-basic variable 的系数 $c_j<0$，可把它作为候选进入变量；若可行步长为正，就能降低目标值，若步长为零则发生退化 pivot。
+- 如果所有 $c_{j} \geq 0$，说明当前 BFS 已经达到最优值，算法终止。
 
 Theorem 1 给出充分条件。退化时，最优点对应的某个基仍可能有负 reduced cost，因此判据暂不适用不等于该点一定非最优。
 
@@ -2696,7 +2655,7 @@ Theorem 1 给出充分条件。退化时，最优点对应的某个基仍可能�
 
 ### 4.3 Theorem 2：Unboundedness criterion（无下界判据）
 
-#### Theorem 2: Unboundedness Criterion
+**Theorem 2: Unboundedness Criterion**
 
 #### Example：我们给一个有 $n = 4$个变量、$m = 2$ 条约束的 canonical form（basis 取 $B = \{ x_{3},x_{4}\}$，非基是 $x_{1},x_{2}$）。例子和之前的NBB例子一致
 
@@ -2708,13 +2667,10 @@ Theorem 1 给出充分条件。退化时，最优点对应的某个基仍可能�
 
 基本信息：
 
-Basis：$\{ x_{3},x_{4}\}$。
-
-非基：$\{ x_{1},x_{2}\}$。
-
-当前 BFS：$(x_1,x_2,x_3,x_4)=(0,0,1,2)$。
-
-目标函数：$Z=5-x_2$。
+- Basis：$\{ x_{3},x_{4}\}$。
+- 非基：$\{ x_{1},x_{2}\}$。
+- 当前 BFS：$(x_1,x_2,x_3,x_4)=(0,0,1,2)$。
+- 目标函数：$Z=5-x_2$。
 
 选 entering variable：$x_2$ 的 reduced cost 为 $-1$，增大它能够降低目标，因此选择 $x_2$ 进入。
 
@@ -2734,24 +2690,28 @@ $$
 
 没有任何 basic variable 会被压到 0，更不会变负。
 
-现在有一个定理说，我们可以通过下面3步直接判断NBB
+**现在有一个定理说，我们可以通过下面3步直接判断NBB**
 
-#### Step 1：确认non-basic variable，这里是$\{ x_{1},x_{2}\}$
+##### Step 1：确认non-basic variable，这里是$\{ x_{1},x_{2}\}$
 
-#### Step 2：如果non-basic variable中有一个在z-row里$< 0$，满足条件1（$c_{2} = - 1 < 0$）
+##### Step 2：如果non-basic variable中有一个在z-row里$< 0$，满足条件1（$c_{2} = - 1 < 0$）
 
-#### Step 3：查看对应的那一列（看 $x_{2}$这一列），如果这一列都$\leq 0$，则满足条件2（这里$\begin{pmatrix} - 2 \\ - 1 \end{pmatrix} \leq 0$）
+##### Step 3：查看对应的那一列（看 $x_{2}$这一列），如果这一列都$\leq 0$，则满足条件2（这里$\begin{pmatrix} - 2 \\ - 1 \end{pmatrix} \leq 0$）
 
 我们称这一列为special column，并且如果出现special column，可以判定NBB。
 
-标准版定义：If there exists a non-basic variable $x_{j}$ such that
+#### 标准版定义：
 
-$c_{j} < 0$, and
+If there exists a non-basic variable $x_{j}$ such that
 
-$a_{ij} \leq 0$ for all $i$,
+- $c_{j} < 0$, and
+- $a_{ij} \leq 0$ for all $i$,
+
 then the corresponding column is a special column, and the LP is unbounded below (NBB).
 
-形式化表述：If there exists $j^{*}$ with
+#### 形式化表述：
+
+If there exists $j^{*}$ with
 
 $$
 \underbrace{m+1\leq j^*\leq n}_{\text{non-basic range}}
@@ -2759,9 +2719,8 @@ $$
 
 satisfying
 
-$c_{j^{*}} < 0$ and
-
-$a_{ij^{*}} \leq 0$ for each $i$ with $1 \leq i \leq m$
+- $c_{j^{*}} < 0$ and
+- $a_{ij^{*}} \leq 0$ for each $i$ with $1 \leq i \leq m$
 
 then the objective function is NBB. This is the analytic way of saying that if there is a “special” column then the problem is NBB.
 
@@ -2771,18 +2730,16 @@ then the objective function is NBB. This is the analytic way of saying that if t
 
 证明总策略：我们显式构造了一族点 ${\overline{s}}_{t}(t \geq 0)$，然后证明2件事情
 
-对每个 $t \geq 0$，${\overline{s}}_{t}$ 都是 feasible solution。
+- 对每个 $t \geq 0$，${\overline{s}}_{t}$ 都是 feasible solution。
+- 当 $t \rightarrow \infty$时，$Z({\overline{s}}_{t}) \rightarrow - \infty$。
 
-当 $t \rightarrow \infty$时，$Z({\overline{s}}_{t}) \rightarrow - \infty$。
 这样我们就知道：有无穷多个 feasible points，且它们的 objective values 可以降到任意小。所以 objective function NBB。
 
-#### Step 1：构造 ${\overline{s}}_{t}$
+##### Step 1：构造 ${\overline{s}}_{t}$
 
-Set $x_{j^{*}} = t \geq 0.$（这里的$x_{j^{*}}$就是我们special column对应的那个variable，比如上述例子中$x_{j^{*}} = x_{2}$。）
-
-Set $x_{j} = 0\ \text{for each }j\ with\ m + 1 \leq j \leq n,j \neq j^{*}.$（其他 non-basic variables 全部继续保持 0，只有 $x_{j^{*}}$这一个 non-basic variable 被放开，设成 $t$。）
-
-Set $x_{i} = b_{i} - a_{i,j^{*}}t,i = 1,\ldots,m.$
+- Set $x_{j^{*}} = t \geq 0.$（这里的$x_{j^{*}}$就是我们special column对应的那个variable，比如上述例子中$x_{j^{*}} = x_{2}$。）
+- Set $x_{j} = 0\ \text{for each }j\ with\ m + 1 \leq j \leq n,j \neq j^{*}.$（其他 non-basic variables 全部继续保持 0，只有 $x_{j^{*}}$这一个 non-basic variable 被放开，设成 $t$。）
+- Set $x_{i} = b_{i} - a_{i,j^{*}}t,i = 1,\ldots,m.$
 
 在 canonical form 里，每个 basic variable 本来都写成
 
@@ -2796,7 +2753,7 @@ $$
 x_{i} = b_{i} - a_{i,j^{*}}x_{j^{*}} = b_{i} - a_{i,j^{*}}t.
 $$
 
-#### Step 2：证明这些点都是 nonnegative
+##### Step 2：证明这些点都是 nonnegative
 
 Since $a_{ij^{*}} \leq 0$, $- a_{ij^{*}} \geq 0$.
 
@@ -2808,17 +2765,16 @@ For non-basic variables, we have $x_{j^{*}} = t \geq 0$ and the remaining non-ba
 
 所以所有坐标都非负。
 
-#### Step 3：定义 ${\overline{s}}_{t}$的完整形式
+##### Step 3：定义 ${\overline{s}}_{t}$的完整形式
 
 $$
 {\overline{s}}_{t} = (b_{1} - a_{1,j^{*}}t,b_{2} - a_{2,j^{*}}t,\ldots,b_{m} - a_{m,j^{*}}t,0,\ldots,0,t,0,\ldots,0).
 $$
 
-前 $m$ 个 basic coordinates 按公式算。
+- 前 $m$ 个 basic coordinates 按公式算。
+- 后面的 non-basic coordinates 全是 0，只有第 $j^{*}$个位置是 $t$。
 
-后面的 non-basic coordinates 全是 0，只有第 $j^{*}$个位置是 $t$。
-
-#### Step 4：证明 ${\overline{s}}_{t}$满足约束等式（这是为了证明这些点不只是非负，而且真的还在可行域里）
+##### Step 4：证明 ${\overline{s}}_{t}$满足约束等式（这是为了证明这些点不只是非负，而且真的还在可行域里）
 
 已知对任意 $i = 1,\ldots,m$，
 
@@ -2848,7 +2804,7 @@ $$
 {\overline{s}}_{t}\text{ is a feasible solution for every }t \geq 0.
 $$
 
-#### Step 5：计算目标函数 $Z({\overline{s}}_{t})$
+##### Step 5：计算目标函数 $Z({\overline{s}}_{t})$
 
 在 canonical form 中，我们知道basic columns 的 bottom-row entries 都是 0，因此
 
@@ -2862,7 +2818,7 @@ $$
 Z({\overline{s}}_{t}) = c_{j^{*}}x_{j^{*}} - z_{0} = c_{j^{*}}t - z_{0}.
 $$
 
-#### Step 6：最后如何推出 $- \infty$
+##### Step 6：最后如何推出 $- \infty$
 
 因为$c_{j^{*}} < 0$，因此当 $t \rightarrow \infty$时，
 
@@ -2882,27 +2838,24 @@ $$
 
 ### 4.4 Theorem 3：Quotient competition（最小比值检验）
 
-#### Theorem 3: Quotient Competition
+**Theorem 3: Quotient Competition**
 
 直观版：若当前存在负 reduced cost，且所选进入列至少有一个正约束系数，就可做一次最小比值检验与 pivot，使得
 
-仍然保持 feasible
-
-并且目标函数不增加；可行步长为正时严格下降
+- 仍然保持 feasible
+- 并且目标函数不增加；可行步长为正时严格下降
 
 换句话来说，如果
 
-Theorem 1 的条件不满足 → 存在 $c_j<0$ → 当前表尚未通过该充分判据确认最优，可以选择负 reduced cost 的非基列。退化时当前点仍可能已经最优。
-
-Theorem 2 的条件不满足 → 当前没有 special column → 当前表尚未给出无下界证据；每个负 reduced cost 的候选列均有正系数可参加比值检验。
+- Theorem 1 的条件不满足 → 存在 $c_j<0$ → 当前表尚未通过该充分判据确认最优，可以选择负 reduced cost 的非基列。退化时当前点仍可能已经最优。
+- Theorem 2 的条件不满足 → 当前没有 special column → 当前表尚未给出无下界证据；每个负 reduced cost 的候选列均有正系数可参加比值检验。
 
 那说明，一定存在某一列
 
-$c_j<0$，对应目标下降的候选方向；实际下降量取决于可行步长
+- $c_j<0$，对应目标下降的候选方向；实际下降量取决于可行步长
+- 且该列至少有一个正数，可以做 pivot
 
-且该列至少有一个正数，可以做 pivot
-
-如何通过pivoting找到最优解（这是我们之前学习的pivoting的第三个用法）— 得到Basic Feasible Solution之后，“推动”我们走向最优解
+#### 如何通过pivoting找到最优解（这是我们之前学习的pivoting的第三个用法）— 得到Basic Feasible Solution之后，“推动”我们走向最优解
 
 Pivoting的核心结论：pivot 改变当前 basis；非退化 pivot 移动到相邻顶点，退化 pivot 保持同一个 BFS 点不变
 
@@ -2916,7 +2869,7 @@ Pivoting的核心结论：pivot 改变当前 basis；非退化 pivot 移动到�
 
 当前BFS：$(5,1,0,0)$
 
-#### Step 0：先判断处在哪种情况
+##### Step 0：先判断处在哪种情况
 
 Theorem 1 的条件不满足（需继续分析）：因为Z-row存在负的 $c_{j}$
 
@@ -2928,15 +2881,17 @@ Theorem 2 的条件不满足（当前尚无无界证据）：因为没有special
 
 所以我们进入Theorem 3（做 pivot）
 
-#### Step 1：选 pivot column（也就是之前说的entering variable）
+##### Step 1：选 pivot column（也就是之前说的entering variable）
 
 要求：$c_{j} < 0$
 
 这里只有：$c_{4} = - 2/3 < 0$，因此pivot column = $x_{4}$
 
-#### Step 2：选 pivot row（ratio test）
+##### Step 2：选 pivot row（ratio test）
 
-#### Step 2.1：筛选eligible rows。只看column $j^{*}$ 上方的 entries $a_{1j^{*}},a_{2j^{*}},\ldots,a_{mj^{*}}$，只有满足
+###### Step 2.1：筛选eligible rows。
+
+只看column $j^{*}$ 上方的 entries $a_{1j^{*}},a_{2j^{*}},\ldots,a_{mj^{*}}$，只有满足
 
 $$
 a_{ij^{*}} > 0
@@ -2944,22 +2899,22 @@ $$
 
 才有资格参加ratio test。这里 $x_4$ 列的 reduced cost 为 $-2/3$，其约束系数为 $-5/3$ 和 $8/3$。只有第二行的 $8/3>0$，因此只有第二行参加 ratio test。
 
-#### Step 2.2：对于每个 eligible row，计算
+###### Step 2.2：对于每个 eligible row，计算
 
 $$
 \frac{b_{i}}{a_{ij^{*}}}
 $$
 
-$b_{i}$ 是这一行RHS
+- $b_{i}$ 是这一行RHS
+- $a_{ij^{*}}$ 是这一行在 pivot column 里的 entry
 
-$a_{ij^{*}}$ 是这一行在 pivot column 里的 entry
 这里的候选人只有一个，因此
 
 $$
 \frac{b_{i}}{a_{ij^{*}}} = \frac{1}{8/3} = \frac{3}{8}
 $$
 
-#### Step 3：选最小 ratio
+##### Step 3：选最小 ratio
 
 $$
 \min\left\{ \frac{b_{i}}{a_{ij^{*}}}:a_{ij^{*}} > 0 \right\}
@@ -2967,7 +2922,7 @@ $$
 
 取得最小值的那一行，就是 pivot row。对应的 basic variable 就是 leaving variable。
 
-#### Step 4：确定 pivot position（pivot row 和 pivot column 的交点）
+##### Step 4：确定 pivot position（pivot row 和 pivot column 的交点）
 
 特殊情况：如果我们出现了多个$c_{j} < 0$的column，理论上选任意一个都可以，但是为了使本轮目标下降量最大，我们可以使用
 
@@ -2993,47 +2948,42 @@ $$
 
 对比所有候选column的新目标函数值，选出本轮下降量最大的候选 column 作为 pivot column，并选择对应的pivot row。
 
-几个需要注意的情况（分别对每个候选 column 检查）
+#### 几个需要注意的情况（分别对每个候选 column 检查）
 
-正常情况 — 有多个 eligible rows：计算每一个的ratio，谁最小谁赢。
+- 正常情况 — 有多个 eligible rows：计算每一个的ratio，谁最小谁赢。
+- 正常情况 — 只有1个 eligible row：直接作为pivot row。
+- 特殊情况 — ratio test的两个ratios算出来一样：那么两行都可以作为 pivot row。
+- 特殊情况 — 1个 eligible row 的 ratio 是 0：这等价于$b_{i} = 0$，因为$a_{ij^{*}} > 0$。这说明 pivot 后目标值不严格下降，这是 degeneracy 的来源之一。
+- 特殊情况 — 根本没有 eligible row：属于NBB，Theorem 2判断。
 
-正常情况 — 只有1个 eligible row：直接作为pivot row。
+#### 形式化表述：
 
-特殊情况 — ratio test的两个ratios算出来一样：那么两行都可以作为 pivot row。
-
-特殊情况 — 1个 eligible row 的 ratio 是 0：这等价于$b_{i} = 0$，因为$a_{ij^{*}} > 0$。这说明 pivot 后目标值不严格下降，这是 degeneracy 的来源之一。
-
-特殊情况 — 根本没有 eligible row：属于NBB，Theorem 2判断。
-
-形式化表述：Assume the current tableau is in canonical form and corresponds to a feasible basic solution, and that neither Theorem 1 nor Theorem 2 applies. Then there exists a non-basic variable $x_{j^{*}}$ such that:
+Assume the current tableau is in canonical form and corresponds to a feasible basic solution, and that neither Theorem 1 nor Theorem 2 applies. Then there exists a non-basic variable $x_{j^{*}}$ such that:
 
 $$
 c_{j^*}<0\quad\text{and}\quad a_{i,j^*}>0\quad\text{for at least one }i.
 $$
 
-Let $i^{*}$ be a row that:
+**Let $i^{*}$ be a row that:**
 
-is eligible ($a_{i^{*},j^{*}} > 0$)
+- is eligible ($a_{i^{*},j^{*}} > 0$)
+- **and satisfies:**
 
-and satisfies:
+    $$
+    \frac{b_{i^{*}}}{a_{i^{*},j^{*}}} = \min\left\{ \frac{b_{i}}{a_{i,j^{*}}}:a_{i,j^{*}} > 0 \right\}
+    $$
 
-$$
-\frac{b_{i^{*}}}{a_{i^{*},j^{*}}} = \min\left\{ \frac{b_{i}}{a_{i,j^{*}}}:a_{i,j^{*}} > 0 \right\}
-$$
+**Then, pivoting at $\left( i^{*},j^{*} \right)$produces:**
 
-Then, pivoting at $\left( i^{*},j^{*} \right)$produces:
+- New basis: $old\ basis \cup \{ x_{j^{*}}\} - \{ x_{i^{*}}\}$
+- The new solution is still feasible.
+- The objective function does not increase.
 
-New basis: $old\ basis \cup \{ x_{j^{*}}\} - \{ x_{i^{*}}\}$
+    $$
+    Z_{new} = - z_{0} + c_{j^{*}} \cdot \frac{b_{i^{*}}}{a_{i^{*},j^{*}}} \leq - z_{0}
+    $$
 
-The new solution is still feasible.
-
-The objective function does not increase.
-
-$$
-Z_{new} = - z_{0} + c_{j^{*}} \cdot \frac{b_{i^{*}}}{a_{i^{*},j^{*}}} \leq - z_{0}
-$$
-
-If $b_{i^{*}} > 0$, the objective function decreases strictly.
+- If $b_{i^{*}} > 0$, the objective function decreases strictly.
 
 这种比较只最大化当前一轮的下降量，不保证总迭代次数最少。退化时还需防循环规则。
 
@@ -3043,71 +2993,68 @@ If $b_{i^{*}} > 0$, the objective function decreases strictly.
 
 #### Proof
 
-到底要证什么
+##### 到底要证什么
 
-新的 basic solution 仍然 feasible：我们会做pivoting，pivoting后会有新的basic solution，证明其依旧大于等于0。
+- 新的 basic solution 仍然 feasible：我们会做pivoting，pivoting后会有新的basic solution，证明其依旧大于等于0。
+- 目标函数值不增加：要证明 pivoting 后的新常数项满足
 
-目标函数值不增加：要证明 pivoting 后的新常数项满足
+    $$
+    - z_{0}' = - z_{0} + \frac{c_{j^{*}}b_{i^{*}}}{a_{i^{*},j^{*}}}
+    $$
 
-$$
-- z_{0}' = - z_{0} + \frac{c_{j^{*}}b_{i^{*}}}{a_{i^{*},j^{*}}}
-$$
+##### 重要的notation
 
-重要的notation
+- 行index：$i = 1,\ldots,m$
 
-行index：$i = 1,\ldots,m$
+    表示第 $i$ 个constraint / row
 
-表示第 $i$ 个constraint / row
+    对应一个basic variable
 
-对应一个basic variable
+- 列index：$j = m + 1,\ldots,n$
 
-列index：$j = m + 1,\ldots,n$
+    表示第 $j$ 个non-basic variable
 
-表示第 $j$ 个non-basic variable
+###### 特殊index
 
-特殊index
+- $i^{*}$：pivot row，我们quotient competition 的 winner，满足
 
-$i^{*}$：pivot row，我们quotient competition 的 winner，满足
+    $$
+    \frac{b_{i^{*}}}{a_{i^{*},j^{*}}} = \min_{i:a_{i,j^*}>0}\frac{b_i}{a_{i,j^*}}
+    $$
 
-$$
-\frac{b_{i^{*}}}{a_{i^{*},j^{*}}} = \min_{i:a_{i,j^*}>0}\frac{b_i}{a_{i,j^*}}
-$$
+- $j^{*}$：pivot column，选中的entering variable，满足
 
-$j^{*}$：pivot column，选中的entering variable，满足
+    $$
+    c_{j^{*}} < 0
+    $$
 
-$$
-c_{j^{*}} < 0
-$$
+###### 变量层面的notation
 
-变量层面的notation
+- $x_{1},\ldots,x_{m}$：basic variables
+- $x_{m + 1},\ldots,x_{n}$：non-basic variables
+- Pivoting发生时：$x_{j^{*}}$进入basis；$x_{i^{*}}$离开basis
 
-$x_{1},\ldots,x_{m}$：basic variables
+###### 矩阵元素notation
 
-$x_{m + 1},\ldots,x_{n}$：non-basic variables
+- $a_{ij}$：第 $i$ 行、第 $j$ 列的 coefficient
+- $a_{i^{*}j^{*}}$：pivoting entry / pivoting position，必须满足$a_{i^{*}j^{*}} > 0$
 
-Pivoting发生时：$x_{j^{*}}$进入basis；$x_{i^{*}}$离开basis
+###### RHS
 
-矩阵元素notation
+- $b_{i}$：pivot前，第 $i$个 basic variable 的值
 
-$a_{ij}$：第 $i$ 行、第 $j$ 列的 coefficient
+- ${b'}_{j^{*}}$：pivot后，entering variable 的 RHS。因为pivoting的过程中$x_{j^{*}}$进入basis；$x_{i^{*}}$离开basis，因此原来那条 pivot row，虽然还是“那一行”，但它不再代表 $x_{i^{*}}$了，而是改成代表$x_{j^{*}}$。因此我们在 pivot 之后，开始用“新 basic variable 的名字”给这一行编号，记为${b'}_{j^{*}}$。
 
-$a_{i^{*}j^{*}}$：pivoting entry / pivoting position，必须满足$a_{i^{*}j^{*}} > 0$
+    $$
+    b_{j^{*}}' = \frac{b_{i^{*}}}{a_{i^{*},j^{*}}}
+    $$
 
-RHS
+- ${b'}_{i}$：pivot后的其他行。
 
-$b_{i}$：pivot前，第 $i$个 basic variable 的值
-
-${b'}_{j^{*}}$：pivot后，entering variable 的 RHS。因为pivoting的过程中$x_{j^{*}}$进入basis；$x_{i^{*}}$离开basis，因此原来那条 pivot row，虽然还是“那一行”，但它不再代表 $x_{i^{*}}$了，而是改成代表$x_{j^{*}}$。因此我们在 pivot 之后，开始用“新 basic variable 的名字”给这一行编号，记为${b'}_{j^{*}}$。
-
-$$
-b_{j^{*}}' = \frac{b_{i^{*}}}{a_{i^{*},j^{*}}}
-$$
-
-${b'}_{i}$：pivot后的其他行。
-
-#### Step 0：pivot 前矩阵长什么样
+##### Step 0：pivot 前矩阵长什么样
 
 ![换基前的单纯形表与主元位置](lin_opt-assets/media/image8.png)
+
 在目前的setting中，当前basis是$\{ x_{1},\ \ldots,x_{m}\}$，所以左半部分是单位矩阵 $I_{m}$，右半部分是 non-basic columns。我们选中了 pivot column $j^{*}$，也选中了 pivot row $i^{*}$。此时已知：
 
 $$
@@ -3115,15 +3062,13 @@ c_{j^{*}} < 0,\ \ a_{i^{*},j^{*}} > 0.
 $$
 
 并且 $i^{*}$是 quotient competition 的 winner。
-我们需要重点关注3个位置
+**我们需要重点关注3个位置**
 
-Pivot entry：$a_{i^{*},j^{*}} > 0$
+- Pivot entry：$a_{i^{*},j^{*}} > 0$
+- Pivot row 的 RHS：$b_{i^{*}}$
+- Z-row 在 pivot column 的绿色 entry：$c_{j^{*}} < 0$
 
-Pivot row 的 RHS：$b_{i^{*}}$
-
-Z-row 在 pivot column 的绿色 entry：$c_{j^{*}} < 0$
-
-#### Step 1：Pivot的第一部分 —— 先把 pivot entry 变成 1
+##### Step 1：Pivot的第一部分 —— 先把 pivot entry 变成 1
 
 目前的pivot entry是$a_{i^{*},j^{*}}$，因此如果记原来的 pivot row 是 $R_{x_{i^{*}}}$，那么变成
 
@@ -3133,9 +3078,8 @@ $$
 
 操作后：
 
-原来 pivot position 是 $a_{i^{*},j^{*}}$，除掉以后，这里变成 1。
-
-pivot row 现在变成了“以 $x_{j^{*}}$为主元”的那一行，也就是说它以后要对应新的 basic variable $x_{j^{*}}$。
+- 原来 pivot position 是 $a_{i^{*},j^{*}}$，除掉以后，这里变成 1。
+- pivot row 现在变成了“以 $x_{j^{*}}$为主元”的那一行，也就是说它以后要对应新的 basic variable $x_{j^{*}}$。
 
 因此：这一行的RHS变成
 
@@ -3150,18 +3094,19 @@ $$
 $$
 
 ![主元行归一化后的单纯形表](lin_opt-assets/media/image9.png)
+
 重要结论：$b_{j^{*}}'$已经自动非负，因为
 
-原来当前 BFS feasible，所以 $b_{i^{*}} \geq 0$
+- 原来当前 BFS feasible，所以 $b_{i^{*}} \geq 0$
+- pivot row 必须 eligible，所以 $a_{i^{*},j^{*}} > 0$
 
-pivot row 必须 eligible，所以 $a_{i^{*},j^{*}} > 0$
 因此，
 
 $$
 b_{j^{*}}' = \frac{b_{i^{*}}}{a_{i^{*},j^{*}}} \geq 0.
 $$
 
-#### Step 2：Pivot的第二部分 —— 把 pivot column 其他位置全消成 0
+##### Step 2：Pivot的第二部分 —— 把 pivot column 其他位置全消成 0
 
 ![消去主元列其他元素后的单纯形表](lin_opt-assets/media/image10.png)
 
@@ -3177,9 +3122,9 @@ $$
 R \leftarrow R - c_{j^{*}}R_{x_{j^{*}}}.
 $$
 
-总结一下row operations 之后，能读出哪些公式
+**总结一下row operations 之后，能读出哪些公式**
 
-非 pivot row、非 pivot column 的新系数：对任意 $i \neq i^{*}$，以及任意 non-basic 列 $j \neq j^{*}$，新系数是
+**非 pivot row、非 pivot column 的新系数：**对任意 $i \neq i^{*}$，以及任意 non-basic 列 $j \neq j^{*}$，新系数是
 
 $$
 a_{ij}' = a_{ij} - a_{i,j^{*}} \cdot \frac{a_{i^{*},j}}{a_{i^{*},j^{*}}}.
@@ -3187,19 +3132,19 @@ $$
 
 本质上就是原系数减去“本行 pivot-column entry × pivot-row 该列系数”。
 
-非 pivot row 的新 RHS：
+**非 pivot row 的新 RHS：**
 
 $$
 b_{i}' = b_{i} - a_{i,j^{*}} \cdot \frac{b_{i^{*}}}{a_{i^{*},j^{*}}}(i \neq i^{*})
 $$
 
-新的 objective coefficients：对于任意 $j \neq j^{*}$的 non-basic column，
+**新的 objective coefficients：对于任意 $j \neq j^{*}$的 non-basic column，**
 
 $$
 c_{j}' = c_{j} - c_{j^{*}} \cdot \frac{a_{i^{*},j}}{a_{i^{*},j^{*}}}.
 $$
 
-新的目标函数常数项：
+**新的目标函数常数项：**
 
 $$
 z_{0}' = z_{0} - c_{j^{*}} \cdot \frac{b_{i^{*}}}{a_{i^{*},j^{*}}}.
@@ -3211,7 +3156,7 @@ $$
 - z_{0}' = - z_{0} + \frac{c_{j^{*}}b_{i^{*}}}{a_{i^{*},j^{*}}}.
 $$
 
-#### Step 3：证明目标函数值下降
+##### Step 3：证明目标函数值下降
 
 $$
 - z_{0}' = - z_{0} + \frac{c_{j^{*}}b_{i^{*}}}{a_{i^{*},j^{*}}}
@@ -3235,7 +3180,7 @@ $$
 
 什么时候可能不下降：如果 $b_{i^{*}} = 0$，那修正项等于 0，所以$- z_{0}' = - z_{0}$。
 
-#### Step 4：证明feasibility
+##### Step 4：证明feasibility
 
 已知 $b_{j^{*}}' = \frac{b_{i^{*}}}{a_{i^{*},j^{*}}} \geq 0$，需要证明对每个 $i \neq i^{*}$，
 
@@ -3243,7 +3188,7 @@ $$
 b_{i}' = b_{i} - a_{i,j^{*}} \cdot \frac{b_{i^{*}}}{a_{i^{*},j^{*}}} \geq 0
 $$
 
-Case 1：如果 $a_{i,j^{*}} \leq 0$
+###### Case 1：如果 $a_{i,j^{*}} \leq 0$
 
 由于$a_{i,j^{*}} \leq 0,\ b_{i^{*}} \geq 0,\ a_{i^{*},j^{*}} > 0$，因此
 
@@ -3261,7 +3206,7 @@ $$
 
 因此，$b_{i}' \geq 0$。
 
-Case 2：如果 $a_{i,j^{*}} > 0$
+###### Case 2：如果 $a_{i,j^{*}} > 0$
 
 由于 $a_{i,j^{*}} > 0$，第 $i$行是 eligible row，而我们知道 pivot row $i^{*}$是 quotient competition 的 winner，所以：
 
@@ -3317,7 +3262,7 @@ $$
 
 ### 4.7 Degeneracy（退化）与循环
 
-Degeneracy
+**Degeneracy**
 
 #### Example：比如下面这个tableau
 
@@ -3327,15 +3272,13 @@ Degeneracy
 | $x_{2}$ | 0 | 1 | 1 | 0 | 2 |
 | $Z$ | 0 | 0 | -1 | 0 | $Z$ |
 
-已知条件
+**已知条件**
 
-当前 basis：$\{ x_{1},x_{2}\}$
+- 当前 basis：$\{ x_{1},x_{2}\}$
+- 当前basic solution：$x_{1} = 0,\ x_{2} = 2,\ x_{3} = 0,\ x_{4} = 0$
+- 当前目标函数：$Z = - x_{3}$
 
-当前basic solution：$x_{1} = 0,\ x_{2} = 2,\ x_{3} = 0,\ x_{4} = 0$
-
-当前目标函数：$Z = - x_{3}$
-
-#### Step 1：选 entering variable，看z-row
+##### Step 1：选 entering variable，看z-row
 
 $$
 c_{3} = - 1 < 0
@@ -3343,7 +3286,7 @@ $$
 
 entering variable = $x_{3}$
 
-#### Step 2：做ratio test，看$x_{3}$列
+##### Step 2：做ratio test，看$x_{3}$列
 
 | row       | $a_{i3}$ | RHS | ratio   |
 |-----------|------------|-----|---------|
@@ -3352,7 +3295,7 @@ entering variable = $x_{3}$
 
 很明显最小ratio是0，因此pivot row = 第一行（$x_{1}$）
 
-#### Step 3：做pivot，pivoting position是 $(\text{row }x_1,\text{col }x_3)$
+##### Step 3：做pivot，pivoting position是 $(\text{row }x_1,\text{col }x_3)$
 
 | 行 | $x_1$ | $x_2$ | $x_3$ | $x_4$ | RHS |
 | --- | ---: | ---: | ---: | ---: | --- |
@@ -3372,23 +3315,18 @@ Theorem 3 的 corollary：如果pivot row满足$b_{i^{*}} > 0$，那么Z会下�
 
 原因：关键在于$b_{i^{*}} = 0$。
 
-pivot 后 entering variable 的值是：$x_{j^{*}} = \frac{b_{i^{*}}}{a_{i^{*},j^{*}}} = 0$，entering variable = 0。
-
-leaving variable 原本就是：$x_{i^{*}} = 0$
+- pivot 后 entering variable 的值是：$x_{j^{*}} = \frac{b_{i^{*}}}{a_{i^{*},j^{*}}} = 0$，entering variable = 0。
+- leaving variable 原本就是：$x_{i^{*}} = 0$
 
 所以你做了一个0和0的交换。
 
-Ratio Test 的五种情况
+#### Ratio Test 的五种情况
 
-正常情况 — 有多个 eligible rows：计算每一个的ratio，谁最小谁赢。
-
-正常情况 — 只有1个 eligible row：直接作为pivot row。
-
-特殊情况 — ratio test的两个ratios算出来一样：那么两行都可以作为 pivot row。
-
-特殊情况 — 1个 eligible row 的 ratio 是 0：这等价于$b_{i} = 0$，因为$a_{ij^{*}} > 0$。这说明 pivot 后目标值不严格下降，这是 degeneracy 。
-
-特殊情况 — 根本没有 eligible row：属于NBB，Theorem 2判断。
+- 正常情况 — 有多个 eligible rows：计算每一个的ratio，谁最小谁赢。
+- 正常情况 — 只有1个 eligible row：直接作为pivot row。
+- 特殊情况 — ratio test的两个ratios算出来一样：那么两行都可以作为 pivot row。
+- 特殊情况 — 1个 eligible row 的 ratio 是 0：这等价于$b_{i} = 0$，因为$a_{ij^{*}} > 0$。这说明 pivot 后目标值不严格下降，这是 degeneracy 。
+- 特殊情况 — 根本没有 eligible row：属于NBB，Theorem 2判断。
 
 由于存在零步长，任意选取进入变量和并列离开变量可能导致 cycling（循环）。一种防循环方法是 **Bland's rule**：
 
@@ -3487,7 +3425,9 @@ $$
 
 我们发现这没有在Canonical Form里，因为不存在单位列，这个系统没有直接 reveal 一个 good basis。
 
-#### Step 0：Preprocessing。我们需要multiply by $- 1$ any constraint equality whose right hand number is negative
+#### Step 0：Preprocessing。
+
+我们需要multiply by $- 1$ any constraint equality whose right hand number is negative
 
 解读：如果某个等式RHS是负数，把整条约束乘以 $- 1$。
 
@@ -3528,7 +3468,9 @@ $$
 
 #### Step 2：构造 auxiliary LPP
 
-#### Step 2.1：定义 $w = x_{6} + x_{7} + x_{8}$。于是我们可以写出一个auxiliary LPP
+##### Step 2.1：定义 $w = x_{6} + x_{7} + x_{8}$。
+
+于是我们可以写出一个auxiliary LPP
 
 $$
 \left( l_{aux} \right)\min w = x_{6} + x_{7} + x_{8}
@@ -3550,7 +3492,9 @@ $$
 \end{aligned} \right.
 $$
 
-#### Step 2.2：把auxiliary LPP写成Canonical Form。目前objective function还写在basic variables 里，所以
+##### Step 2.2：把auxiliary LPP写成Canonical Form。
+
+目前objective function还写在basic variables 里，所以
 
 $$
 x_{6} = 60 - 3x_{1} - 2x_{2} + x_{3}
@@ -3566,19 +3510,18 @@ $$
 
 相加得到$w = 216 - 13x_{1} - 10x_{2} + x_{3} + x_{4} + x_{5}$，这就是 $w$ 的 canonical expression。
 
-解读：为什么最小化 $w$有用
+#### 解读：为什么最小化 $w$有用
 
-Crucial Fact：原系统$(l)$有解，if and only if 新系统$(*)$有一个解满足
+**Crucial Fact：原系统$(l)$有解，if and only if 新系统$(*)$有一个解满足**
 
 $$
 x_{6} = x_{7} = x_{8} = 0
 $$
 
-为什么
+**为什么**
 
-因为如果原问题有解 $\left( x_{1},\ldots,x_{5} \right)$，那么把 $x_{6} = x_{7} = x_{8} = 0$加进去，就得到 $(*)$的一个解。
-
-反过来，如果 $(*)$有一个解使 $x_{6} = x_{7} = x_{8} = 0$，那么去掉这三个 artificial variables，剩下的 $\left( x_{1},\ldots,x_{5} \right)$就是原问题 $(l)$的解。
+- 因为如果原问题有解 $\left( x_{1},\ldots,x_{5} \right)$，那么把 $x_{6} = x_{7} = x_{8} = 0$加进去，就得到 $(*)$的一个解。
+- 反过来，如果 $(*)$有一个解使 $x_{6} = x_{7} = x_{8} = 0$，那么去掉这三个 artificial variables，剩下的 $\left( x_{1},\ldots,x_{5} \right)$就是原问题 $(l)$的解。
 
 结论：$(l)\ feasible \Longleftrightarrow (*)\ \text{has a solution with }x_{6} = x_{7} = x_{8} = 0$
 
@@ -3594,11 +3537,11 @@ $$
 w = 0 \Longleftrightarrow x_{6} = x_{7} = x_{8} = 0
 $$
 
-Great Conclusions
+#### Great Conclusions
 
-First Great Conclusion: If $w_{\min} = 0$ then $(l)$ is feasible; after removing any remaining zero-valued artificial basic variables and redundant rows, Phase 2 can start from a feasible basis.
+- First Great Conclusion: If $w_{\min} = 0$ then $(l)$ is feasible; after removing any remaining zero-valued artificial basic variables and redundant rows, Phase 2 can start from a feasible basis.
 
-Second Great Conclusion: If $w_{\min} > 0$ (since artificial variables cannot all be 0 at any auxiliary feasible point), $(l)$ is infeasible.
+- Second Great Conclusion: If $w_{\min} > 0$ (since artificial variables cannot all be 0 at any auxiliary feasible point), $(l)$ is infeasible.
 
 <a id="section-5-4"></a>
 
@@ -3617,7 +3560,9 @@ Second Great Conclusion: If $w_{\min} > 0$ (since artificial variables cannot al
 
 检测Theorem 1是否适用：$c_{1} = - 13 < 0,\ c_{2} = - 10 < 0$，因此 Theorem 1 不适用。
 
-Quotient Competition 1：这里$x_{1}$和$x_{2}$都可以作为pivoting column，因此我们可以借助Theorem 3的推论判断哪个会让目标函数降低得更快。
+##### Quotient Competition 1：
+
+这里$x_{1}$和$x_{2}$都可以作为pivoting column，因此我们可以借助Theorem 3的推论判断哪个会让目标函数降低得更快。
 
 $$
 Z_{new} = - z_{0} + c_{j^{*}} \cdot \frac{b_{i^{*}}}{a_{i^{*},j^{*}}}
@@ -3666,7 +3611,9 @@ $$
 w = - \frac{44}{7}x_{2} + x_{3} - \frac{6}{7}x_{4} + x_{5} + \frac{13}{7}x_{7} + 60
 $$
 
-Quotient Competition 2：同之前方法，此处采用同样的比较步骤，我们这里选$x_{2}$列
+##### Quotient Competition 2：
+
+同之前方法，此处采用同样的比较步骤，我们这里选$x_{2}$列
 
 进行ratio test
 
@@ -3693,7 +3640,9 @@ $$
 w = x_{3} - \frac{1}{3}x_{4} - \frac{2}{9}x_{5} + \frac{4}{3}x_{7} + \frac{11}{9}x_{8} + 16
 $$
 
-Quotient Competition 3：同之前方法，此处采用同样的比较步骤，我们这里选$x_{4}$列
+##### Quotient Competition 3：
+
+同之前方法，此处采用同样的比较步骤，我们这里选$x_{4}$列
 
 进行ratio test，这里只有2个eligible rows
 
@@ -3728,7 +3677,7 @@ $$
 
 #### Step 4：Phase 1 结束后，如何切回原问题
 
-4.1 ：读tableau，写出目前的基本方程和目标函数
+##### 4.1 ：读tableau，写出目前的基本方程和目标函数
 
 | 行 | $x_1$ | $x_2$ | $x_3$ | $x_4$ | $x_5$ | $x_6$ | $x_7$ | $x_8$ | RHS |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
@@ -3751,7 +3700,7 @@ $$
 w = x_{6} + x_{7} + x_{8}
 $$
 
-4.2：把the original objective function $Z$ 写出由the current non-basic variables only的形式。
+##### 4.2：把the original objective function $Z$ 写出由the current non-basic variables only的形式。
 
 之前：$Z = 10x_{1} + 4x_{2}$
 
@@ -3804,9 +3753,9 @@ $$
 x_{1},x_{2},x_{3},x_{4},x_{5} \geq 0
 $$
 
-过程中的重要细节：
+#### 过程中的重要细节：
 
-Phase 1 里会不会像 Theorem 2 那样出现无下界？不会，这是因为$w$有一个非常重要的性质
+**Phase 1 里会不会像 Theorem 2 那样出现无下界？不会，这是因为$w$有一个非常重要的性质**
 
 $$
 w \geq 0
@@ -3826,7 +3775,7 @@ $$
 
 ### 5.6 Tie 与退化：第二个完整例子
 
-#### Degeneracy/Tie
+**Degeneracy/Tie**
 
 考虑下面这个问题：
 
@@ -3859,7 +3808,9 @@ $$
 
 不是Canonical Form。进入Phase 1。
 
-#### Phase 1.0：Preprocessing。这里无需preprocessing，因为RHS大于等于0
+#### Phase 1.0：Preprocessing。
+
+这里无需preprocessing，因为RHS大于等于0
 
 #### Phase 1.1：引入 Artificial Variables
 
@@ -3885,7 +3836,7 @@ $$
 
 #### Phase 1.3：在 $\left( l_{aux} \right)$上应用 Phase 2
 
-#### 第一次pivoting
+##### 第一次pivoting
 
 选择pivoting position：我们选择 $x_{1}$作为entering variable。
 
@@ -3952,7 +3903,7 @@ $$
 | $R_3$ | 0 | 4 | -8 | 1 | -3 | 0 | 1 | 4 |
 | $w$ | 0 | -5 | 10 | -2 | 4 | 0 | 0 | $w-5$ |
 
-#### 第二次pivoting
+##### 第二次pivoting
 
 选择pivoting position：我们选择 $x_{4}$作为entering variable，这是一条合法的演示路径。若选择 $x_2$，最小比值也为 $1$ 且两行并列，可一步达到 $w=0$；tie 本身允许继续，只需按一致规则选择离开行。
 
@@ -3975,7 +3926,7 @@ $$
 | $R_3$ | 0 | 3 | -6 | 0 | -3 | -1 | 1 | 3 |
 | $w$ | 0 | -3 | 6 | 0 | 4 | 2 | 0 | $w-3$ |
 
-#### 第三次pivoting
+##### 第三次pivoting
 
 选择pivoting position：我们选择 $x_{2}$作为entering variable。
 
@@ -4061,13 +4012,13 @@ $$
 
 ### 5.7 Phase 1 的两条实用性质
 
-Phase 1的两条重要定理
+**Phase 1的两条重要定理**
 
-Theorem 1：Phase 1 的 $w$-row 检查定理
+#### Theorem 1：Phase 1 的 $w$-row 检查定理
 
 内容：对所有非人工变量列，$w$ 行系数等于当前人工基变量行对应系数的负和。当前 $w$ 值等于人工基变量行 RHS 之和，因此目标行 RHS 为 $w$ 减去该和；人工变量列还要包含原始目标系数 $1$。
 
-#### Example
+##### Example
 
 | 行 | $x_1$ | $x_2$ | $x_3$ | $x_4$ | $x_5$ | $x_6$ | $x_7$ | RHS |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
@@ -4078,7 +4029,7 @@ Theorem 1：Phase 1 的 $w$-row 检查定理
 
 这里我们可以看到artificial-variable row（只有$x_{7}$）对应的RHS是3，因此当前 $w_0=3$，目标行 RHS 为 $w-3$，其常数部分为 $-3$。
 
-Theorem 2：Artificial variable 离开 basis 后，不需要再回来
+#### Theorem 2：Artificial variable 离开 basis 后，不需要再回来
 
 内容：An artificial variable that is removed from the basis in Phase 1 need never be returned to the basis.
 
@@ -4106,9 +4057,13 @@ $$
 
 Phase 2的目标是继续优化寻找最小值。
 
-但是有一个问题：在Phase 1中，即使$w_{\min} = 0$，Phase 1 结束时也可能还有 artificial variables 留在 basis 里面，这表示还有值为零的人工基变量需要清理；只有当对应行的所有非人工系数均为零时，才可据此删除冗余行。
+#### 但是有一个问题：
 
-Redundancy的标准定义：An equation or some equations in the original system of constraints are linear combinations of the remaining equations in the system.
+在Phase 1中，即使$w_{\min} = 0$，Phase 1 结束时也可能还有 artificial variables 留在 basis 里面，这表示还有值为零的人工基变量需要清理；只有当对应行的所有非人工系数均为零时，才可据此删除冗余行。
+
+#### Redundancy的标准定义：
+
+An equation or some equations in the original system of constraints are linear combinations of the remaining equations in the system.
 
 冗余等式的线性组合关系必须同时包括左侧系数与右端常数。若系数关系相同而常数不匹配，可能得到矛盾等式，系统应判为不可行。
 
@@ -4129,7 +4084,7 @@ Redundancy的标准定义：An equation or some equations in the original system
 
 ### 6.3 例 1：冗余等式的删除
 
-#### Example of Redundancy in Simplex
+**Example of Redundancy in Simplex**
 
 #### Example：我们考虑如下的线性规划问题
 
@@ -4149,7 +4104,9 @@ $$
 
 注意第二条约束其实就是第一条约束的两倍，所以它是 redundant constraint。但是在 simplex 过程中，我们假装不知道这一点，让 Phase 1 自己把它发现出来。
 
-#### Step 1：加入 artificial variables。原系统没有 obvious good basis，所以我们给两条等式分别加入 artificial variables $x_{3},x_{4}$
+#### Step 1：加入 artificial variables。
+
+原系统没有 obvious good basis，所以我们给两条等式分别加入 artificial variables $x_{3},x_{4}$
 
 | 行 | $x_1$ | $x_2$ | $x_3$ | $x_4$ | RHS |
 | --- | ---: | ---: | ---: | ---: | --- |
@@ -4159,7 +4116,9 @@ $$
 
 这是一个 minimization problem。底行有负数，所以还没有达到 Phase 1 的 minimum。我们选择 $x_{1}$进入 basis。
 
-#### Step 2：Quotient competition。我们看 $x_{1}$-column
+#### Step 2：Quotient competition。
+
+我们看 $x_{1}$-column
 
 $$
 \frac{2}{1} = 2,\frac{4}{2} = 2
@@ -4177,17 +4136,16 @@ $$
 
 现在Basis是 $\{ x_{1},x_{4}\}$，BFS是$\left(x_{1},x_{2},x_{3},x_{4}\right)=\left(2,0,0,0\right)$。我们发现这个时候
 
-辅助目标 $w$ 行的系数没有负数；
-
-$w_{\min} = 0$；
-
-artificial variable （$x_{4}$）还在 basis；
-
-查看仍在基中的人工变量 $x_4$ 对应的约束行：在 original-variable 列上均为零，没有可用于换出 $x_4$ 的非人工主元。
+- 辅助目标 $w$ 行的系数没有负数；
+- $w_{\min} = 0$；
+- artificial variable （$x_{4}$）还在 basis；
+- 查看仍在基中的人工变量 $x_4$ 对应的约束行：在 original-variable 列上均为零，没有可用于换出 $x_4$ 的非人工主元。
 
 这正是 redundancy section 要处理的情况。
 
-#### Step 4：删除 redundant row 和 artificial columns。我们这里删除第二行（$x_{4}$ row），同时删除artificial columns $x_{3},x_{4}$。我们得到
+#### Step 4：删除 redundant row 和 artificial columns。
+
+我们这里删除第二行（$x_{4}$ row），同时删除artificial columns $x_{3},x_{4}$。我们得到
 
 | 行 | $x_1$ | $x_2$ | RHS |
 | --- | ---: | ---: | --- |
@@ -4231,7 +4189,7 @@ $$
 
 ### 6.4 例 2：人工变量留在基中，但无需删除约束
 
-#### Example 2 of Redundancy in Simplex (New Technique)
+**Example 2 of Redundancy in Simplex (New Technique)**
 
 新方法的目标：Phase 1 已经得到 $w_{\min} = 0$，说明原问题 feasible；但是 basis 里还残留 artificial variable。这个时候不能直接进入 Phase 2，而要先用一个新 technique 把 artificial variable 从 basis 里换出去。
 
@@ -4252,7 +4210,9 @@ $$
 \end{aligned} \right.
 $$
 
-#### Step 1：加入 artificial variables。原系统没有 obvious good basis，所以我们给三条等式分别加入 artificial variables $x_{5},\ x_{6},\ x_{7}$
+#### Step 1：加入 artificial variables。
+
+原系统没有 obvious good basis，所以我们给三条等式分别加入 artificial variables $x_{5},\ x_{6},\ x_{7}$
 
 | 行 | $x_1$ | $x_2$ | $x_3$ | $x_4$ | $x_5$ | $x_6$ | $x_7$ | RHS |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
@@ -4265,7 +4225,7 @@ Phase 1 是 minimization problem。对于 $w$-row，负 coefficient 表示目标
 
 #### Step 2：在 $\left( l_{aux} \right)$上应用 Phase 2
 
-#### Pivoting 1
+##### Pivoting 1
 
 对比哪个pivoting column最好：
 
@@ -4296,7 +4256,7 @@ $$
 | $x_{7}$ | 4 | 0 | -2 | 3/5 | -2/5 | 0 | 1 | 4 |
 | $w$ | -5 | 0 | 1 | $-3/5$ | $7/5$ | 0 | 0 | $w-5$ |
 
-#### Pivoting 2
+##### Pivoting 2
 
 对比哪个pivoting column最好：
 
@@ -4337,7 +4297,9 @@ $$
 
 现在出现了本节的关键问题：$x_{7}$ 仍然是 basic variable，而 $x_{7}$是 artificial variable。所以我们还不能直接进入 Phase 2。
 
-Step 3：New Technique。我们选择一个新的pivoting position。这一步不是普通 simplex algorithm 的 objective-improving pivot。因为 $w$已经等于 $0$了，不需要再降低 $w$。这一步只是为了把 artificial variable 清理出 basis。选择标准是
+#### Step 3：New Technique。
+
+我们选择一个新的pivoting position。这一步不是普通 simplex algorithm 的 objective-improving pivot。因为 $w$已经等于 $0$了，不需要再降低 $w$。这一步只是为了把 artificial variable 清理出 basis。选择标准是
 
 我们找到problematic row（也就是 $w_{\min} = 0$ 后，artificial variable的那一个row；也就是degenerate basic variable对应的row）：在这里是 $x_{7}$ row。
 

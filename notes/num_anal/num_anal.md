@@ -73,7 +73,7 @@
 
 #### 科学计数法 Scientific Notation
 
-表示 Expression
+**表示 Expression**
 
 $$
 x = \pm \left( d_{1}.d_{2}\ldots d_{t}d_{t + 1}\ldots \right) \times 10^{e}
@@ -81,7 +81,7 @@ $$
 
 where $d_{i}$ are integers, $0 \leq d_{i} \leq 9$, with $d_{1} \neq 0$, and $e$ is an integer exponent.
 
-案例 Example
+**案例 Example**
 
 $$
 x = 1.9652 \times 10^{6}
@@ -89,9 +89,9 @@ $$
 
 #### 电脑中表示数字的方法
 
-浮点数 Floating Point Numbers
+**浮点数 Floating Point Numbers**
 
-表示 Expression
+**表示 Expression**
 
 $$
 fl(x) = \pm \left( d_{1}.d_{2}d_{3}\ldots d_{t} \right) \times 10^{e}
@@ -99,15 +99,13 @@ $$
 
 #### 浮点数的一些特征 Characteristics of Floating Point Numbers
 
-不能表示任意多位有效数字。浮点系统只保留有限个数位，$t$ 表示包括首位在内的有效数字总位数。
-
-Cannot represent infinitely large (positive or negative) exponent. 浮点数的指数$e$受到限制，不能任意大或者任意小。
-
-有限浮点数的集合是 $\mathbb R$ 的有限子集。IEEE 754 另有无穷大和 NaN 等特殊编码，它们不属于有限实数。
+- 不能表示任意多位有效数字。浮点系统只保留有限个数位，$t$ 表示包括首位在内的有效数字总位数。
+- Cannot represent infinitely large (positive or negative) exponent. 浮点数的指数$e$受到限制，不能任意大或者任意小。
+- 有限浮点数的集合是 $\mathbb R$ 的有限子集。IEEE 754 另有无穷大和 NaN 等特殊编码，它们不属于有限实数。
 
 #### 十进制和其他进制 Decimal and Other Systems
 
-十进制表示法 Base-10 (Decimal)
+**十进制表示法 Base-10 (Decimal)**
 
 $$
 fl(x) = \pm \left( d_{1}.d_{2}d_{3}\ldots d_{t} \right) \times 10^{e} = \pm (\frac{d_{1}}{10^{0}} + \frac{d_{2}}{10^{1}} + \ldots + \frac{d_{t}}{10^{t - 1}}) \times 10^{e}
@@ -189,15 +187,11 @@ $$
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 数位 | 0 | 0 | 0 | 1 | 1 | 0 | 0 | 1 | 1 | 0 | 0 | $\cdots$ |
 
-$2^{0} = 1$大于$0.2$，因此写0；
-
-$2^{- 1} = 0.5$大于$0.2$，因此写0；
-
-$2^{- 2} = 0.25$大于$0.2$，因此写0；
-
-$2^{- 3} = 0.125$小于$0.2$，因此写1；
-
-$2^{- 4} = 0.0625$小于$0.2 - 0.125$，因此写1
+- $2^{0} = 1$大于$0.2$，因此写0；
+- $2^{- 1} = 0.5$大于$0.2$，因此写0；
+- $2^{- 2} = 0.25$大于$0.2$，因此写0；
+- $2^{- 3} = 0.125$小于$0.2$，因此写1；
+- $2^{- 4} = 0.0625$小于$0.2 - 0.125$，因此写1
 
 继续按余量计算：
 
@@ -217,17 +211,15 @@ $2^{- 4} = 0.0625$小于$0.2 - 0.125$，因此写1
 
 ### 1.2 浮点表示、范围与机器精度
 
-双精度浮点数（64位）Double-Precision Floating-Point (64 Bit)
+#### 双精度浮点数（64位）Double-Precision Floating-Point (64 Bit)
 
 $$
 x=(-1)^s\left(1+\frac{F}{2^{52}}\right)2^{E-1023},\qquad1\le E\le2046.
 $$
 
-符号位 Sign Bit: 第63位，表示数的正负，0表示正，1表示负。
-
-指数域（biased exponent）：第 $62$ 位至第 $52$ 位，共 $11$ 位，存储偏置指数 $E$，真实指数为 $e=E-1023$。
-
-小数域（fraction）：第 $51$ 位至第 $0$ 位，共 $52$ 位，存储整数 $F$。正规数的有效数为 $1+F/2^{52}$，首位 $1$ 隐含存储，因此共有 $53$ 位二进制有效数字。
+- 符号位 Sign Bit: 第63位，表示数的正负，0表示正，1表示负。
+- 指数域（biased exponent）：第 $62$ 位至第 $52$ 位，共 $11$ 位，存储偏置指数 $E$，真实指数为 $e=E-1023$。
+- 小数域（fraction）：第 $51$ 位至第 $0$ 位，共 $52$ 位，存储整数 $F$。正规数的有效数为 $1+F/2^{52}$，首位 $1$ 隐含存储，因此共有 $53$ 位二进制有效数字。
 
 #### 单精度浮点数（32位）Single-Precision Floating-Point (32 Bit)
 
@@ -235,11 +227,9 @@ $$
 x=(-1)^s\left(1+\frac{F}{2^{23}}\right)2^{E-127},\qquad1\le E\le254.
 $$
 
-符号位 Sign Bit: 1位。
-
-指数部分 Biased Exponent: 8位。
-
-尾数部分 Mantissa: 23位。
+- 符号位 Sign Bit: 1位。
+- 指数部分 Biased Exponent: 8位。
+- 尾数部分 Mantissa: 23位。
 
 单精度小数域为 $23$ 位，正规数共有 $24$ 位二进制有效数字。以上两个数值公式均针对正规数。指数域为零时，次正规数采用有效数 $F/2^q$，其中双精度 $q=52$、单精度 $q=23$；指数域全为一时用于编码无穷大与 NaN。
 
@@ -247,9 +237,8 @@ $$
 
 浮点数的表示范围是有限的，计算机无法显示所有的实数，只能表示有限范围内的数字。
 
-上溢（overflow）：结果超出有限表示范围。默认舍入到最近值时，足够大的结果会成为带符号的无穷大，具体行为取决于舍入模式。
-
-下溢（underflow）：结果进入极小数值区域时，可先用次正规数表示并损失相对精度；更小的非零结果才可能舍入为零。
+- 上溢（overflow）：结果超出有限表示范围。默认舍入到最近值时，足够大的结果会成为带符号的无穷大，具体行为取决于舍入模式。
+- 下溢（underflow）：结果进入极小数值区域时，可先用次正规数表示并损失相对精度；更小的非零结果才可能舍入为零。
 
 ![有限十进制浮点系统的上溢、下溢和零附近间隙示意](./num_anal-assets/media/image4.png)
 
@@ -317,7 +306,7 @@ $$
 
 这里 $1110$ 按四位补码解释为 $-2$；按无符号二进制解释时，$(1110)_2=14$。
 
-无符号整数 Unsigned Integers
+#### 无符号整数 Unsigned Integers
 
 无符号整数 Unsigned Integers 只能表示非负整数，因此不需要用位来表示符号。
 
@@ -343,19 +332,19 @@ $$
 
 双精度浮点数的不封闭性 Non-Closure of Double-Precision Floating-Point Numbers: 双精度浮点数集合在这些运算下并不总是封闭的。这意味着两个双精度浮点数的运算结果可能无法被精确地表示为另一个双精度浮点数。
 
-浮点数运算的定义 Definition of Floating Point Arithmetic
+#### 浮点数运算的定义 Definition of Floating Point Arithmetic
 
 浮点运算的舍入模型：由于精确结果未必落在有限浮点数集合中，实际加、减、乘、除通常先形成精确结果，再舍入到最近的可表示值。若发生上溢或无效运算，还可能得到无穷大或 NaN。
 
-封闭方式 Closure Method
+##### 封闭方式 Closure Method
 
-- Step 1: 精确的代数运算（首先，进行实际的代数运算，不考虑浮点数的表示限制。）
+**Step 1:** 精确的代数运算（首先，进行实际的代数运算，不考虑浮点数的表示限制。）
 
 $$
 x + y\ \ \ x - y\ \ \ x \times y\ \ \ x \div y
 $$
 
-- Step 2: 浮点舍入：将这个精确的代数运算结果舍入到最接近的可以用浮点数表示的数。
+**Step 2:** 浮点舍入：将这个精确的代数运算结果舍入到最接近的可以用浮点数表示的数。
 
 $$
 x \oplus y\ : = \ {fl}_{DP}(x + y)
@@ -397,11 +386,12 @@ $$
 
 在电脑运算中，有两种 Errors，分别是:
 
-数值中固有的误差 Error inherent in the numbers: 指的是由于表示数值时使用了有限精度，因此不可避免的误差。
+- 数值中固有的误差 Error inherent in the numbers: 指的是由于表示数值时使用了有限精度，因此不可避免的误差。
+- 由算术运算引入的误差 Error introduced by the arithmetic: 这是指在进行加减乘除等运算时，由于有限精度和舍入误差而产生的额外误差。
 
-由算术运算引入的误差 Error introduced by the arithmetic: 这是指在进行加减乘除等运算时，由于有限精度和舍入误差而产生的额外误差。
+#### 灾难性抵消 Catastrophic Cancellation:
 
-灾难性抵消 Catastrophic Cancellation: 在计算机算术中，减去两个接近的双精度数值时可能会导致显著的精度损失。
+ 在计算机算术中，减去两个接近的双精度数值时可能会导致显著的精度损失。
 
 若输入为 $\widehat x=x+\Delta x$、$\widehat y=y+\Delta y$，即使减法本身精确，也有 $(\widehat x-\widehat y)-(x-y)=\Delta x-\Delta y$。当 $|x-y|$ 很小时，已有误差相对于差值被放大。
 
@@ -433,21 +423,17 @@ b_{n}
 \end{pmatrix}
 $$
 
-$A$ is the matrix of coefficients.
-
-$x$ is the vector of unknowns.
-
-$b$ is the vector of constants.
+- $A$ is the matrix of coefficients.
+- $x$ is the vector of unknowns.
+- $b$ is the vector of constants.
 
 #### 线性方程组的解 Solutions of SLE
 
 ![平行、相交和重合直线对应的线性方程组解](./num_anal-assets/media/image5.png)
 
-When two distinct lines are parallel, the system has no solution because the lines do not intersect. 两条相异平行线对应无解。
-
-When two lines intersect at a point, the corresponding system of linear equations has a unique solution.
-
-When two lines coincide, the system has infinitely many solutions: every point on the common line is a solution.
+- When two distinct lines are parallel, the system has no solution because the lines do not intersect. 两条相异平行线对应无解。
+- When two lines intersect at a point, the corresponding system of linear equations has a unique solution.
+- When two lines coincide, the system has infinitely many solutions: every point on the common line is a solution.
 
 #### 线性方程组的唯一解 Unique solution of SLE
 
@@ -494,7 +480,7 @@ $$
 
 ### 2.2 特殊矩阵与三角方程组
 
-单位矩阵 Identity Matrix
+#### 单位矩阵 Identity Matrix
 
 $$
 I = \begin{pmatrix}
@@ -562,7 +548,7 @@ x_{3}
 \end{pmatrix}
 $$
 
-正向代入法 Forward Substitution:
+##### 正向代入法 Forward Substitution:
 
 $$
 1x_{1} = 1\ \ \ x_{1} = 1
@@ -605,7 +591,7 @@ x_{3}
 \end{pmatrix}
 $$
 
-逆向代入法 Backward Substitution:
+##### 逆向代入法 Backward Substitution:
 
 $$
 6x_{3} = 3\ \ x_{3} = 0.5
@@ -624,7 +610,7 @@ $$
 
 #### 解线性方程组 Simply Solved Linear Systems
 
-逆向代入法算法 Backward Substitution Algorithms
+##### 逆向代入法算法 Backward Substitution Algorithms
 
 若已经得到一个对角元均非零的方阵上三角系统，可使用回代算法求唯一解。一般行阶梯形矩阵还需判断秩与相容性。
 
@@ -632,11 +618,11 @@ $$
 
 ![按行与按列回代的伪代码](./num_anal-assets/media/image6.png)
 
-#### 列方向算法 Column-oriented Algorithm
+##### 列方向算法 Column-oriented Algorithm
 
 从矩阵的最后一列开始逐列进行处理，每一列逐项计算对应的解。
 
-- Step 1: 从最后一列开始，计算$x_{n}$。比如，
+**Step 1:** 从最后一列开始，计算$x_{n}$。比如，
 
 $$
 \begin{pmatrix}
@@ -657,7 +643,7 @@ $$
 x_{2} = \frac{b_{2}}{a_{2,2}} = \frac{3}{3} = 1
 $$
 
-- Step 2: 逐步向前，直到第一列。对于每一列需要针对后面的$b$进行更新。
+**Step 2:** 逐步向前，直到第一列。对于每一列需要针对后面的$b$进行更新。
 
 $$
 b_{i} = b_{i} - a_{i,j} \times x_{j}
@@ -669,23 +655,23 @@ $$
 b_{1} = b_{1} - a_{1,2} \times x_{2} = - 4
 $$
 
-- Step 3: 列出每一列的式子，计算剩余$x_{i}$。比如，
+**Step 3:** 列出每一列的式子，计算剩余$x_{i}$。比如，
 
 $$
 x_{1} = \frac{b_{1}}{a_{1,1}} = \frac{- 4}{4} = - 1
 $$
 
-#### 行方向算法 Row-oriented Algorithm
+##### 行方向算法 Row-oriented Algorithm
 
 从矩阵的最后一行开始向上逐行处理，每一行使用前面已经解出的解来计算当前未知行的未知数。
 
-- Step 1: 从最后一行开始，计算$x_{n}$。比如，
+**Step 1:** 从最后一行开始，计算$x_{n}$。比如，
 
 $$
 3x_{2} = 3\ \ \ x_{2} = \frac{3}{3} = 1
 $$
 
-- Step 2: 回到上一行，利用已知的$x_{n}$，计算$x_{n - 1}$。比如，
+**Step 2:** 回到上一行，利用已知的$x_{n}$，计算$x_{n - 1}$。比如，
 
 $$
 4x_{1} + 2x_{2} = - 2
@@ -699,19 +685,19 @@ $$
 
 给定$n \times n$矩阵 A，我们通过如下公式计算乘法、减法和除法的成本
 
-乘法次数 Multiplications
+##### 乘法次数 Multiplications
 
 $$
 \frac{n(n - 1)}{2}
 $$
 
-减法次数 Subtractions
+##### 减法次数 Subtractions
 
 $$
 \frac{n(n - 1)}{2}
 $$
 
-除法次数 Divisions
+##### 除法次数 Divisions
 
 $$
 n
@@ -721,17 +707,17 @@ $$
 
 ### 2.3 向量范数
 
-矢量范数的性质 Properties of A Norm of $v$, i.e. $\left\lVert v\right\rVert$
+#### 矢量范数的性质 Properties of A Norm of $v$, i.e. $\left\lVert v\right\rVert$
 
-非负性 Non-Negativity: $\left\lVert v\right\rVert \geq 0$ for all vectors $v \in \mathbb{R}^{n}$, and : $\left\lVert v\right\rVert = 0$ if and only if $v = 0$.
+- 非负性 Non-Negativity: $\left\lVert v\right\rVert \geq 0$ for all vectors $v \in \mathbb{R}^{n}$, and : $\left\lVert v\right\rVert = 0$ if and only if $v = 0$.
 
-三角不等式 Triangle Inequality: $\left\lVert v + w\right\rVert \leq \left\lVert v\right\rVert + \left\lVert w\right\rVert$ for all vectors $v \in \mathbb{R}^{n}$ and $w \in \mathbb{R}^{n}$.
+- 三角不等式 Triangle Inequality: $\left\lVert v + w\right\rVert \leq \left\lVert v\right\rVert + \left\lVert w\right\rVert$ for all vectors $v \in \mathbb{R}^{n}$ and $w \in \mathbb{R}^{n}$.
 
-齐次性 Homogeneity: $\left\lVert cv\right\rVert = |c|\left\lVert v\right\rVert$ for all vectors $v \in \mathbb{R}^{n}$ and all scalars c.
+- 齐次性 Homogeneity: $\left\lVert cv\right\rVert = |c|\left\lVert v\right\rVert$ for all vectors $v \in \mathbb{R}^{n}$ and all scalars c.
 
-矢量的三个范数 Three Vector Norms
+#### 矢量的三个范数 Three Vector Norms
 
-#### 一范数与曼哈顿距离（One-norm and Manhattan distance）$\ell_1$
+##### 一范数与曼哈顿距离（One-norm and Manhattan distance）$\ell_1$
 
 向量的一范数 $\lVert x\rVert_1$ 等于它到原点的曼哈顿距离；两个向量 $x,y$ 之间的曼哈顿距离为 $\lVert x-y\rVert_1$。
 
@@ -739,13 +725,13 @@ $$
 \left\lVert x\right\rVert_{1} = \left| x_{1} \right| + \left| x_{2} \right| + \ldots + \left| x_{n} \right| = \sum_{i = 1}^{n}{|x_{i}|}
 $$
 
-#### 欧几里得范数 Euclidean Norm $\mathcal{l}_{2}$
+##### 欧几里得范数 Euclidean Norm $\mathcal{l}_{2}$
 
 $$
 \left\lVert x\right\rVert_{2} = \sqrt{x_{1}^{2} + x_{2}^{2} + x_{3}^{2} + \ldots + x_{n}^{2}} = \left( \sum_{i = 1}^{n}x_{i}^{2} \right)^{\frac{1}{2}}
 $$
 
-#### 无穷范数 Infinity norm $\mathcal{l}_{\infty}$
+##### 无穷范数 Infinity norm $\mathcal{l}_{\infty}$
 
 向量中各个元素绝对值的最大值。
 
@@ -757,29 +743,28 @@ $$
 
 ### 2.4 矩阵范数与条件数
 
-矩阵范数的性质 Properties of A, i.e. $\left\lVert A\right\rVert$
+#### 矩阵范数的性质 Properties of A, i.e. $\left\lVert A\right\rVert$
 
 将矩阵视为向量空间元素时，范数满足以下三条公理。随后列出的矩阵乘法不等式要求使用相容的矩阵与向量范数；诱导范数满足这些不等式。
 
-非负性 Non-Negativity: $\left\lVert A\right\rVert \geq 0$ for all matrices $A \in \mathbb{R}^{m \times n}$, and : $\left\lVert A\right\rVert = 0$ if and only if $A = 0$.
+- 非负性 Non-Negativity: $\left\lVert A\right\rVert \geq 0$ for all matrices $A \in \mathbb{R}^{m \times n}$, and : $\left\lVert A\right\rVert = 0$ if and only if $A = 0$.
 
-三角不等式：$\lVert A+B\rVert\le\lVert A\rVert+\lVert B\rVert$，其中 $A,B\in\mathbb R^{m\times n}$。
+- 三角不等式：$\lVert A+B\rVert\le\lVert A\rVert+\lVert B\rVert$，其中 $A,B\in\mathbb R^{m\times n}$。
+- 齐次性：$\lVert cA\rVert=|c|\lVert A\rVert$，其中 $A\in\mathbb R^{m\times n}$，$c$ 为标量。
 
-齐次性：$\lVert cA\rVert=|c|\lVert A\rVert$，其中 $A\in\mathbb R^{m\times n}$，$c$ 为标量。
-
-其他性质 Other Properties:
+##### 其他性质 Other Properties:
 
 - 矩阵范数与向量范数之间的关系 Relationship between Matrix and Vector Norms
 
-$$
-\left\lVert Ax\right\rVert \leq \left\lVert A\right\rVert \cdot \left\lVert x\right\rVert
-$$
+    $$
+    \left\lVert Ax\right\rVert \leq \left\lVert A\right\rVert \cdot \left\lVert x\right\rVert
+    $$
 
 - 两个矩阵相乘的范数 The Norm of the Multiplication of Two Matrices
 
-$$
-\left\lVert A \cdot B\right\rVert \leq \left\lVert A\right\rVert \cdot \left\lVert B\right\rVert
-$$
+    $$
+    \left\lVert A \cdot B\right\rVert \leq \left\lVert A\right\rVert \cdot \left\lVert B\right\rVert
+    $$
 
 #### F 范数 Frobenius Norm
 
@@ -793,19 +778,19 @@ $$
 
 诱导矩阵范数定义为 $\lVert A\rVert_p=\max_{x\ne0}\lVert Ax\rVert_p/\lVert x\rVert_p$。Frobenius 范数一般不是诱导范数，但满足相应次乘性，并有 $\lVert Ax\rVert_2\le\lVert A\rVert_F\lVert x\rVert_2$。
 
-$p = 1$，最大列和范数，定义为矩阵所有列中元素绝对值和的最大值。
+##### $p = 1$，最大列和范数，定义为矩阵所有列中元素绝对值和的最大值。
 
 $$
 \left\lVert A\right\rVert_{1} = \max_{1 \leq j \leq n}{\sum_{i = 1}^{m}{|a_{ij}|}}
 $$
 
-$p = \infty$，最大行和范数，定义为矩阵所有行中元素绝对值和的最大值。
+##### $p = \infty$，最大行和范数，定义为矩阵所有行中元素绝对值和的最大值。
 
 $$
 \left\lVert A\right\rVert_{\infty} = \max_{1 \leq i \leq m}{\sum_{j = 1}^{n}{|a_{ij}|}}
 $$
 
-$p = 2$，谱范数，定义为 A 矩阵 SVD 分解后的最大奇异值$\sigma_{1}$。
+##### $p = 2$，谱范数，定义为 A 矩阵 SVD 分解后的最大奇异值$\sigma_{1}$。
 
 $$
 \left\lVert A\right\rVert_{2} = \sigma_{1}
@@ -813,7 +798,7 @@ $$
 
 #### 条件数 Condition Number
 
-条件数的定义 Definition of Condition Number
+**条件数的定义 Definition of Condition Number**
 
 以下设 $A$ 为非奇异方阵，使用一致选定的诱导范数。此时 $\kappa(A)\ge1$；奇异矩阵通常记为条件数无穷大。
 
@@ -843,7 +828,7 @@ $$
 
 - Even if the residuals are small, the error can be large if the condition number of the matrix is large.
 
-良态矩阵和病态矩阵 Well-Conditioned and Ill-Conditioned Matrix
+##### 良态矩阵和病态矩阵 Well-Conditioned and Ill-Conditioned Matrix
 
 - 良态矩阵的条件数接近 $1$，此时小的相对残差意味着小的相对解误差。
 
@@ -883,7 +868,7 @@ $$
 
 **步骤 2：** 根据我们每一步“Replacing $R_{i}$ by $R_{i} - kR_{j}$”中的 k 值来得到 L 矩阵。
 
-案例 Example:
+**案例 Example:**
 
 $$
 \begin{bmatrix}
@@ -967,13 +952,13 @@ $$
 
 #### 为什么要使用部分主元 Why We Using Partial Pivoting?
 
-**Avoid Denominators of 0.** If the main diagonal element of the current column is 0, then eliminating it directly will result in a divide by 0 error.
+- **Avoid Denominators of 0.** If the main diagonal element of the current column is 0, then eliminating it directly will result in a divide by 0 error.
 
-**Avoid Too Small Divisor.** During Gaussian elimination, if the element on the main diagonal is very small, using it directly for the elimination operation may lead to unstable values or even overflow during the calculation.
+- **Avoid Too Small Divisor.** During Gaussian elimination, if the element on the main diagonal is very small, using it directly for the elimination operation may lead to unstable values or even overflow during the calculation.
 
-**Improve Numerical Accuracy**. Partial Pivoting can reduce the rounding error introduced during Gaussian elimination and thus improve the accuracy of the solution.
+- **Improve Numerical Accuracy**. Partial Pivoting can reduce the rounding error introduced during Gaussian elimination and thus improve the accuracy of the solution.
 
-**控制算法误差。** 部分主元法提高消元的数值稳定性，但矩阵固有的条件性保持不变，例如 $\kappa_2(PA)=\kappa_2(A)$。病态问题仍可能对数据扰动敏感。
+- **控制算法误差。** 部分主元法提高消元的数值稳定性，但矩阵固有的条件性保持不变，例如 $\kappa_2(PA)=\kappa_2(A)$。病态问题仍可能对数据扰动敏感。
 
 #### 步骤 Steps
 
@@ -1041,25 +1026,25 @@ $$
 
 #### 对称正定矩阵 Symmetric Positive Definite (SPD) Matrix
 
-对称性 Symmetric
+##### 对称性 Symmetric
 
 $$
 A = A^{T}
 $$
 
-正定性 Positive Definite
+##### 正定性 Positive Definite
 
 - 方法一：对实对称矩阵，全部特征值严格为正等价于正定。
 
 - 方法二:
 
-$$
-x^{T}Ax \geq 0\ \ \ \ \forall x \in \mathbb{R}^{n}
-$$
+    $$
+    x^{T}Ax \geq 0\ \ \ \ \forall x \in \mathbb{R}^{n}
+    $$
 
-$$
-x^{T}Ax = 0\ \  \Longleftrightarrow \ \ \ x = 0
-$$
+    $$
+    x^{T}Ax = 0\ \  \Longleftrightarrow \ \ \ x = 0
+    $$
 
 #### 科列斯基分解步骤 Steps of Cholesky Factorization
 
@@ -1242,7 +1227,7 @@ Solve x.
 
 多项式插值与最小二乘法 Polynomial Interpolation and Least Squares: 这与一般的拟合（比如最小二乘法）不同，拟合方法可以近似数据点，但并不需要完全通过所有点，而多项式插值的要求则是精确地通过所有点。
 
-多项式插值的唯一性定理 Polynomial Interpolation Uniqueness Theorem
+#### 多项式插值的唯一性定理 Polynomial Interpolation Uniqueness Theorem
 
 当节点 $x_0,\ldots,x_N$ 互异时，存在唯一的次数不超过 $N$ 的多项式 $p_N$，使其插值数据 $(x_i,f_i)$，$i=0,\ldots,N$。
 
@@ -1254,13 +1239,12 @@ Solve x.
 
 #### 幂函数多项式插值条件 Power Function Polynomial Interpolation Conditions
 
-Condition 1: 每个插值点$(x_{i},f_{i})$必须满足给定的多项式形式。这意味着插值多项式$p_{N}(x)$在每个$x_{i}$处的值都必须等于$f_{i}$。
+- Condition 1: 每个插值点$(x_{i},f_{i})$必须满足给定的多项式形式。这意味着插值多项式$p_{N}(x)$在每个$x_{i}$处的值都必须等于$f_{i}$。
+- Condition 2: 插值多项式的表达形式为
 
-Condition 2: 插值多项式的表达形式为
-
-$$
-p_{N}(x) = a_{0} + a_{1}x + \ldots + a_{N}x^{N}
-$$
+    $$
+    p_{N}(x) = a_{0} + a_{1}x + \ldots + a_{N}x^{N}
+    $$
 
 这是次数不超过 $N$ 的幂基多项式，其中 $a_0,\ldots,a_N$ 是待定系数，最高次系数可为零。
 
@@ -1453,9 +1437,9 @@ $$
 
 牛顿多项式 Newton Form 的优点是可以在每次添加新数据点时，只需要更新一项，而不需要重新计算整个多项式。
 
-#### 插值条件 Interpolation Conditions
+##### 插值条件 Interpolation Conditions
 
-如何确定系数$b_{i}$
+**如何确定系数$b_{i}$**
 
 Condition: 多项式在每个插值点$x_{i}$上都要等于对应的函数值$f_{i}$。
 
@@ -1473,7 +1457,7 @@ $$
 
 算法复杂度 Algorithmic Complexity: 求解这些系数所需的计算量（flops，即浮点运算次数）随着多项式的次数 N 的增加以$N^{2}$的速度增长。这意味着当多项式的次数较大时，计算复杂度也会相应增加。
 
-#### 牛顿多项式求解案例 Example of Finding Newton Form of the Interpolating Polynomial
+##### 牛顿多项式求解案例 Example of Finding Newton Form of the Interpolating Polynomial
 
 使用(2,88), (8,81), (4,88), (5,88), (6,87)这五个数据来寻求牛顿多项式。
 
@@ -1557,19 +1541,19 @@ $$
 
 其中，$f_{0},f_{1},\ldots,f_{N}$是插值点的函数值；$\mathcal{l}_{0}(x),\ \mathcal{l}_{1}(x),\ldots,\mathcal{l}_{N}(x)$是拉格朗日基函数 Lagrange Basis Function。
 
-#### 拉格朗日基函数 Lagrange Basis Function
+##### 拉格朗日基函数 Lagrange Basis Function
 
 $$
 \mathcal{l}_{k}(x) = \prod_{j = 0,\ j \neq k}^{N}\frac{(x - x_{j})}{(x_{k} - x_{j})}
 $$
 
-#### 案例 Example
+##### 案例 Example
 
 对于给定的五个插值点(2,88),(8,81),(4,88),(5,88),(6,87)，如何构造基函数$\mathcal{l}_{k}(x)$。
 
 **步骤 1：** 五个节点对应五个拉格朗日基函数 $\ell_0(x),\ell_1(x),\ell_2(x),\ell_3(x),\ell_4(x)$，最终组合为 $\sum_{k=0}^{4}f_k\ell_k(x)$。
 
-- Step 2: 遵从口诀“上未知、下实际、分别减、乘起来”。比如对于$\mathcal{l}_{0}(x)$，实际点为$x_{0} = 2$。
+**Step 2:** 遵从口诀“上未知、下实际、分别减、乘起来”。比如对于$\mathcal{l}_{0}(x)$，实际点为$x_{0} = 2$。
 
 $$
 \mathcal{l}_{0}(x) = \frac{x - 8}{2 - 8} \cdot \frac{x - 4}{2 - 4} \cdot \frac{x - 5}{2 - 5} \cdot \frac{x - 6}{2 - 6}
@@ -1577,15 +1561,15 @@ $$
 
 即可求出$\mathcal{l}_{0}(x)$，根据该方法求出每一个基函数。
 
-- Step 3: 根据拉格朗日插值公式，写出多项式$p(x)$。
+**Step 3:** 根据拉格朗日插值公式，写出多项式$p(x)$。
 
-#### 拉格朗日基函数的性质 Properties of Lagrange Basis Function
+##### 拉格朗日基函数的性质 Properties of Lagrange Basis Function
 
 - 在给定插值点 Nodes $x_{i}$上，拉格朗日基函数满足
 
-$$
-\ell_i(x_j)=\begin{cases}1,&i=j,\\0,&i\ne j.\end{cases}
-$$
+    $$
+    \ell_i(x_j)=\begin{cases}1,&i=j,\\0,&i\ne j.\end{cases}
+    $$
 
 - 该性质保证插值多项式$p(x)$在$x = x_{i}$处，正好取数据点$f_{i}$的值，而并不会受到其他数据点的影响。
 
@@ -1595,7 +1579,7 @@ $$
 
 #### 切比雪夫多项式的形式 Form of Chebyshev Polynomial
 
-多项式插值的通式 General Form of Polynomial Interpolation
+**多项式插值的通式 General Form of Polynomial Interpolation**
 
 $$
 p_N(x)=a_0\phi_0(x)+\cdots+a_N\phi_N(x)=\sum_{i=0}^{N}a_i\phi_i(x).
@@ -1731,15 +1715,15 @@ $$
 
 这个公式描述了多项式插值$p_{N}(x)$和实际函数$f(x)$之间的误差，其表明在某个点$x$处，插值多项式和真实函数直接的差异。
 
-$\omega_{N + 1}(x)$: 这是一个与插值点 Nodes 相关的函数
+- **$\omega_{N + 1}(x)$: 这是一个与插值点 Nodes 相关的函数**
 
-$$
-\omega_{N + 1}(x) = \left( x - x_{0} \right)\left( x - x_{1} \right)\ldots(x - x_{N})
-$$
+    $$
+    \omega_{N + 1}(x) = \left( x - x_{0} \right)\left( x - x_{1} \right)\ldots(x - x_{N})
+    $$
 
-该函数是 $x$ 与各节点带符号差值的乘积。误差界由 $|\omega_{N+1}(x)|$ 与相应高阶导数的大小共同决定，不能仅凭到某个节点的距离判断误差。
+    该函数是 $x$ 与各节点带符号差值的乘积。误差界由 $|\omega_{N+1}(x)|$ 与相应高阶导数的大小共同决定，不能仅凭到某个节点的距离判断误差。
 
-$(N + 1)!$: 这是阶乘项，$N$是插值多项式的阶数。
+**$(N + 1)!$: 这是阶乘项，$N$是插值多项式的阶数。**
 
 $f^{(N+1)}(\xi_x)$ 是 $N+1$ 阶导数在某个中间点的值。其绝对值越大，余项所允许的误差越大；导数阶数本身不决定其数值大小。
 
@@ -1757,15 +1741,14 @@ $$
 
 这表明插值误差的上界受两个因素的影响:
 
-$\omega_{N + 1}(x)$: 插值点的选择（即$x_{i}$的位置）。
-
-$f^{(N + 1)}(z)$: 函数高级导数的最大值。
+- $\omega_{N + 1}(x)$: 插值点的选择（即$x_{i}$的位置）。
+- $f^{(N + 1)}(z)$: 函数高级导数的最大值。
 
 #### 选择切比雪夫点 Choosing Chebyshev Point
 
 为了尽可能减小误差，通常建议选择 Chebyshev 点作为插值点。Chebyshev 点可以**有效降低**$\mathbf{\omega}_{\mathbf{N + 1}}\left( \mathbf{x} \right)$**的最大值**，从而改善插值的精度。
 
-不同的插值方法和插值结果的准确性 Different Interpolation Methods and Accuracy of Interpolation Results
+#### 不同的插值方法和插值结果的准确性 Different Interpolation Methods and Accuracy of Interpolation Results
 
 Computation of the polynomial interpolating function and its evaluation **can produce error**.
 
@@ -1775,7 +1758,7 @@ Computation of the polynomial interpolating function and its evaluation **can pr
 
 区间端点附近的插值：在某些等距高次插值中，误差容易在端点附近放大。若端点本身属于插值节点，端点处的插值误差为零；误差最大的位置依赖于函数和节点。
 
-插值误差的比较 Comparison of Interpolation Errors
+##### 插值误差的比较 Comparison of Interpolation Errors
 
 在某些具体数值实验中，随着 $n$ 增大，Vandermonde、Newton 或 Lagrange 实现的误差可能迅速增大。是否在 $n>60$ 时出现明显问题取决于函数、节点、精度和实现，没有通用的节点数阈值。
 
@@ -1813,15 +1796,15 @@ $$
 \max_{x \in \lbrack a,b\rbrack}\left| f(x) - S_{1,N}(x) \right| \leq \frac{h^{2}}{8} \cdot \max_{x \in \lbrack a,b\rbrack}\left| f^{(2)}(x) \right|
 $$
 
-最大误差$\max_{x \in \lbrack a,b\rbrack}\left| f(x) - S_{1,N}(x) \right|$: 这是函数$f(x)$和 linear splines $S_{1,N}(x)$之间的最大误差，也就是我们希望估计的插值误差。
+**最大误差$\max_{x \in \lbrack a,b\rbrack}\left| f(x) - S_{1,N}(x) \right|$:** 这是函数$f(x)$和 linear splines $S_{1,N}(x)$之间的最大误差，也就是我们希望估计的插值误差。
 
-区间长度$h$: 这是插值点之间的最大距离
+**区间长度$h$: 这是插值点之间的最大距离**
 
 $$
 h = \max_{i}{(x_{i + 1} - x_{i})}
 $$
 
-二阶导数的最大值$\max_{x \in \lbrack a,b\rbrack}\left| f^{(2)}(x) \right|$: $f^{(2)}(x)$是函数$f(x)$的二阶导数。
+**二阶导数的最大值$\max_{x \in \lbrack a,b\rbrack}\left| f^{(2)}(x) \right|$:** $f^{(2)}(x)$是函数$f(x)$的二阶导数。
 
 Error Bound of Linear Splines 说明其 Error 随着$h$的增大而增大，并且其受到二阶导数的影响，如果函数变化剧烈，误差会增加。
 
@@ -1829,27 +1812,27 @@ Error Bound of Linear Splines 说明其 Error 随着$h$的增大而增大，并�
 
 三次样条插值构造 $S\in C^2[a,b]$，即每个区间上的插值多项式及其一阶、二阶导数在节点处衔接连续。样条 $S$ 在每个区间上次数不超过三；构造样条本身只需数据点，高阶误差分析另需对原函数 $f$ 加光滑性假设。
 
-插值条件 Interpolation Condition: 对于每个插值区间$\lbrack x_{i},\ x_{i + 1}\rbrack$，都需要满足如下条件
+##### 插值条件 Interpolation Condition: 对于每个插值区间$\lbrack x_{i},\ x_{i + 1}\rbrack$，都需要满足如下条件
 
-函数值连续性 Continuity of Function Values: 对于每个区间的两端，插值多项式 Interpolating Polynomial $S_i(x)$在点$x_{i}$和$x_{i + 1}$处必须等于真实的函数值$f(x_{i})$和$f(x_{i + 1})$，即
+- 函数值连续性 Continuity of Function Values: 对于每个区间的两端，插值多项式 Interpolating Polynomial $S_i(x)$在点$x_{i}$和$x_{i + 1}$处必须等于真实的函数值$f(x_{i})$和$f(x_{i + 1})$，即
 
-$$
-S_i\left( x_{i} \right) = f\left( x_{i} \right),\ {\ \ \ f}_{i}\left( x_{i + 1} \right) = f\left( x_{i + 1} \right),\ \ \ \ i = 0,1,\ldots,n - 1
-$$
+    $$
+    S_i\left( x_{i} \right) = f\left( x_{i} \right),\ {\ \ \ f}_{i}\left( x_{i + 1} \right) = f\left( x_{i + 1} \right),\ \ \ \ i = 0,1,\ldots,n - 1
+    $$
 
-一阶导数连续性 Continuity of First-Order Derivatives: 插值多项式 Interpolating Polynomial $S_i(x)$的导数在每个插值点上必须连续
+- 一阶导数连续性 Continuity of First-Order Derivatives: 插值多项式 Interpolating Polynomial $S_i(x)$的导数在每个插值点上必须连续
 
-$$
-S_i'\left( x_{i + 1} \right) = S_{i+1}'\left( x_{i + 1} \right),\ \ \ i = 0,1,\ldots,n - 2
-$$
+    $$
+    S_i'\left( x_{i + 1} \right) = S_{i+1}'\left( x_{i + 1} \right),\ \ \ i = 0,1,\ldots,n - 2
+    $$
 
-二阶导数的连续性 Continuity of Second-Order Derivatives: 插值多项式 Interpolating Polynomial $S_i(x)$的二阶导数在每个插值点上必须连续
+- 二阶导数的连续性 Continuity of Second-Order Derivatives: 插值多项式 Interpolating Polynomial $S_i(x)$的二阶导数在每个插值点上必须连续
 
-$$
-S_i^{''}\left( x_{i + 1} \right) = S_{i+1}^{''}\left( x_{i + 1} \right),\ \ \ i = 0,1,\ldots,n - 2
-$$
+    $$
+    S_i^{''}\left( x_{i + 1} \right) = S_{i+1}^{''}\left( x_{i + 1} \right),\ \ \ i = 0,1,\ldots,n - 2
+    $$
 
-三次样条插值的形式 Expressions for Cubic Spline Interpolation
+##### 三次样条插值的形式 Expressions for Cubic Spline Interpolation
 
 $$
 S(x)=S_i(x)=a_ix^3+b_ix^2+c_ix+d_i,\qquad x\in[x_i,x_{i+1}].
@@ -1859,7 +1842,7 @@ $$
 
 #### 常见的边界条件 Common Boundary Conditions
 
-自然边界条件 Natural Boundary Conditions: 假设二阶导数在两端为0，即在$x_{0}$和$x_{N}$处有
+##### 自然边界条件 Natural Boundary Conditions: 假设二阶导数在两端为0，即在$x_{0}$和$x_{N}$处有
 
 $$
 S_0^{''}\left( x_{0} \right) = 0,\ S_{N-1}^{''}\left( x_{N} \right) = 0
@@ -1867,7 +1850,7 @@ $$
 
 自然边界条件适用于假设端点曲率为零的建模。若真实端点二阶导数不为零，自然边界可能限制端点附近精度；实际精度依赖原函数及边界条件。
 
-二阶导数条件：在两个端点指定二阶导数。若已知原函数端点二阶导数，可用其真实值，使边界曲率匹配：
+##### 二阶导数条件：在两个端点指定二阶导数。若已知原函数端点二阶导数，可用其真实值，使边界曲率匹配：
 
 $$
 S_0^{''}\left( x_{0} \right) = f^{''}\left( x_{0} \right),\ S_{N-1}^{''}\left( x_{N} \right) = f''(x_{N})
@@ -1875,7 +1858,7 @@ $$
 
 其逼近精度较好，误差可以达到$O(h^{4})$的精度。
 
-一阶导数条件：在两个端点指定一阶导数。若已知原函数端点一阶导数，可用其真实值，构成夹持样条：
+##### 一阶导数条件：在两个端点指定一阶导数。若已知原函数端点一阶导数，可用其真实值，构成夹持样条：
 
 $$
 S_0'\left( x_{0} \right) = f'\left( x_{0} \right),\ S_{N-1}'\left( x_{N} \right) = f'(x_{N})
@@ -1883,7 +1866,7 @@ $$
 
 其和 Second Derivative Conditions 一样，逼近精度较好，误差可以达到$O(h^{4})$的精度。
 
-非节点条件 Not-A-Knot Conditions: 在第二个和倒数第二个点（即$x_{1}$和$x_{N - 1}$）要求三阶导数连续
+##### 非节点条件 Not-A-Knot Conditions: 在第二个和倒数第二个点（即$x_{1}$和$x_{N - 1}$）要求三阶导数连续
 
 $$
 S_0^{'''}\left( x_{1} \right) = S_1^{'''}\left( x_{1} \right),\ S_{N-2}^{'''}\left( x_{N - 1} \right) = S_{N-1}^{'''}(x_{N - 1})
@@ -1962,7 +1945,7 @@ S_0(x)=\frac{13}{40}x^3-\frac{21}{40}x+\frac{11}{10},\qquad
 S_1(x)=-\frac{13}{40}x^3+\frac{39}{20}x^2-\frac{99}{40}x+\frac74.
 $$
 
-方程系统的唯一解 Unique Solution of the System of Equations
+#### 方程系统的唯一解 Unique Solution of the System of Equations
 
 对于三次样条插值 Cubic Spline Interpolation，我们需要在每个子区间（两个插值点之间）上定义一个三次多项式，为了确保这些多项式的系数，我们需要构建一个方程系统。
 
@@ -1970,7 +1953,7 @@ $$
 
 当节点互异且采用适定的两条边界条件时，这 $4N$ 个线性约束给出唯一的样条解。
 
-误差界限 Error Bound
+#### 误差界限 Error Bound
 
 以下四阶误差界假设 $f\in C^4[a,b]$，并使用匹配真实端点一阶或二阶导数的样条，或适当网格下的 not-a-knot 样条。以均匀网格为例，常数与网格步长无关。自然样条若端点曲率与原函数不匹配，则不一定满足这一全区间四阶界。
 
@@ -1980,11 +1963,11 @@ $$
 
 这是**两个相邻插值点之间的最大误差公式**。$f(x)$为 Real Function，而$p_{3}(x)$是 Cubic Spline Interpolation Polynomial。
 
-C 为一个常数 Constant。
+**C 为一个常数 Constant。**
 
-$h$是插值点之间的最大距离$h = \max_{i}{|x_{i} - x_{i - 1}|}$。
+**$h$是插值点之间的最大距离$h = \max_{i}{|x_{i} - x_{i - 1}|}$。**
 
-$f^{(4)}(x)$是函数的四阶导数，反映函数的光滑性。
+**$f^{(4)}(x)$是函数的四阶导数，反映函数的光滑性。**
 
 在上述假设下，当最大网格间距 $h$ 缩小时，误差上界按 $h^4$ 的量级减小。
 
@@ -1996,13 +1979,10 @@ $f^{(4)}(x)$是函数的四阶导数，反映函数的光滑性。
 
 #### 为什么有时候使用最小二乘拟合而不是插值 Why Least Squares Fitting?
 
-希望寻求数据中的趋势 Seeking trend in data.
-
-数据本身可能有测量错误 Data may contain measurement errors.
-
-希望模型只依赖较少参数 $a_0,\ldots,a_M$，而不是为每个数据点增加一个参数。
-
-更直接和效率构建方程 Construction of function “straightforward and efficient”.
+- 希望寻求数据中的趋势 Seeking trend in data.
+- 数据本身可能有测量错误 Data may contain measurement errors.
+- 希望模型只依赖较少参数 $a_0,\ldots,a_M$，而不是为每个数据点增加一个参数。
+- 更直接和效率构建方程 Construction of function “straightforward and efficient”.
 
 #### 最小二乘多项式的定义 Definition of Least Squares Polynomial
 
@@ -2026,15 +2006,14 @@ $$
 
 我们称，$p_{M}(x)$是 M 次的最小二乘多项式 Least Squares Polynomial。
 
-关键点 Key Points
+##### 关键点 Key Points
 
-最小二乘法 Least Squares Fitting 寻找的多项式是让误差度量$\sigma_{M}$最小的多项式，因此我们定义$\sigma\left( p_{M} \right) \leq \sigma\left( q_{M} \right)\ \forall\ q_{M}(x)$。
+- 最小二乘法 Least Squares Fitting 寻找的多项式是让误差度量$\sigma_{M}$最小的多项式，因此我们定义$\sigma\left( p_{M} \right) \leq \sigma\left( q_{M} \right)\ \forall\ q_{M}(x)$。
+- 尽管 Least Squares Polynomial $p_{M}(x)$产生了最小的误差度量$\sigma_{M}$，这不意味着其一定是对数据的“最佳拟合 Best Fit”，其可能出现过拟合或欠拟合 Overfitting or Underfitting 的情况。
 
-尽管 Least Squares Polynomial $p_{M}(x)$产生了最小的误差度量$\sigma_{M}$，这不意味着其一定是对数据的“最佳拟合 Best Fit”，其可能出现过拟合或欠拟合 Overfitting or Underfitting 的情况。
+#### 如何寻找最小二乘多项式 How to Find Least Squares Polynomial?
 
-如何寻找最小二乘多项式 How to Find Least Squares Polynomial?
-
-幂级数的多项式形式 Polynomial Form of Power Series
+##### 幂级数的多项式形式 Polynomial Form of Power Series
 
 $$
 p_{M}(x) = a_{0} + a_{1}x + \ldots + a_{M}x^{M}
@@ -2048,7 +2027,7 @@ $$
 \sigma_{M} = \sum_{r = 0}^{N}\left\{ p_{M}\left( x_{r} \right) - f_{r} \right\}^{2}
 $$
 
-如何寻找$a_{i}$使得$\sigma_{M}$最小？How to Find $a_{i}$ such that $\sigma_{M}$ Is Minimized?
+##### 如何寻找$a_{i}$使得$\sigma_{M}$最小？How to Find $a_{i}$ such that $\sigma_{M}$ Is Minimized?
 
 基本思想 Basic Ideas: 对误差函数 Error Function 对于每个系数$a_{i}$分别求偏导，并让偏导数为0。
 
@@ -2091,7 +2070,7 @@ $$
 
 正规矩阵的性质：$A=V^TV$ 总是对称半正定；当设计矩阵 $V$ 满列秩时才正定，最小二乘系数唯一。平方误差函数为凸二次函数，驻点为全局最小点。正定性不自动保证良好的数值条件。
 
-使用其他基函数在最小二乘法 Other Basis Functions in Least Squares Fitting
+#### 使用其他基函数在最小二乘法 Other Basis Functions in Least Squares Fitting
 
 $$
 \begin{array}{r}
@@ -2224,7 +2203,7 @@ $$
 
 在这道题中，我们可以知道$T_{0}(x) = 1,\ T_{1}(x) = x,\ T_{2}(x) = 2x^{2} - 1$。对于给定的数据点，我们代入计算即可。
 
-通过设计矩阵构建正规方程 Constructing Normal Equations by Design Matrix
+#### 通过设计矩阵构建正规方程 Constructing Normal Equations by Design Matrix
 
 设计矩阵 Design Matrix: 对于 Basis Function 是 Power Function 的情况，可以设矩阵 V 是设计矩阵 Design Matrix，其包含数据点$x_{i}$的所有幂次信息。
 
@@ -2281,7 +2260,9 @@ $$
 
 因此，我们可以将原 Normal Equations 写为$V^{T}Va = V^{T}f$。
 
-案例 Example: 有四个数据点$(1,1),\ (2,2),\ (3,2),\ (4,4)$，请使用二次多项式$p(x) = a_{0} + a_{1}x + a_{2}x^{2}$来拟合这些数据点。
+##### 案例 Example:
+
+ 有四个数据点$(1,1),\ (2,2),\ (3,2),\ (4,4)$，请使用二次多项式$p(x) = a_{0} + a_{1}x + a_{2}x^{2}$来拟合这些数据点。
 
 **步骤 1：** 构建设计矩阵 Design Matrix 和向量$f$。
 
@@ -2382,7 +2363,7 @@ $$
 
 为什么使用 QR 分解：若 $V$ 满列秩，$\kappa_2(V^TV)=\kappa_2(V)^2$。显式形成正规方程会使数值条件更差，QR 可避免这一步的额外放大。
 
-如何使用 QR 分解 How to Use QR Decomposition:
+##### 如何使用 QR 分解 How to Use QR Decomposition:
 
 $$
 V = QR
@@ -2429,7 +2410,9 @@ $$
 
 上式把目标分解为 $\lVert R_ma-b\rVert_2^2+\lVert c\rVert_2^2$。第二项与 $a$ 无关，因此回代解 $R_ma=b$ 即得最小二乘系数；$\lVert c\rVert_2^2$ 仍是最小残差平方和，评价拟合误差时须保留。
 
-案例 Example: 有四个数据点$(1,1),\ (2,2),\ (3,2),\ (4,4)$，请使用二次多项式$p(x) = a_{0} + a_{1}x + a_{2}x^{2}$来拟合这些数据点。
+##### 案例 Example:
+
+ 有四个数据点$(1,1),\ (2,2),\ (3,2),\ (4,4)$，请使用二次多项式$p(x) = a_{0} + a_{1}x + a_{2}x^{2}$来拟合这些数据点。
 
 **步骤 1：** 构建设计矩阵 Design Matrix 和向量$f$。
 
@@ -2482,9 +2465,8 @@ $$
 
 #### 为什么要使用数值微分一个方程 Why Differentiate A Function Numerically?
 
-Derivatives may be complicated to determine analytically.
-
-Function may not be explicitly known.
+- Derivatives may be complicated to determine analytically.
+- Function may not be explicitly known.
 
 #### 微分的标准定义 Formal Definition of a Derivative
 
@@ -2512,7 +2494,9 @@ $$
 
 以下各差分公式及相应 Taylor 余项均假设 $f$ 在所有取样点所覆盖的区间上具有所需的连续导数，且步长 $h>0$。
 
-前向差分法 Forward Difference: Forward Difference 就是使用$f(a + h)$的 Taylor Series Expansion 推得$f'(a)$。对于 Taylor Series Expansion，我们只保留到二阶导数项。
+#### 前向差分法 Forward Difference:
+
+ Forward Difference 就是使用$f(a + h)$的 Taylor Series Expansion 推得$f'(a)$。对于 Taylor Series Expansion，我们只保留到二阶导数项。
 
 $$
 f(a + h) = f(a) + hf'(a) + \frac{h^{2}}{2}f''(\xi)
@@ -2532,7 +2516,9 @@ $$
 f'(a) \approx \frac{f(a + h) - f(a)}{h}
 $$
 
-后向差分法 Backward Difference: Backward Difference 就是使用$f(a - h)$的 Taylor Series Expansion 推得$f'(a)$。对于 Taylor Series Expansion，我们只保留到二阶导数项。
+#### 后向差分法 Backward Difference:
+
+ Backward Difference 就是使用$f(a - h)$的 Taylor Series Expansion 推得$f'(a)$。对于 Taylor Series Expansion，我们只保留到二阶导数项。
 
 $$
 f(a - h) = f(a) - hf'(a) + \frac{h^{2}}{2}f''(\xi)
@@ -2552,7 +2538,7 @@ $$
 f'(a) \approx \frac{f(a) - f(a - h)}{h}
 $$
 
-高阶单边差分法 One-Sided Difference (Higher Order)
+#### 高阶单边差分法 One-Sided Difference (Higher Order)
 
 之前的单边差分：前向公式使用 $f(a)$、$f(a+h)$，后向公式使用 $f(a)$、$f(a-h)$，各使用两个函数值，误差为 $O(h)$。
 
@@ -2560,21 +2546,23 @@ $$
 
 - 高阶前向差分公式 Higher Order Forward Difference: 使用了点$f(a),\ f(a + h),\ f(a + 2h)$，即在$a$点右侧取了两个$h$。
 
-$$
-f'(a) \approx \frac{- 3f(a) + 4f(a + h) - f(a + 2h)}{2h}
-$$
+    $$
+    f'(a) \approx \frac{- 3f(a) + 4f(a + h) - f(a + 2h)}{2h}
+    $$
 
 - 高阶后向差分公式 Higher Order Backward Difference: 使用了点$f(a),\ f(a - h),\ f(a - 2h)$，即在$a$点左侧取了两个$h$。
 
-$$
-f'(a) \approx \frac{f(a - 2h) - 4f(a - h) + 3f(a)}{2h}
-$$
+    $$
+    f'(a) \approx \frac{f(a - 2h) - 4f(a - h) + 3f(a)}{2h}
+    $$
 
 <a id="section-4-3"></a>
 
 ### 4.3 中心差分与误差比较
 
-一阶导数的中间差分法 Centered Difference for First Order Derivatives: 对于一阶导数的 Centered Difference，我们使用$f(a + h)$的 Taylor Series 减去$f(a - h)$的 Taylor Series 得到。
+#### 一阶导数的中间差分法 Centered Difference for First Order Derivatives:
+
+ 对于一阶导数的 Centered Difference，我们使用$f(a + h)$的 Taylor Series 减去$f(a - h)$的 Taylor Series 得到。
 
 $$
 \begin{array}{r}
@@ -2599,7 +2587,9 @@ $$
 f'(a) \approx \frac{f(a + h) - f(a - h)}{2h}
 $$
 
-二阶导数的中心差分：将 $f(a+h)$ 与 $f(a-h)$ 在 $a$ 附近的 Taylor 展开相加，并消去奇次项。
+#### 二阶导数的中心差分：
+
+将 $f(a+h)$ 与 $f(a-h)$ 在 $a$ 附近的 Taylor 展开相加，并消去奇次项。
 
 $$
 \begin{array}{r}
@@ -2624,7 +2614,7 @@ $$
 f^{''}(a) \approx \frac{f(a + h) - 2f(a) + f(a - h)}{h^{2}}
 $$
 
-中心四阶差分法 Centered Fourth Order Difference
+#### 中心四阶差分法 Centered Fourth Order Difference
 
 之前的中心差分：一阶导数公式使用 $f(a-h)$、$f(a+h)$；二阶导数公式还使用 $f(a)$。两者的截断误差均为 $O(h^2)$。
 
@@ -2634,7 +2624,7 @@ $$
 f'(a) \approx \frac{1}{12h}\left( f(a - 2h) - 8f(a - h) + 8f(a + h) - f(a + 2h) \right)
 $$
 
-误差对比 Comparison of Errors
+#### 误差对比 Comparison of Errors
 
 精度比较：读取最终导数近似的截断误差中 $h$ 的幂次。下表统一定义误差为“精确导数减差分近似”，列出足够光滑时的 Taylor 主项。
 
@@ -2652,11 +2642,9 @@ $$
 
 ![指数函数的一阶、二阶与四阶精度差分误差比较](./num_anal-assets/media/image8-differences.png)
 
-Forward Difference 的误差随着$h$减小成线性缩小，符合$O(h)$的定义。
-
-Centered Difference 的误差呈现出二阶精度，即随着$h^{2}$减小，符合$O(h^{2})$的定义。
-
-四阶中心差分在截断误差占主导时按 $O(h^4)$ 减小，往往比低阶方法更精确。双精度下继续减小 $h$ 后，舍入误差会限制并可能破坏这种下降趋势。
+- Forward Difference 的误差随着$h$减小成线性缩小，符合$O(h)$的定义。
+- Centered Difference 的误差呈现出二阶精度，即随着$h^{2}$减小，符合$O(h^{2})$的定义。
+- 四阶中心差分在截断误差占主导时按 $O(h^4)$ 减小，往往比低阶方法更精确。双精度下继续减小 $h$ 后，舍入误差会限制并可能破坏这种下降趋势。
 
 在函数足够光滑、步长适当且截断误差占主导时，较高阶差分公式可达到更高精度。
 
@@ -2668,7 +2656,7 @@ Centered Difference 的误差呈现出二阶精度，即随着$h^{2}$减小，�
 
 #### 积分的标准定义与数值积分求积法则 Definition of Integration and Quadrature Rule
 
-积分的标准定义 Definition of Integration
+##### 积分的标准定义 Definition of Integration
 
 $$
 \int_{a}^{b}\, f(x)dx
@@ -2676,7 +2664,7 @@ $$
 
 这是一个定积分 Definite Integral，其中$f$是一个可积函数 Integrable Function，$\lbrack a,b\rbrack$是一个有限区间 Finite Interval。
 
-数值积分求积法则 Quadrature Rule
+##### 数值积分求积法则 Quadrature Rule
 
 $$
 \begin{array}{r}
@@ -2723,13 +2711,13 @@ $$
 
 牛顿-科特斯求积法则 Newton-Cotes Rule 是特殊的 Interpolatory Quadrature，其通过 Interpolation Polynomial 来近似函数，从而计算定积分。具体来说，其使用在区间$\lbrack a,\ b\rbrack$上选择$N + 1$个等距 Nodes ($x_{0},\ x_{1},\ x_{2},\ldots,\ x_{N}$) 从而构造一个多项式。该多项式在每个 Nodes 处的函数值与原函数$f(x)$相同。我们使用该多项式的积分作为原积分的近似值。Newton-Cotes Rule 可以根据 Nodes 是否包括 Endpoints 分为 Closed Formula 和 Open Formula。
 
-闭合公式 Closed Formula: Nodes 包括 Endpoints $a,b$。
+##### 闭合公式 Closed Formula: Nodes 包括 Endpoints $a,b$。
 
 - 2 Points Closed Newton-Cotes Rule: Trapezoidal Rule（使用两个 Nodes，近似的多项式为一阶多项式）
 
 - 3 Points Closed Newton-Cotes Rule: Simpson’s Rule（使用三个 Nodes，近似的多项式为二次多项式）
 
-开放公式 Open Formula: Nodes 不包括 Endpoints $a,b$。
+##### 开放公式 Open Formula: Nodes 不包括 Endpoints $a,b$。
 
 - 1 Point Open Newton-Cotes Rule: Midpoint Rule（使用一个节点，即区间中点处取样近似积分，近似的多项式为 Constant）
 
@@ -2817,7 +2805,7 @@ $$
 
 区间划分 Interval Dividing: 将$\lbrack a,b\rbrack$等分为$r$个小区间，每个小区间长度为$h = \frac{b - a}{r}$。其可以表示为$\lbrack x_{i - 1},\ x_{i}\rbrack$，其中$x_{i} = a + ih$。
 
-累加结果 Cumulative Result
+**累加结果 Cumulative Result**
 
 $$
 \int_a^bf(x)\,dx=\sum_{i=1}^{r}\int_{x_{i-1}}^{x_i}f(x)\,dx.
@@ -2845,7 +2833,7 @@ $$
 
 #### 误差分析 Error Analysis
 
-中点法和梯形法的误差 Error of Midpoint and Trapezoidal Method
+##### 中点法和梯形法的误差 Error of Midpoint and Trapezoidal Method
 
 统一定义积分误差为 $E(f)=I(f)-R(f)$。以下中点与梯形余项要求 $f\in C^2[a,b]$。
 
@@ -2945,11 +2933,11 @@ $$
 R(f) = \frac{1}{3}f( - 1) + \frac{4}{3}f(0) + \frac{1}{3}f(1)
 $$
 
-如何通过待定系数法得出其精度 How to Derive the Degree of Precision by the Method of Undetermined Coefficients
+#### 如何通过待定系数法得出其精度 How to Derive the Degree of Precision by the Method of Undetermined Coefficients
 
 方法 Method: 需要找到在第几阶的时候精确值$I(f)$和估计值$R(f)$不等，此时其对应的点$- 1$（即上一个可被精确估计的点）就是 Degree of Precision。
 
-案例 Example: 对于之前的例子
+**案例 Example: 对于之前的例子**
 
 $$
 \int_{- 1}^{1}1dx = 2 = \frac{1}{3}(1) + \frac{4}{3}(1) + \frac{1}{3}(1)
@@ -2977,7 +2965,7 @@ $$
 
 ### 4.9 Peano 核定理与求积误差
 
-#### 假设现在有一个 Quadrature Methods $R(f) = \sum_{i = 0}^{N}\, w_{i}f(x_{i})$来近似积分$I(f) = \int_{a}^{b}\, f(x)dx$，并且该规则的 Degree of Precision 为$m$。假设被积函数$f(x)$及其前$m + 1$阶导数都在区间$\lbrack a,b\rbrack$上存在且连续。
+假设现在有一个 Quadrature Methods $R(f) = \sum_{i = 0}^{N}\, w_{i}f(x_{i})$来近似积分$I(f) = \int_{a}^{b}\, f(x)dx$，并且该规则的 Degree of Precision 为$m$。假设被积函数$f(x)$及其前$m + 1$阶导数都在区间$\lbrack a,b\rbrack$上存在且连续。
 
 #### Peano 核函数$K(x)$
 
@@ -3003,7 +2991,7 @@ $$
 
 计算误差常数时，可选测试函数 $f(x)=x^{m+1}$，使其 $m+1$ 阶导数恒为 $(m+1)!$。由 $\kappa=[I(x^{m+1})-R(x^{m+1})]/(m+1)!$ 求得常数。单点余项的适用性还需不变号核等条件。
 
-案例 Example: Calculate the Peano constant $\kappa$ for Simpson’s rule (DOP = 3)
+##### 案例 Example: Calculate the Peano constant $\kappa$ for Simpson’s rule (DOP = 3)
 
 $$
 \begin{array}{r}
@@ -3037,15 +3025,12 @@ $$
 
 为最大化给定节点数的多项式代数精度，在 $[-1,1]$、权函数为 $1$ 时，选取勒让德多项式 $P_{N+1}$ 的零点作为 $N+1$ 个节点，并选取对应插值型权重，得到 Gauss–Legendre 公式。
 
-高斯积分规则的特性 Properties of Gauss Rules
+#### 高斯积分规则的特性 Properties of Gauss Rules
 
-所有 Weight $w_{i} > 0$。
-
-所有 Nodes（高斯点 Gauss Points）都位于区间$( - 1,\  + 1)$。
-
-对称性 Symmetry: Nodes $x_{i}$在原点周围对称分布，相应的 Weight $w_{i}$也对称。
-
-节点交织：若 $x_1<\cdots<x_n$ 为 $P_n$ 的零点，$\bar x_1<\cdots<\bar x_{n+1}$ 为 $P_{n+1}$ 的零点，则 $-1<\bar x_1<x_1<\bar x_2<x_2<\cdots<\bar x_n<x_n<\bar x_{n+1}<1$。
+- 所有 Weight $w_{i} > 0$。
+- 所有 Nodes（高斯点 Gauss Points）都位于区间$( - 1,\  + 1)$。
+- 对称性 Symmetry: Nodes $x_{i}$在原点周围对称分布，相应的 Weight $w_{i}$也对称。
+- 节点交织：若 $x_1<\cdots<x_n$ 为 $P_n$ 的零点，$\bar x_1<\cdots<\bar x_{n+1}$ 为 $P_{n+1}$ 的零点，则 $-1<\bar x_1<x_1<\bar x_2<x_2<\cdots<\bar x_n<x_n<\bar x_{n+1}<1$。
 
 Gauss Rules 本质上是 Interpolatory Quadrature Rules，这说明在 Nodes 确定后，Weights 可以根据拉格朗日基函数的积分求得。
 
@@ -3057,7 +3042,7 @@ $$
 
 $(N + 1)$点的高斯规则的精度为$2N + 1$。
 
-勒让德多项式 Legendre Polynomials
+#### 勒让德多项式 Legendre Polynomials
 
 $$
 \phi_{j + 1}(x) = \frac{2j + 1}{j + 1}x\phi_{j}(x) - \frac{j}{j + 1}\phi_{j - 1}(x),\ j \geq 1
@@ -3081,7 +3066,7 @@ Legendre 多项式由上述递推式定义，在整个实数轴上都有定义�
 
 - $\phi_{4}(x) = \frac{1}{8}(35x^{4} - 30x^{2} + 3)$
 
-高斯点 Gauss Points: 勒让德多项式 Legendre Polynomials 的零点。
+**高斯点 Gauss Points: 勒让德多项式 Legendre Polynomials 的零点。**
 
 两点高斯积分 Two-Point Gauss Rule: Two-Point Gauss Rule 说明积分公式中我们使用2个 Nodes (Gauss Points)。并且我们应该使用2阶 Legendre Polynomial。在这里我们定义一个参数$N$，$N = 2 - 1 = 1$。
 
@@ -3089,13 +3074,13 @@ Legendre 多项式由上述递推式定义，在整个实数轴上都有定义�
 
 参数 $N$ 的含义：节点编号为 $0,\ldots,N$，总数为 $N+1$；求 Gauss 节点时使用 $N+1$ 次 Legendre 多项式。权重公式中的 $n$ 若作为末编号，则与 $N$ 同义。
 
-权重公式 Weighting Formula: 对于每个节点$x_{j}$，Gauss Points 的权重$w_{j}$为
+**权重公式 Weighting Formula: 对于每个节点$x_{j}$，Gauss Points 的权重$w_{j}$为**
 
 $$
 w_{j} = \frac{2\left( 1 - x_{j}^{2} \right)}{\lbrack(n + 1)\phi_{n}(x_{j})\rbrack^{2}},j = 0,1,\ldots,n
 $$
 
-误差公式 Corresponding Error
+#### 误差公式 Corresponding Error
 
 $$
 \int_{- 1}^{1}\, f(x)dx - \sum_{j = 0}^{n}\, w_{j}f(x_{j}) = \frac{2^{2n + 3}((n + 1)!)^{4}}{(2n + 3)!((2n + 2)!)^{2}}f^{(2n + 2)}(\xi)
@@ -3179,7 +3164,7 @@ $$
 
 Lobatto 公式若节点编号为 $0,\ldots,N$，共有 $N+1$ 个节点，DOP 为 $2N-1$；以节点总数 $s=N+1$ 表示则为 $2s-3$。
 
-洛巴托法则的基本形式 Basic Form of Lobatto Rules
+#### 洛巴托法则的基本形式 Basic Form of Lobatto Rules
 
 $$
 \begin{array}{r}
@@ -3193,15 +3178,11 @@ $$
 
 除去 Endpoints 外，Lobatto Rules 区间内部是 Legendre Polynomial 的导数的零点。Legendre Polynomial 的阶数等于 Lobatto Rules 的点数减1。比如对于5点 Lobatto Rules，我们需要使用4阶 Legendre Polynomial 的导数的零点作为 Internal Nodes。如下是前几个 Legendre Polynomial 的导数:
 
-$\phi_{0}'(x) = 0$
-
-$\phi_{1}'(x) = 1$
-
-$\phi_{2}'(x) = 3x$
-
-$\phi_{3}'(x) = \frac{1}{2}(15x^{2} - 3)$
-
-$\phi_{4}'(x) = \frac{1}{2}(5x(7x^{2} - 3))$
+- $\phi_{0}'(x) = 0$
+- $\phi_{1}'(x) = 1$
+- $\phi_{2}'(x) = 3x$
+- $\phi_{3}'(x) = \frac{1}{2}(15x^{2} - 3)$
+- $\phi_{4}'(x) = \frac{1}{2}(5x(7x^{2} - 3))$
 
 因此，我们可以得到其零点，从而得到 Lobatto Rules 的 Internal Nodes。
 
@@ -3211,15 +3192,17 @@ $\phi_{4}'(x) = \frac{1}{2}(5x(7x^{2} - 3))$
 
 概述 Overview: 我们使用 Method of Undetermined Coefficients 来寻求 Lobatto Rules 的 Weights，方法步骤和幂函数的 Method of Undetermined Coefficients 保持一致。
 
-案例 Example: 我们使用3点 Lobatto Rule 来近似计算$\lbrack - 1,1\rbrack$区间上积分$\int_{- 1}^{1}{f(x)}dx$，选择的节点为$- 1,\ 0,\ 1$，请求出节点对应的权重$w_{0},\ w_{1},\ w_{2}$。
+##### 案例 Example:
 
-- Step 1: 列出积分近似公式并设置待定系数
+ 我们使用3点 Lobatto Rule 来近似计算$\lbrack - 1,1\rbrack$区间上积分$\int_{- 1}^{1}{f(x)}dx$，选择的节点为$- 1,\ 0,\ 1$，请求出节点对应的权重$w_{0},\ w_{1},\ w_{2}$。
+
+**Step 1:** 列出积分近似公式并设置待定系数
 
 $$
 \int_{- 1}^{1}\, f(x)dx \approx w_{0}f( - 1) + w_{1}f(0) + w_{2}f(1)
 $$
 
-- Step 2: 代入条件，构建方程组
+**Step 2:** 代入条件，构建方程组
 
 $$
 \int_{- 1}^{1}\, 1dx = 2 = w_{0}(1) + w_{1}(1) + w_{2}(1)
@@ -3273,7 +3256,7 @@ $$
 
 标准区间 Canonical Interval: 标准区间 Canonical Interval 是数值分析和数值积分中的一个固定的参考区间，通常是$\lbrack - 1,1\rbrack$，这样可以简化计算和分析。在高斯定理 Gauss Rule、洛巴托法则 Lobatto Rules、勒让德多项式 Legendre Polynomials 以及切比雪夫多项式 Chebyshev Polynomials 中，Canonical Interval 是$\lbrack - 1,1\rbrack$。
 
-如何将积分区间转换到标准区间 How to Convert Integral Interval to Canonical Interval
+#### 如何将积分区间转换到标准区间 How to Convert Integral Interval to Canonical Interval
 
 区间转换 Interval Conversion: 如果我们遇到非$\lbrack - 1,1\rbrack$标准区间的情况，而是遇到了一个任意的$\lbrack a,b\rbrack$区间。我们可以使用如下公式将积分的上下限进行改变。
 
@@ -3297,7 +3280,7 @@ $$
 
 $\frac{b - a}{2}$是缩放因子 Scaling Factor。
 
-精度 Degree of Precision
+#### 精度 Degree of Precision
 
 精度的定义 Definition of Degree of Precision (DOP): 一个数值积分公式能够精确积分的多项式的最高次数。具体而言，如果一个数值积分方法能够精确积分所有次数小于或等于$n$的多项式，但对次数为$n + 1$的多项式则不一定精准，那么这个方法的 DOP 等于$n$。
 
@@ -3305,7 +3288,7 @@ $\frac{b - a}{2}$是缩放因子 Scaling Factor。
 
 可先从适用的非退化误差余项中识别可能的代数精度，再按定义检验：所有次数不超过 DOP 的多项式都精确，至少有一个更高一次的多项式不精确。
 
-精度对比 DOP Comparison
+#### 精度对比 DOP Comparison
 
 | 方法 | 误差或误差界，$E=I-R$ | 导数阶数 | DOP |
 | --- | --- | --- | --- |
@@ -3327,19 +3310,15 @@ $\frac{b - a}{2}$是缩放因子 Scaling Factor。
 
 #### 寻找非线性方程根的五种方法 Five Ways to Find Roots of Nonlinear Equations
 
-固定点迭代法 Fixed-Point Iteration
-
-牛顿迭代法 Newton Iteration
-
-割线法 Secant Iteration
-
-二分法 Bisection
-
-二次反插值法 Quadratic Inverse Interpolation
+- 固定点迭代法 Fixed-Point Iteration
+- 牛顿迭代法 Newton Iteration
+- 割线法 Secant Iteration
+- 二分法 Bisection
+- 二次反插值法 Quadratic Inverse Interpolation
 
 #### 每种求根法的重要关注点 Important Concerns for Each Rooting Method
 
-收敛速率 Convergence Rate
+#### 收敛速率 Convergence Rate
 
 收敛阶描述误差在迭代后期趋于零的渐近规律，并影响达到期望精度所需的迭代次数。设误差 $e_n=x_n-x^*$，若存在 $p$ 和 $K$ 使
 
@@ -3347,7 +3326,7 @@ $$
 \lim_{n \rightarrow \infty}\frac{\left| e_{n + 1} \right|}{\left| e_{n} \right|^{p}} = K
 $$
 
-其中
+**其中**
 
 - $e_{n} = x_{n} - x^{*}$是误差。
 
@@ -3355,7 +3334,7 @@ $$
 
 - $K$ 是有限正数；当 $p=1$ 时，线性收敛还要求 $0<K<1$。
 
-分类 Classification
+**分类 Classification**
 
 - 线性收敛：$p=1$ 且 $0<K<1$，误差渐近按固定比例减小。固定点迭代通常属于此类；二分法的区间长度和误差上界每步减半。
 
@@ -3363,21 +3342,21 @@ $$
 
 - 二次收敛 Quadratic Convergence $p = 2$: 误差平方减少（如 Newton Iteration）。
 
-是否需要导数 Need for Derivatives
+#### 是否需要导数 Need for Derivatives
 
 定义 Definition: 方法是否需要计算或依赖函数的导数 Derivative of A Function。
 
-关注点 Concerns
+**关注点 Concerns**
 
 - 如果导数显式表达式难以获得，或计算代价高，则优先选择不需要导数的方法（如 Secant Iteration、Bisection）。
 
 - 如果导数易得或可以通过自动微分计算，则可以使用 Newton Iteration 等需要导数的方法。
 
-初始条件的选择 Selection of Initial Conditions
+#### 初始条件的选择 Selection of Initial Conditions
 
 定义 Definition: 方法对初始值或初始区间 Initial Value or Initial Interval 的要求。
 
-关注点 Concerns
+**关注点 Concerns**
 
 - 二分法 Bisection: 需要初始区间$\lbrack a,b\rbrack$，并要求$f(a)f(b) < 0$。
 
@@ -3389,11 +3368,9 @@ $$
 
 定义 Definition: 满足如下三个条件被称为 Simple Root
 
-Condition 1: $f\left( x^{*} \right) = 0$ 函数在$x^{*}$处的值为0，表示$x^{*}$是方程的根。
-
-Condition 2: $f'(x)$在包含$x^{*}$的某个开区间内存在，保证函数$f(x)$在这一区域是 Continuous and Differentiable。
-
-Condition 3: $f'\left( x^{*} \right) \neq 0$ 简单根处导数不为0。
+- Condition 1: $f\left( x^{*} \right) = 0$ 函数在$x^{*}$处的值为0，表示$x^{*}$是方程的根。
+- Condition 2: $f'(x)$在包含$x^{*}$的某个开区间内存在，保证函数$f(x)$在这一区域是 Continuous and Differentiable。
+- Condition 3: $f'\left( x^{*} \right) \neq 0$ 简单根处导数不为0。
 
 几何意义 Geometric Significance: 函数$f(x)$在 Simple Root $x^{*}$处穿过$x$轴。
 
@@ -3415,15 +3392,13 @@ Condition 3: $f'\left( x^{*} \right) \neq 0$ 简单根处导数不为0。
 
 #### 如何将根问题转化为固定点问题 How to Convert the Root Finding Problem into the Fixed Point Problem
 
-方法与案例 Methods and Examples
+**方法与案例 Methods and Examples**
 
-Method 1: 直接分离变量，例如$f(x) = x^{2} - 3x + 2 = 0$，我们重新排列可以得到$x = \frac{x^{2} + 2}{3}$，这是一个可能的$g(x) = \frac{x^{2} + 2}{3}$。
+- Method 1: 直接分离变量，例如$f(x) = x^{2} - 3x + 2 = 0$，我们重新排列可以得到$x = \frac{x^{2} + 2}{3}$，这是一个可能的$g(x) = \frac{x^{2} + 2}{3}$。
+- Method 2: 通过$x = x - f(x)$构造，例如对于$f(x) = x^{2} - 3x + 2 = 0$，我们可以说$g(x) = x - \left( x^{2} - 3x + 2 \right) = - x^{2} + 4x - 2$。
+- Method 3: 通过线性变换调整方程，有时我们可以通过重新排列方程找到更简单的形式，比如直接将$f(x)$的一部分移到等式另一边。例如$f(x) = x^{2} - 3x + 2 = 0$，我们重新排列可以得到$g(x) = \sqrt{3x - 2}$。
 
-Method 2: 通过$x = x - f(x)$构造，例如对于$f(x) = x^{2} - 3x + 2 = 0$，我们可以说$g(x) = x - \left( x^{2} - 3x + 2 \right) = - x^{2} + 4x - 2$。
-
-Method 3: 通过线性变换调整方程，有时我们可以通过重新排列方程找到更简单的形式，比如直接将$f(x)$的一部分移到等式另一边。例如$f(x) = x^{2} - 3x + 2 = 0$，我们重新排列可以得到$g(x) = \sqrt{3x - 2}$。
-
-遵循的原则 Principles to Be Followed
+##### 遵循的原则 Principles to Be Followed
 
 等价性 Equivalence: 转化后的 Fixed Point Problem $x = g(x)$的 Fixed Point $x^{*}$必须与原先的 Root Finding Problem 的$f(x) = 0$的根一致。也就是说，如果$x^{*}$是$g(x) = x$的解，其必须也是$f(x) = 0$的解，反之亦然。本质上，我们是把$f(x)$与$x$轴交点的寻找问题转化为$g(x)$与$y = x$交点的寻找问题。
 
@@ -3439,11 +3414,10 @@ $$
 
 目标 Objective: 通过迭代 Iteration 找到满足$x = g(x)$的 Fixed Point $x^{*}$。
 
-步骤 Steps
+##### 步骤 Steps
 
-选择一个函数$g(x)$，使得 Root Finding Problem $f(x) = 0$等价于 Fixed Point Problem $g(x) = x$。
-
-猜测一个 Initial Value $x_{0}$。
+- 选择一个函数$g(x)$，使得 Root Finding Problem $f(x) = 0$等价于 Fixed Point Problem $g(x) = x$。
+- 猜测一个 Initial Value $x_{0}$。
 
 使用迭代公式 Iteration Formula
 
@@ -3496,13 +3470,12 @@ $$
 
 #### 固定点迭代的收敛性条件 Convergence Conditions for Fixed-Point Iterations
 
-收敛性条件 Convergence Conditions
+**收敛性条件 Convergence Conditions**
 
-固定点条件 Fixed Point Condition: $x^{*} = g(x^{*})$，即$x^{*}$是$g(x)$的 Fixed Point。
+- 固定点条件 Fixed Point Condition: $x^{*} = g(x^{*})$，即$x^{*}$是$g(x)$的 Fixed Point。
+- 误差衰减：定义带符号误差 $e_n=x_n-x^*$。若在包含迭代点和固定点的区间内有 $|g\prime(x)|\le q<1$，则 $|e_{n+1}|\le q|e_n|$，误差单调衰减并趋于零。
 
-误差衰减：定义带符号误差 $e_n=x_n-x^*$。若在包含迭代点和固定点的区间内有 $|g\prime(x)|\le q<1$，则 $|e_{n+1}|\le q|e_n|$，误差单调衰减并趋于零。
-
-误差传播公式 Error Propagation Formula
+**误差传播公式 Error Propagation Formula**
 
 $$
 e_{n + 1} = x_{n + 1} - x^{*} = g\left( x_{n} \right) - g\left( x^{*} \right) = g'\left( \eta_{n} \right)\left( x_{n} - x^{*} \right) = g'\left( \eta_{n} \right)e_{n}
@@ -3524,28 +3497,28 @@ $$
 \left| g'\left( \eta_{n} \right) \right| < 1
 $$
 
-如何判断收敛性 How to Determine Convergence
+**如何判断收敛性 How to Determine Convergence**
 
 - 方法一：用当前迭代点附近的导数值作局部诊断。例如以下数值显示导数绝对值较小；严格的收敛保证还需对相关区间建立统一收缩界。
 
-$$
-g\prime(x_1)=-e^{-x_1}\approx-e^{-0.6065}\approx-0.5452.
-$$
+    $$
+    g\prime(x_1)=-e^{-x_1}\approx-e^{-0.6065}\approx-0.5452.
+    $$
 
-$$
-|g\prime(x_1)|\approx0.5452<1.
-$$
+    $$
+    |g\prime(x_1)|\approx0.5452<1.
+    $$
 
 - 方法二：画出 $|g\prime(x)|$ 帮助选择可能收缩的区间，再验证该区间上的统一上界 $q<1$ 及区间映射不变性。
 
 - 方法三：中值定理给出误差比例与某个中间点导数的关系。若 $g$ 在相关闭区间连续、内部可微，则存在 $\eta_n$ 位于 $x_n$ 与 $x^*$ 之间，使下式成立；严格小于一还需由导数界或具体计算另行判断：
 
-$$
-\begin{aligned}
-\left| g'\left( \eta_{n} \right) \right| &= \left| \frac{g\left( x_{n} \right) - g\left( x^{*} \right)}{x_{n} - x^{*}} \right|\\
-&= \left| \frac{g\left( x_{n} \right) - x^{*}}{x_{n} - x^{*}} \right| \le q<1
-\end{aligned}
-$$
+    $$
+    \begin{aligned}
+    \left| g'\left( \eta_{n} \right) \right| &= \left| \frac{g\left( x_{n} \right) - g\left( x^{*} \right)}{x_{n} - x^{*}} \right|\\
+    &= \left| \frac{g\left( x_{n} \right) - x^{*}}{x_{n} - x^{*}} \right| \le q<1
+    \end{aligned}
+    $$
 
 以我们之前的例子为例，设$x^{*} \approx 0.5671$是固定点，$x_{n} = 0.6065$（即第1次迭代的值），我们可以得到
 
@@ -3581,17 +3554,14 @@ $$
 
 #### 固定点迭代的收敛速率 Convergence Rate of the Fixed-Point Iterations
 
-收敛速率与$g'(x^{*})$的关系 Convergence Rate Versus $g'(x^{*})$
+**收敛速率与$g'(x^{*})$的关系 Convergence Rate Versus $g'(x^{*})$**
 
-如果$|g'\left( x^{*} \right)|$越小，收敛越快。
+- 如果$|g'\left( x^{*} \right)|$越小，收敛越快。
+- 如果$g'\left( x^{*} \right) = 0$，则其可能达到 Superlinear 或者 Quadratic Convergence。
+- 若 $|g\prime(x^*)|<1$ 但接近 $1$，局部线性收敛通常较慢。
+- 若 $|g\prime(x^*)|>1$，固定点局部排斥，通常不能从附近收敛；若等于 $1$，一阶判据无法决定，应考察高阶项。例如 $g(x)=x-x^3$ 在零附近可收敛。
 
-如果$g'\left( x^{*} \right) = 0$，则其可能达到 Superlinear 或者 Quadratic Convergence。
-
-若 $|g\prime(x^*)|<1$ 但接近 $1$，局部线性收敛通常较慢。
-
-若 $|g\prime(x^*)|>1$，固定点局部排斥，通常不能从附近收敛；若等于 $1$，一阶判据无法决定，应考察高阶项。例如 $g(x)=x-x^3$ 在零附近可收敛。
-
-单侧收敛与双侧收敛 One-Sided and Two-Sided Convergence
+#### 单侧收敛与双侧收敛 One-Sided and Two-Sided Convergence
 
 当 $0<g\prime(x^*)<1$ 且迭代点足够接近固定点时，误差保持同号，从同一侧收敛。例如 $g(x)=x/2+1$，固定点为 $2$，误差满足 $e_{k+1}=e_k/2$。
 
@@ -3613,9 +3583,8 @@ $$
 
 #### 牛顿迭代法的假设条件 Conditions for the Newton Iteration
 
-Condition 1: $f \in C^{2}\lbrack a,b\rbrack$，即$f(x)$的一阶和二阶导数存在并连续。
-
-Condition 2: $f'(x) \neq 0$，避免分母为0的情况。
+- Condition 1: $f \in C^{2}\lbrack a,b\rbrack$，即$f(x)$的一阶和二阶导数存在并连续。
+- Condition 2: $f'(x) \neq 0$，避免分母为0的情况。
 
 #### 泰勒定理与牛顿迭代法算法 Taylor’s Theorem and Newton Iteration Algorithm
 
@@ -3661,27 +3630,27 @@ $$
 
 - 第一次迭代
 
-$$
-x_{1} = 1 - \frac{1^{2} - 2}{2 \times 1} = 1.5
-$$
+    $$
+    x_{1} = 1 - \frac{1^{2} - 2}{2 \times 1} = 1.5
+    $$
 
 - 第二次迭代
 
-$$
-x_2=\frac32-\frac{(3/2)^2-2}{2(3/2)}=\frac{17}{12}\approx1.416666666667.
-$$
+    $$
+    x_2=\frac32-\frac{(3/2)^2-2}{2(3/2)}=\frac{17}{12}\approx1.416666666667.
+    $$
 
 - 第三次迭代
 
-$$
-x_3=\frac{17}{12}-\frac{(17/12)^2-2}{2(17/12)}=\frac{577}{408}\approx1.414215686275.
-$$
+    $$
+    x_3=\frac{17}{12}-\frac{(17/12)^2-2}{2(17/12)}=\frac{577}{408}\approx1.414215686275.
+    $$
 
 迭代继续进行，其逐渐逼近$f(x)$的根。
 
 #### 牛顿迭代法的收敛性与特性 Convergence and Properties of the Newton Iteration
 
-收敛条件 Convergence Conditions
+##### 收敛条件 Convergence Conditions
 
 起始点的选择 Selection of Initial Value: Newton Iteration 的 Initial Value $x_{0}$需要足够接近函数根$x^{*}$。
 
@@ -3699,11 +3668,9 @@ $$
 
 #### 割线法的假设条件 Conditions for the Secant Iteration
 
-Condition 1: 割线法 Secant Iteration 要求目标函数$f(x)$在定义域内连续，以确保函数值$f\left( x_{k} \right)$和$f\left( x_{k - 1} \right)$有意义。
-
-Condition 2: 对于每一次迭代，我们要求$f\left( x_{k} \right) - f(x_{k - 1}) \neq 0$，否则分母为0，无法进行迭代。
-
-Condition 3: 虽然割线法 Secant Iteration 不需要显式地计算导数$f'(x)$，但隐含假设函数$f(x)$在根$x^{*}$附近具有良好的线性近似性 Good Linear Approximability，即$f'(x) \neq 0$且在根附近平滑。
+- Condition 1: 割线法 Secant Iteration 要求目标函数$f(x)$在定义域内连续，以确保函数值$f\left( x_{k} \right)$和$f\left( x_{k - 1} \right)$有意义。
+- Condition 2: 对于每一次迭代，我们要求$f\left( x_{k} \right) - f(x_{k - 1}) \neq 0$，否则分母为0，无法进行迭代。
+- Condition 3: 虽然割线法 Secant Iteration 不需要显式地计算导数$f'(x)$，但隐含假设函数$f(x)$在根$x^{*}$附近具有良好的线性近似性 Good Linear Approximability，即$f'(x) \neq 0$且在根附近平滑。
 
 #### 割线法算法 Secant Iteration Algorithm
 
@@ -3725,21 +3692,21 @@ $$
 
 - 第一次迭代: 计算$x_{2}$
 
-$$
-x_2=x_1-\frac{f(x_1)(x_1-x_0)}{f(x_1)-f(x_0)}=2-\frac{2(2-1)}{2-(-1)}=\frac43\approx1.333333333333.
-$$
+    $$
+    x_2=x_1-\frac{f(x_1)(x_1-x_0)}{f(x_1)-f(x_0)}=2-\frac{2(2-1)}{2-(-1)}=\frac43\approx1.333333333333.
+    $$
 
 - 第二次迭代: 计算$x_{3}$
 
-$$
-x_3=x_2-\frac{f(x_2)(x_2-x_1)}{f(x_2)-f(x_1)}=\frac43-\frac{(-2/9)(4/3-2)}{-2/9-2}=\frac75=1.4.
-$$
+    $$
+    x_3=x_2-\frac{f(x_2)(x_2-x_1)}{f(x_2)-f(x_1)}=\frac43-\frac{(-2/9)(4/3-2)}{-2/9-2}=\frac75=1.4.
+    $$
 
 - 第三次迭代: 计算$x_{4}$
 
-$$
-x_4=x_3-\frac{f(x_3)(x_3-x_2)}{f(x_3)-f(x_2)}=\frac75-\frac{(-1/25)(7/5-4/3)}{-1/25-(-2/9)}=\frac{58}{41}\approx1.414634146341.
-$$
+    $$
+    x_4=x_3-\frac{f(x_3)(x_3-x_2)}{f(x_3)-f(x_2)}=\frac75-\frac{(-1/25)(7/5-4/3)}{-1/25-(-2/9)}=\frac{58}{41}\approx1.414634146341.
+    $$
 
 迭代继续进行，其逐渐逼近$f(x)$的根。
 
@@ -3761,19 +3728,18 @@ $$
 
 介值定理 Intermediate Value Theorem 是二分法 Bisection Method 的理论基础。
 
-Condition 1: $f(x)$必须在区间$\lbrack x_{l},\ x_{u}\rbrack$上是连续的 Continuous。
+- Condition 1: $f(x)$必须在区间$\lbrack x_{l},\ x_{u}\rbrack$上是连续的 Continuous。
+- Condition 2: 区间端点的函数值$f\left( x_{l} \right)$和$f\left( x_{u} \right)$的符号必须相反
 
-Condition 2: 区间端点的函数值$f\left( x_{l} \right)$和$f\left( x_{u} \right)$的符号必须相反
-
-$$
-f\left( x_{l} \right)f\left( x_{u} \right) < 0
-$$
+    $$
+    f\left( x_{l} \right)f\left( x_{u} \right) < 0
+    $$
 
 这意味着区间内存在至少一个 Real Root。
 
 #### 二分法算法 Bisection Method Algorithm
 
-二分法算法内容 Bisection Method Algorithm Content
+**二分法算法内容 Bisection Method Algorithm Content**
 
 **步骤 1：** 划分区间。
 
@@ -3805,7 +3771,7 @@ $$
 
 #### 停止迭代的条件 Conditions for Stopping Iteration
 
-真实误差 True Error
+##### 真实误差 True Error
 
 $$
 \varepsilon_{t} = \left| x_{approx} - x_{true} \right|
@@ -3817,7 +3783,7 @@ $x_{true}$: 真实根。
 
 真实误差在实际应用中通常无法直接计算，因为$x_{true}$未知。
 
-近似误差 Approximated Error
+##### 近似误差 Approximated Error
 
 $$
 \varepsilon_{a} = \left| \frac{x_{r}^{new} - x_{r}^{old}}{x_{r}^{new}} \right| \times 100\%
@@ -3849,7 +3815,7 @@ $$
 
 终止条件：使用当前区间半宽小于绝对容限，或按一致量纲设定的其他可计算判据。真实根未知时，真实误差 $\varepsilon_t$ 通常不能直接用于停止。
 
-二分法的整体误差 Overall Error in Bisection Method
+#### 二分法的整体误差 Overall Error in Bisection Method
 
 若第 $k$ 次迭代表示取第 $k$ 个中点，初始区间为 $[a,b]$，则该中点的误差不超过 $(b-a)/2^k$。据此确定所需迭代次数。
 
@@ -3881,17 +3847,14 @@ $$
 
 #### 二次反插值法的假设条件 Conditions for the Quadratic Inverse Interpolation
 
-Condition 1: $f(x)$必须在根附近是连续的 Continuous。
-
-条件 2：选择三个点 $(x_{n-2},y_{n-2}),(x_{n-1},y_{n-1}),(x_n,y_n)$，其中 $y_i=f(x_i)$，三个函数值必须两两不同。若其中一个 $y_i=0$，则对应点已经是根。
-
-条件 3：初值应足够靠近目标简单根，以适用局部收敛分析。三个函数值不必异号，也不必夹住零点；实际实现可额外维持夹根区间以提高可靠性。
-
-条件 4：在目标简单根附近要求足够光滑且 $f\prime(x^*)\ne0$，从而存在可供近似的局部反函数。只在这一邻域内使用局部单调性，无需假定整个全局定义域单调。
+- Condition 1: $f(x)$必须在根附近是连续的 Continuous。
+- 条件 2：选择三个点 $(x_{n-2},y_{n-2}),(x_{n-1},y_{n-1}),(x_n,y_n)$，其中 $y_i=f(x_i)$，三个函数值必须两两不同。若其中一个 $y_i=0$，则对应点已经是根。
+- 条件 3：初值应足够靠近目标简单根，以适用局部收敛分析。三个函数值不必异号，也不必夹住零点；实际实现可额外维持夹根区间以提高可靠性。
+- 条件 4：在目标简单根附近要求足够光滑且 $f\prime(x^*)\ne0$，从而存在可供近似的局部反函数。只在这一邻域内使用局部单调性，无需假定整个全局定义域单调。
 
 #### 二次反插值法算法 Quadratic Inverse Interpolation Algorithm
 
-算法内容 Algorithm Content
+**算法内容 Algorithm Content**
 
 **步骤 1：** 输入数据，假设给定三个点 Initial Values $x_{n - 2},\ x_{n - 1},\ x_{n}$，以及对应的函数值$f\left( x_{n - 2} \right) = y_{n - 2}$, $f\left( x_{n - 1} \right) = y_{n - 1}$, $f\left( x_{n} \right) = y_{n}$。
 
@@ -3995,19 +3958,17 @@ $$
 
 #### 如何选择方法 How to Choose A Methodology
 
-函数连续但导数不可用:
+- 函数连续但导数不可用:
 
-如果简单易实现且鲁棒性优先：选择 Bisection Method。
+    如果简单易实现且鲁棒性优先：选择 Bisection Method。
 
-如果需要更快的收敛速度：选择 Secant Method。
+    如果需要更快的收敛速度：选择 Secant Method。
 
-如果函数的反函数易近似：选择 Quadratic Inverse Interpolation。
+    如果函数的反函数易近似：选择 Quadratic Inverse Interpolation。
 
-函数连续且导数可用: 使用 Newton's Iteration。
-
-函数行为复杂或初始点远离根: 选择 Bisection Method。
-
-若能把方程重写为易算且满足收缩条件的 $x=g(x)$，固定点迭代可提供低成本实现。
+- 函数连续且导数可用: 使用 Newton's Iteration。
+- 函数行为复杂或初始点远离根: 选择 Bisection Method。
+- 若能把方程重写为易算且满足收缩条件的 $x=g(x)$，固定点迭代可提供低成本实现。
 
 <a id="unit-6"></a>
 
@@ -4021,11 +3982,11 @@ $$
 
 优化目标 Typical Optimization Objectives: 优化 Optimization 的通常目标是最大化 Maximize 或者最小化 Minimize 某一数量（比如利润），基于变量（如材料的成本和数量）的选择。但是，优化问题 Optimization Problem 有时也包括约束条件 Constraint（如成本必须为正值）。
 
-本单元讨论的问题 Problems Discussed in this Chapter
+#### 本单元讨论的问题 Problems Discussed in this Chapter
 
 单变量函数 Single Variable Function 的无约束最小化问题 Minimization Without Constraints
 
-如何将这些方法适配于最大化问题 Maximization Problems？
+#### 如何将这些方法适配于最大化问题 Maximization Problems？
 
 #### 全局极值与局部极值 Global Extrema vs. Local Extrema
 
@@ -4033,9 +3994,8 @@ $$
 
 ![全局极值与局部极值示意](./num_anal-assets/media/image17.png)
 
-全局极值 Global Extrema: 包括全局最大值 Global Maximum 和全局最小值 Global Minimum。其是函数在整个定义域上的最大值或最小值。
-
-局部极值 Local Extrema: 包括局部最大值 Local Maximum 和局部最小值 Local Minimum。其是函数在某一局部区间上的最大值或最小值。
+- 全局极值 Global Extrema: 包括全局最大值 Global Maximum 和全局最小值 Global Minimum。其是函数在整个定义域上的最大值或最小值。
+- 局部极值 Local Extrema: 包括局部最大值 Local Maximum 和局部最小值 Local Minimum。其是函数在某一局部区间上的最大值或最小值。
 
 研究重点：寻找单变量函数的局部最小点。黄金分割与二次插值只用函数值，牛顿优化和这里的三次 Hermite 搜索还需要导数。
 
@@ -4051,15 +4011,12 @@ $$
 
 实际应用中，需依据函数性质或充分的数学分析确定单峰区间。有限采样可提供线索，但通常不足以严格证明全区间单峰。
 
-四种单变量最小化方法（Four methods for univariate minimization）：
+#### 四种单变量最小化方法（Four methods for univariate minimization）：
 
-黄金分割搜索法 Golden Section Search
-
-二次插值搜索法 Quadratic Interpolation Search
-
-牛顿方法 Newton’s Method
-
-三次插值搜索法 Cubic Interpolation Search
+- 黄金分割搜索法 Golden Section Search
+- 二次插值搜索法 Quadratic Interpolation Search
+- 牛顿方法 Newton’s Method
+- 三次插值搜索法 Cubic Interpolation Search
 
 <a id="section-6-2"></a>
 
@@ -4067,27 +4024,27 @@ $$
 
 #### 黄金分割搜索法算法 Golden Section Search Algorithm
 
-初始设定 Initial Setting
+##### 初始设定 Initial Setting
 
 在区间$\lbrack a,b\rbrack$中选择两个中间点$x_{2}$和$x_{1}$。
 
 评估函数值$f\left( x_{2} \right)$和$f\left( x_{1} \right)$以确定新的搜索区间 Search Interval。
 
-更新规则 Updated Rules
+##### 更新规则 Updated Rules
 
-如果$f\left( x_{2} \right) \leq f\left( x_{1} \right)$
+**如果$f\left( x_{2} \right) \leq f\left( x_{1} \right)$**
 
 - Local Minimum 位于$\left\lbrack a,x_{1} \right\rbrack$内。
 
 - 更新 Search Interval 位于$\left\lbrack a,x_{1} \right\rbrack$内。
 
-若 $f(x_2)>f(x_1)$，采用右侧区间更新：
+**若 $f(x_2)>f(x_1)$，采用右侧区间更新：**
 
 - Local Minimum 位于$\left\lbrack x_{2},b \right\rbrack$内。
 
 - 更新 Search Interval 位于$\left\lbrack x_{2},b \right\rbrack$内。
 
-如何选择初始设定的$x_{1}$和$x_{2}$ How do I Select the Initial Settings $x_{1}$ and $x_{2}$?
+#### 如何选择初始设定的$x_{1}$和$x_{2}$ How do I Select the Initial Settings $x_{1}$ and $x_{2}$?
 
 推导过程 Derivation Process: 设整个区间长度为$l_{0}$，分成两部分$l_{1}$和$l_{2}$，满足$l_{0} = l_{1} + l_{2}$。黄金比例的比例要求
 
@@ -4095,13 +4052,13 @@ $$
 \frac{l_{1}}{l_{2}} = \frac{l_{0}}{l_{1}}
 $$
 
-计算比例因子$r^{*}$
+##### 计算比例因子$r^{*}$
 
 $$
 \rho=\frac{\sqrt5-1}{2},\qquad d=\rho(x_u-x_l).
 $$
 
-$x_{1}$和$x_{2}$公式 Formula of $x_{1}$ and $x_{2}$
+##### $x_{1}$和$x_{2}$公式 Formula of $x_{1}$ and $x_{2}$
 
 $$
 \left\{ \begin{array}{r}
@@ -4124,7 +4081,9 @@ $$
 
 ![黄金分割搜索删除右侧区间](./num_anal-assets/media/image20.png)
 
-黄金分割算例：寻找 $f(x)=x^2-6x+15$ 的最小点。先可在 $[0,4]$ 上计算第一步：$x_2\approx1.527864045$、$x_1\approx2.472135955$，保留 $[1.527864045,4]$。以下图组采用初始区间 $[0,10]$，展示完整的多步区间更新。
+#### 黄金分割算例：
+
+寻找 $f(x)=x^2-6x+15$ 的最小点。先可在 $[0,4]$ 上计算第一步：$x_2\approx1.527864045$、$x_1\approx2.472135955$，保留 $[1.527864045,4]$。以下图组采用初始区间 $[0,10]$，展示完整的多步区间更新。
 
 **步骤 1：** 在区间$\lbrack a,b\rbrack$中选择两个中间点$x_{2}$和$x_{1}$。根据黄金比例公式进行计算。并计算两个中间点对应的函数值$f\left( x_{2} \right),\ f(x_{1})$。
 
@@ -4146,9 +4105,8 @@ $$
 
 #### 黄金分割搜索法的高效性 Efficiency of the Golden Section Search
 
-在每次迭代中，无需重新评估所有点的函数值，只需利用之前的计算结果。
-
-每次迭代后，Search Interval 缩小为原区间的$61.8\%$（黄金比例）。
+- 在每次迭代中，无需重新评估所有点的函数值，只需利用之前的计算结果。
+- 每次迭代后，Search Interval 缩小为原区间的$61.8\%$（黄金比例）。
 
 <a id="section-6-3"></a>
 
@@ -4272,9 +4230,9 @@ $$
 
 #### 牛顿法算法 Newton’s Method Algorithm
 
-牛顿法的迭代公式 Iterative Formula for Newton's Method
+**牛顿法的迭代公式 Iterative Formula for Newton's Method**
 
-牛顿法的优化公式 Optimization Formula
+**牛顿法的优化公式 Optimization Formula**
 
 $$
 x_{k + 1} = x_{k} - \frac{f'\left( x_{k} \right)}{f^{''}\left( x_{k} \right)}
@@ -4348,9 +4306,9 @@ $$
 
 - $k = 0:x_{0} = 0,\ f'\left( x_{0} \right) = 2(0) - 4 = - 4,\ f^{''}\left( x_{0} \right) = 2$
 
-$$
-x_{1} = 0 - \frac{- 4}{2} = 2
-$$
+    $$
+    x_{1} = 0 - \frac{- 4}{2} = 2
+    $$
 
 - $k = 1:x_{1} = 2,\ f'\left( x_{1} \right) = 2(2) - 4 = 0$ 梯度为0，停止迭代。
 
@@ -4362,17 +4320,17 @@ Result: $x^{*} = 2,\ f\left( x^{*} \right) = 2^{2} - 4(2) + 5 = 1$
 
 #### 埃尔米特多项式与近似函数 Hermite Polynomials and Approximating Functions
 
-三次插值搜索法的背景 Background of Cubic Interpolation Search
+**三次插值搜索法的背景 Background of Cubic Interpolation Search**
 
 假设函数$f(x)$在区间$\lbrack a,b\rbrack$内是 U-Shaped 的。
 
 在导数左负右正的单峰区间内，可用 $f\prime(a)<0<f\prime(b)$ 夹持最小点。端点导数异号本身不足以证明全区间单峰，严格 U 形函数的端点导数也可能为零。
 
-构造三次插值多项式 Constructing Cubic Interpolation Polynomials
+##### 构造三次插值多项式 Constructing Cubic Interpolation Polynomials
 
 为了逼近$f(x)$的 Local Minimum，需要使用三次 Hermite Polynomial。
 
-Hermite Polynomial 通过插值满足以下条件
+**Hermite Polynomial 通过插值满足以下条件**
 
 $$
 P_{3}(a) = f(a),P_{3}(b) = f(b),P_{3}'(a) = f'(a),P_{3}'(b) = f'(b)
@@ -4380,7 +4338,7 @@ $$
 
 #### 三次插值搜索法算法 Cubic Interpolation Search Algorithm
 
-埃尔米特多项式 Hermite Polynomials
+##### 埃尔米特多项式 Hermite Polynomials
 
 $$
 P_{3}(x) = A(x - c)^{3} + B(x - c)^{2} + C(x - c) + D
@@ -4392,7 +4350,7 @@ $$
 c = \frac{a + b}{2},\ d = \frac{b - a}{2}
 $$
 
-三次多项式的系数$A,\ B,\ C,\ D$使用函数值和导数值计算
+**三次多项式的系数$A,\ B,\ C,\ D$使用函数值和导数值计算**
 
 $$
 \begin{array}{r}
