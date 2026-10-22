@@ -4,6 +4,8 @@
 %-------------------------------------------------------------------------------
 % A4 paper size by default, use 'letterpaper' for US letter
 \documentclass[11pt, letterpaper, final]{academic-cv}
+\usepackage{orcidlink}
+\urlstyle{same}
 
 % Configure page margins with geometry
 \geometry{left=0.75in, top=0.75in, right=0.75in, bottom=0.75in, footskip=.5cm}
@@ -11,8 +13,32 @@
 % Specify the location of the included fonts
 \fontdir[fonts/]
 
+% Use Palatino throughout; Pagella provides a compatible font for Linux builds.
+% Palatino's small-cap styles use its upright face, matching the approved preview.
+\IfFontExistsTF{Palatino}{%
+  \setmainfont{Palatino}[SmallCapsFont=Palatino]
+}{%
+  \setmainfont{texgyrepagella}[
+    Extension=.otf,
+    UprightFont=*-regular,
+    ItalicFont=*-italic,
+    BoldFont=*-bold,
+    BoldItalicFont=*-bolditalic,
+    SmallCapsFont=*-regular
+  ]
+}
+\renewcommand{\familydefault}{\rmdefault}
+\renewcommand{\headerfont}{\rmfamily}
+\renewcommand{\headerfontlight}{\rmfamily}
+\renewcommand{\footerfont}{\rmfamily}
+\renewcommand{\bodyfont}{\rmfamily}
+\renewcommand{\bodyfontlight}{\rmfamily}
+
 % If you would like to change the social information separator from a pipe (|) to something else
 \renewcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
+% Balance the visible gaps around the position line across the different font sizes.
+\renewcommand{\acvHeaderAfterNameSkip}{3mm}
+\renewcommand{\acvHeaderAfterPositionSkip}{2mm}
 
 
 %-------------------------------------------------------------------------------
@@ -21,13 +47,13 @@
 %-------------------------------------------------------------------------------
 \name{Zihan Liang}{}
 \position{PhD Student{\enskip\cdotp\enskip}Computational Biology and Bioinformatics Program, Duke University}
-\address{Hock Plaza, Suite 1106, Room 11028, 2424 Erwin Rd, Durham, NC 27705, USA}
 
 %\mobile{+1 000-000-0000}
 \email{zihan.liang@duke.edu}
 \homepage{www.zihanliang.com}
 \github{zihanliang}
 \linkedin{zihan-liang}
+\extrainfo{\mbox{\orcidlink{0009-0008-3166-3129}\acvHeaderIconSep\href{https://orcid.org/0009-0008-3166-3129}{0009-0008-3166-3129}}}
 % \gitlab{my-gitlab-id}
 % \stackoverflow{SO-id}{SO-name}
 % \skype{skype-id}
@@ -57,13 +83,13 @@
 %-------------------------------------------------------------------------------
 \input{cv/education.tex}
 \input{cv/publications.tex}
+\input{cv/presentation.tex}
 \input{cv/research.tex}
 \input{cv/honors.tex}
 \input{cv/teaching.tex}
 \input{cv/extracurricular.tex}
 \input{cv/additional.tex}
 %\input{cv/professional.tex}
-%\input{cv/presentation.tex}
 %\input{cv/mentoring.tex}
 %-------------------------------------------------------------------------------
 \end{document}

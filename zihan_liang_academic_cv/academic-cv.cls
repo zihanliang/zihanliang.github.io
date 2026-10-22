@@ -34,6 +34,8 @@
 %-------------------------------------------------------------------------------
 % Needed to make fixed length table
 \RequirePackage{array}
+\RequirePackage{longtable}
+\RequirePackage{needspace}
 % Needed to handle list environment
 \RequirePackage{enumitem}
 % Needed to handle text alignment
@@ -227,9 +229,10 @@
     colframe=linkblue!22,
     boxrule=0.3pt,
     arc=1mm
-  ]{\makebox[2cm][c]{{\fontsize{8pt}{1em}\bodyfont\bfseries\color{linkblue}\MakeUppercase{#1}}}}%
+  ]{\makebox[2.2cm][c]{{\fontsize{8pt}{1em}\bodyfont\bfseries\color{linkblue}\MakeUppercase{#1}}}}%
 }
 \newcommand*{\technologydetailstyle}[1]{{\fontsize{9.5pt}{1em}\bodyfontlight\color{graytext} #1}}
+\newcommand*{\cvtechnologysep}{\hspace{0.3em}{\color{lightgray}\textbar}\hspace{0.3em}}
 
 % For elements of publication
 \newcommand*{\pubstyle}[1]{{\fontsize{10pt}{1em}\bodyfont\color{text} #1}}
@@ -628,15 +631,15 @@
 
 % Define an environment for a structured technology matrix
 \newenvironment{cvtechnologies}{%
-  \vspace{\acvSectionContentTopSkip}
-  \vspace{-1.5mm}
+  \setlength{\LTpre}{1mm}
+  \setlength{\LTpost}{1mm}
+  \setlength{\LTleft}{0pt}
+  \setlength{\LTright}{\fill}
   \setlength\tabcolsep{0pt}
   \setlength{\extrarowheight}{0pt}
-  \begin{tabular}{@{}l@{\hspace{\acvTechnologyColumnSep}}c@{\hspace{\acvTechnologyColumnSep}}l@{}}
+  \begin{longtable}{@{}l@{\hspace{\acvTechnologyColumnSep}}c@{\hspace{\acvTechnologyColumnSep}}l@{}}
 }{%
-  \end{tabular}
-  \par
-  \vspace{1mm}
+  \end{longtable}
 }
 
 % Define a line of technology information
@@ -669,7 +672,7 @@
 \newenvironment{cvitems}{%
   \vspace{-4.0mm}
   \begin{justify}
-  \begin{itemize}[leftmargin=2ex, nosep, noitemsep]
+  \begin{itemize}[labelindent=0pt, leftmargin=1.1em, labelwidth=0.6em, labelsep=0.5em, align=left, nosep, noitemsep]
     \setlength{\parskip}{0pt}
     \renewcommand{\labelitemi}{\bullet}
 }{%
