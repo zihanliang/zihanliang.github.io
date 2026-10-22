@@ -397,10 +397,9 @@ local function prepare_images(doc, figure_dir)
       local w, h = image_size(file)
       if not (w and h and w > 0 and h > 0) then return image end
 
-      -- The ratio reserves space before the image loads; explicit sizes only
-      -- when the source did not set its own width.
-      local style = image.attributes["style"]
-      image.attributes["style"] = (style and (style .. "; ") or "") .. string.format("aspect-ratio: %d / %d", w, h)
+      -- Native image dimensions reserve space before lazy loading. Do not add
+      -- an aspect-ratio style: Quarto moves image styles to the figure wrapper,
+      -- whose full article width would reserve too much height for small images.
       if not image.attributes["width"] and not image.attributes["height"] then
         image.attributes["width"] = tostring(w)
         image.attributes["height"] = tostring(h)
