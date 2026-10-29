@@ -95,6 +95,14 @@
       "title": "Leadership",
       "entries": [
         {
+          "id": "awdpi",
+          "short": "AWDPI",
+          "org": "Asian Women Development Plan International",
+          "orgUrl": "https://awdpi.org/",
+          "role": "Head of Information Technology",
+          "period": "Oct. 2026 – Present"
+        },
+        {
           "id": "emory-csa",
           "short": "Emory CSA",
           "org": "Emory Chinese Student Association",
