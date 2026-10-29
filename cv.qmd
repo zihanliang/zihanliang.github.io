@@ -11,7 +11,7 @@ title-block: false
 <header class="cv-header">
 <div class="cv-header-text">
 <h2 class="section-title cv-title page-first-title">Curriculum Vitae</h2>
-<p class="exp-intro cv-meta">Two-page PDF, with a preview of the first page below.</p>
+<p class="exp-intro cv-meta">Full CV available as a PDF, with a preview of the first page below.</p>
 </div>
 <div class="cv-document-actions">
 <a class="cv-document-read" href="zihan_liang_academic_cv/cv.pdf" target="_blank" rel="noopener noreferrer">

@@ -54,6 +54,12 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install --yes poppler-utils
+          pages=$(pdfinfo zihan_liang_academic_cv/cv.pdf | awk '/^Pages:/ { print $2 }')
+          if ! [[ "$pages" =~ ^[1-9][0-9]*$ ]]; then
+            echo "::error::CV PDF must contain at least one page (reported: '$pages')."
+            exit 1
+          fi
+          echo "CV PDF contains $pages page(s)."
           pdftoppm \
             -f 1 \
             -l 1 \
@@ -62,7 +68,6 @@ jobs:
             -png \
             zihan_liang_academic_cv/cv.pdf \
             zihan_liang_academic_cv/cv-first-page
-          test "$(pdfinfo zihan_liang_academic_cv/cv.pdf | awk '/^Pages:/ { print $2 }')" -eq 2
           test -s zihan_liang_academic_cv/cv-first-page.png
 
       - name: Finish LaTeX study notes
