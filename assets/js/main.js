@@ -258,11 +258,15 @@ function renderResearch(research) {
     research.paragraphs.map((p) => `<p>${p}</p>`).join("")
   );
 
-  const link = document.getElementById("research-link");
-  if (link && research.link) {
-    link.href = research.link.url;
-    link.textContent = research.link.label;
-  }
+  setHtml(
+    "research-links",
+    (research.links || [])
+      .map((link) => {
+        const target = link.external ? ' target="_blank" rel="noopener noreferrer"' : "";
+        return `<a class="text-link" href="${link.url}"${target}>${link.label}</a>`;
+      })
+      .join("")
+  );
 
   setHtml(
     "research-items",

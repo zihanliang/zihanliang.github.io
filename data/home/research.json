@@ -4,10 +4,17 @@
   "paragraphs": [
     "What gets recorded, and when, reflects how patients move through the health system as much as how they are doing. I develop machine learning methods for longitudinal and multimodal clinical data, including EHR time series, clinical notes, and medical images, drawing on representation learning, causal inference, and statistics."
   ],
-  "link": {
-    "label": "Publications",
-    "url": "research.html"
-  },
+  "links": [
+    {
+      "label": "Publications",
+      "url": "research.html"
+    },
+    {
+      "label": "Causal Graph Workbench",
+      "url": "https://www.zihanliang.com/causal-graph-workbench/",
+      "external": true
+    }
+  ],
   "items": [
     {
       "title": "Longitudinal patient representations",

@@ -1,5 +1,6 @@
 const researchDataFile = "data/research/sections.json";
 const resourceLinkOrder = [
+  { key: "app", label: "Open tool" },
   { key: "paper", label: "Paper" },
   { key: "code", label: "Code" },
   { key: "slides", label: "Slides" },

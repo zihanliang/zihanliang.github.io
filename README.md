@@ -25,7 +25,7 @@ Source repository for a personal academic website (Quarto + vanilla frontend).
 
 - `data/home/`: Home modules (hero/about/research/news/beyond/contact)
 - `data/navigation.json`: Navbar visibility controls
-- `data/research/sections.json`: Publications, manuscripts, collaborative projects
+- `data/research/sections.json`: Publications, software, manuscripts, collaborative projects
 - `data/deadlines-snapshot.json`: Fallback snapshot for the conference deadline tracker
 - `data/experiences/sections.json`: Education, teaching, industry, leadership experiences
 - `data/notes/sections.json`: Notes catalog and download links

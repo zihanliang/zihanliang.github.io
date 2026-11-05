@@ -583,6 +583,9 @@ section { margin-bottom: clamp(4.3rem, 9vw, 8.5rem); }
 .text-link:hover { color: var(--forest-deep); }
 .text-link:hover::after { transform: translateX(3px); }
 
+.text-links { display: flex; flex-wrap: wrap; gap: 0.35rem 1.6rem; margin-top: 1.4rem; }
+.text-links .text-link { margin-top: 0; }
+
 .research-items {
   display: grid;
   grid-column: 1 / -1;

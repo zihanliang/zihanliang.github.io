@@ -11,6 +11,7 @@ const zhImageDimensions = {
 };
 
 const zhResourceLinkOrder = [
+  { key: "app", label: "打开工具" },
   { key: "paper", label: "论文" },
   { key: "code", label: "代码" },
   { key: "slides", label: "幻灯片" },
@@ -19,6 +20,7 @@ const zhResourceLinkOrder = [
 
 const zhPaperSectionTitles = new Map([
   ["Publications", "已发表与录用论文"],
+  ["Software", "软件工具"],
   ["Manuscripts", "在审稿件"],
   ["Theses and Dissertations", "学位论文"]
 ]);

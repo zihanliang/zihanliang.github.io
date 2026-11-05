@@ -1,6 +1,6 @@
 {
   "pageTitle": "Research",
-  "pageIntro": "Papers, manuscripts, and theses on machine learning for clinical and other high-stakes data. A complete list is on <a href=\"https://scholar.google.com/citations?hl=en&user=qDHioQ8AAAAJ\" target=\"_blank\" rel=\"noopener noreferrer\">Google Scholar</a>.",
+  "pageIntro": "Papers, manuscripts, and theses on machine learning for clinical and other high-stakes data, and software I have built along the way. A complete list of papers is on <a href=\"https://scholar.google.com/citations?hl=en&user=qDHioQ8AAAAJ\" target=\"_blank\" rel=\"noopener noreferrer\">Google Scholar</a>.",
   "sections": [
     {
       "id": "publications",
@@ -103,6 +103,25 @@
           "paper": "https://workshop-proceedings.icwsm.org/abstract.php?id=2025_59",
           "code": "https://github.com/zihanliang/CARELAB-SMM4H2025",
           "tldr": "Domain-aware transformer systems for insomnia detection in clinical text and food-safety event extraction, ranking first on Task 5 of the shared task."
+        }
+      ]
+    },
+    {
+      "id": "software",
+      "title": "Software",
+      "entries": [
+        {
+          "id": "causal-graph-workbench",
+          "title": "Causal Graph Workbench",
+          "authors": "Zihan Liang",
+          "year": "2026",
+          "venueShort": "Web app",
+          "topics": [
+            "Causal Inference"
+          ],
+          "app": "https://www.zihanliang.com/causal-graph-workbench/",
+          "code": "https://github.com/zihanliang/causal-graph-workbench",
+          "tldr": "Takes a causal graph and a dataset and returns the variables to adjust for, the estimated effect, and the arrows the conclusion rests on. Runs entirely in the browser, so data is never uploaded."
         }
       ]
     },

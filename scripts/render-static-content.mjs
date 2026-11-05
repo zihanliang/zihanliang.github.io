@@ -12,6 +12,7 @@ const imageDimensions = {
 };
 
 const resourceLinkOrder = [
+  { key: "app", label: "Open tool" },
   { key: "paper", label: "Paper" },
   { key: "code", label: "Code" },
   { key: "slides", label: "Slides" },
@@ -19,6 +20,7 @@ const resourceLinkOrder = [
 ];
 
 const zhResourceLinkOrder = [
+  { key: "app", label: "打开工具" },
   { key: "paper", label: "论文" },
   { key: "code", label: "代码" },
   { key: "slides", label: "幻灯片" },
@@ -27,6 +29,7 @@ const zhResourceLinkOrder = [
 
 const zhPaperSectionTitles = new Map([
   ["Publications", "已发表与录用论文"],
+  ["Software", "软件工具"],
   ["Manuscripts", "在审稿件"],
   ["Theses and Dissertations", "学位论文"]
 ]);
@@ -528,6 +531,11 @@ function renderZhCompactEntry(entry) {
   `;
 }
 
+function renderTextLink(link) {
+  const target = link.external ? ' target="_blank" rel="noopener noreferrer"' : "";
+  return `<a class="text-link" href="${link.url}"${target}>${link.label}</a>`;
+}
+
 function renderHome({ hero, about, news, beyond, research, contact }) {
   const nameWithChineseFont = (about.nameZh || "").replace(
     /([\u3400-\u9FFF]+)/g,
@@ -556,7 +564,7 @@ function renderHome({ hero, about, news, beyond, research, contact }) {
     </div>
     <div class="research-side">
       <div id="research-paragraphs" class="research-paragraphs">${research.paragraphs.map((p) => `<p>${p}</p>`).join("")}</div>
-      <a id="research-link" class="text-link" href="${research.link.url}">${research.link.label}</a>
+      <div id="research-links" class="text-links">${research.links.map(renderTextLink).join("")}</div>
     </div>
     <ol id="research-items" class="research-items">${research.items
       .map(

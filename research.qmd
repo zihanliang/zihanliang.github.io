@@ -2,7 +2,7 @@
 title: ""
 pagetitle: "Zihan Liang - Research"
 title-prefix: ""
-description-meta: "Publications, manuscripts, and research projects by Zihan Liang in reliable machine learning, causal inference, multimodal clinical data, and NLP."
+description-meta: "Publications, manuscripts, software, and research projects by Zihan Liang in reliable machine learning, causal inference, multimodal clinical data, and NLP."
 page-layout: full
 title-block: false
 ---
