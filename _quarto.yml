@@ -7,15 +7,20 @@ project:
     - "*.qmd"
     - "notes/*/index.qmd"
   pre-render:
+    - python3 scripts/subset-fonts.py
     - node scripts/render-static-content.mjs
     - node scripts/build-note-sources.mjs
   post-render:
     - node scripts/build-note-sources.mjs --publish
+    - node scripts/apply-navigation.mjs
     - node scripts/post-render-seo.mjs
   resources:
     - CNAME
     - data/**
-    - fonts/**
+    # Only the web fonts; the full Chinese fonts are build inputs for
+    # scripts/subset-fonts.py and are not published.
+    - fonts/**/*.woff2
+    - fonts/**/OFL.txt
     - figures/**
     - icon/**
     - notes/*.pdf
@@ -27,6 +32,10 @@ website:
   title: "Zihan Liang"
   description: "Zihan Liang is a Ph.D. student at Duke University researching reliable machine learning, causal inference, multimodal learning, and clinical data."
   site-url: "https://www.zihanliang.com"
+  open-graph:
+    site-name: "Zihan Liang"
+  twitter-card:
+    card-style: summary_large_image
   favicon: icon/favicon-32x32.png
   search: false
   navbar:
@@ -45,7 +54,12 @@ website:
       - text: "AI Deadlines"
         href: deadlines.qmd
   page-footer:
-    center: "Computational Biology and Bioinformatics Program, Duke University | zihan.liang@duke.edu <br><a href=\"zh.html\">中文</a> | © 2026 Zihan Liang. All rights reserved."
+    center: "Computational Biology and Bioinformatics Program, Duke University | zihan.liang@duke.edu <br><a href=\"/zh.html\">中文</a> | © 2026 Zihan Liang. All rights reserved."
+
+# Every page shares the same link-preview card, instead of Quarto picking the
+# first image on the page (the portrait, or a figure in a note).
+image: /figures/home/zihan-liang-share.jpg
+image-alt: "Zihan Liang, Ph.D. student at Duke University: I study how models remain reliable under uncertainty."
 
 format:
   html:

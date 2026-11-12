@@ -455,7 +455,7 @@ function buildNoteReaderPages(data) {
       const subject = String(note.subject || "").replace(/<[^>]+>/g, "");
       pages[path.posix.dirname(note.source)] = {
         pagetitle: `Zihan Liang - ${subject}`,
-        description: `${subject}: ${String(note.language || "").toLowerCase()} study notes by Zihan Liang, readable online with a downloadable PDF.`,
+        description: `${subject}: ${/^english$/i.test(note.language || "") ? "English" : String(note.language || "").toLowerCase()} study notes by Zihan Liang, readable online with a downloadable PDF.`,
         header: renderNoteReaderHeader(note, section.title),
         pdf: note.file ? path.posix.relative(path.posix.dirname(notePagePath(note)), note.file) : note.url
       };
@@ -534,6 +534,17 @@ function renderZhCompactEntry(entry) {
 function renderTextLink(link) {
   const target = link.external ? ' target="_blank" rel="noopener noreferrer"' : "";
   return `<a class="text-link" href="${link.url}"${target}>${link.label}</a>`;
+}
+
+// A named icon (see the .contact-icon rules in style.css), or any other text,
+// such as an emoji, shown as is.
+function renderContactIcon(icon) {
+  const value = String(icon || "").trim();
+  if (/^[a-z0-9-]+$/.test(value)) {
+    return `<span class="contact-icon" data-icon="${value}" aria-hidden="true"></span>`;
+  }
+  const text = value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return `<span class="contact-icon contact-icon--text" aria-hidden="true">${text || "•"}</span>`;
 }
 
 function renderHome({ hero, about, news, beyond, research, contact }) {
@@ -618,8 +629,7 @@ function renderHome({ hero, about, news, beyond, research, contact }) {
         .map(
           (item) => `
       <li>
-        <span class="contact-icon">${item.icon || "•"}</span>
-        <a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.label}</a>
+        <a href="${item.url}" target="_blank" rel="noopener noreferrer">${renderContactIcon(item.icon)}<span>${item.label}</span></a>
       </li>
     `
         )
@@ -783,8 +793,7 @@ function renderZhPage({ homeHero, chineseHome, contact, research, experiences })
         .map(
           (item) => `
           <li>
-            <span class="contact-icon">${item.icon || "•"}</span>
-            <a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">${contactLabelMap.get(item.label) || escapeHtml(item.label)}</a>
+            <a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">${renderContactIcon(item.icon)}<span>${contactLabelMap.get(item.label) || escapeHtml(item.label)}</span></a>
           </li>
         `
         )

@@ -1,0 +1,32 @@
+{
+  "alibaba-puhuiti-400.woff2": {
+    "source": "fonts/AlibabaPuHuiTi/AlibabaPuHuiTi-2-55-Regular.ttf",
+    "characters": 304,
+    "bytes": 31900,
+    "signature": "4eb236e8ee2f161e73b1853f77017ec0107b6d963ea2a8649562f4d7f5ca56b7"
+  },
+  "alibaba-puhuiti-500.woff2": {
+    "source": "fonts/AlibabaPuHuiTi/AlibabaPuHuiTi-2-65-Medium.ttf",
+    "characters": 304,
+    "bytes": 31296,
+    "signature": "a9fe1eb6d293ba2568e550773f4ca5287bcad74a83870ecc8e2d140a5a966095"
+  },
+  "alibaba-puhuiti-600.woff2": {
+    "source": "fonts/AlibabaPuHuiTi/AlibabaPuHuiTi-2-75-SemiBold.ttf",
+    "characters": 304,
+    "bytes": 31708,
+    "signature": "ac1cef32fa0e012e10aee3c5e95db4ebf10792609642b30792f86e9b9b4dcc9b"
+  },
+  "alibaba-puhuiti-700.woff2": {
+    "source": "fonts/AlibabaPuHuiTi/AlibabaPuHuiTi-2-85-Bold.ttf",
+    "characters": 304,
+    "bytes": 31216,
+    "signature": "20b49721c905d837b29eac850cfe37661fc1bb4a8ec163860c038af5d1b68bd9"
+  },
+  "lxgw-wenkai-700.woff2": {
+    "source": "fonts/LXGWWenKai/LXGWWenKai-Bold.ttf",
+    "characters": 3,
+    "bytes": 2096,
+    "signature": "a0b6a9434fd84ddaba73a7c7b018b1a990f1ca44b682c99ec979f438115102c2"
+  }
+}

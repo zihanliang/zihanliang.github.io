@@ -243,6 +243,17 @@ function renderHero(homeHero, chineseHome) {
   );
 }
 
+// A named icon (see the .contact-icon rules in style.css), or any other text,
+// such as an emoji, shown as is.
+function renderContactIcon(icon) {
+  const value = String(icon || "").trim();
+  if (/^[a-z0-9-]+$/.test(value)) {
+    return `<span class="contact-icon" data-icon="${value}" aria-hidden="true"></span>`;
+  }
+  const text = value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return `<span class="contact-icon contact-icon--text" aria-hidden="true">${text || "•"}</span>`;
+}
+
 function renderContact(contact) {
   const labelMap = new Map([
     ["Email", "邮箱"],
@@ -258,8 +269,7 @@ function renderContact(contact) {
       .map(
         (item) => `
           <li>
-            <span class="contact-icon">${item.icon || "•"}</span>
-            <a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">${labelMap.get(item.label) || escapeHtml(item.label)}</a>
+            <a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">${renderContactIcon(item.icon)}<span>${labelMap.get(item.label) || escapeHtml(item.label)}</span></a>
           </li>
         `
       )

@@ -36,13 +36,8 @@
 <link rel="shortcut icon" href="/icon/favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="/icon/apple-touch-icon.png">
 <link rel="preload" href="/fonts/CormorantGaramond/CormorantGaramond-VariableFont_wght.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/Manrope/Manrope-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="preload" href="/fonts/Manrope/Manrope-VariableFont_wght.woff2" as="font" type="font/woff2" crossorigin>
 <meta name="theme-color" content="#f3f5f9">
-<style>
-html.nav-config-loading #quarto-header .navbar-nav {
-  visibility: hidden;
-}
-</style>
 <script>
 (function () {
   const root = document.documentElement;
@@ -51,8 +46,19 @@ html.nav-config-loading #quarto-header .navbar-nav {
   const DARK_THEME_COLOR = '#09111f';
   const LIGHT_START_HOUR = 7;
   const DARK_START_HOUR = 19;
+  const SYSTEM_DARK_QUERY = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  const SYSTEM_LIGHT_QUERY = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
 
-  root.classList.add('nav-config-loading');
+  // The theme follows the operating system's current appearance. A page can
+  // see that appearance but not whether the system switches it automatically,
+  // and following it covers both cases: a fixed light or dark setting is kept,
+  // and an automatic one is followed as it changes. Browsers that report no
+  // appearance fall back to the local-time schedule (dark from 19:00 to 07:00).
+  function getSystemTheme() {
+    if (SYSTEM_DARK_QUERY && SYSTEM_DARK_QUERY.matches) return 'dark';
+    if (SYSTEM_LIGHT_QUERY && SYSTEM_LIGHT_QUERY.matches) return 'light';
+    return null;
+  }
 
   function getThemeForCurrentTime() {
     const hour = new Date().getHours();
@@ -71,7 +77,7 @@ html.nav-config-loading #quarto-header .navbar-nav {
   function storeManualThemeOverride(theme) {
     try {
       // Keep manual toggles scoped to the current tab so each new visit
-      // falls back to the visitor's local-time schedule.
+      // goes back to following the system appearance.
       window.sessionStorage.setItem(SESSION_THEME_KEY, theme);
     } catch (error) {
       // Ignore storage failures so theme switching still works for the session.
@@ -79,7 +85,7 @@ html.nav-config-loading #quarto-header .navbar-nav {
   }
 
   function getResolvedTheme() {
-    return getManualThemeOverride() || getThemeForCurrentTime();
+    return getManualThemeOverride() || getSystemTheme() || getThemeForCurrentTime();
   }
 
   function updateToggleButton(theme) {
@@ -155,6 +161,14 @@ html.nav-config-loading #quarto-header .navbar-nav {
   });
   document.addEventListener('visibilitychange', function () {
     if (!document.hidden && !getManualThemeOverride()) syncThemeFromPreference();
+  });
+  [SYSTEM_DARK_QUERY, SYSTEM_LIGHT_QUERY].forEach(function (query) {
+    if (!query) return;
+    const onChange = function () {
+      if (!getManualThemeOverride()) syncThemeFromPreference();
+    };
+    if (query.addEventListener) query.addEventListener('change', onChange);
+    else if (query.addListener) query.addListener(onChange);
   });
   window.setInterval(function () {
     if (!getManualThemeOverride()) syncThemeFromPreference();

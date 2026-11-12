@@ -12,9 +12,13 @@
 /zihan_liang_academic_cv/*.log
 /zihan_liang_academic_cv/*.out
 /zihan_liang_academic_cv/*.pdf
+/zihan_liang_academic_cv/*.synctex.gz
 /zihan_liang_academic_cv/*.xdv
 /zihan_liang_academic_cv/cv-first-page.png
 /zihan_liang_academic_cv/tmp/
+
+# macOS folder metadata
 .DS_Store
-.DS_Store
-figures/.DS_Store
+
+# Python bytecode
+__pycache__/

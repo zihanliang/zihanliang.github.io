@@ -2,37 +2,37 @@
   "title": "Contact",
   "items": [
     {
-      "icon": "📧",
+      "icon": "email",
       "label": "Email",
       "url": "mailto:zihan.liang@duke.edu"
     },
     {
-      "icon": "💼",
+      "icon": "linkedin",
       "label": "LinkedIn",
       "url": "https://www.linkedin.com/in/zihan-liang/"
     },
     {
-      "icon": "🆔",
+      "icon": "orcid",
       "label": "ORCID",
       "url": "https://orcid.org/0009-0008-3166-3129"
     },
     {
-      "icon": "🎓",
+      "icon": "scholars-duke",
       "label": "Scholars@Duke",
       "url": "https://scholars.duke.edu/person/Zihan.Liang"
     },
     {
-      "icon": "📚",
+      "icon": "google-scholar",
       "label": "Google Scholar",
       "url": "https://scholar.google.com/citations?hl=en&user=qDHioQ8AAAAJ"
     },
     {
-      "icon": "🗂️",
+      "icon": "dblp",
       "label": "DBLP",
       "url": "https://dblp.org/pid/303/1479-2.html"
     },
     {
-      "icon": "💻",
+      "icon": "github",
       "label": "GitHub",
       "url": "https://github.com/zihanliang"
     }

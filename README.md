@@ -20,11 +20,12 @@ Source repository for a personal academic website (Quarto + vanilla frontend).
 - `deadlines.qmd`: Live AI conference deadline tracker with a published data snapshot fallback
 - `experiences.qmd`: Experiences page, content from `data/experiences/sections.json`
 - `notes.qmd`: Study Notes page, content from `data/notes/sections.json`
+- `404.qmd`: Page shown for missing addresses (GitHub Pages serves `404.html`)
 
 ## Content and Assets
 
 - `data/home/`: Home modules (hero/about/research/news/beyond/contact)
-- `data/navigation.json`: Navbar visibility controls
+- `data/navigation.json`: Navbar visibility controls (applied to the pages at build time)
 - `data/research/sections.json`: Publications, software, manuscripts, collaborative projects
 - `data/deadlines-snapshot.json`: Fallback snapshot for the conference deadline tracker
 - `data/experiences/sections.json`: Education, teaching, industry, leadership experiences
@@ -36,9 +37,11 @@ Source repository for a personal academic website (Quarto + vanilla frontend).
   `data/notes/sections.json` at it with `"source": "notes/<name>/<file>"`; its card then opens the
   reader page `notes/<name>/`, which has a table of contents and PDF buttons. See
   [Study note reader pages](#study-note-reader-pages).
-- `figures/home/`: Home page images
-- `fonts/`: Custom font resources
-- `icon/web-icon.png`: Site favicon and navbar logo
+- `figures/home/`: Home page images, including `zihan-liang-share.jpg`, the
+  1200×630 preview image shown when a page is shared (Open Graph and Twitter cards)
+- `fonts/`: Web fonts (WOFF2). The full Chinese fonts (`AlibabaPuHuiTi/`,
+  `LXGWWenKai/`) are build inputs only; see [Chinese fonts](#chinese-fonts)
+- `icon/`: Favicons
 
 ## Frontend Scripts
 
@@ -50,7 +53,12 @@ Source repository for a personal academic website (Quarto + vanilla frontend).
 - `assets/js/note-reader.js`: Note reader table of contents (current-section highlight, collapsible on phones)
 - `scripts/build-note-sources.mjs`: Prepares web notes (reader stubs, LaTeX compiles, figure SVGs)
 - `scripts/note-reader.lua`: Quarto filter that lays out reader pages from Markdown or LaTeX sources
-- `assets/includes/nav-scroll.html`: Extra script include injected into pages
+- `assets/includes/head-icons.html`: Favicons, structured data, and the theme script (follows the
+  system light/dark appearance; the toggle overrides it for the current tab)
+- `assets/includes/nav-scroll.html`: Navbar scroll state and the mobile menu
+- `scripts/subset-fonts.py`: Builds the Chinese font subsets in `fonts/subsets/`
+- `scripts/apply-navigation.mjs`: Removes navbar entries hidden in `data/navigation.json` from the rendered pages
+- `scripts/post-render-seo.mjs`: Normalizes sitemap URLs and dates each page by its last commit
 - `assets/includes/statcounter.html`: Invisible Statcounter tracking for project `13358447`, included once on every HTML page
 - `assets/css/style.css`: Global site styles
 
@@ -62,7 +70,8 @@ search crawlers can read the complete content without executing JavaScript.
 ## Local Development
 
 1. Install Quarto, XeLaTeX, `latexmk`, and Poppler (and the TeX packages the LaTeX notes use,
-   for their web versions).
+   for their web versions). To rebuild the Chinese font subsets, also install
+   `pip install fonttools brotli`.
 2. Build the CV assets from the repository root:
 
 ```bash
@@ -86,6 +95,24 @@ committed (Quarto must find the stubs before it renders; run
 `build-note-sources.mjs` again after adding a new web note). Subsequent
 Quarto builds refresh the HTML fragments automatically from the JSON sources;
 the GitHub Pages workflow always rebuilds the CV assets before rendering.
+
+## Chinese Fonts
+
+The full Chinese fonts are 8–16 MB each, so the site loads subsets that hold only
+the characters it uses (about 30 KB per weight). `scripts/subset-fonts.py`
+collects every character in `data/**`, the page sources, and the browser
+scripts, and writes the WOFF2 files to `fonts/subsets/`. It runs as a Quarto
+pre-render step and does nothing when the text has not changed.
+
+The deploy workflow always rebuilds the subsets, so new characters are covered
+on the live site. Locally, without fontTools, the script keeps the committed
+subsets and prints a warning; a character missing from a subset still shows, in
+the system's Chinese font. Rebuild and commit the subsets after adding Chinese
+text, so a local preview matches:
+
+```bash
+python3 scripts/subset-fonts.py
+```
 
 ## Study Note Reader Pages
 
@@ -132,7 +159,8 @@ Core config file: `_quarto.yml`
 
 - `project.type: website`
 - `project.output-dir: docs`
-- `project.resources`: Files copied to output (`CNAME`, `data/`, `fonts/`, `figures/`, `icon/`, `notes/*.pdf`, the generated CV PDF, and its first-page preview)
+- `project.resources`: Files copied to output (`CNAME`, `data/`, the WOFF2 fonts, `figures/`, `icon/`, `notes/*.pdf`, the generated CV PDF, and its first-page preview)
+- `website.image` and `open-graph` / `twitter-card`: The default preview image for shared links
 - `website.navbar`: Top navigation (Home/CV/Research/Experiences/Study Notes)
-- `data/navigation.json`: Runtime visibility for navbar entries (`visible: true` or `false`)
+- `data/navigation.json`: Navbar entries to show (`visible: true` or `false`), applied by `scripts/apply-navigation.mjs` after each render
 - `format.html.css`: `assets/css/style.css`
