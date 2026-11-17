@@ -718,6 +718,112 @@ section { margin-bottom: clamp(4.3rem, 9vw, 8.5rem); }
 }
 
 .contact-grid .section-title { margin: 0; }
+
+/* Contact with reasons to write (.contact-grid--split): the title and the lead
+   sentence span the section, and two labeled columns sit below them, the
+   email rows on the left and the profile links on the right. Both columns
+   stretch to the taller one's height and their lists grow with them, so the
+   top and bottom lines of the two lists stay level. */
+.contact .contact-grid--split {
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: 0 clamp(2.5rem, 5vw, 4.5rem);
+}
+/* With no visible title, the section's own top padding would leave a wider
+   gap above the lead sentence than between the other home page sections. */
+.contact:has(> .contact-grid--split) { padding-top: 0; }
+/* The lead's width is set in em, against its own font size, so it breaks in
+   the same place at every window width: wide enough for its longer line
+   ("build a tool together, or work on tech for nonprofits.", about 19.8em in
+   Cormorant) but not for the first line plus the next phrase. Phrases do not
+   break inside on wider screens, and text-wrap: balance evens out the lines
+   if the wording changes. */
+.contact-grid--split > .contact-lead {
+  grid-column: 1 / -1;
+  max-width: 21.5em;
+  margin-bottom: 2.6rem;
+  font-size: clamp(1.75rem, 2.7vw, 2.5rem);
+  text-wrap: balance;
+}
+@media (min-width: 720.02px) {
+  .contact-grid--split .contact-phrase { white-space: nowrap; }
+}
+.contact-column { display: flex; flex-direction: column; min-width: 0; }
+.contact-column > ul { flex: 1; }
+.contact-label {
+  margin: 0 0 0.7rem;
+  color: var(--brass);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.contact-grid--split .contact-intents { display: grid; }
+.contact-grid--split .contact-intents li { display: grid; }
+.contact-grid--split .contact-links { border-top: 1px solid var(--line); }
+.contact-grid--split .contact-links li { min-height: 52px; padding-top: 0.5rem; padding-bottom: 0.5rem; }
+
+/* Lead sentence: each highlighted phrase opens an email with its subject set.
+   The marker under a phrase fills the whole line on hover. */
+.contact-lead {
+  margin: 0 0 1.7rem;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: clamp(1.55rem, 2.3vw, 2.1rem);
+  font-weight: 500;
+  line-height: 1.28;
+  letter-spacing: -0.015em;
+}
+.contact-phrase {
+  color: var(--forest);
+  text-decoration: none;
+  background-image: linear-gradient(var(--accent-wash-strong), var(--accent-wash-strong));
+  background-repeat: no-repeat;
+  background-position: 0 88%;
+  background-size: 100% 0.42em;
+  transition: background-size 220ms ease, color 200ms ease;
+}
+.contact-phrase:hover { color: var(--forest-deep); background-size: 100% 100%; }
+
+/* One row per reason to write, laid out like the Beyond Research rows. */
+.contact-intents {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+  list-style: none;
+}
+.contact-intents a {
+  display: grid;
+  grid-template-columns: minmax(10.5rem, 13.5rem) minmax(0, 1fr) auto;
+  gap: 1.5rem;
+  align-items: baseline;
+  padding: 1.05rem 0.2rem 1.05rem 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+}
+.contact-intent-label {
+  font-family: var(--serif);
+  font-size: 1.32rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  transition: color 200ms ease;
+}
+.contact-intent-text { color: var(--ink-soft); font-size: 0.93rem; line-height: 1.6; }
+.contact-intent-arrow { color: var(--forest); transition: transform 180ms var(--ease); }
+.contact-intents a:hover .contact-intent-label { color: var(--forest); }
+.contact-intents a:hover .contact-intent-arrow { transform: translateX(3px); }
+
+/* Below desktop width the two columns stack, and each row's label sits above
+   its description. */
+@media (max-width: 991.98px) {
+  .contact .contact-grid--split { grid-template-columns: minmax(0, 1fr); }
+  .contact-grid--split > .contact-column + .contact-column { margin-top: 2.6rem; }
+  .contact-intents a { grid-template-columns: minmax(0, 1fr) auto; gap: 0.25rem 1rem; }
+  .contact-intent-arrow { grid-row: 1; grid-column: 2; }
+  .contact-intent-text { grid-column: 1 / -1; }
+}
+
 .contact-links {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1109,16 +1215,40 @@ section { margin-bottom: clamp(4.3rem, 9vw, 8.5rem); }
   transition: color 200ms ease;
 }
 
-/* Organizations with a website read as links: blue and underlined. */
-.experiences-page .exp-org a {
-  color: var(--forest);
-  text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, currentColor 55%, transparent);
-  text-decoration-thickness: 0.045em;
-  text-underline-offset: 0.12em;
-  transition: color 200ms ease, text-decoration-color 200ms ease;
+/* Organizations with a website keep the title color; a small arrow marks the
+   link (on the Experiences page and in the Chinese page's experience list).
+   The arrow stays inline (not inline-block) so it never wraps onto a line of
+   its own, and the second `content` hides it from screen readers where alt
+   text for generated content is supported. */
+.experiences-page .exp-org a,
+.zh-page .zh-compact-section .scholar-entry-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 200ms ease;
 }
-.experiences-page .exp-org a:hover { color: var(--forest-deep); text-decoration-color: currentColor; }
+.experiences-page .exp-org a::after,
+.zh-page .zh-compact-section .scholar-entry-title a::after {
+  position: relative;
+  top: 0;
+  left: 0;
+  margin-left: 0.18em;
+  color: var(--forest);
+  content: "↗";
+  content: "↗" / "";
+  font-family: var(--sans);
+  font-size: 0.5em;
+  font-weight: 700;
+  letter-spacing: 0;
+  vertical-align: 0.7em;
+  transition: top 180ms var(--ease), left 180ms var(--ease);
+}
+.experiences-page .exp-org a:hover,
+.zh-page .zh-compact-section .scholar-entry-title a:hover { color: var(--forest); }
+.experiences-page .exp-org a:hover::after,
+.zh-page .zh-compact-section .scholar-entry-title a:hover::after { top: -2px; left: 2px; }
+/* The Chinese list titles are far smaller than the Experiences page titles,
+   so the arrow takes a larger share of their size. */
+.zh-page .zh-compact-section .scholar-entry-title a::after { margin-left: 0.12em; font-size: 0.72em; vertical-align: 0.32em; }
 
 .exp-role { margin: 0.5rem 0 0; color: var(--forest); font-size: 0.78rem; font-weight: 800; letter-spacing: 0.06em; line-height: 1.5; text-transform: uppercase; }
 .exp-details { margin: 0.75rem 0 0; padding: 0; color: var(--ink-soft); font-size: 0.95rem; line-height: 1.65; list-style: none; }
@@ -1259,6 +1389,10 @@ section { margin-bottom: clamp(4.3rem, 9vw, 8.5rem); }
 .zh-entry-details > span + span::before { margin: 0 0.45rem; content: "|"; color: var(--line-strong); }
 .zh-meta-label { color: var(--forest); font-weight: 700; }
 .zh-list-entry .scholar-resource-links { justify-content: flex-end; align-content: start; }
+/* "Beyond Research" rows on the Chinese page: the home page's list, set in
+   the Chinese font, with the labels and text sized up for Chinese glyphs. */
+.zh-beyond .beyond-items h3 { font-family: var(--zh-sans); font-size: 0.86rem; letter-spacing: 0.08em; line-height: 1.95; }
+.zh-beyond .beyond-items p { font-family: var(--zh-sans); font-size: 1rem; line-height: 1.75; }
 .zh-compact-sections { display: grid; gap: 3.5rem; }
 .zh-compact-section { margin: 0; }
 .zh-contact { margin-top: -1.5rem; }

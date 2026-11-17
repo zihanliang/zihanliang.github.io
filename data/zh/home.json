@@ -12,5 +12,27 @@
     "paragraphs": [
       "我在杜克大学攻读计算生物学与生物信息学博士，在 Anru Zhang 教授的指导下开展研究。我为不规则、不完整、往往并不干净的纵向与多模态数据，开发可靠的表示学习方法。"
     ]
+  },
+  "beyond": {
+    "title": "研究之外",
+    "titleEn": "Beyond Research",
+    "items": [
+      {
+        "title": "性别平等",
+        "description": "负责<a href=\"https://awdpi.org/zh-cn/\" target=\"_blank\" rel=\"noopener noreferrer\">亚裔女性国际发展计划（AWDPI）</a>的 AI 与 IT 系统，这是一个致力于消除针对亚裔女性的性别暴力的非营利组织。"
+      },
+      {
+        "title": "AI 素养",
+        "description": "创立埃默里大学人工智能与数据协会（EAIDA）及其 “AI for ALL” 项目，成员发展到 200 余人，来自各个专业。"
+      },
+      {
+        "title": "社群",
+        "description": "担任埃默里大学中国学生会（Emory CSA）会长，带领 100 余人的团队，活动覆盖 2,000 余名学生和家庭。"
+      },
+      {
+        "title": "教学",
+        "description": "担任埃默里大学本科机器学习课程助教，以及 AwesomeMath 奥数代数课程助教。"
+      }
+    ]
   }
 }

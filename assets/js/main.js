@@ -294,20 +294,79 @@ function renderContactIcon(icon) {
   return `<span class="contact-icon contact-icon--text" aria-hidden="true">${text || "•"}</span>`;
 }
 
-function renderContact(contact) {
-  setHtml("contact-title", contact.title);
-  setHtml(
-    "contact-links",
-    (contact.items || [])
-      .map(
-        (item) => `
+// The Contact section (the same markup as renderContactGrid in
+// scripts/render-static-content.mjs). With "intents" in
+// data/home/contact.json, a lead sentence spans the section and two labeled
+// columns sit below it: one row per reason to write, each opening a new email
+// to the address of the mailto item with its subject set, and the profile
+// links. Without intents, only the title and the profile links are shown.
+function getContactEmail(contact) {
+  const item = (contact.items || []).find((entry) => String(entry.url || "").startsWith("mailto:"));
+  return item ? item.url.slice("mailto:".length) : "";
+}
+
+function getContactIntents(contact) {
+  return getContactEmail(contact) ? contact.intents || [] : [];
+}
+
+function joinPhrases(parts) {
+  if (parts.length <= 1) return parts.join("");
+  if (parts.length === 2) return `${parts[0]} or ${parts[1]}`;
+  return `${parts.slice(0, -1).join(", ")}, or ${parts[parts.length - 1]}`;
+}
+
+function contactGridClass(contact) {
+  return getContactIntents(contact).length ? "contact-grid contact-grid--split" : "contact-grid";
+}
+
+function renderContactGrid(contact) {
+  // The split layout opens with the lead sentence, so its title is kept only
+  // for screen readers and the page outline.
+  const titleWith = (className) => `<h2 id="contact-title" class="${className}">${contact.title}</h2>`;
+  const links = `<ul id="contact-links" class="contact-links">${(contact.items || [])
+    .map(
+      (item) => `
       <li>
         <a href="${item.url}" target="_blank" rel="noopener noreferrer">${renderContactIcon(item.icon)}<span>${item.label}</span></a>
-      </li>
-    `
-      )
-      .join("")
-  );
+      </li>`
+    )
+    .join("")}</ul>`;
+  const intents = getContactIntents(contact);
+  if (!intents.length) return `${titleWith("section-title")}${links}`;
+
+  const email = getContactEmail(contact);
+  const href = (intent) => `mailto:${email}?subject=${encodeURIComponent(intent.subject || intent.label)}`;
+  const phrases = intents.map((intent) => `<a class="contact-phrase" href="${href(intent)}">${intent.phrase}</a>`);
+  const lead = contact.lead ? `${contact.lead} ` : "";
+  return `
+    ${titleWith("visually-hidden")}
+    <p class="contact-lead">${lead}${joinPhrases(phrases)}.</p>
+    <div class="contact-column">
+      <p class="contact-label">${contact.emailLabel || "By email"}</p>
+      <ul class="contact-intents">${intents
+        .map(
+          (intent) => `
+        <li>
+          <a href="${href(intent)}">
+            <span class="contact-intent-label">${intent.label}</span>
+            <span class="contact-intent-text">${intent.description}</span>
+            <span class="contact-intent-arrow" aria-hidden="true">→</span>
+          </a>
+        </li>`
+        )
+        .join("")}</ul>
+    </div>
+    <div class="contact-column">
+      <p class="contact-label">${contact.elsewhereLabel || "Elsewhere"}</p>
+      ${links}
+    </div>`;
+}
+
+function renderContact(contact) {
+  const grid = document.getElementById("contact-grid");
+  if (!grid) return;
+  grid.className = contactGridClass(contact);
+  grid.innerHTML = renderContactGrid(contact);
 }
 
 async function init() {

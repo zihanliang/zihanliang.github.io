@@ -547,6 +547,74 @@ function renderContactIcon(icon) {
   return `<span class="contact-icon contact-icon--text" aria-hidden="true">${text || "•"}</span>`;
 }
 
+// The home page Contact section (the same markup as renderContactGrid in
+// assets/js/main.js). With "intents" in data/home/contact.json, a lead
+// sentence spans the section and two labeled columns sit below it: one row per
+// reason to write, each opening a new email to the address of the mailto item
+// with its subject set, and the profile links. Without intents, only the
+// title and the profile links are shown.
+function getContactEmail(contact) {
+  const item = (contact.items || []).find((entry) => String(entry.url || "").startsWith("mailto:"));
+  return item ? item.url.slice("mailto:".length) : "";
+}
+
+function getContactIntents(contact) {
+  return getContactEmail(contact) ? contact.intents || [] : [];
+}
+
+function joinPhrases(parts) {
+  if (parts.length <= 1) return parts.join("");
+  if (parts.length === 2) return `${parts[0]} or ${parts[1]}`;
+  return `${parts.slice(0, -1).join(", ")}, or ${parts[parts.length - 1]}`;
+}
+
+function contactGridClass(contact) {
+  return getContactIntents(contact).length ? "contact-grid contact-grid--split" : "contact-grid";
+}
+
+function renderContactGrid(contact) {
+  // The split layout opens with the lead sentence, so its title is kept only
+  // for screen readers and the page outline.
+  const titleWith = (className) => `<h2 id="contact-title" class="${className}">${contact.title}</h2>`;
+  const links = `<ul id="contact-links" class="contact-links">${(contact.items || [])
+    .map(
+      (item) => `
+        <li>
+          <a href="${item.url}" target="_blank" rel="noopener noreferrer">${renderContactIcon(item.icon)}<span>${item.label}</span></a>
+        </li>`
+    )
+    .join("")}</ul>`;
+  const intents = getContactIntents(contact);
+  if (!intents.length) return `${titleWith("section-title")}${links}`;
+
+  const email = getContactEmail(contact);
+  const href = (intent) => `mailto:${email}?subject=${encodeURIComponent(intent.subject || intent.label)}`;
+  const phrases = intents.map((intent) => `<a class="contact-phrase" href="${href(intent)}">${intent.phrase}</a>`);
+  const lead = contact.lead ? `${contact.lead} ` : "";
+  return `
+      ${titleWith("visually-hidden")}
+      <p class="contact-lead">${lead}${joinPhrases(phrases)}.</p>
+      <div class="contact-column">
+        <p class="contact-label">${contact.emailLabel || "By email"}</p>
+        <ul class="contact-intents">${intents
+          .map(
+            (intent) => `
+          <li>
+            <a href="${href(intent)}">
+              <span class="contact-intent-label">${intent.label}</span>
+              <span class="contact-intent-text">${intent.description}</span>
+              <span class="contact-intent-arrow" aria-hidden="true">→</span>
+            </a>
+          </li>`
+          )
+          .join("")}</ul>
+      </div>
+      <div class="contact-column">
+        <p class="contact-label">${contact.elsewhereLabel || "Elsewhere"}</p>
+        ${links}
+      </div>`;
+}
+
 function renderHome({ hero, about, news, beyond, research, contact }) {
   const nameWithChineseFont = (about.nameZh || "").replace(
     /([\u3400-\u9FFF]+)/g,
@@ -623,18 +691,7 @@ function renderHome({ hero, about, news, beyond, research, contact }) {
   </section>
 
   <section class="contact">
-    <div class="contact-grid">
-      <h2 id="contact-title" class="section-title">${contact.title}</h2>
-      <ul id="contact-links" class="contact-links">${(contact.items || [])
-        .map(
-          (item) => `
-      <li>
-        <a href="${item.url}" target="_blank" rel="noopener noreferrer">${renderContactIcon(item.icon)}<span>${item.label}</span></a>
-      </li>
-    `
-        )
-        .join("")}</ul>
-    </div>
+    <div id="contact-grid" class="${contactGridClass(contact)}">${renderContactGrid(contact)}</div>
   </section>
 </div>
 
@@ -715,6 +772,32 @@ function renderNotesPage(data) {
 <script src="assets/js/notes.js"></script>`;
 }
 
+// The Chinese counterpart of the home page's "Beyond Research" rows, from the
+// "beyond" block of data/zh/home.json. Descriptions may hold links, so they
+// are inserted as HTML, as on the English home page.
+function renderZhBeyondItems(beyond) {
+  return (beyond?.items || [])
+    .map(
+      (item) => `
+        <li>
+          <h3>${escapeHtml(item.title)}</h3>
+          <p>${item.description}</p>
+        </li>
+      `
+    )
+    .join("");
+}
+
+function renderZhBeyond(beyond) {
+  if (!beyond?.items?.length) return "";
+  return `
+  <section id="zh-beyond" class="zh-scholar-block zh-beyond">
+    <h2 class="section-title">${escapeHtml(beyond.title)} <span>${escapeHtml(beyond.titleEn || "")}</span></h2>
+    <ul id="zh-beyond-items" class="beyond-items">${renderZhBeyondItems(beyond)}</ul>
+  </section>
+`;
+}
+
 function renderZhPage({ homeHero, chineseHome, contact, research, experiences }) {
   const hero = chineseHome.hero || {};
   const about = chineseHome.about || {};
@@ -780,7 +863,7 @@ function renderZhPage({ homeHero, chineseHome, contact, research, experiences })
       .map(renderZhCompactEntry)
       .join("")}</div>
   </section>
-
+${renderZhBeyond(chineseHome.beyond)}
   <section class="zh-scholar-block">
     <h2 class="section-title">经历 <span>Experiences</span></h2>
     <div id="zh-experience-sections" class="zh-compact-sections">${experienceSections}</div>

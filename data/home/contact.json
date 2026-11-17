@@ -1,5 +1,28 @@
 {
   "title": "Contact",
+  "lead": "Write to me if you'd like to",
+  "intents": [
+    {
+      "phrase": "talk about reliable ML",
+      "label": "Talk about reliable ML",
+      "description": "longitudinal and multimodal clinical data, informative missingness, distribution shift",
+      "subject": "Research conversation"
+    },
+    {
+      "phrase": "build a tool together",
+      "label": "Build a tool together",
+      "description": "open-source tools like the Causal Graph Workbench, and projects across ML and health",
+      "subject": "Building a tool together"
+    },
+    {
+      "phrase": "work on tech for nonprofits",
+      "label": "Tech for nonprofits",
+      "description": "AI and IT volunteering, as in my work with AWDPI",
+      "subject": "Tech for nonprofits"
+    }
+  ],
+  "emailLabel": "By email",
+  "elsewhereLabel": "Elsewhere",
   "items": [
     {
       "icon": "email",

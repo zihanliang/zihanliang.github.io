@@ -215,6 +215,23 @@ function renderExperiences(experiencesData) {
   setHtml("zh-experience-sections", sections);
 }
 
+// The "Beyond Research" rows; the build pre-renders the section only when
+// data/zh/home.json has items, so there is nothing to fill otherwise.
+function renderBeyond(chineseHome) {
+  const items = (chineseHome.beyond?.items || [])
+    .map(
+      (item) => `
+        <li>
+          <h3>${escapeHtml(item.title)}</h3>
+          <p>${item.description}</p>
+        </li>
+      `
+    )
+    .join("");
+
+  if (items) setHtml("zh-beyond-items", items);
+}
+
 function renderHero(homeHero, chineseHome) {
   document.documentElement.lang = "zh-CN";
 
@@ -309,6 +326,7 @@ async function init() {
     renderHero(homeHero, chineseHome);
     renderPaperSections(research);
     renderCollaborativeProjects(research);
+    renderBeyond(chineseHome);
     renderExperiences(experiences);
     renderContact(contact);
     renderChineseFooter();

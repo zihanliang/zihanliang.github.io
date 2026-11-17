@@ -1,27 +1,27 @@
 {
   "alibaba-puhuiti-400.woff2": {
     "source": "fonts/AlibabaPuHuiTi/AlibabaPuHuiTi-2-55-Regular.ttf",
-    "characters": 304,
-    "bytes": 31900,
-    "signature": "4eb236e8ee2f161e73b1853f77017ec0107b6d963ea2a8649562f4d7f5ca56b7"
+    "characters": 369,
+    "bytes": 39492,
+    "signature": "fd6ba84a64cffcbaa23c4b046fc7e5b96f74d4628fd60ddd1b2cf284603b468a"
   },
   "alibaba-puhuiti-500.woff2": {
     "source": "fonts/AlibabaPuHuiTi/AlibabaPuHuiTi-2-65-Medium.ttf",
-    "characters": 304,
-    "bytes": 31296,
-    "signature": "a9fe1eb6d293ba2568e550773f4ca5287bcad74a83870ecc8e2d140a5a966095"
+    "characters": 369,
+    "bytes": 38880,
+    "signature": "d07b9185d6143d237e3175bdbaca0272bb3078854815147ab90e8e46d7e594b1"
   },
   "alibaba-puhuiti-600.woff2": {
     "source": "fonts/AlibabaPuHuiTi/AlibabaPuHuiTi-2-75-SemiBold.ttf",
-    "characters": 304,
-    "bytes": 31708,
-    "signature": "ac1cef32fa0e012e10aee3c5e95db4ebf10792609642b30792f86e9b9b4dcc9b"
+    "characters": 369,
+    "bytes": 39300,
+    "signature": "192df3c172db9bf882f5431758cd701ec920f28146839f9f3b570d7c65fa6285"
   },
   "alibaba-puhuiti-700.woff2": {
     "source": "fonts/AlibabaPuHuiTi/AlibabaPuHuiTi-2-85-Bold.ttf",
-    "characters": 304,
-    "bytes": 31216,
-    "signature": "20b49721c905d837b29eac850cfe37661fc1bb4a8ec163860c038af5d1b68bd9"
+    "characters": 369,
+    "bytes": 38824,
+    "signature": "e7241cb550f8c75f45a20efbb260ff6c4856a1941639809beb25e2fb27f591ea"
   },
   "lxgw-wenkai-700.woff2": {
     "source": "fonts/LXGWWenKai/LXGWWenKai-Bold.ttf",
