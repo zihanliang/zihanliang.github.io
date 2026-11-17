@@ -148,6 +148,12 @@ a {
   text-underline-offset: 0.18em;
 }
 
+/* Bootstrap sets every link to weight 400, so a link inside a title (an
+   organization or paper name) or the Contact lead sentence came out lighter
+   than the words around it. There the link takes the surrounding weight. */
+:is(h1, h2, h3, h4, h5, h6) a,
+.contact-lead a { font-weight: inherit; }
+
 a:hover {
   color: var(--forest-deep);
   text-decoration-color: currentColor;
