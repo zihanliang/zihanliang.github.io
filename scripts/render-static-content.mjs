@@ -548,11 +548,12 @@ function renderContactIcon(icon) {
 }
 
 // The home page Contact section (the same markup as renderContactGrid in
-// assets/js/main.js). With "intents" in data/home/contact.json, a lead
-// sentence spans the section and two labeled columns sit below it: one row per
-// reason to write, each opening a new email to the address of the mailto item
-// with its subject set, and the profile links. Without intents, only the
-// title and the profile links are shown.
+// assets/js/main.js). With "intents" in data/home/contact.json, the title and
+// a lead sentence share a head row laid out like Beyond Research, and two
+// labeled columns sit below it: one row per reason to write, each opening a
+// new email to the address of the mailto item with its subject set, and the
+// profile links. Without intents, only the title and the profile links are
+// shown.
 function getContactEmail(contact) {
   const item = (contact.items || []).find((entry) => String(entry.url || "").startsWith("mailto:"));
   return item ? item.url.slice("mailto:".length) : "";
@@ -573,9 +574,7 @@ function contactGridClass(contact) {
 }
 
 function renderContactGrid(contact) {
-  // The split layout opens with the lead sentence, so its title is kept only
-  // for screen readers and the page outline.
-  const titleWith = (className) => `<h2 id="contact-title" class="${className}">${contact.title}</h2>`;
+  const title = `<h2 id="contact-title" class="section-title">${contact.title}</h2>`;
   const links = `<ul id="contact-links" class="contact-links">${(contact.items || [])
     .map(
       (item) => `
@@ -585,15 +584,17 @@ function renderContactGrid(contact) {
     )
     .join("")}</ul>`;
   const intents = getContactIntents(contact);
-  if (!intents.length) return `${titleWith("section-title")}${links}`;
+  if (!intents.length) return `${title}${links}`;
 
   const email = getContactEmail(contact);
   const href = (intent) => `mailto:${email}?subject=${encodeURIComponent(intent.subject || intent.label)}`;
   const phrases = intents.map((intent) => `<a class="contact-phrase" href="${href(intent)}">${intent.phrase}</a>`);
   const lead = contact.lead ? `${contact.lead} ` : "";
   return `
-      ${titleWith("visually-hidden")}
-      <p class="contact-lead">${lead}${joinPhrases(phrases)}.</p>
+      <div class="contact-head">
+        ${title}
+        <p class="contact-lead">${lead}${joinPhrases(phrases)}.</p>
+      </div>
       <div class="contact-column">
         <p class="contact-label">${contact.emailLabel || "By email"}</p>
         <ul class="contact-intents">${intents
@@ -843,7 +844,7 @@ function renderZhPage({ homeHero, chineseHome, contact, research, experiences })
       <h1 class="hero-title zh-hero-title">${renderTextWithEmoji(hero.greeting)}<span>${renderTextWithEmoji(hero.name)}</span>${renderTextWithEmoji(hero.tagline)}</h1>
       <div class="hero-summary">
         <p class="hero-summary-meta">${escapeHtml(about.name)} · <a href="mailto:${escapeHtml(about.email)}">${escapeHtml(about.email)}</a></p>
-        <div class="hero-summary-copy">${(about.paragraphs || []).map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")}</div>
+        <div class="hero-summary-copy">${(about.paragraphs || []).map((paragraph) => `<p>${paragraph}</p>`).join("")}</div>
       </div>
     </div>
     <div id="zh-hero-image-wrap" class="hero-image-wrap">

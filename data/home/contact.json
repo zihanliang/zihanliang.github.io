@@ -58,6 +58,11 @@
       "icon": "github",
       "label": "GitHub",
       "url": "https://github.com/zihanliang"
+    },
+    {
+      "icon": "x",
+      "label": "X",
+      "url": "https://x.com/_zihanliang"
     }
   ]
 }

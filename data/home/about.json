@@ -3,6 +3,6 @@
   "email": "zihan.liang@duke.edu",
   "affiliation": "Ph.D. Student · Computational Biology and Bioinformatics · Duke University",
   "paragraphs": [
-    "I am a Ph.D. student in Computational Biology and Bioinformatics at Duke University, conducting research under the guidance of Prof. Anru Zhang. I develop reliable representation learning methods for longitudinal and multimodal data that are irregular, incomplete, and rarely clean."
+    "I am a Ph.D. student in Computational Biology and Bioinformatics at Duke University, conducting research under the guidance of <a href=\"https://anruzhang.github.io/\" target=\"_blank\" rel=\"noopener noreferrer\">Prof. Anru Zhang</a>. I develop reliable representation learning methods for longitudinal and multimodal data that are irregular, incomplete, and rarely clean."
   ]
 }

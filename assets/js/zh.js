@@ -237,8 +237,9 @@ function renderHero(homeHero, chineseHome) {
 
   const hero = chineseHome.hero || {};
   const about = chineseHome.about || {};
+  // Paragraphs are trusted HTML from data/zh/home.json, so they can hold links.
   const summary = (about.paragraphs || [])
-    .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`)
+    .map((paragraph) => `<p>${paragraph}</p>`)
     .join("");
 
   setHtml(
