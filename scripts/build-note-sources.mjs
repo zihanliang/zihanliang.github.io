@@ -31,7 +31,7 @@
 
 import { execFile } from "node:child_process";
 import { createHash } from "node:crypto";
-import { access, copyFile, mkdir, readdir, readFile, rm, stat, writeFile } from "node:fs/promises";
+import { access, copyFile, cp, mkdir, readdir, readFile, rm, stat, writeFile } from "node:fs/promises";
 import { promisify } from "node:util";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
@@ -447,13 +447,36 @@ async function prepareLatex(note) {
   await writeIfChanged(path.join(numbersDir, "main.tex"), numbersTex);
   if (figures.length) await writeIfChanged(path.join(figuresDir, "figures.tex"), figuresTex);
 
+  // The note's own style files (referenced by \usepackage{styles/...}) live in
+  // the note folder, not these generated compile directories. Neither the local
+  // compile (cwd = compile dir) nor CI's latex-action (work_in_root_file_dir)
+  // can see them through TeX's default search path, so copy them in. Fold their
+  // contents into the compile hash so a style edit forces a rebuild.
+  const stylesDir = path.join(noteDir, "styles");
+  let stylePayload = "";
+  if (await exists(stylesDir)) {
+    const names = (await readdir(stylesDir)).sort();
+    stylePayload = (
+      await Promise.all(
+        names.map((name) =>
+          readFile(path.join(stylesDir, name), "utf8").then((c) => `${name}\n${c}`).catch(() => "")
+        )
+      )
+    ).join("\n");
+    await cp(stylesDir, path.join(numbersDir, "styles"), { recursive: true });
+    if (figures.length) await cp(stylesDir, path.join(figuresDir, "styles"), { recursive: true });
+  }
+
   const prepared = {
     theorems,
     boxes,
     figureCount: figures.length,
     sectionCount,
     envCount,
-    hashes: { numbers: hash(numbersTex), figures: figures.length ? hash(figuresTex) : null }
+    hashes: {
+      numbers: hash(numbersTex + stylePayload),
+      figures: figures.length ? hash(figuresTex + stylePayload) : null
+    }
   };
   await writeIfChanged(path.join(workDir, "prepared.json"), `${JSON.stringify(prepared, null, 2)}\n`);
   return prepared;
