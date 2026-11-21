@@ -2,6 +2,10 @@
   "title": "Recent News",
   "items": [
     {
+      "date": "Nov. 2026",
+      "text": "Our team was selected as one of three finalists for the <a href=\"https://www.etr.org/yth/yth-live-global-2026/\" target=\"_blank\" rel=\"noopener noreferrer\">YTH Live Global 2026 Innovation Challenge</a>, presented by ETR. Winners will be announced on December 10, 2026."
+    },
+    {
       "date": "Aug. 2026",
       "text": "I started my Ph.D. in Computational Biology and Bioinformatics at Duke University, conducting research under the guidance of <a href=\"https://anruzhang.github.io/\" target=\"_blank\" rel=\"noopener noreferrer\">Prof. Anru Zhang</a>."
     },
